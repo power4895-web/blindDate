@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.self_board_project.user.mapper.UserMapper">
+    <select id="selectUserList" resultType="com.example.self_board_project.user.vo.User">
+        /** selectUserList **/
+        SELECT
+            *
+        FROM user t1
+    </select>
+    <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
+        /** selectUser **/
+        SELECT
+            *
+        FROM user t1
+        WHERE id = #{id}
+    </select>
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        /** insertUser **/
+        INSERT INTO `user`( login_id
+                          , password
+                          , real_name
+                          , nickname
+                          , age
+                          , gender
+                          , email
+                          , introduce
+                          , phone_number
+                          , create_date)
+
+        VALUES ( #{loginId}
+               , #{password}
+               , #{realName}
+               , #{nickname}
+               , #{age}
+               , #{gender}
+               , #{email}
+               , #{introduce}
+               , #{phoneNumber}
+               , now())
+    </insert>
+</mapper>

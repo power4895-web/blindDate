@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.self_board_project.file.mapper.FileMapper">
+    <select id="selectFileCount" resultType="int">
+        /** selectFileCount **/
+        SELECT
+            count(1)
+        FROM file t1
+    </select>
+    <select id="selectBoard" resultType="com.example.self_board_project.file.vo.FileInfo">
+        /** selectFileList **/
+        SELECT
+            *
+        FROM file t1
+        JOIN user t2 ON t1.user_id = t2.id
+        WHERE t1.id = #{id}
+    </select>
+    <select id="selectFileList" resultType="com.example.self_board_project.file.vo.FileInfo">
+        /** selectFileList **/
+        SELECT
+            *
+        FROM file t1
+        JOIN user t2 ON t1.user_id = t2.id
+        ORDER BY t1.id DESC
+        LIMIT #{rowStart}, #{rowSize}
+    </select>
+
+
+    <insert id="insertFile" useGeneratedKeys="true" keyProperty="id">
+        insert into file(
+            division
+            , ref_id
+            , system_filename
+            , original_filename
+            , filepath
+            , create_date
+        )Value(
+            #{division}
+            , #{refId}
+            , #{systemFilename}
+            , #{originalFilename}
+            , #{filepath}
+            , NOW()
+        )
+    </insert>
+    <delete id="deleteFile" >
+        DELETE FROM file  WHERE id = #{id}
+    </delete>
+</mapper>
