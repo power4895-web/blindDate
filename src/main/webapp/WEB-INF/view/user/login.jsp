@@ -12,7 +12,7 @@
 <script type="text/javascript" src="/static/js/commonUtil.js"></script>
     아이디: <input type="text" id="loginId" name="loginId" value="">
     비밀번호: <input type="text" id="password" name="password" value="">
-<button onclick="login()">로그인</button>
+<button onclick="login()">로그인2</button>
 <script>
     function login() {
         console.log(">>", $("#loginId").val().trim())
