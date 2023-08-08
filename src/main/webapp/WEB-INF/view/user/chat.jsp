@@ -10,7 +10,7 @@
 <%--<script src="/static/js/jquery.form.js"></script>--%>
 <script type="text/javascript" src="/static/js/jquery-2.2.4.js"></script>
 <script type="text/javascript" src="/static/js/commonUtil.js"></script>
-<%--수정합니다223--%>
+<%--수정합니다2234--%>
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
