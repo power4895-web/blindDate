@@ -3,6 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.self_board_project.user.mapper.UserMapper">
+<!--    <sql id="selectUser">-->
+<!--        SELECT id,-->
+<!--               login_id,-->
+<!--               password,-->
+<!--               nickname,-->
+<!--               real_name,-->
+<!--               age,-->
+<!--               gender,-->
+<!--               email,-->
+<!--               phone_number,-->
+<!--               introduce,-->
+<!--               create_date,-->
+<!--               update_date,-->
+<!--               update_id-->
+<!--        FROM `user`;-->
+<!--    </sql>-->
+
+
+
     <select id="selectUserList" resultType="com.example.self_board_project.user.vo.User">
         /** selectUserList **/
         SELECT
@@ -10,7 +29,6 @@
         FROM user t1
     </select>
     <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
-        /** selectUser **/
         SELECT
             *
         FROM user t1

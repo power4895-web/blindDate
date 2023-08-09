@@ -102,8 +102,8 @@
 
         $("#createRoom").click(function(){
 
-            var msg = $('#roomName').val();
-            // var msg = {	roomName : $('#roomName').val()	};
+            // var msg = $('#roomName').val();
+            var msg = {	roomName : $('#roomName').val()	};
             console.log("createRoom");
             console.log("msg" , msg);
             console.log("roomList" , roomList);
@@ -118,7 +118,7 @@
     function goRoom(number, name){
         console.log("number", number)
         console.log("name", name)
-        // location.href="/moveChating?roomName="+name+"&"+"roomNumber="+number;
+        location.href="/moveChating?roomName="+name+"&"+"roomNumber="+number;
     }
 
     function createChatingRoom(res){
@@ -127,6 +127,8 @@
         if(res != null){
             var tag = "<tr><th class='num'>순서</th><th class='room'>방 이름</th><th class='go'></th></tr>";
             res.forEach(function(d, idx){
+                console.log("d.roomName : " , d.roomName)
+                console.log("d.roomName.trim() : " , d.roomName.trim())
                 var rn = d.roomName.trim();
                 var roomNumber = d.roomNumber;
                 tag += "<tr>"+

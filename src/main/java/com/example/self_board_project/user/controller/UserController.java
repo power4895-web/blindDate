@@ -6,11 +6,10 @@ import com.example.self_board_project.user.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.math.BigInteger;
 
 @Controller
 //@RestController
@@ -32,11 +31,20 @@ public class UserController {
     @RequestMapping(value = "/registerForm")
     public String userRegisterForm(Model model, User user) {
         System.out.println(">>>>registerForm");
-        return "user/registerForm";
+        return "user/updateForm";
     }
+
+    @RequestMapping(value = "/updateForm/{id}", method = RequestMethod.GET)
+    public String updateForm(Model model, @PathVariable int id) {
+        System.out.println("id" + id);
+        User userInfo = userService.selectUser(id);
+        model.addAttribute("userInfo", userInfo);
+        return "user/updateForm";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public BigInteger userRegister(Model model, User user) {
+    public Integer userRegister(Model model, User user) {
        userService.insertUser(user);
         return user.getId();
     }
@@ -50,6 +58,7 @@ public class UserController {
         System.out.println(">>>>loginForm");
         return "user/todayProfile";
     }
+
 //    @RequestMapping(value = "/login")
 //    public void login(Model model, User user) {
 //        System.out.println(">>>>register" +  user.getLoginId());

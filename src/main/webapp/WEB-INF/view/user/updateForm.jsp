@@ -67,7 +67,7 @@
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="text-center mb-5">
                     <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
-                    <h1 class="fw-bolder">회원가입</h1>
+                    <h1 class="fw-bolder">내 정보 변경</h1>
                     <p class="lead fw-normal text-muted mb-0">Introduce yourself</p>
                 </div>
                 <div class="row gx-5 justify-content-center">
@@ -82,56 +82,56 @@
                         <form action="/register" name="frm" id="frm" data-sb-form-api-token="API_TOKEN">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="realName" name="realName" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
+                                <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
                                 <label for="realName">이름</label>
                                 <div class="invalid-feedback" data-sb-feedback="realName:required">A realName is required.</div>
                             </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="nickname" name="nickname" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="nickname" name="nickname" value="${userInfo.nickname}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="nickname">닉네임</label>
                                 <div class="invalid-feedback" data-sb-feedback="nickname:required">A nickname is required.</div>
                             </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="password" name="password" type="password" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="password" name="password" value="${userInfo.password}" type="password" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="password">비밀번호</label>
                                 <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
                             </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="age" name="age" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="age" name="age" value="${userInfo.age}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="age">나이</label>
                                 <div class="invalid-feedback" data-sb-feedback="age:required">A age is required.</div>
                             </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="gender" name="gender" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="gender" name="gender" value="${userInfo.gender}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="gender">성별</label>
                                 <div class="invalid-feedback" data-sb-feedback="gender:required">A gender is required.</div>
                             </div>
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                <input class="form-control" id="email" name="email" value="${userInfo.email}" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
                                 <label for="email">이메일</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
                             <!-- ID address input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="loginId" name="loginId" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <input class="form-control" id="loginId" name="loginId" value="${userInfo.loginId}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="loginId">아이디</label>
                                 <div class="invalid-feedback" data-sb-feedback="loginId:required">A loginId is required.</div>
                             </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="phoneNumber" name="phoneNumber" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                <input class="form-control" id="phoneNumber" name="phoneNumber" value="${userInfo.phoneNumber}" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
                                 <label for="phoneNumber">핸드폰번호</label>
                                 <div class="invalid-feedback" data-sb-feedback="phoneNumber:required">A phone number is required.</div>
                             </div>
                             <!-- Message input-->
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="introduce" name="introduce" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                                <textarea class="form-control" id="introduce" name="introduce" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required">${userInfo.introduce}</textarea>
                                 <label for="introduce">introduce</label>
                                 <div class="invalid-feedback" data-sb-feedback="introduce:required">A introduce is required.</div>
                             </div>

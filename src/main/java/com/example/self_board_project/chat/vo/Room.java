@@ -6,6 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Room {
-    int roomNumber;
-    String roomName;
+    private int roomNumber;
+    private String roomName;
+    private int id;
+    private int roomId;
+    private int makingId;
+    private int makedId;
 }

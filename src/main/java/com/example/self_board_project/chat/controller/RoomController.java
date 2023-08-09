@@ -29,10 +29,11 @@ public class RoomController {
      * @return
      */
     @RequestMapping("/createRoom")
-    public @ResponseBody List<Room> createRoom(@RequestParam String params){
-//    public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){
-        String roomName = params;
-        System.out.println("roomName" + roomName);
+//    public @ResponseBody List<Room> createRoom(@RequestParam String params){
+    public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){
+//        String roomName = params;
+         String roomName = (String)params.get("roomName");
+//        System.out.println("roomName" + roomName);
         if(roomName != null && !roomName.trim().equals("")) {
             Room room = new Room();
             room.setRoomNumber(++roomNumber);
@@ -64,11 +65,15 @@ public class RoomController {
         int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
 
         List<Room> new_list = roomList.stream().filter(o->o.getRoomNumber()==roomNumber).collect(Collectors.toList());
+        System.out.println("new_list : " + new_list);
+        System.out.println("new_list.size() : " + new_list.size());
         if(new_list != null && new_list.size() > 0) {
+            System.out.println("/user/chat");
             mv.addObject("roomName", params.get("roomName"));
             mv.addObject("roomNumber", params.get("roomNumber"));
             mv.setViewName("/user/chat");
         }else {
+            System.out.println("/user/room");
             mv.setViewName("/user/room");
         }
         return mv;

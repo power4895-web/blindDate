@@ -16,16 +16,16 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public int selectBoardCount() {
+    public int selectUserCount() {
         System.out.println(">>");
         return 1;
     }
-    public List<User> selectBoardList() {
+    public List<User> selectUserList() {
 
         return userMapper.selectUserList();
     }
-    public User selectBoard() {
-        return userMapper.selectUser();
+    public User selectUser(int id) {
+        return userMapper.selectUser(id);
     }
     public void insertUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));

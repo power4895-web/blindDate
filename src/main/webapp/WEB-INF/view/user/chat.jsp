@@ -80,7 +80,7 @@
             var msg = data.data;
             console.log("msg", msg);
             if(msg != null && msg.trim() != ''){
-                var d = JSON.parse(msg);
+                var d = JSON.parse(msg); //보낼 땐 문자열로 보냈고, 받을 땐 json오브젝트를 자바스크립트 오브젝트로 변환
                 console.log("d", d)
                 console.log("d.type", d.type)
                 if(d.type == "getId"){
