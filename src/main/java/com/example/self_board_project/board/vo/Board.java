@@ -4,13 +4,12 @@ import com.example.self_board_project.core.support.Pagination;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigInteger;
 import java.util.Date;
 @Getter
 @Setter
 public class Board extends Pagination {
     private Integer id;
-    private BigInteger userId;
+    private Integer userId;
     private String title;
     private String content;
     private Date createDate;

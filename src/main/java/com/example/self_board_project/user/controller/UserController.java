@@ -1,6 +1,7 @@
 package com.example.self_board_project.user.controller;
 
 
+import com.example.self_board_project.core.authority.Auth;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 //@RestController
@@ -31,7 +35,12 @@ public class UserController {
     @RequestMapping(value = "/registerForm")
     public String userRegisterForm(Model model, User user) {
         System.out.println(">>>>registerForm");
-        return "user/updateForm";
+        return "user/registerForm";
+    }
+    @RequestMapping(value = "/registerForm2")
+    public String userRegisterForm2(Model model, User user) {
+        System.out.println(">>>>registerForm");
+        return "user/registerForm2";
     }
 
     @RequestMapping(value = "/updateForm/{id}", method = RequestMethod.GET)
@@ -46,7 +55,7 @@ public class UserController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Integer userRegister(Model model, User user) {
        userService.insertUser(user);
-        return user.getId();
+       return user.getId();
     }
     @RequestMapping(value = "/login")
     public String userLoginForm(Model model, User user) {
@@ -54,9 +63,60 @@ public class UserController {
         return "user/login";
     }
     @RequestMapping(value = "/todayProfile")
-    public String todayProfile(Model model, User user) {
+    public String todayProfile(Model model, User user, Auth auth) {
+
         System.out.println(">>>>loginForm");
+        User userInfo = userService.selectUser(auth.getId());
+        String ids = userInfo.getTodayProfileId();
+        String todayIds[] = ids.split(",");
+
+        List<User> dataList = new ArrayList<>();
+//        for (String item3: todayIds) {
+//            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
+//            dataList.add(userInfo2);
+//        }
+//        for (User item4: dataList) {
+//            System.out.println("item4" + item4.getId());
+//            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
+//            dataList.add(userInfo2);
+//        }
+
+
         return "user/todayProfile";
+    }
+    @RequestMapping(value="/todayProfile/update")
+    public void todayProfileUpdate(Model model, User user, Auth auth) {
+        List<User> userList = userService.selectUserList();
+        for (User item: userList) {
+            String todayProfileId = "";
+            if(item.getGender().equals("M")) {
+                user.setGender("F");
+                List<User> manRandomList = userService.selectUserRandomList(user);
+                for (User item2: manRandomList) {
+                    todayProfileId += item2.getId() + ",";
+                }
+                todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
+                user.setTodayProfileId(todayProfileId);
+                user.setId(item.getId());
+                userService.updateTodayProfileId(user);
+//                String test[] = ids.split(",");
+//                System.out.println("test : " + test);
+//                List<String> dataList = new ArrayList<>();
+//                for (String item3: test) {
+//                    System.out.println("item3 : " + item3);
+//                }
+            } else {
+                user.setGender("M");
+                List<User> womanRandomList = userService.selectUserRandomList(user);
+                for (User item2: womanRandomList) {
+                    todayProfileId += item2.getId() + ",";
+                }
+                todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
+                user.setTodayProfileId(todayProfileId);
+                user.setId(item.getId());
+                userService.updateTodayProfileId(user);
+            }
+        }
     }
 
 //    @RequestMapping(value = "/login")

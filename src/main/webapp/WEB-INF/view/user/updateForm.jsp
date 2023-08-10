@@ -13,6 +13,8 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="/static/js/jquery.form.js"></script>
 <script src="/static/js/commonUtil.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <sec:authentication var="info" property="principal" />
 <html>
 <head>
@@ -66,9 +68,8 @@
             <!-- Contact form-->
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="text-center mb-5">
-                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
                     <h1 class="fw-bolder">내 정보 변경</h1>
-                    <p class="lead fw-normal text-muted mb-0">Introduce yourself</p>
+                    <p class="lead fw-normal text-muted mb-0">update user</p>
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
@@ -162,57 +163,46 @@
                                 </div>
                             </section>
 
-
-
-
                             <div class="d-none" id="submitSuccessMessage">
-<%--                                <div class="text-center mb-3">--%>
-<%--                                    <div class="fw-bolder">Form submission successful!</div>--%>
-<%--                                    To activate this form, sign up at--%>
-<%--                                    <br />--%>
-<%--                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>--%>
-<%--                                </div>--%>
                             </div>
-                            <!-- Submit error message-->
-                            <!---->
-                            <!-- This is what your users will see when there is-->
-                            <!-- an error submitting the form-->
                             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-<%--                            <button class="btn btn-primary "  class="btn btn-primary btn-lg disabled"  id="submitButton" onclick="register()" >가입2</button>--%>
-<%--                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="register()" >가입</button></div>--%>
-                            <!-- Submit Button-->
                         </form>
                         <div class="d-grid">
                             <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="register()" type="submit">가입</button></div>
                         </div>
+
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100" src="https://source.unsplash.com/user/erondu/1600x900" alt="..." />
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="https://source.unsplash.com/collection/190727/1600x900" alt="..." />
+                                </div>
+                                <div class="carousel-item">
+                                    <img class="d-block w-100" src="https://source.unsplash.com/WLUHO9A_xik/1600x900" alt="..." />
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- Contact cards-->
-            <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
-                <div class="col">
-                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-chat-dots"></i></div>
-                    <div class="h5 mb-2">Chat with us</div>
-                    <p class="text-muted mb-0">Chat live with one of our support specialists.</p>
-                </div>
-                <div class="col">
-                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
-                    <div class="h5">Ask the community</div>
-                    <p class="text-muted mb-0">Explore our community forums and communicate with other users.</p>
-                </div>
-                <div class="col">
-                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-question-circle"></i></div>
-                    <div class="h5">Support center</div>
-                    <p class="text-muted mb-0">Browse FAQ's and support articles to find solutions.</p>
-                </div>
-                <div class="col">
-                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telephone"></i></div>
-                    <div class="h5">Call us</div>
-                    <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
                 </div>
             </div>
         </div>
     </section>
+
 </main>
 <!-- Footer-->
 <footer class="bg-dark py-4 mt-auto">

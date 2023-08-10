@@ -21,8 +21,10 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping(value="/fileUpload/{division}/{refid}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void  fileUpload (@RequestParam("file") List<MultipartFile> file, @PathVariable String division, @PathVariable("refid") String refid) throws Exception {
+    public void  fileUpload (@RequestParam("file") List<MultipartFile> file, @PathVariable String division, @PathVariable("refid") Integer refid) throws Exception {
         FileInfo fileInfo = new FileInfo();
+        fileInfo.setRefId(refid);
+        fileInfo.setDivision(division);
         fileService.insertFile( fileInfo, file);
     }
 }

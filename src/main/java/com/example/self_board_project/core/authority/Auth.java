@@ -14,9 +14,10 @@ public class Auth implements Serializable {
 
 //	private static final long serialVersionUID = -1540957347729418968L;
 
-	private BigInteger id;
+	private Integer id;
 	private String loginId;
 	private String realName;
+	private String getnder;
 	private String password;
 
 	

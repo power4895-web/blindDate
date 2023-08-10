@@ -10,7 +10,8 @@
 		 id
 		, login_id 
 		, real_name
-		, password 
+		, gender
+		, password
 	FROM user  t1
 	WHERE login_id = #{loginId}
 	</select>

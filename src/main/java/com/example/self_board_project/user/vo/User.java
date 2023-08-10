@@ -17,6 +17,7 @@ public class User {
     private String email;
     private String phoneNumber;
     private String introduce;
+    private String todayProfileId;
     private Date createDate;
     private Date updateDate;
     private Integer updateId;

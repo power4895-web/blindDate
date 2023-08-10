@@ -24,11 +24,21 @@ public class UserService {
 
         return userMapper.selectUserList();
     }
+    public List<User> selectUserRandomList(User user) {
+
+        return userMapper.selectUserRandomList(user);
+    }
     public User selectUser(int id) {
         return userMapper.selectUser(id);
     }
     public void insertUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.insertUser(user);
+    }
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+    public void updateTodayProfileId(User user) {
+        userMapper.updateTodayProfileId(user);
     }
 }

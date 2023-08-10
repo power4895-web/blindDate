@@ -3,34 +3,38 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.self_board_project.user.mapper.UserMapper">
-<!--    <sql id="selectUser">-->
-<!--        SELECT id,-->
-<!--               login_id,-->
-<!--               password,-->
-<!--               nickname,-->
-<!--               real_name,-->
-<!--               age,-->
-<!--               gender,-->
-<!--               email,-->
-<!--               phone_number,-->
-<!--               introduce,-->
-<!--               create_date,-->
-<!--               update_date,-->
-<!--               update_id-->
-<!--        FROM `user`;-->
-<!--    </sql>-->
-
+    <!--    <sql id="selectUser">-->
+    <!--        SELECT id,-->
+    <!--               login_id,-->
+    <!--               password,-->
+    <!--               nickname,-->
+    <!--               real_name,-->
+    <!--               age,-->
+    <!--               gender,-->
+    <!--               email,-->
+    <!--               phone_number,-->
+    <!--               introduce,-->
+    <!--               create_date,-->
+    <!--               update_date,-->
+    <!--               update_id-->
+    <!--        FROM `user`;-->
+    <!--    </sql>-->
 
 
     <select id="selectUserList" resultType="com.example.self_board_project.user.vo.User">
         /** selectUserList **/
-        SELECT
-            *
+        SELECT *
         FROM user t1
     </select>
+    <select id="selectUserRandomList" resultType="com.example.self_board_project.user.vo.User">
+        /** selectUserRandomList **/
+        select *
+        from user
+        WHERE gender = #{gender}
+        order by rand() limit 2;
+    </select>
     <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
-        SELECT
-            *
+        SELECT *
         FROM user t1
         WHERE id = #{id}
     </select>
@@ -58,4 +62,9 @@
                , #{phoneNumber}
                , now())
     </insert>
+    <update id="updateTodayProfileId">
+        UPDATE user
+        SET today_profile_id = #{todayProfileId}
+        WHERE id = #{id}
+    </update>
 </mapper>
