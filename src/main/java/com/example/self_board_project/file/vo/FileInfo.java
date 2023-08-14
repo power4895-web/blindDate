@@ -14,5 +14,6 @@ public class FileInfo {
     private String originalFilename;
     private String systemFilename;
     private String division;
+    private String bossType;
     private Date createDate;
 }

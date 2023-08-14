@@ -21,4 +21,8 @@ public class User {
     private Date createDate;
     private Date updateDate;
     private Integer updateId;
+
+//  file
+    private String bossType;
+    private String filepath;
 }

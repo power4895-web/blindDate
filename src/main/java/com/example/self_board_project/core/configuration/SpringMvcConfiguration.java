@@ -1,6 +1,7 @@
 package com.example.self_board_project.core.configuration;
 
 import com.example.self_board_project.core.authority.UserHandlerMethodArgumentResolver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -15,6 +16,8 @@ import java.util.List;
 @Configuration
 public class SpringMvcConfiguration implements WebMvcConfigurer {
 
+    private @Value("${file.root.path") String fileRootPath;
+    private @Value("${deploy}") String deploy;
     /**
      * User argumentResolvers
      */
@@ -55,10 +58,11 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("/static/");
 //		registry.addResourceHandler("/favicon.ico").addResourceLocations("/static/favicon.ico");
-
-//        if("local".equals(deploy)) {
-//            registry.addResourceHandler("/data/**").addResourceLocations("file:///" + fileRootPath + "/data/");
-//        }
+        System.out.println("deploy" + deploy);
+        if("local".equals(deploy)) {
+//            registry.addResourceHandler("/**").addResourceLocations("file:///" + fileRootPath + "/");
+            registry.addResourceHandler("/datasdfsadfadsf/**").addResourceLocations("file:///" + fileRootPath + "/data/");
+        }
     }
 
 

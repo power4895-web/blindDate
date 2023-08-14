@@ -69,102 +69,105 @@
             </div>
             <div class="row gx-5 justify-content-center">
                 <!-- Pricing card free-->
-                <div class="col-lg-6 col-xl-4">
-                    <div class="card mb-5 mb-xl-0">
-                        <div class="card-body p-5">
-                            <div class="small text-uppercase fw-bold text-muted">Free</div>
-                            <div class="mb-3">
-                                <img class="card-img-top" src="/static/files/설윤2.jpg" alt="..." />
+                <c:forEach var="item" items="${dataList}">
+                    <div class="col-lg-6 col-xl-4">
+                        <div class="card mb-5 mb-xl-0">
+                            <div class="card-body p-5">
+                                <div class="small text-uppercase fw-bold text-muted">Free</div>
+                                <div class="mb-3">
+                                    <img class="card-img-top" src="\files\3a27f8c6-b447-408f-9a47-0df21f8f570e_ㅋㅊㅍq.jpg" alt="..." />
+
+                                </div>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        <strong>1 users</strong>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        5GB storage
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        Unlimited public projects
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        Community access
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        Unlimited private projects
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        Dedicated support
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        Free linked domain
+                                    </li>
+                                    <li class="text-muted">
+                                        <i class="bi bi-check text-primary"></i>
+                                        Monthly status reports
+                                    </li>
+                                </ul>
+                                <div class="d-grid"><a class="btn btn-outline-primary" href="#!">Choose plan</a></div>
                             </div>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    <strong>1 users</strong>
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    5GB storage
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Unlimited public projects
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Community access
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Unlimited private projects
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Dedicated support
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Free linked domain
-                                </li>
-                                <li class="text-muted">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Monthly status reports
-                                </li>
-                            </ul>
-                            <div class="d-grid"><a class="btn btn-outline-primary" href="#!">Choose plan</a></div>
                         </div>
                     </div>
-                </div>
+                </c:forEach>
                 <!-- Pricing card pro-->
-                <div class="col-lg-6 col-xl-4">
-                    <div class="card mb-5 mb-xl-0">
-                        <div class="card-body p-5">
-                            <div class="small text-uppercase fw-bold">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                Pro
-                            </div>
-                            <div class="mb-3">
-                                <img class="card-img-top" src="/static/files/민지.jpg" alt="..." />
-                            </div>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    <strong>5 users</strong>
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    5GB storage
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Unlimited public projects
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Community access
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Unlimited private projects
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Dedicated support
-                                </li>
-                                <li class="mb-2">
-                                    <i class="bi bi-check text-primary"></i>
-                                    Free linked domain
-                                </li>
-                                <li class="text-muted">
-                                    <i class="bi bi-x"></i>
-                                    Monthly status reports
-                                </li>
-                            </ul>
-                            <div class="d-grid"><a class="btn btn-outline-primary" href="#!">Choose plan</a></div>
-                        </div>
-                    </div>
-                </div>
-                </div>
+                <%--                <div class="col-lg-6 col-xl-4">--%>
+                <%--                    <div class="card mb-5 mb-xl-0">--%>
+                <%--                        <div class="card-body p-5">--%>
+                <%--                            <div class="small text-uppercase fw-bold">--%>
+                <%--                                <i class="bi bi-star-fill text-warning"></i>--%>
+                <%--                                Pro--%>
+                <%--                            </div>--%>
+                <%--                            <div class="mb-3">--%>
+                <%--                                <img class="card-img-top" src="/static/files/민지.jpg" alt="..." />--%>
+                <%--                            </div>--%>
+                <%--                            <ul class="list-unstyled mb-4">--%>
+                <%--                                <li class="mb-2">--%>
+                <%--                                    <i class="bi bi-check text-primary"></i>--%>
+                <%--                                    <strong>5 users</strong>--%>
+                <%--                                </li>--%>
+                <%--                                <li class="mb-2">--%>
+                <%--                                    <i class="bi bi-check text-primary"></i>--%>
+                <%--                                    5GB storage--%>
+                <%--                                </li>--%>
+                <%--                                <li class="mb-2">--%>
+                <%--                                    <i class="bi bi-check text-primary"></i>--%>
+                <%--                                    Unlimited public projects--%>
+                <%--                                </li>--%>
+                <%--                                <li class="mb-2">--%>
+                <%--                                    <i class="bi bi-check text-primary"></i>--%>
+                <%--                                    Community access--%>
+                <%--                                </li>--%>
+                <%--                                <li class="mb-2">--%>
+                <%--                                    <i class="bi bi-check text-primary"></i>--%>
+                <%--                                    Unlimited private projects--%>
+                <%--                                </li>--%>
+                <%--                                <li class="mb-2">--%>
+                <%--                                    <i class="bi bi-check text-primary"></i>--%>
+                <%--                                    Dedicated support--%>
+                <%--                                </li>--%>
+                <%--                                <li class="mb-2">--%>
+                <%--                                    <i class="bi bi-check text-primary"></i>--%>
+                <%--                                    Free linked domain--%>
+                <%--                                </li>--%>
+                <%--                                <li class="text-muted">--%>
+                <%--                                    <i class="bi bi-x"></i>--%>
+                <%--                                    Monthly status reports--%>
+                <%--                                </li>--%>
+                <%--                            </ul>--%>
+                <%--                            <div class="d-grid"><a class="btn btn-outline-primary" href="#!">Choose plan</a></div>--%>
+                <%--                        </div>--%>
+                <%--                    </div>--%>
+                <%--                </div>--%>
             </div>
+        </div>
         </div>
     </section>
 </main>
@@ -183,6 +186,15 @@
         </div>
     </div>
 </footer>
+
+<div>
+    <div>
+
+    </div>
+
+</div>
+
+
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
@@ -251,7 +263,7 @@
         let params =  {
             "realName" : frm.realName,
             "password" : frm.password,
-             "gender" : frm.gender,
+            "gender" : frm.gender,
             "loginId" : frm.loginId,
             "phoneNumber" : frm.phoneNumber,
             "age" : frm.age,

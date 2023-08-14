@@ -65,16 +65,18 @@ public class UserController {
     @RequestMapping(value = "/todayProfile")
     public String todayProfile(Model model, User user, Auth auth) {
 
-        System.out.println(">>>>loginForm");
+        System.out.println(">>>>todayProfile");
         User userInfo = userService.selectUser(auth.getId());
         String ids = userInfo.getTodayProfileId();
         String todayIds[] = ids.split(",");
 
+        System.out.println();
         List<User> dataList = new ArrayList<>();
-//        for (String item3: todayIds) {
-//            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
-//            dataList.add(userInfo2);
-//        }
+        for (String item3: todayIds) {
+            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
+            dataList.add(userInfo2);
+        }
+        model.addAttribute("dataList", dataList);
 //        for (User item4: dataList) {
 //            System.out.println("item4" + item4.getId());
 //            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
