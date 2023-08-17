@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 public class SpringMvcConfiguration implements WebMvcConfigurer {
 
-    private @Value("${file.root.path") String fileRootPath;
+    private @Value("${file.root.path}") String fileRootPath;
     private @Value("${deploy}") String deploy;
     /**
      * User argumentResolvers
@@ -61,7 +61,10 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
         System.out.println("deploy" + deploy);
         if("local".equals(deploy)) {
 //            registry.addResourceHandler("/**").addResourceLocations("file:///" + fileRootPath + "/");
-            registry.addResourceHandler("/datasdfsadfadsf/**").addResourceLocations("file:///" + fileRootPath + "/data/");
+            System.out.println("fileRootPath" + fileRootPath);
+//            registry.addResourceHandler("/files/**").addResourceLocations("file:///" + fileRootPath + "/files/"); //data 말고 다른 이름으로 해줘도 된다.
+            registry.addResourceHandler("/data/**").addResourceLocations("file:///" + "D:/data/selfProject/"); //data 말고 다른 이름으로 해줘도 된다.
+            //나중에 실서버에 올릴 때 data로 만들어주면 될 것 같다.
         }
     }
 

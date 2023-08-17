@@ -75,7 +75,10 @@
                             <div class="card-body p-5">
                                 <div class="small text-uppercase fw-bold text-muted">Free</div>
                                 <div class="mb-3">
-                                    <img class="card-img-top" src="\files\3a27f8c6-b447-408f-9a47-0df21f8f570e_ㅋㅊㅍq.jpg" alt="..." />
+                                    <img class="card-img-top" src="${item.filepath}${item.systemFilename}" alt="..." />
+<%--                                    <img class="card-img-top" src="${`\files\ + item.systemFilename`}" alt="..." />--%>
+<%--                                    <img class="card-img-top" src="${item.systemFilename}" alt="..." />--%>
+<%--                                    <img class="card-img-top" src="`\files\${item.systemFilename}`" alt="..." />--%>
 
                                 </div>
                                 <ul class="list-unstyled mb-4">

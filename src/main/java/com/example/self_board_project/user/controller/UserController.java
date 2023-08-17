@@ -82,7 +82,7 @@ public class UserController {
 //            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
 //            dataList.add(userInfo2);
 //        }
-
+ 
 
         return "user/todayProfile";
     }

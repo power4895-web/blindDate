@@ -25,4 +25,5 @@ public class User {
 //  file
     private String bossType;
     private String filepath;
+    private String systemFilename;
 }
