@@ -13,6 +13,7 @@ public class FileInfo {
     private String filepath;
     private String originalFilename;
     private String systemFilename;
+    private String uploadResourcePath;
     private String division;
     private String bossType;
     private Date createDate;
