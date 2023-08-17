@@ -281,7 +281,7 @@
             // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
             success: function (data) { // 결과 성공 콜백함수
                 console.log("data", data);
-                // document.location.href = '/'
+                document.location.href = '/'
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
@@ -314,7 +314,7 @@
             success : function(data) { // 결과 성공 콜백함수
                 console.log("data", data);
                 saveFile(data, "user");
-                document.location.href = '/'
+                // document.location.href = '/'
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)

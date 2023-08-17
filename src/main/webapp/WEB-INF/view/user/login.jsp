@@ -72,13 +72,13 @@
                     <div class="col-lg-8 col-xl-6">
                         <!-- Name input-->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="loginId" name="loginId" type="text" placeholder="Enter your loginId..." data-sb-validations="required" />
+                            <input class="form-control" id="loginId" name="loginId" value="power4895" type="text" placeholder="Enter your loginId..." data-sb-validations="required" />
                             <label for="loginId">아이디</label>
                             <div class="invalid-feedback" data-sb-feedback="realName:required">A loginId is required.</div>
                         </div>
                         <!-- Name input-->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="password" name="password" type="password" placeholder="Enter your name..." data-sb-validations="required" />
+                            <input class="form-control" id="password" name="password" value="1234" type="password" placeholder="Enter your name..." data-sb-validations="required" />
                             <label for="password">비밀번호</label>
                             <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
                         </div>

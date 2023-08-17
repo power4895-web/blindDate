@@ -17,6 +17,7 @@ import java.util.List;
 public class SpringMvcConfiguration implements WebMvcConfigurer {
 
     private @Value("${file.root.path}") String fileRootPath;
+    private @Value("${upload.resource.path}") String uploadResourcePath;
     private @Value("${deploy}") String deploy;
     /**
      * User argumentResolvers
@@ -56,15 +57,9 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-//		registry.addResourceHandler("/favicon.ico").addResourceLocations("/static/favicon.ico");
-        System.out.println("deploy" + deploy);
+//        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
         if("local".equals(deploy)) {
-//            registry.addResourceHandler("/**").addResourceLocations("file:///" + fileRootPath + "/");
-            System.out.println("fileRootPath" + fileRootPath);
-//            registry.addResourceHandler("/files/**").addResourceLocations("file:///" + fileRootPath + "/files/"); //data 말고 다른 이름으로 해줘도 된다.
-            registry.addResourceHandler("/data/**").addResourceLocations("file:///" + "D:/data/selfProject/"); //data 말고 다른 이름으로 해줘도 된다.
-            //나중에 실서버에 올릴 때 data로 만들어주면 될 것 같다.
+            registry.addResourceHandler( uploadResourcePath + "**").addResourceLocations("file:///" + fileRootPath); //data 말고 다른 이름으로 해줘도 된다.
         }
     }
 
