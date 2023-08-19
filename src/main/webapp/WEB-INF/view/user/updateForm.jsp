@@ -141,27 +141,41 @@
                             <div class="form-floating mb-3">
                                 <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple" />
                             </div>
+<%--                            <p id="fileList"></p>--%>
 
                             <section class="py-5">
-                                <div class="container px-5 my-5">
-                                    <div class="row gx-5 align-items-center">
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
+                                <c:forEach var="item" begin="1" end="3" step="1">
+                                    <div class="container px-5 my-5">
+                                        <div class="row gx-5 align-items-center">
+                                            <div class="col-lg-6 order-first order-lg-last">
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}" />
+                                                <span id="deleteBtn${item}"></span>
+                                            </div>
+                                                <%--                                            <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="container px-5 my-5">
-                                    <div class="row gx-5 align-items-center">
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                    </div>
-                                </div>
-                                <div class="container px-5 my-5">
-                                    <div class="row gx-5 align-items-center">
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </section>
+<%--                            <section class="py-5">--%>
+<%--                                <div class="container px-5 my-5">--%>
+<%--                                    <div class="row gx-5 align-items-center">--%>
+<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
+<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <div class="container px-5 my-5">--%>
+<%--                                    <div class="row gx-5 align-items-center">--%>
+<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
+<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <div class="container px-5 my-5">--%>
+<%--                                    <div class="row gx-5 align-items-center">--%>
+<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
+<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </section>--%>
 
                             <div class="d-none" id="submitSuccessMessage">
                             </div>
@@ -171,32 +185,34 @@
                             <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="register()" type="submit">가입</button></div>
                         </div>
 
-                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            </div>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img class="d-block w-100" src="https://source.unsplash.com/user/erondu/1600x900" alt="..." />
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="https://source.unsplash.com/collection/190727/1600x900" alt="..." />
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block w-100" src="https://source.unsplash.com/WLUHO9A_xik/1600x900" alt="..." />
-                                </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
+
+<%--                        슬라이드--%>
+<%--                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">--%>
+<%--                            <div class="carousel-indicators">--%>
+<%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>--%>
+<%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>--%>
+<%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>--%>
+<%--                            </div>--%>
+<%--                            <div class="carousel-inner">--%>
+<%--                                <div class="carousel-item active">--%>
+<%--                                    <img class="d-block w-100" src="https://source.unsplash.com/user/erondu/1600x900" alt="..." />--%>
+<%--                                </div>--%>
+<%--                                <div class="carousel-item">--%>
+<%--                                    <img class="d-block w-100" src="https://source.unsplash.com/collection/190727/1600x900" alt="..." />--%>
+<%--                                </div>--%>
+<%--                                <div class="carousel-item">--%>
+<%--                                    <img class="d-block w-100" src="https://source.unsplash.com/WLUHO9A_xik/1600x900" alt="..." />--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">--%>
+<%--                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>--%>
+<%--                                <span class="visually-hidden">Previous</span>--%>
+<%--                            </button>--%>
+<%--                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">--%>
+<%--                                <span class="carousel-control-next-icon" aria-hidden="true"></span>--%>
+<%--                                <span class="visually-hidden">Next</span>--%>
+<%--                            </button>--%>
+<%--                        </div>--%>
                     </div>
                 </div>
             </div>
@@ -232,9 +248,39 @@
 </html>
 <script>
 
+    var fileNum = 0;  //추가하고자 하는 파일개수
+    var reviewFileCount = 0;	//등록된 수급자 파일개수
+    var fileName = $(".fileName");
+    var liSize = 0; //현재 등록된 파일 개수를 담을 변수
+    var totalFileSize;  //추가한 파일과 업로드 되어있는 파일개수
+
+
     $(document).ready(function(){
         $(document).on("change", "#file", function(e) {
+//     	console.log("현재 업로드 되어있는 파일개수", liSize)
             var files = e.target.files;
+            if(files.length > 6) {
+//     		console.log("한번에 올리실수 있는 파일은 5개까지");
+                alert("파일은 6개까지 올릴 수 있습니다.")
+                fileNum = 0;
+                return;
+            }else{
+                fileNum += files.length; //선택한 파일 개수    6
+//     		console.log("현재 추가한 파일 개수fileNum", fileNum);
+//     		console.log("현재 업로드되어있는 파일개수", liSize);
+
+                totalFileSize = liSize + fileNum;
+//     		console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
+                if(totalFileSize > 6){
+                    fileNum -= files.length;
+//     			console.log("최종적으로 남은 선택한 파일 개수: ", fileNum);
+//     			console.log("원래 파일업로드된 파일과 추가한 파일을 더한결과 5개가 넘습니다.")
+                    totalFileSize = 6;  //5가 넘었을 경우 토탈카운트 다시 5로 맞춰준다.
+                    alert("파일은 6개까지 올릴 수 있습니다.")
+                    return;
+                }
+            }
+
             if(files.length > 0) {
                 addFiles(e);
             }
@@ -247,8 +293,24 @@
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var filesArrLen = filesArr.length;
+
+        var filesTempArrLen = filesTempArr.length;
+        var reader = new FileReader();
+        var img = "";
+
         for( var i=0; i<filesArrLen; i++ ) {
+            var tempFileName = filesArr[i].name;
             filesTempArr.push(filesArr[i]);
+            img = URL.createObjectURL(filesArr[i]);
+
+            <%--$('#fileList').append("<div><img src='' title='${'"+tempFileName+"'}' style='width: 100PX; height: 100PX;' ></div><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' class='btn btnR ss 'style='margin:auto; display:block;'>삭제</button>");--%>
+            var hello = "fileList" + filesTempArr.length
+            var hello2 = "deleteBtn" + filesTempArr.length
+            console.log("hello", hello)
+            $("#" + hello2 ).append("<div>삭제</button>");
+            $("#" + hello ).attr("src", img);
+            // $("#fileList img:last").attr("src", img);
+
         }
         console.log("filesTempArr" , filesTempArr)
     }
