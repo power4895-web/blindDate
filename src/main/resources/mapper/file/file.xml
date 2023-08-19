@@ -35,6 +35,8 @@
             , system_filename
             , original_filename
             , filepath
+            , image_name
+            , flag
             , create_date
         )Value(
             #{division}
@@ -42,6 +44,8 @@
             , #{systemFilename}
             , #{originalFilename}
             , #{filepath}
+            , #{imageName}
+            , #{flag}
             , NOW()
         )
     </insert>

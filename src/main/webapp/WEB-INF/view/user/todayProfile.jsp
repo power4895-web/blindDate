@@ -74,7 +74,7 @@
                         <div class="card mb-5 mb-xl-0">
                             <div class="card-body p-5">
                                 <div class="mb-3">
-                                    <img class="card-img-top" src="${item.filepath}${item.systemFilename}" alt="..." />
+                                    <img class="card-img-top" src="${item.filepath}${item.imageName}" alt="..." />
                                 </div>
                                 <div class="small text-uppercase fw-bold text-muted">Free</div>
                                 <ul class="list-unstyled mb-4">

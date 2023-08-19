@@ -28,8 +28,8 @@ public class UserService {
 
         return userMapper.selectUserRandomList(user);
     }
-    public User selectUser(int id) {
-        return userMapper.selectUser(id);
+    public User selectUser(User user) {
+        return userMapper.selectUser(user);
     }
     public void insertUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));

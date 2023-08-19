@@ -24,6 +24,8 @@ public class User {
 
 //  file
     private String bossType;
+    private String imageName;
+    private String flag;
     private String filepath;
     private String systemFilename;
 }

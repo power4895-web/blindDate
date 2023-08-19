@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserMapper {
     public List<User> selectUserList();
     public List<User> selectUserRandomList(User user);
-    public User selectUser(int id);
+    public User selectUser(User user);
 
     public void insertUser(User user);
     public void updateUser(User user);

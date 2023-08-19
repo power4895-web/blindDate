@@ -39,7 +39,14 @@
         SELECT *
         FROM user t1
         join file t2 on t1.id = t2.ref_id
-        WHERE t1.id = #{id} and t2.boss_type = 'Y'
+        WHERE t1.id = #{id}
+        <if test="bossType != null and bossType != ''">
+            AND t2.boss_type = 'Y'
+        </if>
+        <if test="flag != null and flag != ''">
+            AND t2.flag = 'S'
+        </if>
+
     </select>
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
         /** insertUser **/

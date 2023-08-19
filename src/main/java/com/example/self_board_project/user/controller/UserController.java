@@ -46,7 +46,9 @@ public class UserController {
     @RequestMapping(value = "/updateForm/{id}", method = RequestMethod.GET)
     public String updateForm(Model model, @PathVariable int id) {
         System.out.println("id" + id);
-        User userInfo = userService.selectUser(id);
+        User user = new User();
+        user.setId(id);
+        User userInfo = userService.selectUser(user);
         model.addAttribute("userInfo", userInfo);
         return "user/updateForm";
     }
@@ -63,17 +65,24 @@ public class UserController {
         return "user/login";
     }
     @RequestMapping(value = "/todayProfile")
-    public String todayProfile(Model model, User user, Auth auth) {
+    public String todayProfile(Model model, Auth auth) {
 
         System.out.println(">>>>todayProfile");
-        User userInfo = userService.selectUser(auth.getId());
+        User user = new User();
+        user.setId(auth.getId());
+        User userInfo = userService.selectUser(user);
         String ids = userInfo.getTodayProfileId();
         String todayIds[] = ids.split(",");
 
-        System.out.println();
         List<User> dataList = new ArrayList<>();
         for (String item3: todayIds) {
-            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
+            System.out.println(">>>>" + item3);
+            User todayUser = new User();
+            todayUser.setId(Integer.parseInt(item3));
+            todayUser.setBossType("B");
+            todayUser.setFlag("S");
+
+            User userInfo2 = userService.selectUser(todayUser);
             dataList.add(userInfo2);
         }
         model.addAttribute("dataList", dataList);

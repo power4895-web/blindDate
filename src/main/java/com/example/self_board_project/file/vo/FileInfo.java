@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -17,4 +19,7 @@ public class FileInfo {
     private String division;
     private String bossType;
     private Date createDate;
+    private String imageName;
+    private String flag;
+    private List<Map<String,Object>> imageList;
 }
