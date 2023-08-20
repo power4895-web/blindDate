@@ -142,24 +142,18 @@
                             </div>
 
                             <section class="py-5">
-                                <div class="container px-5 my-5">
-                                    <div class="row gx-5 align-items-center">
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
+                                <c:forEach var="item" begin="1" end="3" step="1">
+                                    <div class="container px-5 my-5">
+                                        <div class="row gx-5 align-items-center">
+                                            <div class="col-lg-6 order-first order-lg-last">
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_1" />
+                                            </div>
+                                            <div class="col-lg-6 order-first order-lg-last">
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_2" />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="container px-5 my-5">
-                                    <div class="row gx-5 align-items-center">
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                    </div>
-                                </div>
-                                <div class="container px-5 my-5">
-                                    <div class="row gx-5 align-items-center">
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </section>
 
 
@@ -238,13 +232,40 @@
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <%--<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>--%>
-</body>
-</html>
 <script>
 
+
+    var fileNum = 0;  //추가하고자 하는 파일개수
+    var reviewFileCount = 0;	//등록된 수급자 파일개수
+    var fileName = $(".fileName");
+    var liSize = 0; //현재 등록된 파일 개수를 담을 변수
+    var totalFileSize;  //추가한 파일과 업로드 되어있는 파일개수
     $(document).ready(function(){
         $(document).on("change", "#file", function(e) {
+
+//     	console.log("현재 업로드 되어있는 파일개수", liSize)
             var files = e.target.files;
+            if(files.length > 6) {
+//     		console.log("한번에 올리실수 있는 파일은 5개까지");
+                alert("파일은 6개까지 올릴 수 있습니다.")
+                fileNum = 0;
+                return;
+            }else{
+                fileNum += files.length; //선택한 파일 개수    6
+//     		console.log("현재 추가한 파일 개수fileNum", fileNum);
+//     		console.log("현재 업로드되어있는 파일개수", liSize);
+
+                totalFileSize = liSize + fileNum;
+//     		console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
+                if(totalFileSize > 6){
+                    fileNum -= files.length;
+//     			console.log("최종적으로 남은 선택한 파일 개수: ", fileNum);
+//     			console.log("원래 파일업로드된 파일과 추가한 파일을 더한결과 5개가 넘습니다.")
+                    totalFileSize = 6;  //5가 넘었을 경우 토탈카운트 다시 5로 맞춰준다.
+                    alert("파일은 6개까지 올릴 수 있습니다.")
+                    return;
+                }
+            }
             if(files.length > 0) {
                 addFiles(e);
             }
@@ -257,14 +278,111 @@
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var filesArrLen = filesArr.length;
+
+        var filesTempArrLen = filesTempArr.length;
+        var reader = new FileReader();
+        var img = "";
+
         for( var i=0; i<filesArrLen; i++ ) {
+            var tempFileName = filesArr[i].name;
             filesTempArr.push(filesArr[i]);
+            img = URL.createObjectURL(filesArr[i]);
+            if(filesTempArr.length == 1) {
+                var hello = "fileList" + filesTempArr.length + '_' + 1;
+                var hello2 = "deleteBtn" + filesTempArr.length + '_' + 1;
+            }
+            if(filesTempArr.length == 2) {
+                var hello = "fileList" + (filesTempArr.length -1) + '_' + 2;
+                var hello2 = "deleteBtn" + (filesTempArr.length -1) + '_' + 2;
+            }
+            if(filesTempArr.length == 3) {
+                var hello = "fileList" + (filesTempArr.length -1) + '_' + 1;
+                var hello2 = "deleteBtn" + (filesTempArr.length -1) + '_' + 1;
+            }
+            if(filesTempArr.length == 4) {
+                var hello = "fileList" + (filesTempArr.length -2) + '_' + 2;
+                var hello2 = "deleteBtn" + (filesTempArr.length -2) + '_' + 2;
+            }
+            if(filesTempArr.length == 5) {
+                var hello = "fileList" + (filesTempArr.length -2) + '_' + 1;
+                var hello2 = "deleteBtn" + (filesTempArr.length -2) + '_' + 1;
+            }
+            if(filesTempArr.length == 6) {
+                var hello = "fileList" + (filesTempArr.length -3) + '_' + 2;
+                var hello2 = "deleteBtn" + (filesTempArr.length -3) + '_' + 2;
+            }
+            console.log("hello : ", hello)
+            console.log("hello2 : ", hello2)
+            $("#" + hello ).attr("src", img);
+            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button></span> ");
+            // $("#" + hello2 ).append("<button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button>");
+
         }
         console.log("filesTempArr" , filesTempArr)
     }
 
+    //파일 삭제
+    var deleteFile = function (self, orderParam) {
+        if(confirm("이미지를 삭제하시겠습니까?") == false) { return false ;}
+
+        console.log("deleteFile")
+
+        for(let i=1; i<7; i++) {
+            for(let j=1; j<3; j++) {
+                $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d');
+                $('#deleteBtn' + i + '_' + j).remove();
+            }
+        }
+        console.log("orderParam", orderParam)
+        filesTempArr.splice(orderParam, 1);
+
+        var filesTempArrLen = filesTempArr.length;
+        var img = "";
+
+        console.log(">>>>filesTempArrLen" , filesTempArrLen);
+
+        for( var i=0; i<filesTempArrLen; i++ ) {
+            img = URL.createObjectURL(filesTempArr[i]);
+
+            if(i == 0 ) {
+                var hello = "fileList1_1";
+                var hello2 = "deleteBtn1_1";
+            }
+            if(i == 1) {
+                var hello = "fileList1_2";
+                var hello2 = "deleteBtn1_2";
+            }
+            if(i ==  2) {
+                var hello = "fileList2_1";
+                var hello2 = "deleteBtn2_1";
+            }
+            if(i == 3) {
+                var hello = "fileList2_2";
+                var hello2 = "deleteBtn2_2";
+            }
+            if(i == 4) {
+                var hello = "fileList3_1";
+                var hello2 = "deleteBtn3_1";
+            }
+            if(i == 5) {
+                var hello = "fileList3_2";
+                var hello2 = "deleteBtn3_2";
+            }
+            console.log("hello : ", hello)
+            console.log("hello2 : ", hello2)
+
+            $("#" + hello ).attr("src", img);
+            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + i +")' style='margin:auto; display:block;'>삭제</button></span> ");
+        }
+        fileNum--;  //현재 파일업로드 하려고 하는 개수
+        console.log("fileNum", fileNum);
+        totalFileSize--; //총 파일개수
+        console.log("총 파일개수 totalFileSize : ", totalFileSize)
+    }
+
+
+
     function saveFile(id, field) {
-        console.log("savefile", filesTempArr.length)
         let formData = new FormData();
 
         for(let i=0, filesTempArrLen = filesTempArr.length; i < filesTempArrLen; i++) {
@@ -291,13 +409,20 @@
     }
 
 
+
+
     function register() {
+        if(filesTempArr.length == 0) {
+            alert("파일을 한개이상 등록하세요.")
+            return;
+        }
+
         var frm = $("#frm").serializeObject();
         console.log("frm.realName : ", frm.realName)
         let params =  {
             "realName" : frm.realName,
             "password" : frm.password,
-             "gender" : frm.gender,
+            "gender" : frm.gender,
             "loginId" : frm.loginId,
             "phoneNumber" : frm.phoneNumber,
             "age" : frm.age,
@@ -319,7 +444,12 @@
             error : function(request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
             }
+
         });
     }
 
+
+
 </script>
+</body>
+</html>

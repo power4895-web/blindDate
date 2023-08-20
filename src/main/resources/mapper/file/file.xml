@@ -22,9 +22,15 @@
         SELECT
             *
         FROM file t1
-        JOIN user t2 ON t1.user_id = t2.id
-        ORDER BY t1.id DESC
-        LIMIT #{rowStart}, #{rowSize}
+        JOIN user t2 ON t1.ref_id = t2.id
+        WHERE t1.ref_id = #{refId}
+        <if test="bossType != null and bossType != ''">
+            AND t1.boss_type = #{bossType}
+        </if>
+        <if test="flag != null and flag != ''">
+            AND t1.flag = #{flag}
+        </if>
+
     </select>
 
 

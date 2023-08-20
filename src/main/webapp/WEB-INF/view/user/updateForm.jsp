@@ -144,17 +144,31 @@
 <%--                            <p id="fileList"></p>--%>
 
                             <section class="py-5">
-                                <c:forEach var="item" begin="1" end="3" step="1">
+                                <c:forEach var="item" items="${fileList}" varStatus="status">
                                     <div class="container px-5 my-5">
+                                            ${status.count}
+                                            ${status.index}
                                         <div class="row gx-5 align-items-center">
                                             <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}" />
-                                                <span id="deleteBtn${item}"></span>
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="${item.filepath}${item.imageName}" alt="..." id="fileList${status.count}" />
+                                                <span id="deleteBtn${status.count}"></span>
                                             </div>
-                                                <%--                                            <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
                                         </div>
                                     </div>
                                 </c:forEach>
+<%--                                <c:forEach var="item" begin="1" end="3" step="1">--%>
+<%--                                    <div class="container px-5 my-5">--%>
+<%--                                        <div class="row gx-5 align-items-center">--%>
+<%--                                            <div class="col-lg-6 order-first order-lg-last">--%>
+<%--                                                <c:if test="${fileList.size > 0}">--%>
+<%--                                                    <img class="img-fluid rounded mb-5 mb-lg-0" src="${fileList[item-0].filepath}${fileList[item-0].imageName}" alt="..." id="fileList${item}" />--%>
+<%--                                                </c:if>--%>
+<%--                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}" />--%>
+<%--                                                <span id="deleteBtn${item}"></span>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </c:forEach>--%>
                             </section>
 <%--                            <section class="py-5">--%>
 <%--                                <div class="container px-5 my-5">--%>
@@ -256,6 +270,7 @@
 
 
     $(document).ready(function(){
+
         $(document).on("change", "#file", function(e) {
 //     	console.log("현재 업로드 되어있는 파일개수", liSize)
             var files = e.target.files;

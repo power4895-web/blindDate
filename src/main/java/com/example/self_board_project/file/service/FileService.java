@@ -24,6 +24,11 @@ public class FileService {
     private @Value("${upload.resource.path}") String uploadResourcePath;
     @Autowired
     FileMapper fileMapper;
+
+    public List<FileInfo> selectFileList(FileInfo fileInfo) {
+        System.out.println("selectFileList");
+        return fileMapper.selectFileList(fileInfo);
+    }
     public void insertFile(FileInfo fileInfo, List<MultipartFile> files)throws Exception {
         List< FileInfo> list = new ArrayList< FileInfo>();
         String currentDate = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());

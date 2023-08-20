@@ -2,6 +2,8 @@ package com.example.self_board_project.user.controller;
 
 
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.file.service.FileService;
+import com.example.self_board_project.file.vo.FileInfo;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private FileService fileService;
     @RequestMapping(value = "/user/list")
     public String userList(Model model) {
         System.out.println(">>>>list");
@@ -49,7 +53,15 @@ public class UserController {
         User user = new User();
         user.setId(id);
         User userInfo = userService.selectUser(user);
+        System.out.println("userInfo");
+
+        FileInfo fileInfo = new FileInfo();
+        fileInfo.setBossType("Y");
+        fileInfo.setRefId(id);
+        fileInfo.setFlag("S");
+        List<FileInfo> fileList = fileService.selectFileList(fileInfo);
         model.addAttribute("userInfo", userInfo);
+        model.addAttribute("fileList", fileList);
         return "user/updateForm";
     }
 
