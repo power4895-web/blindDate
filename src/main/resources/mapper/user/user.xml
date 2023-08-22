@@ -68,6 +68,24 @@
                , now())
     </insert>
 
+
+    <update id="updateUser">
+        UPDATE user
+        SET login_id = #{loginId},
+            password = #{password},
+            nickname= #{nickname},
+            real_name= #{realName},
+            age= #{age},
+            gender= #{gender},
+            email= #{email},
+            phone_number= #{phoneNumber},
+            introduce= #{introduce},
+            today_profile_id= #{todayProfileId},
+            update_date= now()
+        WHERE id = #{id}
+
+
+    </update>
     <update id="updateTodayProfileId">
         UPDATE user
         SET today_profile_id = #{todayProfileId}

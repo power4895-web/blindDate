@@ -116,55 +116,37 @@
                         </div>
                     </div>
                 </c:forEach>
-                <!-- Pricing card pro-->
-                <%--                <div class="col-lg-6 col-xl-4">--%>
-                <%--                    <div class="card mb-5 mb-xl-0">--%>
-                <%--                        <div class="card-body p-5">--%>
-                <%--                            <div class="small text-uppercase fw-bold">--%>
-                <%--                                <i class="bi bi-star-fill text-warning"></i>--%>
-                <%--                                Pro--%>
+
+
+
+                <%--                        슬라이드--%>
+                <%--                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">--%>
+                <%--                            <div class="carousel-indicators">--%>
+                <%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>--%>
+                <%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>--%>
+                <%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>--%>
                 <%--                            </div>--%>
-                <%--                            <div class="mb-3">--%>
-                <%--                                <img class="card-img-top" src="/static/files/민지.jpg" alt="..." />--%>
+                <%--                            <div class="carousel-inner">--%>
+                <%--                                <div class="carousel-item active">--%>
+                <%--                                    <img class="d-block w-100" src="https://source.unsplash.com/user/erondu/1600x900" alt="..." />--%>
+                <%--                                </div>--%>
+                <%--                                <div class="carousel-item">--%>
+                <%--                                    <img class="d-block w-100" src="https://source.unsplash.com/collection/190727/1600x900" alt="..." />--%>
+                <%--                                </div>--%>
+                <%--                                <div class="carousel-item">--%>
+                <%--                                    <img class="d-block w-100" src="https://source.unsplash.com/WLUHO9A_xik/1600x900" alt="..." />--%>
+                <%--                                </div>--%>
                 <%--                            </div>--%>
-                <%--                            <ul class="list-unstyled mb-4">--%>
-                <%--                                <li class="mb-2">--%>
-                <%--                                    <i class="bi bi-check text-primary"></i>--%>
-                <%--                                    <strong>5 users</strong>--%>
-                <%--                                </li>--%>
-                <%--                                <li class="mb-2">--%>
-                <%--                                    <i class="bi bi-check text-primary"></i>--%>
-                <%--                                    5GB storage--%>
-                <%--                                </li>--%>
-                <%--                                <li class="mb-2">--%>
-                <%--                                    <i class="bi bi-check text-primary"></i>--%>
-                <%--                                    Unlimited public projects--%>
-                <%--                                </li>--%>
-                <%--                                <li class="mb-2">--%>
-                <%--                                    <i class="bi bi-check text-primary"></i>--%>
-                <%--                                    Community access--%>
-                <%--                                </li>--%>
-                <%--                                <li class="mb-2">--%>
-                <%--                                    <i class="bi bi-check text-primary"></i>--%>
-                <%--                                    Unlimited private projects--%>
-                <%--                                </li>--%>
-                <%--                                <li class="mb-2">--%>
-                <%--                                    <i class="bi bi-check text-primary"></i>--%>
-                <%--                                    Dedicated support--%>
-                <%--                                </li>--%>
-                <%--                                <li class="mb-2">--%>
-                <%--                                    <i class="bi bi-check text-primary"></i>--%>
-                <%--                                    Free linked domain--%>
-                <%--                                </li>--%>
-                <%--                                <li class="text-muted">--%>
-                <%--                                    <i class="bi bi-x"></i>--%>
-                <%--                                    Monthly status reports--%>
-                <%--                                </li>--%>
-                <%--                            </ul>--%>
-                <%--                            <div class="d-grid"><a class="btn btn-outline-primary" href="#!">Choose plan</a></div>--%>
+                <%--                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">--%>
+                <%--                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>--%>
+                <%--                                <span class="visually-hidden">Previous</span>--%>
+                <%--                            </button>--%>
+                <%--                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">--%>
+                <%--                                <span class="carousel-control-next-icon" aria-hidden="true"></span>--%>
+                <%--                                <span class="visually-hidden">Next</span>--%>
+                <%--                            </button>--%>
                 <%--                        </div>--%>
-                <%--                    </div>--%>
-                <%--                </div>--%>
+
             </div>
         </div>
         </div>

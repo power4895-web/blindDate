@@ -9,13 +9,12 @@
             count(1)
         FROM file t1
     </select>
-    <select id="selectBoard" resultType="com.example.self_board_project.file.vo.FileInfo">
-        /** selectFileList **/
+    <select id="selectFile" resultType="com.example.self_board_project.file.vo.FileInfo">
+        /** selectFile **/
         SELECT
             *
         FROM file t1
-        JOIN user t2 ON t1.user_id = t2.id
-        WHERE t1.id = #{id}
+        WHERE id = #{id}
     </select>
     <select id="selectFileList" resultType="com.example.self_board_project.file.vo.FileInfo">
         /** selectFileList **/

@@ -36,6 +36,7 @@ public class UserService {
         userMapper.insertUser(user);
     }
     public void updateUser(User user) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.updateUser(user);
     }
     public void updateTodayProfileId(User user) {

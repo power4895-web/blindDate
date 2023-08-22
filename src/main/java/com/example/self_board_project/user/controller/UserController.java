@@ -56,7 +56,7 @@ public class UserController {
         System.out.println("userInfo");
 
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setBossType("Y");
+//        fileInfo.setBossType("Y");
         fileInfo.setRefId(id);
         fileInfo.setFlag("S");
         List<FileInfo> fileList = fileService.selectFileList(fileInfo);
@@ -70,6 +70,12 @@ public class UserController {
     public Integer userRegister(Model model, User user) {
        userService.insertUser(user);
        return user.getId();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public boolean userUpdate(Model model, User user) {
+       userService.updateUser(user);
+       return true;
     }
     @RequestMapping(value = "/login")
     public String userLoginForm(Model model, User user) {

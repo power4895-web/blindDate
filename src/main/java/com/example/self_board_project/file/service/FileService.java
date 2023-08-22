@@ -25,6 +25,16 @@ public class FileService {
     @Autowired
     FileMapper fileMapper;
 
+    /**
+     * 파일 조회
+     * @param id
+     * @return
+     */
+    public FileInfo selectFile(String id) {
+        return fileMapper.selectFile(id);
+    }
+
+
     public List<FileInfo> selectFileList(FileInfo fileInfo) {
         System.out.println("selectFileList");
         return fileMapper.selectFileList(fileInfo);
@@ -122,6 +132,25 @@ public class FileService {
         fileInfo.setFilepath("/files" + projectPath);
         fileMapper.insertFile(fileInfo);
 
+    }
+
+
+    /**
+     * 파일 삭제
+     * @param id
+     * @return
+     */
+    public boolean deleteFile(String id) {
+        FileInfo fileInfo = selectFile(id);
+
+        if (fileInfo == null) return false;
+
+        fileMapper.deleteFile(id);
+        File f = new File(fileInfo.getFilepath() + fileInfo.getImageName());
+
+        if(f.exists()) f.delete();
+
+        return true;
     }
 
 

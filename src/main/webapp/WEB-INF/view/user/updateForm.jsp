@@ -73,14 +73,8 @@
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- * * SB Forms Contact Form * *-->
-                        <!-- * * * * * * * * * * * * * * *-->
-                        <!-- This form is pre-integrated with SB Forms.-->
-                        <!-- To make this form functional, sign up at-->
-                        <!-- https://startbootstrap.com/solution/contact-forms-->
-                        <!-- to get an API token!-->
                         <form action="/register" name="frm" id="frm" data-sb-form-api-token="API_TOKEN">
+                            <input type="hidden" id="id" name="id" value="${userInfo.id}">
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
@@ -144,89 +138,29 @@
 <%--                            <p id="fileList"></p>--%>
 
                             <section class="py-5">
-                                <c:forEach var="item" items="${fileList}" varStatus="status">
+
+
+                                <c:forEach var="item" begin="1" end="3" step="1">
                                     <div class="container px-5 my-5">
-                                            ${status.count}
-                                            ${status.index}
                                         <div class="row gx-5 align-items-center">
                                             <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="${item.filepath}${item.imageName}" alt="..." id="fileList${status.count}" />
-                                                <span id="deleteBtn${status.count}"></span>
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_1" />
+                                            </div>
+                                            <div class="col-lg-6 order-first order-lg-last">
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_2" />
                                             </div>
                                         </div>
                                     </div>
                                 </c:forEach>
-<%--                                <c:forEach var="item" begin="1" end="3" step="1">--%>
-<%--                                    <div class="container px-5 my-5">--%>
-<%--                                        <div class="row gx-5 align-items-center">--%>
-<%--                                            <div class="col-lg-6 order-first order-lg-last">--%>
-<%--                                                <c:if test="${fileList.size > 0}">--%>
-<%--                                                    <img class="img-fluid rounded mb-5 mb-lg-0" src="${fileList[item-0].filepath}${fileList[item-0].imageName}" alt="..." id="fileList${item}" />--%>
-<%--                                                </c:if>--%>
-<%--                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}" />--%>
-<%--                                                <span id="deleteBtn${item}"></span>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </c:forEach>--%>
                             </section>
-<%--                            <section class="py-5">--%>
-<%--                                <div class="container px-5 my-5">--%>
-<%--                                    <div class="row gx-5 align-items-center">--%>
-<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
-<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                                <div class="container px-5 my-5">--%>
-<%--                                    <div class="row gx-5 align-items-center">--%>
-<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
-<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                                <div class="container px-5 my-5">--%>
-<%--                                    <div class="row gx-5 align-items-center">--%>
-<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
-<%--                                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." /></div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </section>--%>
-
                             <div class="d-none" id="submitSuccessMessage">
                             </div>
                             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                         </form>
                         <div class="d-grid">
-                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="register()" type="submit">가입</button></div>
+                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="update()" type="submit">수정</button></div>
                         </div>
 
-
-<%--                        슬라이드--%>
-<%--                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">--%>
-<%--                            <div class="carousel-indicators">--%>
-<%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>--%>
-<%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>--%>
-<%--                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>--%>
-<%--                            </div>--%>
-<%--                            <div class="carousel-inner">--%>
-<%--                                <div class="carousel-item active">--%>
-<%--                                    <img class="d-block w-100" src="https://source.unsplash.com/user/erondu/1600x900" alt="..." />--%>
-<%--                                </div>--%>
-<%--                                <div class="carousel-item">--%>
-<%--                                    <img class="d-block w-100" src="https://source.unsplash.com/collection/190727/1600x900" alt="..." />--%>
-<%--                                </div>--%>
-<%--                                <div class="carousel-item">--%>
-<%--                                    <img class="d-block w-100" src="https://source.unsplash.com/WLUHO9A_xik/1600x900" alt="..." />--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">--%>
-<%--                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>--%>
-<%--                                <span class="visually-hidden">Previous</span>--%>
-<%--                            </button>--%>
-<%--                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">--%>
-<%--                                <span class="carousel-control-next-icon" aria-hidden="true"></span>--%>
-<%--                                <span class="visually-hidden">Next</span>--%>
-<%--                            </button>--%>
-<%--                        </div>--%>
                     </div>
                 </div>
             </div>
@@ -249,15 +183,8 @@
         </div>
     </div>
 </footer>
-<!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
 <script src="/static/js/scripts.js"></script>
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-<!-- * *                               SB Forms JS                               * *-->
-<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-<%--<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>--%>
 </body>
 </html>
 <script>
@@ -270,6 +197,7 @@
 
 
     $(document).ready(function(){
+        getFileList();
 
         $(document).on("change", "#file", function(e) {
 //     	console.log("현재 업로드 되어있는 파일개수", liSize)
@@ -303,8 +231,65 @@
         })
     })
 
+    function getFileList() {
+        const id = $('#id').val();
+        $.ajax({
+            type: 'get',
+            url : "/fileUploadList/" + "user" + "/" + id,
+            success: function (data) { // 결과 성공 콜백함수
+                console.log("data", data.length);
+                if(data.length >0) {
+
+                    for(let i=0; i<data.length; i++) {
+                        img = data[i].filepath  + data[i].imageName
+
+                        if(i == 0 ) {
+                            var hello = "fileList1_1";
+                            var hello2 = "deleteBtn1_1";
+                        }
+                        if(i == 1) {
+                            var hello = "fileList1_2";
+                            var hello2 = "deleteBtn1_2";
+                        }
+                        if(i ==  2) {
+                            var hello = "fileList2_1";
+                            var hello2 = "deleteBtn2_1";
+                        }
+                        if(i == 3) {
+                            var hello = "fileList2_2";
+                            var hello2 = "deleteBtn2_2";
+                        }
+                        if(i == 4) {
+                            var hello = "fileList3_1";
+                            var hello2 = "deleteBtn3_1";
+                        }
+                        if(i == 5) {
+                            var hello = "fileList3_2";
+                            var hello2 = "deleteBtn3_2";
+                        }
+                        console.log("hello : ", hello)
+                        console.log("hello2 : ", hello2)
+
+                        $("#" + hello ).attr("src", img);
+                        $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='removeFile($(this), " + data[i].id +")' style='margin:auto; display:block;'>삭제</button></span> ");
+                    }
+                }
+                // document.location.href = '/'
+            },
+            error: function (request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        });
+    }
+
+
+
     var filesTempArr = [];
-    function addFiles(e) {
+    async  function addFiles(e) {
+        var data = await requestSyncPostBodyJson(); // 동기식 요청
+
+        console.log(">>>>>data", data);
+        return;
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var filesArrLen = filesArr.length;
@@ -313,18 +298,41 @@
         var reader = new FileReader();
         var img = "";
 
+
+
         for( var i=0; i<filesArrLen; i++ ) {
             var tempFileName = filesArr[i].name;
             filesTempArr.push(filesArr[i]);
             img = URL.createObjectURL(filesArr[i]);
-
-            <%--$('#fileList').append("<div><img src='' title='${'"+tempFileName+"'}' style='width: 100PX; height: 100PX;' ></div><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' class='btn btnR ss 'style='margin:auto; display:block;'>삭제</button>");--%>
-            var hello = "fileList" + filesTempArr.length
-            var hello2 = "deleteBtn" + filesTempArr.length
-            console.log("hello", hello)
-            $("#" + hello2 ).append("<div>삭제</button>");
+            if(filesTempArr.length == 1) {
+                var hello = "fileList" + filesTempArr.length + '_' + 1;
+                var hello2 = "deleteBtn" + filesTempArr.length + '_' + 1;
+            }
+            if(filesTempArr.length == 2) {
+                var hello = "fileList" + (filesTempArr.length -1) + '_' + 2;
+                var hello2 = "deleteBtn" + (filesTempArr.length -1) + '_' + 2;
+            }
+            if(filesTempArr.length == 3) {
+                var hello = "fileList" + (filesTempArr.length -1) + '_' + 1;
+                var hello2 = "deleteBtn" + (filesTempArr.length -1) + '_' + 1;
+            }
+            if(filesTempArr.length == 4) {
+                var hello = "fileList" + (filesTempArr.length -2) + '_' + 2;
+                var hello2 = "deleteBtn" + (filesTempArr.length -2) + '_' + 2;
+            }
+            if(filesTempArr.length == 5) {
+                var hello = "fileList" + (filesTempArr.length -2) + '_' + 1;
+                var hello2 = "deleteBtn" + (filesTempArr.length -2) + '_' + 1;
+            }
+            if(filesTempArr.length == 6) {
+                var hello = "fileList" + (filesTempArr.length -3) + '_' + 2;
+                var hello2 = "deleteBtn" + (filesTempArr.length -3) + '_' + 2;
+            }
+            console.log("hello : ", hello)
+            console.log("hello2 : ", hello2)
             $("#" + hello ).attr("src", img);
-            // $("#fileList img:last").attr("src", img);
+            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button></span> ");
+            // $("#" + hello2 ).append("<button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button>");
 
         }
         console.log("filesTempArr" , filesTempArr)
@@ -348,7 +356,7 @@
             // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
             success: function (data) { // 결과 성공 콜백함수
                 console.log("data", data);
-                // document.location.href = '/'
+                document.location.href = '/'
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
@@ -358,10 +366,10 @@
     }
 
 
-    function register() {
+    function update() {
         var frm = $("#frm").serializeObject();
-        console.log("frm.realName : ", frm.realName)
         let params =  {
+            "id" : frm.id,
             "realName" : frm.realName,
             "password" : frm.password,
              "gender" : frm.gender,
@@ -375,18 +383,127 @@
         }
         $.ajax({
             type : 'post',
-            url : "/register",
+            url : "/update",
             data : params,
             // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
             success : function(data) { // 결과 성공 콜백함수
-                console.log("data", data);
-                saveFile(data, "user");
-                document.location.href = '/'
+                if(data == true) {
+                    if(filesTempArr.length >0) {
+                        saveFile($('#id').val(), "user");
+                    } else {
+                        document.location.href = '/'
+                    }
+                }
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
             }
         });
     }
+
+    //파일 삭제
+    var deleteFile = function (self, orderParam) {
+        if(confirm("이미지를 삭제하시겠습니까?") == false) { return false ;}
+
+        console.log("deleteFile")
+
+        for(let i=1; i<7; i++) {
+            for(let j=1; j<3; j++) {
+                $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d');
+                $('#deleteBtn' + i + '_' + j).remove();
+            }
+        }
+        console.log("orderParam", orderParam)
+        filesTempArr.splice(orderParam, 1);
+
+        var filesTempArrLen = filesTempArr.length;
+        var img = "";
+
+        console.log(">>>>filesTempArrLen" , filesTempArrLen);
+
+        for( var i=0; i<filesTempArrLen; i++ ) {
+            img = URL.createObjectURL(filesTempArr[i]);
+
+            if(i == 0 ) {
+                var hello = "fileList1_1";
+                var hello2 = "deleteBtn1_1";
+            }
+            if(i == 1) {
+                var hello = "fileList1_2";
+                var hello2 = "deleteBtn1_2";
+            }
+            if(i ==  2) {
+                var hello = "fileList2_1";
+                var hello2 = "deleteBtn2_1";
+            }
+            if(i == 3) {
+                var hello = "fileList2_2";
+                var hello2 = "deleteBtn2_2";
+            }
+            if(i == 4) {
+                var hello = "fileList3_1";
+                var hello2 = "deleteBtn3_1";
+            }
+            if(i == 5) {
+                var hello = "fileList3_2";
+                var hello2 = "deleteBtn3_2";
+            }
+            console.log("hello : ", hello)
+            console.log("hello2 : ", hello2)
+
+            $("#" + hello ).attr("src", img);
+            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + i +")' style='margin:auto; display:block;'>삭제</button></span> ");
+        }
+        fileNum--;  //현재 파일업로드 하려고 하는 개수
+        console.log("fileNum", fileNum);
+        totalFileSize--; //총 파일개수
+        console.log("총 파일개수 totalFileSize : ", totalFileSize)
+    }
+
+    //완전 파일삭제
+    function removeFile(obj, id) {
+        if(confirm("이미지를 삭제하시겠습니까?") == false) {return false;}
+        $.ajax({
+            type:"post",
+            url : "/deleteFile/" + id,
+            success: function(data){
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>")
+                console.log("data", data)
+                for(let i=1; i<7; i++) {
+                    for(let j=1; j<3; j++) {
+                        $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d');
+                        $('#deleteBtn' + i + '_' + j).remove();
+                    }
+                }
+                getFileList();
+                liSize--;
+            },
+            error: function (request, status, error) { // 결과 에러 콜백함수
+            console.log("error", error)
+            }
+        })
+    }
+
+    function requestSyncPostBodyJson(){
+        return new Promise(function(resolve, reject){ // promise 정의
+            const id = $('#id').val();
+            $.ajax({
+                type: 'get',
+                url : "/fileUploadList/" + "user" + "/" + id,
+                async: true, //비동기 여부
+                timeout: 10000, //타임 아웃 설정 (1000 = 1초)
+                dataType: "JSON", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML,JSONP)
+                contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
+                success: function (data) { // 결과 성공 콜백함수
+                    console.log("data", data)
+                    resolve(data);
+                },
+                error: function (request, status, error) { // 결과 에러 콜백함수
+                    console.log("error", error)
+                    reject(error);
+                }
+            });
+        });
+    };
 
 </script>
