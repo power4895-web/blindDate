@@ -282,8 +282,6 @@
         });
     }
 
-
-
     var filesTempArr = [];
     async  function addFiles(e) {
         var data = await requestSyncPostBodyJson(); // 동기식 요청
