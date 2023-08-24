@@ -39,7 +39,7 @@ public class UserController {
     @RequestMapping(value = "/registerForm")
     public String userRegisterForm(Model model, User user) {
         System.out.println(">>>>registerForm");
-        return "user/registerForm";
+        return "front:user/registerForm";
     }
     @RequestMapping(value = "/registerForm2")
     public String userRegisterForm2(Model model, User user) {
@@ -62,7 +62,26 @@ public class UserController {
         List<FileInfo> fileList = fileService.selectFileList(fileInfo);
         model.addAttribute("userInfo", userInfo);
         model.addAttribute("fileList", fileList);
-        return "user/updateForm";
+        return "front:user/updateForm";
+    }
+    //레이아웃적용 안한거 테스트 > 레이아웃 끝나면 지울것
+    @RequestMapping(value = "/updateForm2/{id}", method = RequestMethod.GET)
+    public String updateForm2(Model model, @PathVariable int id) {
+        System.out.println("id" + id);
+        User user = new User();
+        user.setId(id);
+        User userInfo = userService.selectUser(user);
+        System.out.println("userInfo");
+
+        FileInfo fileInfo = new FileInfo();
+//        fileInfo.setBossType("Y");
+        fileInfo.setRefId(id);
+        fileInfo.setFlag("S");
+        List<FileInfo> fileList = fileService.selectFileList(fileInfo);
+        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("fileList", fileList);
+//        return "/user/updateForm";
+        return "/user/updateForm2";
     }
 
     @ResponseBody

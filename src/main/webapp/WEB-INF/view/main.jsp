@@ -52,7 +52,6 @@
                         <li class="nav-item"><a class="nav-link" href="faq.html">${info.user.loginId}님 안녕하세요</a></li>
                         <li class="nav-item"><a class="nav-link " href="/logout">로그아웃<i class="bi bi-arrow-bar-right"></i></a></li>
                     </sec:authorize>
-
                 </ul>
             </div>
         </div>

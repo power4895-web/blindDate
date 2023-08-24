@@ -10,6 +10,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+import org.springframework.web.servlet.view.tiles3.TilesView;
 
 import java.util.List;
 
@@ -36,7 +39,30 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     public UserHandlerMethodArgumentResolver userHandlerMethodArgumentResolver() {
         return new UserHandlerMethodArgumentResolver();
     }
+    /**
+     * Tiles View
+     *
+     * @return
+     */
+    @Bean
+    public UrlBasedViewResolver tilesViewResolver() {
+        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+        resolver.setViewClass(TilesView.class);
+        resolver.setOrder(1);
+        return resolver;
+    }
 
+    /**
+     * Tiles View
+     *
+     * @return
+     */
+    @Bean
+    public TilesConfigurer tilesConfigurer() {
+        TilesConfigurer tilesConfigurer = new TilesConfigurer();
+        tilesConfigurer.setDefinitions("/WEB-INF/tiles-*.xml");
+        return tilesConfigurer;
+    }
 
     /**
      * JSP View

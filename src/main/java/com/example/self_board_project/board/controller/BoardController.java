@@ -27,7 +27,8 @@ public class BoardController {
     public String boardList(Model model,  Auth auth, Board board, Principal principal) {
         List<Board> boardList = boardService.selectBoardList(board);
         model.addAttribute("boardList", boardList);
-        return "board/boardList";
+        return "front:board/boardList";
+//        return "board/boardList";
     }
     @RequestMapping(value = "/board/form")
     public String boardForm(Model model, Auth auth, Board board) {
@@ -64,5 +65,10 @@ public class BoardController {
         System.out.println("boardId" + board.getId());
         boardService.deleteBoard(board);
         return "redirect:/board/list";
+    }
+    @RequestMapping(value = "/test")
+    public String test() {
+        return "/board/boardList";
+//        return "front:board/boardList";
     }
 }

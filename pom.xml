@@ -123,6 +123,19 @@
             <artifactId>jstl</artifactId>
         </dependency>
 
+<!--        tiles 라이브러리를 사용하기 위함-->
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-jsp</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-core</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
+
 <!--        쿼리출력-->
         <dependency>
             <groupId>org.bgee.log4jdbc-log4j2</groupId>
@@ -134,7 +147,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
