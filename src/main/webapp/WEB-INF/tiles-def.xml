@@ -12,6 +12,8 @@
 <!--        <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />-->
 <!--    </definition>-->
 
+
+<!--    front 다음 **이 두개 있는이유: main은 *로도 불러와지는데 *로는 user/userList는 불러오지 못한다-->
     <definition name="front:**" template="/WEB-INF/layouts/layoutDefault.jsp">
         <put-attribute name="header" value="/WEB-INF/layouts/header.jsp" />
         <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />

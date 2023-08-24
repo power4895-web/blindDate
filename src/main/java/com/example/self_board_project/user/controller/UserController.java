@@ -99,7 +99,7 @@ public class UserController {
     @RequestMapping(value = "/login")
     public String userLoginForm(Model model, User user) {
         System.out.println(">>>>loginForm");
-        return "user/login";
+        return "front:user/login";
     }
     @RequestMapping(value = "/todayProfile")
     public String todayProfile(Model model, Auth auth) {
@@ -113,7 +113,6 @@ public class UserController {
 
         List<User> dataList = new ArrayList<>();
         for (String item3: todayIds) {
-            System.out.println(">>>>" + item3);
             User todayUser = new User();
             todayUser.setId(Integer.parseInt(item3));
             todayUser.setBossType("B");
@@ -130,7 +129,7 @@ public class UserController {
 //        }
  
 
-        return "user/todayProfile";
+        return "front:user/todayProfile";
     }
     @RequestMapping(value="/todayProfile/update")
     public void todayProfileUpdate(Model model, User user, Auth auth) {

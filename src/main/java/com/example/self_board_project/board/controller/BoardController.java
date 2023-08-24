@@ -68,7 +68,12 @@ public class BoardController {
     }
     @RequestMapping(value = "/test")
     public String test() {
-        return "/board/boardList";
+        return "front:/template/test/baseEmpty";
 //        return "front:board/boardList";
+    }
+    @RequestMapping(value = "/test2")
+    public String test2() {
+//        return "/template/test/baseEmpty";
+        return "board/boardList";
     }
 }

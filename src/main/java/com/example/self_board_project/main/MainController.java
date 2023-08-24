@@ -9,7 +9,17 @@ public class MainController {
     @RequestMapping(value="/")
     public static String main (Auth auth)
     {
-        return "main";
+        return "front:main";
+    }
+    @RequestMapping(value="/pricing")
+    public static String price (Auth auth)
+    {
+        return "front:pricing";
+    }
+    @RequestMapping(value="/about")
+    public static String about (Auth auth)
+    {
+        return "front:about";
     }
 
 
