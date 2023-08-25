@@ -22,6 +22,9 @@ public class User {
     private Date updateDate;
     private Integer updateId;
 
+    //간편로그인
+    private String roleKey;
+
 //  file
     private String bossType;
     private String imageName;

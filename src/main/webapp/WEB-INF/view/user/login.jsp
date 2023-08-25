@@ -51,6 +51,7 @@
                         <br>
                         <a style="color: gray">아이디 찾기</a>
                         <a style="float: right; color: gray">비밀번호 찾기</a>
+<%--                        <a href="/oauth2/authorization/naver">네이버</a>--%>
                         <p style="text-align: center; color: gray">다른 방식으로 로그인</p>
                     </div>
                 </div>
