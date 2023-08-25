@@ -23,15 +23,40 @@
 
     <select id="selectUserList" resultType="com.example.self_board_project.user.vo.User">
         /** selectUserList **/
-        SELECT *
+        SELECT id,
+               login_id,
+               password,
+               nickname,
+               real_name,
+               age,
+               gender,
+               email,
+               phone_number,
+               introduce,
+               today_profile_id,
+               create_date,
+               update_date,
+               update_id,
+               (select image_name  from file t2 where t1.id = t2.ref_id and t2.flag = 'S') image_name
         FROM user t1
-        join file t2 on t1.id = t2.ref_id
-
     </select>
 
     <select id="selectUserRandomList" resultType="com.example.self_board_project.user.vo.User">
         /** selectUserRandomList **/
-        select *
+        select id,
+               login_id,
+               password,
+               nickname,
+               real_name,
+               age,
+               gender,
+               email,
+               phone_number,
+               introduce,
+               today_profile_id,
+               create_date,
+               update_date,
+               update_id
         from user
         WHERE gender = #{gender}
         order by rand() limit 2;

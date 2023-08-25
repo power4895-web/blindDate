@@ -146,12 +146,6 @@ public class UserController {
                 user.setTodayProfileId(todayProfileId);
                 user.setId(item.getId());
                 userService.updateTodayProfileId(user);
-//                String test[] = ids.split(",");
-//                System.out.println("test : " + test);
-//                List<String> dataList = new ArrayList<>();
-//                for (String item3: test) {
-//                    System.out.println("item3 : " + item3);
-//                }
             } else {
                 user.setGender("M");
                 List<User> womanRandomList = userService.selectUserRandomList(user);
