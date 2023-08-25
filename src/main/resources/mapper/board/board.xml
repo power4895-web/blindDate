@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.self_board_project.board.mapper.BoardMapper">
+    <select id="selectBoardCount" resultType="int">
+        /** selectBoardList **/
+        SELECT
+            count(1)
+        FROM board t1
+    </select>
+    <select id="selectBoard" resultType="com.example.self_board_project.board.vo.Board">
+        /** selectBoardList **/
+        SELECT
+            *
+        FROM board t1
+        JOIN user t2 ON t1.user_id = t2.id
+        WHERE t1.id = #{id}
+    </select>
+    <select id="selectBoardList" resultType="com.example.self_board_project.board.vo.Board">
+        /** selectBoardList **/
+        SELECT
+            *
+        FROM board t1
+        JOIN user t2 ON t1.user_id = t2.id
+        ORDER BY t1.id DESC
+        LIMIT #{rowStart}, #{rowSize}
+    </select>
+
+
+    <insert id="insertBoard" useGeneratedKeys="true" keyProperty="id">
+        insert into board(
+            user_id
+            , title
+            , content
+            , create_date
+        )Value(
+            #{userId}
+            , #{title}
+            , #{content}
+            , NOW()
+        )
+    </insert>
+    <update id="updateBoard" >
+        UPDATE board SET
+            title = #{title}
+            , content = #{content}
+            , update_id = #{updateId}
+            , update_date = NOW()
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteBoard" >
+        DELETE FROM board  WHERE id = #{id}
+    </delete>
+</mapper>
