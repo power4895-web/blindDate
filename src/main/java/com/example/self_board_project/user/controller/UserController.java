@@ -9,10 +9,7 @@ import com.example.self_board_project.user.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +23,25 @@ public class UserController {
     private UserService userService;
     @Autowired
     private FileService fileService;
+
     @RequestMapping(value = "/user/list")
     public String userList(Model model) {
         System.out.println(">>>>list");
         return "main";
     }
+
     @RequestMapping(value = "/user/detail")
     public String userDetail(Model model) {
         System.out.println(">>>>detail");
         return "main";
     }
+
     @RequestMapping(value = "/registerForm")
     public String userRegisterForm(Model model, User user) {
         System.out.println(">>>>registerForm");
         return "front:user/registerForm";
     }
+
     @RequestMapping(value = "/registerForm2")
     public String userRegisterForm2(Model model, User user) {
         System.out.println(">>>>registerForm");
@@ -64,6 +65,7 @@ public class UserController {
         model.addAttribute("fileList", fileList);
         return "front:user/updateForm";
     }
+
     //레이아웃적용 안한거 테스트 > 레이아웃 끝나면 지울것
     @RequestMapping(value = "/updateForm2/{id}", method = RequestMethod.GET)
     public String updateForm2(Model model, @PathVariable int id) {
@@ -87,20 +89,31 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Integer userRegister(Model model, User user) {
-       userService.insertUser(user);
-       return user.getId();
+        System.out.println("userRegister");
+        userService.insertUser(user);
+        return user.getId();
     }
+
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public boolean userUpdate(Model model, User user) {
-       userService.updateUser(user);
-       return true;
+        userService.updateUser(user);
+        return true;
     }
+
     @RequestMapping(value = "/login")
     public String userLoginForm(Model model, User user) {
         System.out.println(">>>>loginForm");
         return "front:user/login";
     }
+
+    //    @RequestMapping(value = "/login/oauth2/code/naver")
+    @GetMapping("/login/oauth2/code/naver")
+    public String naverLogin2(Model model, User user) {
+        System.out.println(">>>>naverLogin");
+        return "front:user/login";
+    }
+
     @RequestMapping(value = "/todayProfile")
     public String todayProfile(Model model, Auth auth) {
 
@@ -112,7 +125,7 @@ public class UserController {
         String todayIds[] = ids.split(",");
 
         List<User> dataList = new ArrayList<>();
-        for (String item3: todayIds) {
+        for (String item3 : todayIds) {
             User todayUser = new User();
             todayUser.setId(Integer.parseInt(item3));
             todayUser.setBossType("B");
@@ -127,19 +140,20 @@ public class UserController {
 //            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
 //            dataList.add(userInfo2);
 //        }
- 
+
 
         return "front:user/todayProfile";
     }
-    @RequestMapping(value="/todayProfile/update")
+
+    @RequestMapping(value = "/todayProfile/update")
     public void todayProfileUpdate(Model model, User user, Auth auth) {
         List<User> userList = userService.selectUserList();
-        for (User item: userList) {
+        for (User item : userList) {
             String todayProfileId = "";
-            if(item.getGender().equals("M")) {
+            if (item.getGender().equals("M")) {
                 user.setGender("F");
                 List<User> manRandomList = userService.selectUserRandomList(user);
-                for (User item2: manRandomList) {
+                for (User item2 : manRandomList) {
                     todayProfileId += item2.getId() + ",";
                 }
                 todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
@@ -149,7 +163,7 @@ public class UserController {
             } else {
                 user.setGender("M");
                 List<User> womanRandomList = userService.selectUserRandomList(user);
-                for (User item2: womanRandomList) {
+                for (User item2 : womanRandomList) {
                     todayProfileId += item2.getId() + ",";
                 }
                 todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);

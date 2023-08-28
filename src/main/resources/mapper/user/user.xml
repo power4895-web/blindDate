@@ -65,7 +65,19 @@
     <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
         SELECT *
         FROM user t1
-        WHERE t1.id = #{id}
+        WHERE 1=1
+        <if test="id != null and id != ''">
+            AND t1.id = #{id}
+        </if>
+        <if test="nickname != null and nickname != ''">
+            AND t1.nickname = #{nickname}
+        </if>
+        <if test="email != null and email != ''">
+            AND t1.email = #{email}
+        </if>
+        <if test="realName != null and realName != ''">
+            AND t1.real_name = #{realName}
+        </if>
     </select>
 
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">

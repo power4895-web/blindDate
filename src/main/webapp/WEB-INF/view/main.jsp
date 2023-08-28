@@ -253,5 +253,15 @@
             </aside>
         </div>
     </section>
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+            </div>
+        </div>
+
+    </div>
+
 </main>
 </body>
