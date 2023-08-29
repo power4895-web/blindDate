@@ -7,6 +7,9 @@ import com.example.self_board_project.file.vo.FileInfo;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,25 +69,6 @@ public class UserController {
         return "front:user/updateForm";
     }
 
-    //레이아웃적용 안한거 테스트 > 레이아웃 끝나면 지울것
-    @RequestMapping(value = "/updateForm2/{id}", method = RequestMethod.GET)
-    public String updateForm2(Model model, @PathVariable int id) {
-        System.out.println("id" + id);
-        User user = new User();
-        user.setId(id);
-        User userInfo = userService.selectUser(user);
-        System.out.println("userInfo");
-
-        FileInfo fileInfo = new FileInfo();
-//        fileInfo.setBossType("Y");
-        fileInfo.setRefId(id);
-        fileInfo.setFlag("S");
-        List<FileInfo> fileList = fileService.selectFileList(fileInfo);
-        model.addAttribute("userInfo", userInfo);
-        model.addAttribute("fileList", fileList);
-//        return "/user/updateForm";
-        return "/user/updateForm2";
-    }
 
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -109,10 +93,31 @@ public class UserController {
 
     //    @RequestMapping(value = "/login/oauth2/code/naver")
     @GetMapping("/login/oauth2/code/naver")
-    public String naverLogin2(Model model, User user) {
-        System.out.println(">>>>naverLogin");
-        return "front:user/login";
+    public OAuth2User naverLogin2(Authentication authentication , @AuthenticationPrincipal OAuth2User oauth) {
+        System.out.println("네이버에서 콜백!!!!!!!!!!!!");
+
+
+        // @AuthenticationPrincipal이라는 어노테이션을 통해서 세션정보를 받을 수 있다.
+        System.out.println("=====IndexController.testLogin====");
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        System.out.println("oAuth2User.getAttributes() = " + oAuth2User.getAttributes());
+        // oAuth2User.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
+        System.out.println("oauth.getAttributes() = " + oauth.getAttributes());
+        // oauth.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
+        return oAuth2User;
     }
+    @GetMapping("/test/oauth/login")
+    public @ResponseBody String testOAuthLogin(Authentication authentication , @AuthenticationPrincipal OAuth2User oauth){// DI(의존성주입)
+        // @AuthenticationPrincipal이라는 어노테이션을 통해서 세션정보를 받을 수 있다.
+        System.out.println("=====IndexController.testLogin====");
+        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+        System.out.println("oAuth2User.getAttributes() = " + oAuth2User.getAttributes());
+        // oAuth2User.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
+        System.out.println("oauth.getAttributes() = " + oauth.getAttributes());
+        // oauth.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
+        return "세션 정보 확인하기";
+    }
+
 
     @RequestMapping(value = "/todayProfile")
     public String todayProfile(Model model, Auth auth) {

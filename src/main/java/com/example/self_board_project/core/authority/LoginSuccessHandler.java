@@ -7,6 +7,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -34,8 +35,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         HttpServletRequest request, HttpServletResponse response,  Authentication authentication)
     throws ServletException, IOException {
         System.out.println("onAuthenticationSuccess" );
-        AuthInfo user = (AuthInfo) authentication.getPrincipal();
-        System.out.println("user" + user.getUsername());
+//        AuthInfo user = (AuthInfo) authentication.getPrincipal();
+        OAuth2User user = (OAuth2User) authentication.getPrincipal();
+//        System.out.println("user" + user.getUsername());
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         MediaType jsonMimeType = MediaType.APPLICATION_JSON;
         if(user != null) {

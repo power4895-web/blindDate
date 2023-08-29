@@ -1,8 +1,7 @@
 package com.example.self_board_project.core.configuration;
 
 import com.example.self_board_project.core.authority.AuthService;
-import com.example.self_board_project.core.authority.LoginFailureHandler;
-import com.example.self_board_project.core.authority.LoginSuccessHandler;
+import com.example.self_board_project.user.vo.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -57,24 +55,24 @@ public class SecurityConfiguation extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new AjaxSessionTimeoutFilter(), ExceptionTranslationFilter.class)		//Ajax Session time out 체크, redirect 되기전에 상태 코드를 전송하게함
                 .csrf().disable()
                 .authorizeRequests()
-			.antMatchers( "/login" ).permitAll()
+//			.antMatchers( "/login" ).permitAll()
+                .antMatchers("/user/**").hasRole(Role.USER.name())
+//                .and()
+//                .formLogin()
+//                .loginPage( "/login" )
+//                .loginProcessingUrl( "/loginProc" )
+//                .defaultSuccessUrl( "/" )
+//                .successHandler(new LoginSuccessHandler(authService))
+//                .failureHandler(new LoginFailureHandler("/login?err=1"))
+//                .usernameParameter( "loginId" )
+//                .passwordParameter( "password" )
                 .and()
-                .formLogin()
-                .loginPage( "/login" )
-                .loginProcessingUrl( "/loginProc" )
-                .defaultSuccessUrl( "/" )
-                .successHandler(new LoginSuccessHandler(authService))
-                .failureHandler(new LoginFailureHandler("/login?err=1"))
-                .usernameParameter( "loginId" )
-                .passwordParameter( "password" )
-                .and()
-                .logout()
-                .logoutRequestMatcher( new AntPathRequestMatcher( "/logout" ) )
-                .logoutSuccessUrl( "/" )
-                .deleteCookies( "JSESSIONID" )
-//                .deleteCookies( "REMEMBER_ME_COOKE" )
-                .invalidateHttpSession( true )
-                .and()
+//                .logout()
+//                .logoutRequestMatcher( new AntPathRequestMatcher( "/logout" ) )
+//                .logoutSuccessUrl( "/" )
+//                .deleteCookies( "JSESSIONID" )
+//                .invalidateHttpSession( true )
+//                .and()
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)

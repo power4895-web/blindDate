@@ -1,10 +1,8 @@
 package com.example.self_board_project.core.configuration;
 
-import com.example.self_board_project.core.authority.UserHandlerMethodArgumentResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,8 +11,6 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
-
-import java.util.List;
 
 @Configuration
 public class SpringMvcConfiguration implements WebMvcConfigurer {
@@ -25,20 +21,20 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     /**
      * User argumentResolvers
      */
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(userHandlerMethodArgumentResolver());
-    }
+//    @Override
+//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+//        argumentResolvers.add(userHandlerMethodArgumentResolver());
+//    }
 
     /**
      * argument를 이용한 로그인 사용자 정보
      *
      * @return
      */
-    @Bean
-    public UserHandlerMethodArgumentResolver userHandlerMethodArgumentResolver() {
-        return new UserHandlerMethodArgumentResolver();
-    }
+//    @Bean
+//    public UserHandlerMethodArgumentResolver userHandlerMethodArgumentResolver() {
+//        return new UserHandlerMethodArgumentResolver();
+//    }
     /**
      * Tiles View
      *

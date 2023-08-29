@@ -10,6 +10,7 @@ public interface UserMapper {
     public List<User> selectUserList();
     public List<User> selectUserRandomList(User user);
     public User selectUser(User user);
+    public User findByEmail(String email);
 
     public void insertUser(User user);
     public void updateUser(User user);

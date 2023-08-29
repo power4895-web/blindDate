@@ -31,6 +31,9 @@ public class UserService {
     public User selectUser(User user) {
         return userMapper.selectUser(user);
     }
+    public User findByEmail(String email) {
+        return userMapper.findByEmail(email);
+    }
     public void insertUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.insertUser(user);

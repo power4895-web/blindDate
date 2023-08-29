@@ -1,10 +1,9 @@
 package com.example.self_board_project.core.configuration;
 
-import java.util.Map;
-
-import com.example.self_board_project.user.vo.User;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.Map;
 
 @Getter
 public class OAuthAttributes {
@@ -51,7 +50,8 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
-                .picture((String) response.get("profile_image"))
+                .picture((String) response.get("picture"))
+//                .picture((String) response.get("profile_image"))
                 .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
