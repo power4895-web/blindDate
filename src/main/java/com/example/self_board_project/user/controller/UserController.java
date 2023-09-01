@@ -24,33 +24,40 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private FileService fileService;
 
+    /**
+     * 회원목록
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/user/list")
     public String userList(Model model) {
         System.out.println(">>>>list");
         return "main";
     }
 
+    /**
+     * 회원상세
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/user/detail")
     public String userDetail(Model model) {
         System.out.println(">>>>detail");
         return "main";
     }
 
-    @RequestMapping(value = "/registerForm")
-    public String userRegisterForm(Model model, User user) {
-        System.out.println(">>>>registerForm");
-        return "front:user/registerForm";
-    }
 
-    @RequestMapping(value = "/registerForm2")
-    public String userRegisterForm2(Model model, User user) {
-        System.out.println(">>>>registerForm");
-        return "user/registerForm2";
-    }
 
+    /**
+     * 회원수정폼
+     * @param model
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/updateForm/{id}", method = RequestMethod.GET)
     public String updateForm(Model model, @PathVariable int id) {
         System.out.println("id" + id);
@@ -70,25 +77,17 @@ public class UserController {
     }
 
 
-    @ResponseBody
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Integer userRegister(Model model, User user) {
-        System.out.println("userRegister");
-        userService.insertUser(user);
-        return user.getId();
-    }
-
+    /**
+     * 회원수정
+     * @param model
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public boolean userUpdate(Model model, User user) {
         userService.updateUser(user);
         return true;
-    }
-
-    @RequestMapping(value = "/login")
-    public String userLoginForm(Model model, User user) {
-        System.out.println(">>>>loginForm");
-        return "front:user/login";
     }
 
     //    @RequestMapping(value = "/login/oauth2/code/naver")

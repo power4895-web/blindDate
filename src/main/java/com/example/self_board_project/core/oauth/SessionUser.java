@@ -1,9 +1,9 @@
-package com.example.self_board_project.core.configuration;
-
-import java.io.Serializable;
+package com.example.self_board_project.core.oauth;
 
 import com.example.self_board_project.user.vo.User;
 import lombok.Getter;
+
+import java.io.Serializable;
 @Getter
 public class SessionUser implements Serializable {
 

@@ -1,26 +1,28 @@
 package com.example.self_board_project.core.configuration;
 
 import com.example.self_board_project.core.authority.AuthService;
-import com.example.self_board_project.user.vo.Role;
+import com.example.self_board_project.core.oauth.CustomOAuth2UserService;
+import com.example.self_board_project.core.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.ExceptionTranslationFilter;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguation extends WebSecurityConfigurerAdapter {
 
 
     private final CustomOAuth2UserService customOAuth2UserService;
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
     @Autowired
     private AuthService authService;
@@ -30,53 +32,32 @@ public class SecurityConfiguation extends WebSecurityConfigurerAdapter {
     }
 
     // 스프링 시큐리티가 사용자를 인증하는 방법이 담긴 객체
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(authService).passwordEncoder(new BCryptPasswordEncoder());
-        //실제 인증을 진행할 Provider
-    }
-    /*
-     * 스프링 시큐리티 룰을 무시할 URL 규칙 설정
-     * 정적 자원에 대해서는 Security 설정을 적용하지 않음
-     */
-    @Override
-    public void configure(WebSecurity web) {
-        //이미지,자바스크립트,css 디렉토리 보안 설정
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+//        auth.userDetailsService(authService).passwordEncoder(new BCryptPasswordEncoder());
+//        //실제 인증을 진행할 Provider
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //HTTP 관련 보안 설정 **가장 중요
-
-        http
-                .headers().frameOptions().disable()
-                .addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))		//X-Frame-Options 셋팅 , 크로스 사이트 스크립트 방지 해재 default 'DENY'
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/user/**").authenticated()
+                 .antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .anyRequest().permitAll()
                 .and()
-                .addFilterAfter(new AjaxSessionTimeoutFilter(), ExceptionTranslationFilter.class)		//Ajax Session time out 체크, redirect 되기전에 상태 코드를 전송하게함
-                .csrf().disable()
-                .authorizeRequests()
-//			.antMatchers( "/login" ).permitAll()
-                .antMatchers("/user/**").hasRole(Role.USER.name())
-//                .and()
-//                .formLogin()
-//                .loginPage( "/login" )
-//                .loginProcessingUrl( "/loginProc" )
-//                .defaultSuccessUrl( "/" )
-//                .successHandler(new LoginSuccessHandler(authService))
-//                .failureHandler(new LoginFailureHandler("/login?err=1"))
-//                .usernameParameter( "loginId" )
-//                .passwordParameter( "password" )
+                .formLogin()
+                .loginPage("/loginForm")
+                .loginProcessingUrl("/loginProc")
+                .defaultSuccessUrl( "/" )
+                .usernameParameter( "loginId" )
+                .passwordParameter( "password" )
                 .and()
-//                .logout()
-//                .logoutRequestMatcher( new AntPathRequestMatcher( "/logout" ) )
-//                .logoutSuccessUrl( "/" )
-//                .deleteCookies( "JSESSIONID" )
-//                .invalidateHttpSession( true )
-//                .and()
                 .oauth2Login()
+                .loginPage("/loginForm")
                 .userInfoEndpoint()
-                .userService(customOAuth2UserService)
-                .and()
+                .userService(principalOauth2UserService);
 
         ;
 

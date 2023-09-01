@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +17,8 @@ public class Auth implements Serializable {
 	private Integer id;
 	private String loginId;
 	private String realName;
-	private String getnder;
+	private String gender;
 	private String password;
-
-	
-
+	private String role;
+	private List<Object> roleList;
 }

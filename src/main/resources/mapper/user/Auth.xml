@@ -10,6 +10,7 @@
 		 id
 		, login_id 
 		, real_name
+		, role
 		, gender
 		, password
 	FROM user  t1

@@ -28,33 +28,37 @@
                 <div class="text-center mb-5">
                     <h1 class="fw-bolder">로그인</h1>
                 </div>
-                <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-8 col-xl-6">
-                        <!-- Name input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="loginId" name="loginId" value="power4895" type="text" placeholder="Enter your loginId..." data-sb-validations="required" />
-                            <label for="loginId">아이디</label>
-                            <div class="invalid-feedback" data-sb-feedback="realName:required">A loginId is required.</div>
+                <form action="/loginProc" method="POST">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="loginId" name="loginId" value="power4895" type="text" placeholder="Enter your loginId..." data-sb-validations="required" />
+                                <label for="loginId">아이디</label>
+                                <div class="invalid-feedback" data-sb-feedback="realName:required">A loginId is required.</div>
+                            </div>
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="password" name="password" value="1234" type="password" placeholder="Enter your name..." data-sb-validations="required" />
+                                <label for="password">비밀번호</label>
+                                <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
+                            </div>
+                            <div class="d-none" id="submitSuccessMessage">
+                            </div>
+                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                            <div class="d-grid">
+                                <div class="d-grid"><button class="btn btn-primary btn-lg" >로그인</button></div>
+<%--                                <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="login()" type="submit">로그인</button></div>--%>
+                            </div>
+                            <br>
+                            <a style="color: gray">아이디 찾기</a>
+                            <a style="float: right; color: gray">비밀번호 찾기</a>
+                            <%--                        <a href="/oauth2/authorization/naver">네이버</a>--%>
+                            <a href="/oauth2/authorization/google">구글로그인</a>
+                            <p style="text-align: center; color: gray">다른 방식으로 로그인</p>
                         </div>
-                        <!-- Name input-->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="password" name="password" value="1234" type="password" placeholder="Enter your name..." data-sb-validations="required" />
-                            <label for="password">비밀번호</label>
-                            <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
-                        </div>
-                        <div class="d-none" id="submitSuccessMessage">
-                        </div>
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                        <div class="d-grid">
-                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="login()" type="submit">로그인</button></div>
-                        </div>
-                        <br>
-                        <a style="color: gray">아이디 찾기</a>
-                        <a style="float: right; color: gray">비밀번호 찾기</a>
-<%--                        <a href="/oauth2/authorization/naver">네이버</a>--%>
-                        <p style="text-align: center; color: gray">다른 방식으로 로그인</p>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </section>
@@ -88,15 +92,6 @@
                 document.location.href = "/"
 
             }
-
-            // if( data.isLogin == true ){
-            //     var referer = document.referrer;
-            //     console.log("referer", referer)
-            //     document.location.href = (referer == "" || referer.indexOf("login") > -1 || referer.indexOf("registerForm") > -1
-            //         || referer.indexOf("userSearch") > -1 || referer.indexOf("changePasswordForm") > -1) ?  "/" : referer;
-            // }else{
-            //     $("#errorMsg").show();
-            // }
         });
     }
 

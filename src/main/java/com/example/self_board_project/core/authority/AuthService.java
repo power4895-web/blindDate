@@ -21,21 +21,12 @@ public class AuthService  implements UserDetailsService {
 	private AuthMapper mapper;
 
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException, DataAccessException {
-		System.out.println("loadUserByUsername , loginId" + loginId);
+		System.out.println("loadUserByUsername , loginId : " + loginId);
     	
 		//로그인 정보
 		Map<String, String> user = new HashMap<String, String>();
 		user.put("loginId", loginId);
 		Auth loginInfo = (Auth)mapper.getUserInfo(user);
-		System.out.println("loginInfo" + loginInfo.getLoginId());
-		//회원 권한
-//		if(loginInfo != null) {
-//
-//			List<String> roleList = new ArrayList<String>();
-//			roleList.add("USR");
-//			loginInfo.setRoleList(roleList);
-//		}
-
 		return new AuthInfo(loginInfo);
     }
     

@@ -1,4 +1,4 @@
-package com.example.self_board_project.core.configuration;
+package com.example.self_board_project.core.oauth;
 
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;

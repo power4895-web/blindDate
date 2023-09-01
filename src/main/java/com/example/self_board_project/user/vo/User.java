@@ -27,6 +27,8 @@ public class User {
     private String picture;
     private String role;
     private String name;
+    private String provider;
+    private String providerId;
 
 //  file
     private String bossType;

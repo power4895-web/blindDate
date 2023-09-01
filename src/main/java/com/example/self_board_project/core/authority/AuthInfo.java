@@ -1,7 +1,9 @@
 package com.example.self_board_project.core.authority;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,9 +23,10 @@ public class AuthInfo implements UserDetails {
 	}
 
 	public Collection<GrantedAuthority> getAuthorities() {
-
+		System.out.println("getAuthorities, user.getRole() : " + user);
+		System.out.println("getAuthorities, user.getRole() : " + user.getRole());
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-
+		authorities.add( new SimpleGrantedAuthority( user.getRole()));
 //		for(int i = 0; i < user.getRoleList().size(); i++){
 //			 authorities.add( new SimpleGrantedAuthority( "ROLE_" + user.getRoleList().get(i).toString()) );
 //		}
@@ -35,6 +38,7 @@ public class AuthInfo implements UserDetails {
 	}
 
 	public String getPassword() {
+		System.out.println("getPassword : user :  " + user );
 		//return user == null ? "{noop}" : "{noop}" + user.getPassword(); //평서문읽기
 		return user == null ? null : user.getPassword(); //암호화 읽기
 	}
@@ -74,4 +78,13 @@ public class AuthInfo implements UserDetails {
 	}
 
 
+//	@Override
+//	public <A> A getAttribute(String name) {
+//		return OAuth2User.super.getAttribute(name);
+//	}
+//
+//	@Override
+//	public String getName() {
+//		return null;
+//	}
 }
