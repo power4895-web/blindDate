@@ -25,10 +25,12 @@ public class User {
     //간편로그인
     private String roleKey;
     private String picture;
-    private String role;
     private String name;
+    private String role;
     private String provider;
     private String providerId;
+    private String username;
+
 
 //  file
     private String bossType;

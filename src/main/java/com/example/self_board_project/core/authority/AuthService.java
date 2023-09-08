@@ -27,6 +27,7 @@ public class AuthService  implements UserDetailsService {
 		Map<String, String> user = new HashMap<String, String>();
 		user.put("loginId", loginId);
 		Auth loginInfo = (Auth)mapper.getUserInfo(user);
+		System.out.println(">>>>>>>>>>>>" + loginInfo);
 		return new AuthInfo(loginInfo);
     }
     

@@ -8,14 +8,24 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("serial")
-public class AuthInfo implements UserDetails {
+public class AuthInfo implements UserDetails, OAuth2User {
 
 	private Auth user;
+	private Map<String, Object> attributes;
 
+
+	//일반로그인
 	public AuthInfo(Auth user) {
 		this.user = user;
+	}
+
+	//OAuth 로그인
+	public AuthInfo(Auth user, Map<String, Object> attributes) {
+		this.user = user;
+		this.attributes = attributes;
 	}
 
 	public Auth getUser() {
@@ -78,13 +88,18 @@ public class AuthInfo implements UserDetails {
 	}
 
 
-//	@Override
-//	public <A> A getAttribute(String name) {
-//		return OAuth2User.super.getAttribute(name);
-//	}
-//
-//	@Override
-//	public String getName() {
-//		return null;
-//	}
+	@Override
+	public <A> A getAttribute(String name) {
+		return OAuth2User.super.getAttribute(name);
+	}
+
+	@Override
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+
+	@Override
+	public String getName() {
+		return null;
+	}
 }

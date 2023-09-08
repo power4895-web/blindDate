@@ -14,8 +14,35 @@
 		, gender
 		, password
 	FROM user  t1
-	WHERE login_id = #{loginId}
+	where 1=1
+	<if test="loginId != null and loginId != ''">
+		AND login_id = #{loginId}
+	</if>
+	<if test="username != null and username != ''">
+		AND username = #{username}
+	</if>
+	<if test="id != null and id != ''">
+		AND id = #{id}
+	</if>
 	</select>
+
+
+	<insert id="insertAuth" useGeneratedKeys="true" keyProperty="id">
+		/** insertUser **/
+		INSERT INTO `user`( provider
+						  , provider_id
+						  , username
+						  , role
+						  , password
+						  , create_date)
+
+		VALUES ( #{provider}
+			   , #{providerId}
+			   , #{username}
+			   , #{role}
+			   , #{password}
+			   , now())
+	</insert>
 
 
 <!--	<insert id="insertLoginLog">-->

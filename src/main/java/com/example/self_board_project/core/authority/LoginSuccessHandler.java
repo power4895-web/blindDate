@@ -34,6 +34,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         HttpServletRequest request, HttpServletResponse response,  Authentication authentication)
     throws ServletException, IOException {
         System.out.println("onAuthenticationSuccess" );
+        System.out.println("authentication.getPrincipal()"  + authentication.getPrincipal());
         AuthInfo user = (AuthInfo) authentication.getPrincipal();
 //        OAuth2User user = (OAuth2User) authentication.getPrincipal();
 //        System.out.println("user" + user.getUsername());

@@ -4,6 +4,7 @@ package com.example.self_board_project.board.controller;
 import com.example.self_board_project.board.service.BoardService;
 import com.example.self_board_project.board.vo.Board;
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.core.authority.AuthInfo;
 import com.example.self_board_project.file.vo.FileInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,9 @@ public class BoardController {
     private BoardService boardService;
 
     @RequestMapping(value = "/board/list")
-    public String boardList(Model model,  Auth auth, Board board, Principal principal) {
+    public String boardList(Model model, Auth auth,  Board board, Principal principal) {
+        System.out.println(auth.getLoginId());
+        System.out.println(auth.getId());
         List<Board> boardList = boardService.selectBoardList(board);
         model.addAttribute("boardList", boardList);
         return "front:board/boardList";

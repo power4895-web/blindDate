@@ -91,6 +91,10 @@
                           , email
                           , introduce
                           , phone_number
+                          , provider
+                          , provider_id
+                          , username
+                          , role
                           , create_date)
 
         VALUES ( #{loginId}
@@ -102,6 +106,10 @@
                , #{email}
                , #{introduce}
                , #{phoneNumber}
+               , #{provider}
+               , #{providerId}
+               , #{username}
+               , #{role}
                , now())
     </insert>
 

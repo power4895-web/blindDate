@@ -1,6 +1,8 @@
 package com.example.self_board_project.core.configuration;
 
 import com.example.self_board_project.core.authority.AuthService;
+import com.example.self_board_project.core.authority.LoginFailureHandler;
+import com.example.self_board_project.core.authority.LoginSuccessHandler;
 import com.example.self_board_project.core.oauth.CustomOAuth2UserService;
 import com.example.self_board_project.core.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,8 @@ public class SecurityConfiguation extends WebSecurityConfigurerAdapter {
                 .loginPage("/loginForm")
                 .loginProcessingUrl("/loginProc")
                 .defaultSuccessUrl( "/" )
+                .successHandler(new LoginSuccessHandler(authService))
+                .failureHandler(new LoginFailureHandler("/login?err=1"))
                 .usernameParameter( "loginId" )
                 .passwordParameter( "password" )
                 .and()

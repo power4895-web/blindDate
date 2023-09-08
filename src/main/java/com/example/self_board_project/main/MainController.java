@@ -1,12 +1,14 @@
 package com.example.self_board_project.main;
 
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.core.authority.AuthInfo;
 import com.example.self_board_project.core.oauth.SessionUser;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,11 @@ public class MainController {
     }
 
     @GetMapping(value = "/user")
-    public @ResponseBody String user() {
+    public @ResponseBody String user(@AuthenticationPrincipal AuthInfo authInfo, Auth auth) {
+        System.out.println("auth : " + authInfo.getUser());
+        System.out.println("auth : " + auth.getId());
+        System.out.println("auth : " + auth);
+
         return "user";
     }
 

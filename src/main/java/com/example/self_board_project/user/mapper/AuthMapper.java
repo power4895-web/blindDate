@@ -11,6 +11,7 @@ import java.util.Map;
 public interface AuthMapper {
 	
 	Auth getUserInfo(Map<String, String> user);
+	Auth insertAuth(Auth auth);
 
 	void insertLoginLog(Map<String, Object> userLog);
 	

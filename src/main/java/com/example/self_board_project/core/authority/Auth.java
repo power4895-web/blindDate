@@ -20,5 +20,10 @@ public class Auth implements Serializable {
 	private String gender;
 	private String password;
 	private String role;
+	private String email;
+	private String provider;
+	private String providerId;
+	private String username;
+
 	private List<Object> roleList;
 }
