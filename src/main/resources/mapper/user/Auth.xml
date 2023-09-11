@@ -9,7 +9,11 @@
 	SELECT 
 		 id
 		, login_id 
+		, email
 		, real_name
+		, nickname
+		, provider
+		, provider_id
 		, role
 		, gender
 		, password

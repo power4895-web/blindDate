@@ -53,8 +53,11 @@
                             <br>
                             <a style="color: gray">아이디 찾기</a>
                             <a style="float: right; color: gray">비밀번호 찾기</a>
-                            <%--                        <a href="/oauth2/authorization/naver">네이버</a>--%>
                             <a href="/oauth2/authorization/google">구글로그인</a>
+                            <a href="/oauth2/authorization/facebook">페이스북로그인</a>
+                            <a href="/oauth2/authorization/naver">네이버로그인</a>
+<%--네이버 로그인을 하면spring.security.oauth2.client.provider.naver.authorization-uri=https://nid.naver.com/oauth2.0/authorize가 호출된다--%>
+
                             <p style="text-align: center; color: gray">다른 방식으로 로그인</p>
                         </div>
                     </div>

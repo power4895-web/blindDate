@@ -19,6 +19,7 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     private @Value("${upload.resource.path}") String uploadResourcePath;
     private @Value("${deploy}") String deploy;
     /**
+     * api에서 파라미터로 Auth auth 를 통해 유저정보를 가져올 수 있도록 하는 utill
      * User argumentResolvers
      */
 //    @Override
@@ -27,6 +28,7 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
 //    }
 
     /**
+     * api에서 파라미터로 Auth auth 를 통해 유저정보를 가져올 수 있도록 하는 utill
      * argument를 이용한 로그인 사용자 정보
      *
      * @return

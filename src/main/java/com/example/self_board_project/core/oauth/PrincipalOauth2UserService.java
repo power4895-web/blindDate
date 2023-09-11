@@ -2,6 +2,10 @@ package com.example.self_board_project.core.oauth;
 
 import com.example.self_board_project.core.authority.Auth;
 import com.example.self_board_project.core.authority.AuthInfo;
+import com.example.self_board_project.core.oauth.provider.FacebookUserInfo;
+import com.example.self_board_project.core.oauth.provider.GoogleUserInfo;
+import com.example.self_board_project.core.oauth.provider.NaverUserInfo;
+import com.example.self_board_project.core.oauth.provider.OAuth2UserInfo;
 import com.example.self_board_project.user.mapper.AuthMapper;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
@@ -29,19 +33,37 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private PasswordEncoder passwordEncoder;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        String provider = userRequest.getClientRegistration().getClientId(); //google
-        String providerId = oAuth2User.getAttribute("sub");
+        System.out.println("getClientRegistration" + userRequest.getClientRegistration());
+        System.out.println("getTokenValue" + userRequest.getAccessToken().getTokenValue());
+
+        OAuth2User oAuth2User = super.loadUser(userRequest);
+        System.out.println("getAttributes" + oAuth2User.getAttributes());
+
+        OAuth2UserInfo oAuth2UserInfo = null;
+        if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+            oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")){
+            oAuth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
+        } else {
+            System.out.println("우리는 구글,페이스북, 네이버만만 지원합니다.");
+        }
+
+        String provider = oAuth2UserInfo.getGetProvider();
+        String providerId = oAuth2UserInfo.getProviderId();
+        String nickname = oAuth2UserInfo.getName();
         String username = provider + "_" + providerId; //필요는 없지만 그냥 만들어준다. 오스로 로그인했을 때
         String password = passwordEncoder.encode("겟인데어"); //필요는 없지만 그냥 만들어준다. 오스로 로그인했을 때
-        String email = oAuth2User.getAttribute("email");
+        String email = oAuth2UserInfo.getEmail();
         String role = "ROLE_USER";
 
         Map<String, String> auth = new HashMap<String, String>();
         auth.put("username", username);
         Auth authInfo = (Auth)mapper.getUserInfo(auth);
         if(authInfo == null) {
+            System.out.println("OAuth 로그인이 최초입니다.");
             User user = new User();
             user.setPassword(password);
             user.setProvider(provider);
@@ -50,8 +72,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             user.setLoginId(username);
             user.setRole(role);
             user.setEmail(email);
+            user.setNickname(nickname);
             userService.insertUser(user);
-            System.out.println(">>>>>>" + user.getId());
             auth.put("id", String.valueOf(user.getId()));
             authInfo = (Auth)mapper.getUserInfo(auth);
         }
