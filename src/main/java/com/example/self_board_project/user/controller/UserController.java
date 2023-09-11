@@ -2,17 +2,21 @@ package com.example.self_board_project.user.controller;
 
 
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.core.authority.AuthInfo;
 import com.example.self_board_project.file.service.FileService;
 import com.example.self_board_project.file.vo.FileInfo;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,8 @@ import java.util.List;
 //@RestController
 
 public class UserController {
+
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserService userService;
@@ -35,7 +41,6 @@ public class UserController {
      */
     @RequestMapping(value = "/user/list")
     public String userList(Model model) {
-        System.out.println(">>>>list");
         return "main";
     }
 
@@ -46,7 +51,7 @@ public class UserController {
      */
     @RequestMapping(value = "/user/detail")
     public String userDetail(Model model) {
-        System.out.println(">>>>detail");
+        logger.info("detail : {}" );
         return "main";
     }
 
@@ -60,14 +65,12 @@ public class UserController {
      */
     @RequestMapping(value = "/updateForm/{id}", method = RequestMethod.GET)
     public String updateForm(Model model, @PathVariable int id) {
-        System.out.println("id" + id);
+        logger.info("updateForm_id : {}" ,id);
         User user = new User();
         user.setId(id);
         User userInfo = userService.selectUser(user);
-        System.out.println("userInfo");
 
         FileInfo fileInfo = new FileInfo();
-//        fileInfo.setBossType("Y");
         fileInfo.setRefId(id);
         fileInfo.setFlag("S");
         List<FileInfo> fileList = fileService.selectFileList(fileInfo);
@@ -90,40 +93,13 @@ public class UserController {
         return true;
     }
 
-    //    @RequestMapping(value = "/login/oauth2/code/naver")
-    @GetMapping("/login/oauth2/code/naver")
-    public OAuth2User naverLogin2(Authentication authentication , @AuthenticationPrincipal OAuth2User oauth) {
-        System.out.println("네이버에서 콜백!!!!!!!!!!!!");
-
-
-        // @AuthenticationPrincipal이라는 어노테이션을 통해서 세션정보를 받을 수 있다.
-        System.out.println("=====IndexController.testLogin====");
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        System.out.println("oAuth2User.getAttributes() = " + oAuth2User.getAttributes());
-        // oAuth2User.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
-        System.out.println("oauth.getAttributes() = " + oauth.getAttributes());
-        // oauth.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
-        return oAuth2User;
-    }
-    @GetMapping("/test/oauth/login")
-    public @ResponseBody String testOAuthLogin(Authentication authentication , @AuthenticationPrincipal OAuth2User oauth){// DI(의존성주입)
-        // @AuthenticationPrincipal이라는 어노테이션을 통해서 세션정보를 받을 수 있다.
-        System.out.println("=====IndexController.testLogin====");
-        OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        System.out.println("oAuth2User.getAttributes() = " + oAuth2User.getAttributes());
-        // oAuth2User.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
-        System.out.println("oauth.getAttributes() = " + oauth.getAttributes());
-        // oauth.getAttributes() = {sub=103489475512635244738, name=‍고경환[재학 / 정보통신공학과], given_name=고경환[재학 / 정보통신공학과], family_name=‍, profile=https://plus.google.com/103489475512635244738, picture=https://lh3.googleusercontent.com/a/AItbvmlIUxyycyZvUHNNhzX20-5mvGrmrDbw6G1_Ylqn=s96-c, email={이메일}, email_verified=true, locale=ko, hd=hufs.ac.kr}
-        return "세션 정보 확인하기";
-    }
 
 
     @RequestMapping(value = "/todayProfile")
-    public String todayProfile(Model model, Auth auth) {
-
-        System.out.println(">>>>todayProfile");
+    public String todayProfile(Model model, @AuthenticationPrincipal AuthInfo authInfo) {
         User user = new User();
-        user.setId(auth.getId());
+        logger.info("todayProfile id :  {}" , authInfo.getUser().getId());
+        user.setId(authInfo.getUser().getId());
         User userInfo = userService.selectUser(user);
         String ids = userInfo.getTodayProfileId();
         String todayIds[] = ids.split(",");

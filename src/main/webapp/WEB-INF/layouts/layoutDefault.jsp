@@ -15,7 +15,7 @@
 
 	<!-- header -->
 	<div >
-<%--		<tiles:insertAttribute name="header" />--%>
+		<tiles:insertAttribute name="header" />
 	</div>
 	<!--// header -->
 

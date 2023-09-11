@@ -1,5 +1,7 @@
 package com.example.self_board_project.core.authority;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +14,7 @@ import java.util.Map;
 
 @SuppressWarnings("serial")
 public class AuthInfo implements UserDetails, OAuth2User {
-
+	Logger logger = LoggerFactory.getLogger(getClass());
 	private Auth user;
 	private Map<String, Object> attributes;
 
@@ -33,8 +35,7 @@ public class AuthInfo implements UserDetails, OAuth2User {
 	}
 
 	public Collection<GrantedAuthority> getAuthorities() {
-		System.out.println("getAuthorities, user.getRole() : " + user);
-		System.out.println("getAuthorities, user.getRole() : " + user.getRole());
+		logger.info("getAuthorities, user.getRole() : ", user.getRole());
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add( new SimpleGrantedAuthority( user.getRole()));
 //		for(int i = 0; i < user.getRoleList().size(); i++){
@@ -48,8 +49,6 @@ public class AuthInfo implements UserDetails, OAuth2User {
 	}
 
 	public String getPassword() {
-		System.out.println("getPassword : user :  " + user );
-		//return user == null ? "{noop}" : "{noop}" + user.getPassword(); //평서문읽기
 		return user == null ? null : user.getPassword(); //암호화 읽기
 	}
 

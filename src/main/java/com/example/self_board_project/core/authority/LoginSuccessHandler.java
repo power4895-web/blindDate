@@ -1,7 +1,7 @@
 package com.example.self_board_project.core.authority;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.server.ServletServerHttpResponse;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler  {
 
-    protected Log logger = LogFactory.getLog(this.getClass());
+    Logger logger = LoggerFactory.getLogger(getClass());
     
   private AuthService authService;
     
@@ -33,8 +33,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
     public void onAuthenticationSuccess(
         HttpServletRequest request, HttpServletResponse response,  Authentication authentication)
     throws ServletException, IOException {
-        System.out.println("onAuthenticationSuccess" );
-        System.out.println("authentication.getPrincipal()"  + authentication.getPrincipal());
+        logger.info("onAuthenticationSuccess");
+        logger.info("authentication.getPrincipal() : {}" , authentication.getPrincipal());
         AuthInfo user = (AuthInfo) authentication.getPrincipal();
 //        OAuth2User user = (OAuth2User) authentication.getPrincipal();
 //        System.out.println("user" + user.getUsername());

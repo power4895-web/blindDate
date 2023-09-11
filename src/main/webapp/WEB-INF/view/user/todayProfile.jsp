@@ -35,7 +35,7 @@
                         <div class="card mb-5 mb-xl-0">
                             <div class="card-body p-5">
                                 <div class="mb-3">
-                                    <img class="card-img-top" src="${item.filepath}${item.imageName}" alt="..." />
+                                    <img class="card-img-top" src="${item.imgUrl}" alt="..." />
                                 </div>
                                 <div class="small text-uppercase fw-bold text-muted">Free</div>
                                 <ul class="list-unstyled mb-4">
@@ -149,74 +149,5 @@
         })
     })
 
-    var filesTempArr = [];
-    function addFiles(e) {
-        var files = e.target.files;
-        var filesArr = Array.prototype.slice.call(files);
-        var filesArrLen = filesArr.length;
-        for( var i=0; i<filesArrLen; i++ ) {
-            filesTempArr.push(filesArr[i]);
-        }
-        console.log("filesTempArr" , filesTempArr)
-    }
-
-    function saveFile(id, field) {
-        console.log("savefile", filesTempArr.length)
-        let formData = new FormData();
-
-        for(let i=0, filesTempArrLen = filesTempArr.length; i < filesTempArrLen; i++) {
-            formData.append("file", filesTempArr[i]);
-            console.log("formData", formData)
-        }
-        $.ajax({
-            type: 'post',
-            url : "/fileUpload/" + field + "/" + id,
-            data: formData,
-            processData: false,
-            contentType: false,
-            async: true,
-            // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
-            success: function (data) { // 결과 성공 콜백함수
-                console.log("data", data);
-                // document.location.href = '/'
-            },
-            error: function (request, status, error) { // 결과 에러 콜백함수
-                console.log("error", error)
-            }
-        });
-
-    }
-
-
-    function register() {
-        var frm = $("#frm").serializeObject();
-        console.log("frm.realName : ", frm.realName)
-        let params =  {
-            "realName" : frm.realName,
-            "password" : frm.password,
-            "gender" : frm.gender,
-            "loginId" : frm.loginId,
-            "phoneNumber" : frm.phoneNumber,
-            "age" : frm.age,
-            "nickname" : frm.nickname,
-            "gender" : frm.gender,
-            "email" : frm.email,
-            "introduce" : frm.introduce
-        }
-        $.ajax({
-            type : 'post',
-            url : "/register",
-            data : params,
-            // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
-            success : function(data) { // 결과 성공 콜백함수
-                console.log("data", data);
-                saveFile(data, "user");
-                document.location.href = '/'
-            },
-            error : function(request, status, error) { // 결과 에러 콜백함수
-                console.log("error", error)
-            }
-        });
-    }
 
 </script>

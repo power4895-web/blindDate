@@ -9,6 +9,8 @@ import com.example.self_board_project.core.oauth.provider.OAuth2UserInfo;
 import com.example.self_board_project.user.mapper.AuthMapper;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -23,6 +25,7 @@ import java.util.Map;
 
 @Service
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
+    Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private UserService userService ;
     @Autowired
@@ -34,11 +37,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
-        System.out.println("getClientRegistration" + userRequest.getClientRegistration());
-        System.out.println("getTokenValue" + userRequest.getAccessToken().getTokenValue());
+        logger.info("getClientRegistration : {}" , userRequest.getClientRegistration());
+        logger.info("getTokenValue : {}" , userRequest.getAccessToken().getTokenValue());
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        System.out.println("getAttributes" + oAuth2User.getAttributes());
+        logger.info("getAttributes : {}" , oAuth2User.getAttributes());
 
         OAuth2UserInfo oAuth2UserInfo = null;
         if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
@@ -48,7 +51,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
             oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
         } else {
-            System.out.println("우리는 구글,페이스북, 네이버만만 지원합니다.");
+            logger.info("우리는 구글,페이스북, 네이버만만 지원합니다.");
         }
 
         String provider = oAuth2UserInfo.getGetProvider();
@@ -63,7 +66,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         auth.put("username", username);
         Auth authInfo = (Auth)mapper.getUserInfo(auth);
         if(authInfo == null) {
-            System.out.println("OAuth 로그인이 최초입니다.");
+            logger.info("OAuth 로그인이 최초입니다.");
             User user = new User();
             user.setPassword(password);
             user.setProvider(provider);
@@ -77,7 +80,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             auth.put("id", String.valueOf(user.getId()));
             authInfo = (Auth)mapper.getUserInfo(auth);
         }
-        System.out.println("authInfo" + authInfo.getId());
         return new AuthInfo(authInfo, oAuth2User.getAttributes()); //이 리턴이 authenticate 객체안에 들어간다.
         //일반적으로 로긴 하면 유저만 들고 있고, 오스로 로그인하면 유저랑 attibutes맵을 같이 들고 있게 된다.
     }

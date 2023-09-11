@@ -31,7 +31,7 @@
                             <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">장점</a>
                             <sec:authorize access="isAnonymous()">
                                 <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/registerForm">Sign up</a>
-                                <a class="btn btn-outline-light btn-lg px-4" href="/login">Sign in</a>
+                                <a class="btn btn-outline-light btn-lg px-4" href="/loginForm">Sign in</a>
                             </sec:authorize>
                         </div>
                     </div>

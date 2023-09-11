@@ -36,6 +36,7 @@ public class UserService {
     }
     public void insertUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("ROLE_USER");
         userMapper.insertUser(user);
     }
     public void updateUser(User user) {

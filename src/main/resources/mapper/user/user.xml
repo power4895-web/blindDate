@@ -63,7 +63,21 @@
     </select>
 
     <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
-        SELECT *
+        SELECT id,
+            login_id,
+            password,
+            nickname,
+            real_name,
+            age,
+            gender,
+            email,
+            phone_number,
+            introduce,
+            today_profile_id,
+            create_date,
+            update_date,
+            update_id,
+            (select concat(filepath,image_name) from file where ref_id = t1.id and boss_type = "Y" AND flag = "S") as imgUrl
         FROM user t1
         WHERE 1=1
         <if test="id != null and id != ''">

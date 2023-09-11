@@ -6,6 +6,8 @@ import com.example.self_board_project.core.oauth.SessionUser;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Controller
 public class MainController {
+    Logger logger = LoggerFactory.getLogger(getClass());
     private final HttpSession httpSession;
 
     @Autowired
@@ -36,9 +39,7 @@ public class MainController {
 
     @GetMapping(value = "/user")
     public @ResponseBody String user(@AuthenticationPrincipal AuthInfo authInfo, Auth auth) {
-        System.out.println("auth : " + authInfo.getUser());
-        System.out.println("auth : " + auth.getId());
-        System.out.println("auth : " + auth);
+        logger.info("auth : {}" +  authInfo.getUser());
 
         return "user";
     }
@@ -60,7 +61,6 @@ public class MainController {
      */
     @RequestMapping(value = "/loginForm")
     public String userLoginForm(Model model, User user) {
-        System.out.println(">>>>loginForm");
         return "front:user/login";
     }
     /**
@@ -71,7 +71,6 @@ public class MainController {
      */
     @RequestMapping(value = "/registerForm")
     public String userRegisterForm(Model model, User user) {
-        System.out.println(">>>>registerForm");
         return "front:user/registerForm";
     }
 
@@ -85,7 +84,6 @@ public class MainController {
     @ResponseBody
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public Integer userRegister(Model model, User user) {
-        System.out.println("userRegister");
         userService.insertUser(user);
         return user.getId();
     }

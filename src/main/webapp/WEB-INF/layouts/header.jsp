@@ -49,13 +49,13 @@
                                 <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mypage</a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                                     <li><a class="dropdown-item" href="/todayProfile">오늘의 프로필</a></li>
-                                    <li><a class="dropdown-item" href="blog-home.html">좋아요이력</a></li>
+                                    <li><a class="dropdown-item" href="blog-home.html">친구리스트</a></li>
                                     <li><a class="dropdown-item" href="blog-post.html">채팅</a></li>
                                     <li><a class="dropdown-item" href="/updateForm/${info.user.id}">내정보수정</a></li>
                                     <li><a class="dropdown-item" href="blog-post.html">스케줄</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link" >${info.user.loginId}님 안녕하세요</a></li>
+                            <li class="nav-item"><a class="nav-link" >${info.user.nickname}님 안녕하세요</a></li>
                             <li class="nav-item"><a class="nav-link " href="/logout">로그아웃<i class="bi bi-arrow-bar-right"></i></a></li>
                         </sec:authorize>
                     </ul>
