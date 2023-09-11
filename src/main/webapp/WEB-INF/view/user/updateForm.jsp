@@ -190,9 +190,7 @@
                 liSize = data.length
                 console.log("data", data.length);
                 console.log("data", filesTempArr.length);
-                if(data.length >0) {
-                    settingDefaultImage(data.length);
-                }
+                settingDefaultImage(data.length);
                 // document.location.href = '/'
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
@@ -360,6 +358,14 @@
              $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
         }
         if(count == 1) {
+             $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+             $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+             $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+             $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+             $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+        }
+        if(count == 0) {
+             $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
              $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
              $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
              $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
