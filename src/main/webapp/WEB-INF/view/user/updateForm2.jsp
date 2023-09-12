@@ -93,19 +93,29 @@
                             </div>
 
 
-                            <section class="py-5" >
-                                <c:forEach var="item" begin="1" end="3" step="1">
-                                    <div class="container px-5 my-5" id="totalRemove">
+                            <section class="py-5">
+
+                                <c:if test="${fileList.size() > 0}">
+                                    <div class="container px-5 my-5">
                                         <div class="row gx-5 align-items-center">
-                                            <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_1" />
-                                            </div>
-                                            <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_2" />
-                                            </div>
+                                            <c:forEach var="item" items="${fileList}" varStatus="status">
+                                                <div class="col-lg-6 order-first order-lg-last" >
+                                                    <img class="img-fluid rounded mb-5 mb-lg-0" src="${item.filepath}${item.imageName}"  />
+                                                    <button type='button' onclick='removeFile($(this), ${item.id})' style='margin:auto; display:block;'>삭제</button>
+                                                </div>
+                                            </c:forEach>
                                         </div>
                                     </div>
-                                </c:forEach>
+                                </c:if>
+
+                                <div class="container px-5 my-5">
+                                    <div class="row gx-5 align-items-center">
+                                        <div class="col-lg-6 order-first order-lg-last">
+                                            <p id="fileList"></p>
+                                            <p id="tempFileList"></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </section>
                             <div class="d-none" id="submitSuccessMessage">
                             </div>
@@ -169,52 +179,43 @@
         })
     })
 
+
+    function getFileList() {
+        const id = $('#id').val();
+        $.ajax({
+            type: 'get',
+            url : "/fileUploadList/" + "user" + "/" + id,
+            success: function (data) { // 결과 성공 콜백함수
+                realDataSize = data.length
+                liSize = data.length
+                console.log("data", data.length);
+                console.log("data", filesTempArr.length);
+                settingDefaultImage(data.length);
+                // document.location.href = '/'
+            },
+            error: function (request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        });
+    }
+
     var filesTempArr = [];
-    function addFiles(e) {
+    async  function addFiles(e) {
+        $('#tempFileList').empty();
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
         var filesArrLen = filesArr.length; //현재 임시로 올려놓은 파일개수
-
         var filesTempArrLen = filesTempArr.length;
         var img = "";
-
         for( var i=0; i<filesArrLen; i++ ) {
             filesTempArr.push(filesArr[i]);
-
-            console.log("dataFileList.length DB파일개수 : ", dataFileList.length)
-            console.log("filesTempArr.length 업로드 하려는 파일개수 : ", filesTempArr.length)
-
-            var dataPlusTempFile = dataFileList.length + filesTempArr.length
-            console.log("dataPlusTempFile :DB파일과 현재 업로드하려는 파일 개수: " , dataPlusTempFile)
             img = URL.createObjectURL(filesArr[i]);
-            if(dataPlusTempFile == 1) {
-                var hello = "fileList" + dataPlusTempFile + '_' + 1;
-                var hello2 = "deleteBtn" + dataPlusTempFile + '_' + 1;
-            }
-            if(dataPlusTempFile == 2) {
-                var hello = "fileList" + (dataPlusTempFile -1) + '_' + 2;
-                var hello2 = "deleteBtn" + (dataPlusTempFile -1) + '_' + 2;
-            }
-            if(dataPlusTempFile == 3) {
-                var hello = "fileList" + (dataPlusTempFile -1) + '_' + 1;
-                var hello2 = "deleteBtn" + (dataPlusTempFile -1) + '_' + 1;
-            }
-            if(dataPlusTempFile == 4) {
-                var hello = "fileList" + (dataPlusTempFile -2) + '_' + 2;
-                var hello2 = "deleteBtn" + (dataPlusTempFile -2) + '_' + 2;
-            }
-            if(dataPlusTempFile == 5) {
-                var hello = "fileList" + (dataPlusTempFile -2) + '_' + 1;
-                var hello2 = "deleteBtn" + (dataPlusTempFile -2) + '_' + 1;
-            }
-            if(dataPlusTempFile == 6) {
-                var hello = "fileList" + (dataPlusTempFile -3) + '_' + 2;
-                var hello2 = "deleteBtn" + (dataPlusTempFile -3) + '_' + 2;
-            }
-            $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>임시삭제</button></span> ");
-
+            $('#fileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src=''><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>임시삭제</button>");
+            $("#fileList img:last").attr("src", img);
         }
+        console.log("realDataSize : ", realDataSize)
+        console.log("filesTempArrLen : ", filesTempArrLen)
+        settingDefaultImage(totalFileSize);
     }
 
     function saveFile(id, field) {
@@ -284,40 +285,95 @@
     var deleteFile = function (self, orderParam) {
         if(confirm("이미지를 삭제하시겠습니까?") == false) { return false ;}
 
+        console.log("deleteFile")
         console.log("orderParam", orderParam)
 
-        //삭제하는 버튼의 div안에 img를 디폴트로 만들어준다.
-        self.parent().parent('div').children('img').attr("src", "https://dummyimage.com/600x400/343a40/6c757d");
-        //버튼의 상위 div를 없앤다(버튼없앤다)
-        self.parent().empty();
+        $('#fileList').empty();
+        console.log("orderParam", orderParam)
+        console.log("filesTempArr첫번째: ", filesTempArr.length)
+        filesTempArr.splice(orderParam, 1);
+        console.log("filesTempArr두번째", filesTempArr.length)
+
+        var filesTempArrLen = filesTempArr.length;
+        console.log(">>>>filesTempArrLen" , filesTempArrLen);
+        var img = "";
+
+        for( var i=0; i<filesTempArrLen; i++ ) {
+            img = URL.createObjectURL(filesTempArr[i]);
+            $('#fileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src=''><button type='button' style='margin:auto; display:block;' onclick='deleteFile($(this), " + i +")' >임시삭제</button>");
+            $("#fileList img:last").attr("src", img);
+        }
+
 
         fileNum--;  //현재 파일업로드 하려고 하는 개수
         console.log("fileNum", fileNum);
         totalFileSize--; //총 파일개수
         console.log("총 파일개수 totalFileSize : ", totalFileSize)
+
+        settingDefaultImage(totalFileSize);
     }
 
     //완전 파일삭제
     function removeFile(obj, id) {
-        console.log("id", id);
-        console.log("totalFileSize", totalFileSize);
         if(totalFileSize == 1) {
             alert("사진 한장이상은 등록해야합니다.")
             return;
         }
-        if(confirm("이미지를 완전히 삭제하시겠습니까?") == false) {return false;}
+
+        if(confirm("이미지를 삭제하시겠습니까?") == false) {return false;}
         $.ajax({
             type:"post",
             url : "/deleteFile/" + id,
             success: function(data){
                 $(obj).closest("div").remove();
+
                 liSize--;
                 console.log("현재 업로드되어있는 파일개수 liSize" , liSize)
+                settingDefaultImage(liSize)
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
             }
         })
+    }
+
+
+    function settingDefaultImage(count) {
+        $('#tempFileList').empty();
+        if(count == 5) {
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+        }
+        if(count == 4) {
+
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+        }
+        if(count == 3) {
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+        }
+        if(count == 2) {
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+        }
+        if(count == 1) {
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+        }
+        if(count == 0) {
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+            $('#tempFileList').append("<img  class='img-fluid rounded mb-5 mb-lg-0' src='https://dummyimage.com/600x400/343a40/6c757d'>");
+        }
     }
 
 
@@ -342,46 +398,5 @@
             });
         });
     };
-
-    var awaitFileList;
-    var dataFileList = [];
-    async function getFileList () {
-        awaitFileList = await requestSyncPostBodyJson();
-        console.log("awaitFileList", awaitFileList.length);
-        totalFileSize = awaitFileList.length;
-        var img = "";
-
-        for(var i=0; i<awaitFileList.length; i++) {
-            dataFileList.push(awaitFileList[i]);
-            img = awaitFileList[i].filepath + awaitFileList[i].imageName
-            console.log(">>>" , dataFileList.length)
-            if(dataFileList.length == 1) {
-                var hello = "fileList" + dataFileList.length + '_' + 1;
-                var hello2 = "deleteBtn" + dataFileList.length + '_' + 1;
-            }
-            if(dataFileList.length == 2) {
-                var hello = "fileList" + (dataFileList.length -1) + '_' + 2;
-                var hello2 = "deleteBtn" + (dataFileList.length -1) + '_' + 2;
-            }
-            if(dataFileList.length == 3) {
-                var hello = "fileList" + (dataFileList.length -1) + '_' + 1;
-                var hello2 = "deleteBtn" + (dataFileList.length -1) + '_' + 1;
-            }
-            if(dataFileList.length == 4) {
-                var hello = "fileList" + (dataFileList.length -2) + '_' + 2;
-                var hello2 = "deleteBtn" + (dataFileList.length -2) + '_' + 2;
-            }
-            if(dataFileList.length == 5) {
-                var hello = "fileList" + (dataFileList.length -2) + '_' + 1;
-                var hello2 = "deleteBtn" + (dataFileList.length -2) + '_' + 1;
-            }
-            if(dataFileList.length == 6) {
-                var hello = "fileList" + (dataFileList.length -3) + '_' + 2;
-                var hello2 = "deleteBtn" + (dataFileList.length -3) + '_' + 2;
-            }
-            $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='removeFile($(this), " + awaitFileList[i].id +")' style='margin:auto; display:block;'>삭제</button></span> ");
-        }
-    }
 
 </script>

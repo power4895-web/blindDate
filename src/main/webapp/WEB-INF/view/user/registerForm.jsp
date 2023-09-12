@@ -241,7 +241,9 @@
             }
         }
         console.log("orderParam", orderParam)
+        console.log("filesTempArr첫번째: ", filesTempArr.length)
         filesTempArr.splice(orderParam, 1);
+        console.log("filesTempArr두번째", filesTempArr.length)
 
         var filesTempArrLen = filesTempArr.length;
         var img = "";

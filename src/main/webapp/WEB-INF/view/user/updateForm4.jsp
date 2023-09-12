@@ -138,23 +138,23 @@
     $(document).ready(function(){
         getFileList();
         $(document).on("change", "#file", function(e) {
-            console.log("현재 업로드 되어있는 파일개수", liSize)
+    	console.log("현재 업로드 되어있는 파일개수", liSize)
             var files = e.target.files;
             if(files.length > 6) {
-                console.log("한번에 올리실수 있는 파일은 5개까지");
+    		console.log("한번에 올리실수 있는 파일은 5개까지");
                 alert("파일은 6개까지 올릴 수 있습니다.")
                 fileNum = 0;
                 return;
             }else{
                 fileNum += files.length; //선택한 파일 개수    6
-                console.log("현재 추가한 파일 개수fileNum", fileNum);
-                console.log("현재 업로드되어있는 파일개수", liSize);
+    		console.log("현재 추가한 파일 개수fileNum", fileNum);
+    		console.log("현재 업로드되어있는 파일개수", liSize);
 
                 totalFileSize = liSize + fileNum;
-                console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
+    		console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
                 if(totalFileSize > 6){
                     fileNum -= files.length;
-                    console.log("최종적으로 남은 선택한 파일 개수: ", fileNum);
+    			console.log("최종적으로 남은 선택한 파일 개수: ", fileNum);
 //     			console.log("원래 파일업로드된 파일과 추가한 /파일을 더한결과 5개가 넘습니다.")
                     totalFileSize = 6;  //5가 넘었을 경우 토탈카운트 다시 5로 맞춰준다.
                     alert("파일은 6개까지 올릴 수 있습니다.")
@@ -251,7 +251,7 @@
             "id" : frm.id,
             "realName" : frm.realName,
             "password" : frm.password,
-            "gender" : frm.gender,
+             "gender" : frm.gender,
             "loginId" : frm.loginId,
             "phoneNumber" : frm.phoneNumber,
             "age" : frm.age,
@@ -315,7 +315,7 @@
                 console.log("현재 업로드되어있는 파일개수 liSize" , liSize)
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
-                console.log("error", error)
+            console.log("error", error)
             }
         })
     }
