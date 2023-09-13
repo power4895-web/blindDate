@@ -1,8 +1,10 @@
 package com.example.self_board_project.core.configuration;
 
+import com.example.self_board_project.core.authority.UserHandlerMethodArgumentResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 
+import java.util.List;
+
 @Configuration
 public class SpringMvcConfiguration implements WebMvcConfigurer {
 
@@ -20,23 +24,26 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     private @Value("${deploy}") String deploy;
     /**
      * api에서 파라미터로 Auth auth 를 통해 유저정보를 가져올 수 있도록 하는 utill
+     * Auth파라미터가 담긴 메소드정보를 통해 user정보를 가져오는 로직이 있는 userHandlerMethodArgumentResolver를  argumentResolvers에 등록해야한다.
      * User argumentResolvers
      */
-//    @Override
-//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-//        argumentResolvers.add(userHandlerMethodArgumentResolver());
-//    }
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        System.out.println("addArgumentResolvers : " + argumentResolvers);
+        argumentResolvers.add(userHandlerMethodArgumentResolver());
+    }
 
     /**
      * api에서 파라미터로 Auth auth 를 통해 유저정보를 가져올 수 있도록 하는 utill
-     * argument를 이용한 로그인 사용자 정보
+     * 빈에 userHandlerMethodArgumentResolver등록하기 (미리 만들어놔야함)
      *
      * @return
      */
-//    @Bean
-//    public UserHandlerMethodArgumentResolver userHandlerMethodArgumentResolver() {
-//        return new UserHandlerMethodArgumentResolver();
-//    }
+    @Bean
+    public UserHandlerMethodArgumentResolver userHandlerMethodArgumentResolver() {
+        System.out.println("userHandlerMethodArgumentResolver : ");
+        return new UserHandlerMethodArgumentResolver();
+    }
     /**
      * Tiles View
      *

@@ -90,14 +90,15 @@ public class MainController {
 
 
 
-    @RequestMapping(value="/pricying")
-    public static String price (Auth auth)
+    @RequestMapping(value="/pricing")
+    public static String price (User user)
     {
         return "front:pricing";
     }
     @RequestMapping(value="/about")
     public static String about (Auth auth)
     {
+        System.out.println(auth);
         return "front:about";
     }
 

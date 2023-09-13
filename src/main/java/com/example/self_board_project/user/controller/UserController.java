@@ -65,7 +65,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/updateForm/{id}", method = RequestMethod.GET)
-    public String updateForm(Model model, @PathVariable int id) {
+    public String updateForm(Model model, @PathVariable int id, Auth auth) {
         logger.info("updateForm_id : {}" ,id);
         User user = new User();
         user.setId(id);
@@ -97,7 +97,8 @@ public class UserController {
 
 
     @RequestMapping(value = "/todayProfile")
-    public String todayProfile(Model model, @AuthenticationPrincipal AuthInfo authInfo, HttpServletResponse response) {
+    public String todayProfile(Model model, @AuthenticationPrincipal AuthInfo authInfo, HttpServletResponse response,  Auth auth) {
+        System.out.println("auth"+ auth.getId());
         User user = new User();
         logger.info("todayProfile id :  {}" , authInfo.getUser().getId());
         user.setId(authInfo.getUser().getId());
