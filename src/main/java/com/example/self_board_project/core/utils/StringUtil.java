@@ -1,5 +1,7 @@
 package com.example.self_board_project.core.utils;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.StringCharacterIterator;
 import java.util.regex.Matcher;
@@ -104,5 +106,23 @@ public class StringUtil {
      */
 	public static String trim(String str) {
 	    return null == str ? null : str.trim();
+	}
+
+
+	/**
+	 * 경고창 띄우기
+	 * @param response
+	 * @param msg
+	 */
+	public static void alert(HttpServletResponse response, String msg) {
+		try {
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter w = response.getWriter();
+			w.write("<script>alert('"+msg+"');</script>");
+			w.flush();
+			w.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

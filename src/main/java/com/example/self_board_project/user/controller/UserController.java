@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,11 +97,18 @@ public class UserController {
 
 
     @RequestMapping(value = "/todayProfile")
-    public String todayProfile(Model model, @AuthenticationPrincipal AuthInfo authInfo) {
+    public String todayProfile(Model model, @AuthenticationPrincipal AuthInfo authInfo, HttpServletResponse response) {
         User user = new User();
         logger.info("todayProfile id :  {}" , authInfo.getUser().getId());
         user.setId(authInfo.getUser().getId());
         User userInfo = userService.selectUser(user);
+
+//        goUpdateForm(user, response);
+
+        String result = goUpdateForm(user, response);
+        if(result != "true") {
+            return result;
+        }
         String ids = userInfo.getTodayProfileId();
         String todayIds[] = ids.split(",");
 
@@ -124,7 +132,6 @@ public class UserController {
 
         return "front:user/todayProfile";
     }
-
     @RequestMapping(value = "/todayProfile/update")
     public void todayProfileUpdate(Model model, User user, Auth auth) {
         List<User> userList = userService.selectUserList();
@@ -154,6 +161,24 @@ public class UserController {
         }
     }
 
+    /**
+     * 파일이 등록되어있지 않아서 회원수정으로 다시 가는 메소드
+     * @param user
+     * @param response
+     * @return
+     */
+    public String goUpdateForm(User user, HttpServletResponse response) {
+        logger.info("goUpdateForm");
+        User userInfo = userService.selectUser(user);
+        //대표파일 없으면 redirect
+        if(userInfo.getImgUrl() == null) {
+            logger.info("회원수정으로 가기");
+//            StringUtil.alert(response, "파일을 등록해주세요");
+            return String.format("redirect:/updateForm/%s", userInfo.getId());
+        } else {
+            return "true";
+        }
+    }
 //    @RequestMapping(value = "/login")
 //    public void login(Model model, User user) {
 //        System.out.println(">>>>register" +  user.getLoginId());

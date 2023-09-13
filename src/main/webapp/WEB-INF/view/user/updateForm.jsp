@@ -25,7 +25,6 @@
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="text-center mb-5">
                     <h1 class="fw-bolder">내 정보 변경</h1>
-                    <p class="lead fw-normal text-muted mb-0">update user</p>
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
@@ -64,7 +63,9 @@
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="email" name="email" value="${userInfo.email}" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">이메일</label>
+                                <label for="email">이메일
+                                    <button style="float: right" onclick="emailCheck()">인증번호 발송</button>
+                                </label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
@@ -127,34 +128,35 @@
 </html>
 <script>
 
-    var fileNum = 0;  //추가하고자 하는 파일개수
+    var totalTempFileCount = 0;  //추가하고자 하는 총 파일개수
     var reviewFileCount = 0;	//등록된 수급자 파일개수
     var fileName = $(".fileName");
     var liSize = 0; //현재 등록된 파일 개수를 담을 변수
     var totalFileSize;  //추가한 파일과 업로드 되어있는 파일개수
     var realDataSize;  //추가한 파일과 업로드 되어있는 파일개수
 
+    var realFile; //현재업로드된 파일리스트
+    var realFileCount; //현재업로드된 파일리스트
 
     $(document).ready(function(){
         getFileList();
         $(document).on("change", "#file", function(e) {
-            console.log("현재 업로드 되어있는 파일개수", liSize)
+            console.log("현재 DB파일개수", realFileCount)
             var files = e.target.files;
             if(files.length > 6) {
                 console.log("한번에 올리실수 있는 파일은 5개까지");
                 alert("파일은 6개까지 올릴 수 있습니다.")
-                fileNum = 0;
+                totalTempFileCount = 0;
                 return;
             }else{
-                fileNum += files.length; //선택한 파일 개수    6
-                console.log("현재 추가한 파일 개수fileNum", fileNum);
-                console.log("현재 업로드되어있는 파일개수", liSize);
+                totalTempFileCount += files.length; //선택한 파일 개수    6
+                console.log("현재 추가한 파일 개수 totalTempFileCount : ", totalTempFileCount);
 
-                totalFileSize = liSize + fileNum;
+                totalFileSize = realFileCount + totalTempFileCount;
                 console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
                 if(totalFileSize > 6){
-                    fileNum -= files.length;
-                    console.log("최종적으로 남은 선택한 파일 개수: ", fileNum);
+                    totalTempFileCount -= files.length;
+                    console.log("최종적으로 남은 선택한 파일 개수: ", totalTempFileCount);
 //     			console.log("원래 파일업로드된 파일과 추가한 /파일을 더한결과 5개가 넘습니다.")
                     totalFileSize = 6;  //5가 넘었을 경우 토탈카운트 다시 5로 맞춰준다.
                     alert("파일은 6개까지 올릴 수 있습니다.")
@@ -181,10 +183,10 @@
         for( var i=0; i<filesArrLen; i++ ) {
             filesTempArr.push(filesArr[i]);
 
-            console.log("dataFileList.length DB파일개수 : ", dataFileList.length)
+            console.log("realFileCount DB파일개수 : ", realFileCount)
             console.log("filesTempArr.length 업로드 하려는 파일개수 : ", filesTempArr.length)
 
-            var dataPlusTempFile = dataFileList.length + filesTempArr.length
+            var dataPlusTempFile = realFileCount + filesTempArr.length
             console.log("dataPlusTempFile :DB파일과 현재 업로드하려는 파일 개수: " , dataPlusTempFile)
             img = URL.createObjectURL(filesArr[i]);
             if(dataPlusTempFile == 1) {
@@ -212,7 +214,7 @@
                 var hello2 = "deleteBtn" + (dataPlusTempFile -3) + '_' + 2;
             }
             $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>임시삭제</button></span> ");
 
         }
     }
@@ -246,6 +248,11 @@
 
 
     function update() {
+        if(totalFileSize == 0) {
+            alert("프로필 사진을 최소 한장 등록해주세요");
+            return;
+        }
+
         var frm = $("#frm").serializeObject();
         let params =  {
             "id" : frm.id,
@@ -281,18 +288,90 @@
     }
 
     //파일 삭제
-    var deleteFile = function (self, orderParam) {
+    function deleteFile (self, orderParam) {
         if(confirm("이미지를 삭제하시겠습니까?") == false) { return false ;}
 
-        console.log("orderParam", orderParam)
-
         //삭제하는 버튼의 div안에 img를 디폴트로 만들어준다.
-        self.parent().parent('div').children('img').attr("src", "https://dummyimage.com/600x400/343a40/6c757d");
+        $( '.btn-link:button' ).parent().parent('div').children('img').attr("src", "https://dummyimage.com/600x400/343a40/6c757d");
         //버튼의 상위 div를 없앤다(버튼없앤다)
-        self.parent().empty();
+        $( '.btn-link:button' ).parent().empty();
 
-        fileNum--;  //현재 파일업로드 하려고 하는 개수
-        console.log("fileNum", fileNum);
+        //해당 임시파일 삭제
+        filesTempArr.splice(orderParam, 1);
+
+        var img = "";
+        var emptyFileCount = 6 - realFileCount;  //6-3
+        console.log("세팅되어야 할 개수: tempAwaitFileListCount : ", emptyFileCount)
+
+        var emptyFileCountPlusOne = realFileCount + 1; // 3 + 1
+        console.log("DB파일 이후의 순서이기 때문에 DB+1을 해줌 , emptyFileCountPlusOne : ", emptyFileCountPlusOne)
+        for( var i=0; i<emptyFileCount; i++ ) {
+            if(filesTempArr[i] == null) {
+                img = 'https://dummyimage.com/600x400/343a40/6c757d'
+            } else {
+                img = URL.createObjectURL(filesTempArr[i]);
+            }
+            //임시파일리스트 세팅
+            switch (emptyFileCountPlusOne) {
+                case 1:
+                    var hello = "fileList1_1";
+                    var hello2 = "deleteBtn1_1";
+                    $("#" + hello).attr("src", img);
+                    if(filesTempArr[i] != null) {
+                        $("#" + hello).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + i + ")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+                    }
+                    break;
+                case 2:
+                    var hello = "fileList1_2";
+                    var hello2 = "deleteBtn1_2";
+                    $("#" + hello).attr("src", img);
+
+                    if(filesTempArr[i] != null) {
+                        $("#" + hello).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + i + ")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+                    }
+                    break;
+                case 3:
+                    var hello = "fileList2_1";
+                    var hello2 = "deleteBtn2_1";
+                    $("#" + hello).attr("src", img);
+                    if(filesTempArr[i] != null) {
+                        $("#" + hello).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + i + ")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+                    }
+                    break;
+                case 4:
+                    var hello = "fileList2_2";
+                    var hello2 = "deleteBtn2_2";
+                    $("#" + hello).attr("src", img);
+                    filesTempArr[i]
+                    if(filesTempArr[i] != null) {
+                        console.log("임시파일 있음")
+                        $("#" + hello).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + i + ")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+                    }
+                    break;
+                case 5:
+                    var hello = "fileList3_1";
+                    var hello2 = "deleteBtn3_1";
+                    $("#" + hello).attr("src", img);
+                    if(filesTempArr[i] != null) {
+                        console.log("임시파일 있음")
+                        $("#" + hello).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + i + ")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+                    }
+                    break;
+                case 6:
+                    var hello = "fileList3_2";
+                    var hello2 = "deleteBtn3_2";
+                    $("#" + hello).attr("src", img);
+                    if(filesTempArr[i] != null) {
+                        console.log("임시파일 있음")
+                        $("#" + hello).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + i + ")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+                    }
+                    break;
+            }
+            console.log("case문 끝 emptyFileCountPlusOne +1 추가해주기")
+            emptyFileCountPlusOne++;
+        } //for문끝
+        totalTempFileCount--;  //현재 파일업로드 하려고 하는 개수
+        console.log("현재 파일업로드 하려고 하는 총 개수 totalTempFileCount", totalTempFileCount);
         totalFileSize--; //총 파일개수
         console.log("총 파일개수 totalFileSize : ", totalFileSize)
     }
@@ -310,9 +389,15 @@
             type:"post",
             url : "/deleteFile/" + id,
             success: function(data){
-                $(obj).closest("div").remove();
-                liSize--;
-                console.log("현재 업로드되어있는 파일개수 liSize" , liSize)
+                for(let i=1; i<7; i++) {
+                    for(let j=1; j<3; j++) {
+                        $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d');
+                        $('#deleteBtn' + i + '_' + j).remove();
+                    }
+                }
+                getFileList();
+                // liSize--;
+                console.log("현재 업로드되어있는 파일개수 totalFileSize" , totalFileSize)
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
@@ -332,7 +417,6 @@
                 dataType: "JSON", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML,JSONP)
                 contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
                 success: function (data) { // 결과 성공 콜백함수
-                    console.log("data", data)
                     resolve(data);
                 },
                 error: function (request, status, error) { // 결과 에러 콜백함수
@@ -343,18 +427,22 @@
         });
     };
 
-    var awaitFileList;
-    var dataFileList = [];
+
     async function getFileList () {
-        awaitFileList = await requestSyncPostBodyJson();
-        console.log("awaitFileList", awaitFileList.length);
-        totalFileSize = awaitFileList.length;
+        var realFile;  //DB 파일
+        var dataFileList = []; //파일을 잠시 넣어둘 변수
+
+        realFile = await requestSyncPostBodyJson();
+        realFileCount = realFile.length;
+        if(realFileCount == 0) {
+            alert("최소 파일 한장을 등록해주셔야 활성화 됩니다.")
+        }
+        totalFileSize = realFileCount;
         var img = "";
 
-        for(var i=0; i<awaitFileList.length; i++) {
-            dataFileList.push(awaitFileList[i]);
-            img = awaitFileList[i].filepath + awaitFileList[i].imageName
-            console.log(">>>" , dataFileList.length)
+        for(var i=0; i<realFile.length; i++) {
+            dataFileList.push(realFile[i]);
+            img = realFile[i].filepath + realFile[i].imageName
             if(dataFileList.length == 1) {
                 var hello = "fileList" + dataFileList.length + '_' + 1;
                 var hello2 = "deleteBtn" + dataFileList.length + '_' + 1;
@@ -380,7 +468,7 @@
                 var hello2 = "deleteBtn" + (dataFileList.length -3) + '_' + 2;
             }
             $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='removeFile($(this), " + awaitFileList[i].id +")' style='margin:auto; display:block;'>삭제</button></span> ");
+            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='removeFile($(this), " + realFile[i].id +")' style='margin:auto; display:block;'>삭제</button></span> ");
         }
     }
 
