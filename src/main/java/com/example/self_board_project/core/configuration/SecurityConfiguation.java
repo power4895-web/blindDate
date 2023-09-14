@@ -42,11 +42,18 @@ public class SecurityConfiguation extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //시큐리티 설정을 하면 csrf의 공격으로 방어를 해준다. 그래서 외부에서 요청하는 api가 못들어오는 경우가 있다. 그래서 disable해주면 다 허용해준다는 것이다.
+        //하지만 배포할 때 문제점이 있다. 배포했을 때 공격을 받을 수 있다는 것이다. 그래서 스프링에서는 권장하지 않는다. 그래서 나는 mail만 예외처리를 했다.
+        //주석해버리면 loginProc도 403에러가 난다, form, ajax를 통해 서버로 요청할 때 모두 403이 뜬다. 그래서 form, ajax시
+        // CSRF 토큰 값이 세션에 저장되어있는데 form에는
+        // <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 이걸함께, ajax에는 header에 넣어서 보내면 403이 안뜬다.
         http.csrf().disable();
+//        http.csrf().ignoringAntMatchers("/mail/**");//이메일만 csrf예외처리가 되긴 한다.
+//        http.csrf().ignoringAntMatchers("/loginProc/**");//이메일만 csrf예외처리가 되긴 한다.
         http.authorizeRequests()
                 .antMatchers("/user/**").authenticated()
-                 .antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
-                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

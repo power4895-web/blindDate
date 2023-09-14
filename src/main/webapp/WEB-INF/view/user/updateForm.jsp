@@ -63,9 +63,7 @@
                             <!-- Email address input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="email" name="email" value="${userInfo.email}" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">이메일
-                                    <button style="float: right" onclick="emailCheck()">인증번호 발송</button>
-                                </label>
+                                <label for="email">이메일</label>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>

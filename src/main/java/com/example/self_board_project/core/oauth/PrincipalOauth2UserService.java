@@ -19,7 +19,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,8 +27,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private UserService userService ;
-    @Autowired
-    private HttpSession httpSession ;
     @Autowired
     private AuthMapper mapper;
     @Autowired
@@ -51,14 +48,14 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
             oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
         } else {
-            logger.info("우리는 구글,페이스북, 네이버만만 지원합니다.");
+            logger.info("우리는 구글,페이스북, 네이버만 지원합니다.");
         }
 
         String provider = oAuth2UserInfo.getGetProvider();
         String providerId = oAuth2UserInfo.getProviderId();
         String nickname = oAuth2UserInfo.getName();
         String username = provider + "_" + providerId; //필요는 없지만 그냥 만들어준다. 오스로 로그인했을 때
-        String password = passwordEncoder.encode("겟인데어"); //필요는 없지만 그냥 만들어준다. 오스로 로그인했을 때
+        String password = passwordEncoder.encode("겟인데어"); //필요는 없지만 그냥 만들어준다. 오스로 로그인했을 때, 겟인데어는 아무말이나 쓴것
         String email = oAuth2UserInfo.getEmail();
         String role = "ROLE_USER";
 

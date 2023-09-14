@@ -71,11 +71,18 @@
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
                                 <label for="email">이메일</label>
-                                <label for="email">이메일
-                                </label>
-                                <button type="button" class="btn btn-info" onclick="emailCheck()">인증번호 발송</button>
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <button type="button" class="btn btn-info btn-sm" id="sendBtn" name="sendBtn" onclick="sendNumber()">인증번호 발송</button>
+                                <input type="hidden" id="getConfirmNumber" name="getConfirmNumber" value="">
+                            </div>
+                            <div class="form-floating mb-3">
+                                <div id="showMailCheck" name="showMailCheck" >
+                                    <input type="text" name="checkNumber" id="checkNumber" style="width:250px; margin-top: -10px" placeholder="인증번호 입력">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="emailCheckButton()">이메일 인증</button>
+                                </div>
                             </div>
                             <!-- ID address input-->
                             <div class="form-floating mb-3">
@@ -129,9 +136,6 @@
                             <!-- This is what your users will see when there is-->
                             <!-- an error submitting the form-->
                             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-<%--                            <button class="btn btn-primary "  class="btn btn-primary btn-lg disabled"  id="submitButton" onclick="register()" >가입2</button>--%>
-<%--                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="register()" >가입</button></div>--%>
-                            <!-- Submit Button-->
                         </form>
                         <div class="d-grid">
                             <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="register()" type="submit">가입</button></div>
@@ -150,6 +154,7 @@
     var fileName = $(".fileName");
     var liSize = 0; //현재 등록된 파일 개수를 담을 변수
     var totalFileSize;  //추가한 파일과 업로드 되어있는 파일개수
+    let emailCheck = false;
     $(document).ready(function(){
         $(document).on("change", "#file", function(e) {
 
@@ -325,9 +330,16 @@
             alert("파일을 한개이상 등록하세요.")
             return;
         }
+        if(emailCheck == false) {
+            alert("이메일을 체크해주세요")
+            return;
+        }
+
+
 
         var frm = $("#frm").serializeObject();
         console.log("frm.realName : ", frm.realName)
+        return;
         let params =  {
             "realName" : frm.realName,
             "password" : frm.password,
@@ -357,9 +369,42 @@
         });
     }
 
-    function emailCheck() {
-        alert(1)
+
+    function sendNumber(){
+        const result = com.isEmail($('#email').val());
+        console.log("result", result);
+        if($('#email').val().trim() == '') {
+            alert('이메일을 입력해주세요.')
+            return;
+        }
+        if(result == false) {
+            alert('이메일형식이 맞지 않습니다.')
+            return;
+        }
+        $.ajax({
+            url:"/mail",
+            type:"post",
+            dataType:"json",
+            data:{"mail" : $("#email").val()},
+            success: function(data){
+                alert("인증번호 발송");
+                $('#showMailCheck').show();
+                $("#getConfirmNumber").val(data);
+            },
+        })
     }
+
+    function emailCheckButton(){
+        const checkNumber = $("#checkNumber").val();
+        const getConfirmNumber = $("#getConfirmNumber").val();
+        if(checkNumber == getConfirmNumber){
+            alert("인증되었습니다.");
+            emailCheck = true;
+        }else{
+            alert("번호가 다릅니다.");
+        }
+    }
+
 
 
 </script>

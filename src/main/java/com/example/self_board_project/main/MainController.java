@@ -91,10 +91,13 @@ public class MainController {
 
 
     @RequestMapping(value="/pricing")
-    public static String price (User user)
+    public String price (User user)
     {
+        logger.info(">>>>>>>>>>>>>>>>>");
+
         return "front:pricing";
     }
+
     @RequestMapping(value="/about")
     public static String about (Auth auth)
     {

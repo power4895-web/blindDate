@@ -15,7 +15,7 @@
 	<logger name="org.springframework" level="info" additivity="false" >
 		<appender-ref ref="console" />
 	</logger>
-	<logger name="com.healthyhada" level="info" additivity="false"> 
+	<logger name="com.example.self_board_project" level="info" additivity="false">
 		<appender-ref ref="console" />
 	</logger>
 	<logger name="com.example.self_board_project" level="debug" additivity="false">

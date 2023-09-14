@@ -63,6 +63,7 @@
     </select>
 
     <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
+        /** selectUser **/
         SELECT id,
             login_id,
             password,
