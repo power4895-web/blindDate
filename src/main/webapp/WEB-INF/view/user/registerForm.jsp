@@ -335,11 +335,8 @@
             return;
         }
 
-
-
         var frm = $("#frm").serializeObject();
         console.log("frm.realName : ", frm.realName)
-        return;
         let params =  {
             "realName" : frm.realName,
             "password" : frm.password,

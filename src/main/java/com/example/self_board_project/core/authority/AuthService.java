@@ -22,12 +22,13 @@ public class AuthService  implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException, DataAccessException {
 		System.out.println("loadUserByUsername , loginId : " + loginId);
-    	
 		//로그인 정보
 		Map<String, String> user = new HashMap<String, String>();
 		user.put("loginId", loginId);
 		Auth loginInfo = (Auth)mapper.getUserInfo(user);
-		System.out.println(">>>>>>>>>>>>" + loginInfo);
+		System.out.println("loginInfo: " + loginInfo);
+
+
 		return new AuthInfo(loginInfo);
     }
     

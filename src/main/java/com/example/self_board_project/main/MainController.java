@@ -13,10 +13,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
@@ -61,7 +58,20 @@ public class MainController {
      */
     @RequestMapping(value = "/loginForm")
     public String userLoginForm(Model model, User user) {
-        return "front:user/login";
+        logger.info("loginForm");
+        return "front:user/loginForm";
+    }
+
+    @GetMapping(value = "/loginFail")
+    public String loginFail(@RequestParam(value = "error", required = false) String error,
+                            @RequestParam(value = "exception", required = false) String exception,
+                            Model model) {
+        logger.info("loginFail");
+        logger.info("error : {}", error);
+        logger.info("exception : {}", exception);
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+        return "front:user/loginForm";
     }
     /**
      * 회원가입 폼

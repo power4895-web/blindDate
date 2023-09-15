@@ -26,8 +26,6 @@ public class BoardController {
 
     @RequestMapping(value = "/board/list")
     public String boardList(Model model, Auth auth,  Board board, Principal principal) {
-        System.out.println(auth.getLoginId());
-        System.out.println(auth.getId());
         List<Board> boardList = boardService.selectBoardList(board);
         model.addAttribute("boardList", boardList);
         return "front:board/boardList";
