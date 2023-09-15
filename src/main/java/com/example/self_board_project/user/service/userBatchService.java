@@ -11,35 +11,12 @@ import java.util.List;
 public class userBatchService {
     @Autowired
     private UserService userService;
+// @Scheduled(cron = "0 15 10 15 11 ?") // 11월 15일 오전 10시 15분에 실행
 
-    @Scheduled(cron = "0 03 00 * * *")
-    public void todayRandom() {
+
+    @Scheduled(cron = "0 03 00 * * *") //매일 오전 00 시 03분에 돈다
+    public void todayRandomBatch() {
         User user = new User();
-        List<User> userList = userService.selectUserList();
-        for (User item: userList) {
-            String todayProfileId = "";
-            if(item.getGender().equals("M")) {
-                user.setGender("F");
-                List<User> manRandomList = userService.selectUserRandomList(user);
-                for (User item2: manRandomList) {
-                    todayProfileId += item2.getId() + ",";
-                }
-                todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
-                user.setTodayProfileId(todayProfileId);
-                user.setId(item.getId());
-                userService.updateTodayProfileId(user);
-            } else {
-                user.setGender("M");
-                List<User> womanRandomList = userService.selectUserRandomList(user);
-                for (User item2: womanRandomList) {
-                    todayProfileId += item2.getId() + ",";
-                }
-                todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
-                user.setTodayProfileId(todayProfileId);
-                user.setId(item.getId());
-                userService.updateTodayProfileId(user);
-            }
-        }
+        userService.todayRandom(user);
     }
-
 }

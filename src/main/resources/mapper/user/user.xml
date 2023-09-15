@@ -37,7 +37,7 @@
                create_date,
                update_date,
                update_id,
-               (select image_name  from file t2 where t1.id = t2.ref_id and t2.flag = 'S') image_name
+               (select image_name  from file t2 where t1.id = t2.ref_id and t2.flag = 'S' AND boss_type = "Y") image_name
         FROM user t1
     </select>
 

@@ -97,69 +97,40 @@ public class UserController {
 
 
     @RequestMapping(value = "/todayProfile")
-    public String todayProfile(Model model, @AuthenticationPrincipal AuthInfo authInfo, HttpServletResponse response,  Auth auth) {
-        System.out.println("auth"+ auth.getId());
+    public String todayProfile(Model model, HttpServletResponse response,  Auth auth) {
+        logger.info(" auth.getId : {}"+ auth.getId());
         User user = new User();
-        logger.info("todayProfile id :  {}" , authInfo.getUser().getId());
-        user.setId(authInfo.getUser().getId());
+        user.setId(auth.getId());
         User userInfo = userService.selectUser(user);
 
-//        goUpdateForm(user, response);
-
+        //자신의 대표사진이 없으면 회원수정으로 가기
         String result = goUpdateForm(user, response);
-        if(result != "true") {
-            return result;
+        logger.info("대표사진이 있는 결과 result : {}", result);
+        if(result == "true") {
+            logger.info("대표사진 존재함");
         }
         String ids = userInfo.getTodayProfileId();
+        logger.info("todayId: {} " , ids);
+//        logger.info("todayId: {} " , ids.isBlank());
+        if(ids == null || ids.equals("")) {
+            logger.info("todayId가 존재하지 않음 ");
+            userService.todayRandom(user);
+            userInfo = userService.selectUser(user);
+            ids = userInfo.getTodayProfileId();
+        }
         String todayIds[] = ids.split(",");
-
+        logger.info("todayIds.length : {}", todayIds.length);
         List<User> dataList = new ArrayList<>();
         for (String item3 : todayIds) {
             User todayUser = new User();
             todayUser.setId(Integer.parseInt(item3));
             todayUser.setBossType("B");
             todayUser.setFlag("S");
-
             User userInfo2 = userService.selectUser(todayUser);
             dataList.add(userInfo2);
         }
         model.addAttribute("dataList", dataList);
-//        for (User item4: dataList) {
-//            System.out.println("item4" + item4.getId());
-//            User userInfo2 = userService.selectUser(Integer.parseInt(item3));
-//            dataList.add(userInfo2);
-//        }
-
-
         return "front:user/todayProfile";
-    }
-    @RequestMapping(value = "/todayProfile/update")
-    public void todayProfileUpdate(Model model, User user, Auth auth) {
-        List<User> userList = userService.selectUserList();
-        for (User item : userList) {
-            String todayProfileId = "";
-            if (item.getGender().equals("M")) {
-                user.setGender("F");
-                List<User> manRandomList = userService.selectUserRandomList(user);
-                for (User item2 : manRandomList) {
-                    todayProfileId += item2.getId() + ",";
-                }
-                todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
-                user.setTodayProfileId(todayProfileId);
-                user.setId(item.getId());
-                userService.updateTodayProfileId(user);
-            } else {
-                user.setGender("M");
-                List<User> womanRandomList = userService.selectUserRandomList(user);
-                for (User item2 : womanRandomList) {
-                    todayProfileId += item2.getId() + ",";
-                }
-                todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
-                user.setTodayProfileId(todayProfileId);
-                user.setId(item.getId());
-                userService.updateTodayProfileId(user);
-            }
-        }
     }
 
     /**
