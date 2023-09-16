@@ -175,11 +175,35 @@
                 </div>
             </div>
         </div>
+
+        <button onclick="test()">test</button>
     </section>
 </main>
 </body>
 </html>
 <script>
+
+    function test() {
+        const params = {
+            "loginId" : 'hello',
+            "name" : "them",
+        }
+        console.log(typeof params);
+        console.log(typeof JSON.stringify(params));
+
+        com.requestAjax({
+            type: "POST",
+            url : "/pricing2",
+            // contentType: 'application/json',
+            // params : {
+            //     "loginId" : 'hello',
+            //     "name" : "them",
+            // }
+            data: params,
+        },function(data){
+            console.log("data" , data);
+        });
+    }
 
     function login() {
         console.log(">>", $("#loginId").val().trim())
