@@ -212,7 +212,8 @@
                 var hello2 = "deleteBtn" + (dataPlusTempFile -3) + '_' + 2;
             }
             $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-link' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>임시삭제</button></span> ");
+            $("#" + hello ).after("<span id='" + hello2 + "'" + ">" +
+                "<button type='button' class='btn btn-link' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>임시삭제</button></span>");
 
         }
     }
@@ -466,8 +467,27 @@
                 var hello2 = "deleteBtn" + (dataFileList.length -3) + '_' + 2;
             }
             $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='removeFile($(this), " + realFile[i].id +")' style='margin:auto; display:block;'>삭제</button></span> ");
+            if(i == 0) {
+                $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='removeFile($(this), " + realFile[i].id +")' style='margin:auto; display:block;'>삭제</button></span><div class='jb-text'>대표</div> ");
+            } else {
+                $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='removeFile($(this), " + realFile[i].id +")' style='margin:auto; display:block;'>삭제</button></span>");
+            }
         }
     }
 
 </script>
+<style>
+    .col-lg-6 {
+        position: relative;
+    }
+    .jb-text {
+        position: absolute;
+        top: 6%;
+        left: 20%;
+        transform: translate( -50%, -50% );
+        color: black;
+        border-radius: 10px 10px 10px 10px;
+        background-color: #78DCE8;
+        color: white;
+    }
+</style>

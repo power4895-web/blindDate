@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -30,16 +29,14 @@ public class MainController {
     public String main (Auth auth, Model model)
     {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        System.out.println(">>dddd");
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }
         return "front:main";
     }
-
     @GetMapping(value = "/user")
     public @ResponseBody String user(@AuthenticationPrincipal AuthInfo authInfo, Auth auth) {
-        logger.info("auth : {}" +  authInfo.getUser());
-
         return "user";
     }
 

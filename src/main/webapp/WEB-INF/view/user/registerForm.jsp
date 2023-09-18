@@ -330,10 +330,10 @@
             alert("파일을 한개이상 등록하세요.")
             return;
         }
-        if(emailCheck == false) {
-            alert("이메일을 체크해주세요")
-            return;
-        }
+        // if(emailCheck == false) {
+        //     alert("이메일을 체크해주세요")
+        //     return;
+        // }
 
         var frm = $("#frm").serializeObject();
         console.log("frm.realName : ", frm.realName)
@@ -370,14 +370,14 @@
     function sendNumber(){
         const result = com.isEmail($('#email').val());
         console.log("result", result);
-        if($('#email').val().trim() == '') {
-            alert('이메일을 입력해주세요.')
-            return;
-        }
-        if(result == false) {
-            alert('이메일형식이 맞지 않습니다.')
-            return;
-        }
+        // if($('#email').val().trim() == '') {
+        //     alert('이메일을 입력해주세요.')
+        //     return;
+        // }
+        // if(result == false) {
+        //     alert('이메일형식이 맞지 않습니다.')
+        //     return;
+        // }
         $.ajax({
             url:"/mail",
             type:"post",

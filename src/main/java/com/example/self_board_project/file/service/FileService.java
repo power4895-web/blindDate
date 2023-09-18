@@ -50,6 +50,7 @@ public class FileService {
         }
         if (null != files && files.size() > 0) {
 
+            int index = 0;
             for(MultipartFile multipartFile : files) {
                 UUID uuid = UUID.randomUUID();
                 String filename = uuid + "_" + multipartFile.getOriginalFilename();
@@ -57,22 +58,34 @@ public class FileService {
                 multipartFile.transferTo(saveFile);
 
                 List<Map<String,Object>> imageList = new ArrayList<>();
+
+                String bossType = null;
+                if(index == 0) {
+                    bossType = "Y";
+                } else {
+                    bossType = "N";
+                }
+                String finalBossType = bossType;
                 imageList.add(new HashMap<String, Object>() {
+
                     {
                         put("name", filename);
                         put("flag", "O");
+                        put("bossType", finalBossType);
                     }
                 });
                 imageList.add(new HashMap<String, Object>() {
                     {
                         put("name", createTumbnail(projectPath, filename, 200, 200));
                         put("flag", "S");
+                        put("bossType", finalBossType);
                     }
                 });
                 imageList.add(new HashMap<String, Object>() {
                     {
                         put("name", createTumbnail(projectPath, filename, 400, 400));
                         put("flag", "M");
+                        put("bossType", finalBossType);
                     }
                 });
                 fileInfo.setSystemFilename(filename);
@@ -86,10 +99,12 @@ public class FileService {
                     img.setImageName(obj.get("name").toString());
                     img.setFilepath(resourcePathName);
                     img.setFlag(obj.get("flag").toString());
+                    img.setBossType(obj.get("bossType").toString());
                     img.setOriginalFilename(multipartFile.getOriginalFilename());
                     img.setSystemFilename(filename);
                     fileMapper.insertFile(img);
                 });
+                index++;
             }
         }
     }

@@ -42,6 +42,7 @@
             , filepath
             , image_name
             , flag
+            , boss_type
             , create_date
         )Value(
             #{division}
@@ -51,6 +52,7 @@
             , #{filepath}
             , #{imageName}
             , #{flag}
+            , #{bossType}
             , NOW()
         )
     </insert>

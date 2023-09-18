@@ -3,6 +3,8 @@ package com.example.self_board_project.file.controller;
 
 import com.example.self_board_project.file.service.FileService;
 import com.example.self_board_project.file.vo.FileInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,9 +18,19 @@ import java.util.List;
 
 public class FileController {
 
+    Logger logger = LoggerFactory.getLogger(getClass());
+
+
     @Autowired
     private FileService fileService;
 
+    /**
+     * 파일목록
+     * @param division
+     * @param refid
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
     @RequestMapping(value="/fileUploadList/{division}/{refid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FileInfo> fileUploadList (@PathVariable String division, @PathVariable("refid") Integer refid) throws Exception {
@@ -29,10 +41,18 @@ public class FileController {
         fileInfo.setFlag("S");
         return fileService.selectFileList( fileInfo);
     }
+
+    /**
+     * 파일등록
+     * @param file
+     * @param division
+     * @param refid
+     * @throws Exception
+     */
     @ResponseBody
     @RequestMapping(value="/fileUpload/{division}/{refid}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public void  fileUpload (@RequestParam("file") List<MultipartFile> file, @PathVariable String division, @PathVariable("refid") Integer refid) throws Exception {
-        System.out.println("refid" + refid);
+        logger.info("fileUpload insert_ refId : {}" + refid);
         FileInfo fileInfo = new FileInfo();
         fileInfo.setRefId(refid);
         fileInfo.setDivision(division);
