@@ -13,5 +13,6 @@ public interface FileMapper {
     public FileInfo selectFile(String id);
     public void insertFile(FileInfo fileInfo);
     int deleteFile(String id);
+    public void updateFile(FileInfo fileInfo);
 
 }

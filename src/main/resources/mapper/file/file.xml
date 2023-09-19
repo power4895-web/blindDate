@@ -59,4 +59,12 @@
     <delete id="deleteFile" >
         DELETE FROM file  WHERE id = #{id}
     </delete>
+    <update id="updateFile">
+        UPDATE file set
+        <if test="bossType != null and bossType != ''">
+            boss_type = #{bossType}
+        </if>
+        WHERE id = #{id}
+
+    </update>
 </mapper>

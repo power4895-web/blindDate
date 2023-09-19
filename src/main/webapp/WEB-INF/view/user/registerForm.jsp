@@ -146,6 +146,8 @@
         </div>
     </section>
 </main>
+</body>
+</html>
 <script>
 
 
@@ -229,9 +231,11 @@
             console.log("hello : ", hello)
             console.log("hello2 : ", hello2)
             $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button></span> ");
-            // $("#" + hello2 ).append("<button type='button' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button>");
-
+            if(hello  == 'fileList1_1') {
+                $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button></span><div class='jb-text'>대표</div> ");
+            } else {
+                $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='deleteFile($(this), " + (filesTempArrLen+i) +")' style='margin:auto; display:block;'>삭제</button></span>");
+            }
         }
         console.log("filesTempArr" , filesTempArr)
     }
@@ -242,10 +246,12 @@
 
         console.log("deleteFile")
 
+        //보여지는 파일 싹다 감추기
         for(let i=1; i<7; i++) {
             for(let j=1; j<3; j++) {
-                $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d');
-                $('#deleteBtn' + i + '_' + j).remove();
+                $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d'); //임시파일 지우기
+                $('#deleteBtn' + i + '_' + j).remove(); //삭제버튼지우기
+                $('.jb-text').remove(); //대표지우기
             }
         }
         console.log("orderParam", orderParam)
@@ -258,6 +264,7 @@
 
         console.log(">>>>filesTempArrLen" , filesTempArrLen);
 
+        //보여지는 파일로 다시 세팅
         for( var i=0; i<filesTempArrLen; i++ ) {
             img = URL.createObjectURL(filesTempArr[i]);
 
@@ -288,8 +295,15 @@
             console.log("hello : ", hello)
             console.log("hello2 : ", hello2)
 
+
             $("#" + hello ).attr("src", img);
-            $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + i +")' style='margin:auto; display:block;'>삭제</button></span> ");
+            if(hello  == 'fileList1_1') {
+                $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='deleteFile($(this), " + i +")' style='margin:auto; display:block;'>삭제</button></span><div class='jb-text'>대표</div> ");
+            } else {
+                $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' class='btn btn-dark' onclick='deleteFile($(this), " + i +")' style='margin:auto; display:block;'>삭제</button></span>");
+
+            }
+            // $("#" + hello ).after("<span id='" + hello2 + "'" + "><button type='button' onclick='deleteFile($(this), " + i +")' style='margin:auto; display:block;'>삭제</button></span> ");
         }
         fileNum--;  //현재 파일업로드 하려고 하는 개수
         console.log("fileNum", fileNum);
@@ -405,5 +419,18 @@
 
 
 </script>
-</body>
-</html>
+<style>
+    .col-lg-6 {
+        position: relative;
+    }
+    .jb-text {
+        position: absolute;
+        top: 6%;
+        left: 20%;
+        transform: translate( -50%, -50% );
+        color: black;
+        border-radius: 10px 10px 10px 10px;
+        background-color: #78DCE8;
+        color: white;
+    }
+</style>

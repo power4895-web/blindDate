@@ -6,6 +6,8 @@ import net.coobird.thumbnailator.ThumbnailParameter;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import net.coobird.thumbnailator.name.Rename;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import java.util.*;
 
 @Service
 public class FileService {
+
+    Logger logger = LoggerFactory.getLogger(getClass());
 
     private @Value("${file.root.path}") String fileRootPath;
     private @Value("${upload.resource.path}") String uploadResourcePath;
@@ -36,8 +40,37 @@ public class FileService {
 
 
     public List<FileInfo> selectFileList(FileInfo fileInfo) {
-        System.out.println("selectFileList");
-        return fileMapper.selectFileList(fileInfo);
+        FileInfo allFileInfo = new FileInfo();
+        allFileInfo.setRefId(fileInfo.getRefId());
+        allFileInfo.setDivision(fileInfo.getDivision());
+        logger.info("fileService_selectFileList : {}" , allFileInfo.getFlag());
+        //모든 파일 가져온 후 대표이미지가 설정되지 않았을 시 가장 먼저 등록된 O , S , M의 bossType을 Y로 update
+        List<FileInfo> fileAllList = fileMapper.selectFileList(allFileInfo);
+        if(fileAllList.size() > 0) {
+            logger.info("모든 파일 개수_fileList.size() : {}", fileAllList.size());
+            long bossTypeCountIsY = 0;
+//            list.stream().filter(m -> m.getLev() == 0).collect(Collectors.toList());
+
+            bossTypeCountIsY = fileAllList.stream().filter(obj -> obj.getBossType().equals("Y")).count();
+            logger.info("bossTypeCountIsY : {}", bossTypeCountIsY);
+
+
+            if(bossTypeCountIsY  == 0) {
+                logger.info("bossTypeCountIsY 0 -> 대표이미지 설정안된 상태 > 현재 회원의 가장 첫번 째 등록한 파일에 대표이미지 설정 UPDATE");
+                FileInfo updateFlagInfo = new FileInfo();
+                for(int i=0; i<3; i++) {
+                    logger.info("fileList.get(1).getId() : {}", fileAllList.get(i).getId());
+                    updateFlagInfo.setId(fileAllList.get(i).getId());
+                    updateFlagInfo.setBossType("Y");
+                    updateFile(updateFlagInfo);
+                }
+            }
+        }
+
+        //회원수정에서 S사이즈 리스트
+        fileInfo.setFlag("S");
+        List<FileInfo> fileSmallList = fileMapper.selectFileList(fileInfo);
+        return fileSmallList;
     }
     public void insertFile(FileInfo fileInfo, List<MultipartFile> files)throws Exception {
         List< FileInfo> list = new ArrayList< FileInfo>();
@@ -59,8 +92,16 @@ public class FileService {
 
                 List<Map<String,Object>> imageList = new ArrayList<>();
 
+                
+                //현재 대표이미지가 있는지 없는지, 대표 이미지가 있으면 bosstpye을 N으로 insert, 현재 대표이미지가 없으면 Y로
+                FileInfo fileInfoY = new FileInfo();
+                fileInfoY.setBossType("Y");
+                fileInfoY.setRefId(fileInfo.getRefId());
+                List<FileInfo> fileInfoList = selectFileList(fileInfoY);
+
                 String bossType = null;
-                if(index == 0) {
+                //등록하려는 파일의 첫번 째 이면서 파일등록이 아직 되어있지 않았을 시 = 최초 등록으로 보고 bossType을 Y로, 그 이외는 다 N
+                if(index == 0 && fileInfoList.size() == 0) {
                     bossType = "Y";
                 } else {
                     bossType = "N";
@@ -156,8 +197,9 @@ public class FileService {
      * @return
      */
     public boolean deleteFile(String id) {
+        logger.info("deleteFile Mapper Start id {}", id);
         FileInfo fileInfo = selectFile(id);
-
+        logger.info("fileInfoGetId : {}", fileInfo.getId());
         if (fileInfo == null) return false;
 
         fileMapper.deleteFile(id);
@@ -207,5 +249,7 @@ public class FileService {
         return thumbFileName;
     }
 
-
+    public void updateFile(FileInfo fileInfo) {
+        fileMapper.updateFile(fileInfo);
+    }
 }

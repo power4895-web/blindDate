@@ -34,11 +34,10 @@ public class FileController {
     @ResponseBody
     @RequestMapping(value="/fileUploadList/{division}/{refid}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FileInfo> fileUploadList (@PathVariable String division, @PathVariable("refid") Integer refid) throws Exception {
-        System.out.println("refid" + refid);
+        logger.info("refId : {}" + refid);
         FileInfo fileInfo = new FileInfo();
         fileInfo.setRefId(refid);
         fileInfo.setDivision(division);
-        fileInfo.setFlag("S");
         return fileService.selectFileList( fileInfo);
     }
 
@@ -68,7 +67,19 @@ public class FileController {
     @RequestMapping(value = "/deleteFile/{id}")
     public boolean deleteFile(@PathVariable String id) {
         boolean result = fileService.deleteFile(id);
-        System.out.println("result" + result);
+        int originalId = Integer.parseInt(id)- 1;
+        FileInfo fileOriginal = fileService.selectFile(String.valueOf(originalId));
+        if(fileOriginal.getFlag().equals("O")) {
+            logger.info("O일 때");
+            result = fileService.deleteFile(String.valueOf(originalId));
+        }
+
+        int MediumId = Integer.parseInt(id)+ 1;
+        FileInfo fileMedium = fileService.selectFile(String.valueOf(MediumId));
+        if(fileMedium.getFlag().equals("M")) {
+            logger.info("M일 때");
+            result = fileService.deleteFile(String.valueOf(MediumId));
+        }
         return result;
     }
 }
