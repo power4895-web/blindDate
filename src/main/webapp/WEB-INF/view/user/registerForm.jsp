@@ -96,6 +96,26 @@
                                 <label for="phoneNumber">핸드폰번호</label>
                                 <div class="invalid-feedback" data-sb-feedback="phoneNumber:required">A phone number is required.</div>
                             </div>
+
+                            <!-- addressDoro input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="addressDoro" name="addressDoro" data-sb-validations="required" />
+                                <label for="addressDoro">지역</label>
+                                <div class="invalid-feedback" data-sb-feedback="addressDoro:required">A phone number is required.</div>
+                            </div>
+                            <!-- job input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="job" name="job" data-sb-validations="required" />
+                                <label for="job">직업</label>
+                                <div class="invalid-feedback" data-sb-feedback="job:required">A phone number is required.</div>
+                            </div>
+                            <!-- purpose input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="purpose" name="purpose"  data-sb-validations="required" />
+                                <label for="purpose">목적</label>
+                                <div class="invalid-feedback" data-sb-feedback="purpose:required">A phone number is required.</div>
+                            </div>
+
                             <!-- Message input-->
                             <div class="form-floating mb-3">
                                 <textarea class="form-control" id="introduce" name="introduce" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
@@ -113,10 +133,10 @@
                                     <div class="container px-5 my-5">
                                         <div class="row gx-5 align-items-center">
                                             <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_1" />
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_1" />
                                             </div>
                                             <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_2" />
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_2" />
                                             </div>
                                         </div>
                                     </div>
@@ -249,7 +269,7 @@
         //보여지는 파일 싹다 감추기
         for(let i=1; i<7; i++) {
             for(let j=1; j<3; j++) {
-                $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d'); //임시파일 지우기
+                $('#fileList' + i + '_' + j).attr("src", '/static/files/who5.png'); //임시파일 지우기
                 $('#deleteBtn' + i + '_' + j).remove(); //삭제버튼지우기
                 $('.jb-text').remove(); //대표지우기
             }

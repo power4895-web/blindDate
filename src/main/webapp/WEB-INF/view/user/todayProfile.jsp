@@ -25,11 +25,10 @@
     <section class="bg-light py-5">
         <div class="container px-5 my-5">
             <div class="text-center mb-5">
-                <h1 class="fw-bolder">Pay as you grow</h1>
-                <p class="lead fw-normal text-muted mb-0">With our no hassle pricing plans</p>
+                <h1 class="fw-bolder">Daily Profilee</h1>
+                <p class="lead fw-normal text-muted mb-0">Read the profile carefully and choose between the two</p>
             </div>
             <div class="row gx-5 justify-content-center">
-                <!-- Pricing card free-->
                 <c:forEach var="item" items="${dataList}">
                     <div class="col-lg-6 col-xl-4">
                         <div class="card mb-5 mb-xl-0">
@@ -37,8 +36,11 @@
                                 <div class="mb-3">
                                     <img class="card-img-top" src="${item.imgUrl}" alt="..." />
                                 </div>
-                                <div class="small text-uppercase fw-bold text-muted">Free</div>
                                 <ul class="list-unstyled mb-4">
+                                    <div class="small">
+                                        <div class="fw-bold">${item.nickname}, ${item.age}</div>
+                                        <div class="text-muted">${item.job},${item.purpose}</div>
+                                    </div>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
                                         <strong>1 users</strong>
@@ -73,12 +75,11 @@
                                     </li>
                                 </ul>
                                 <div class="d-grid"><a class="btn btn-outline-primary" href="#!">Choose plan</a></div>
+
                             </div>
                         </div>
                     </div>
                 </c:forEach>
-
-
 
                 <%--                        슬라이드--%>
                 <%--                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">--%>
@@ -113,22 +114,6 @@
         </div>
     </section>
 </main>
-<!-- Footer-->
-<footer class="bg-dark py-4 mt-auto">
-    <div class="container px-5">
-        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-            <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2023</div></div>
-            <div class="col-auto">
-                <a class="link-light small" href="#!">Privacy</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Terms</a>
-                <span class="text-white mx-1">&middot;</span>
-                <a class="link-light small" href="#!">Contact</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
 <div>
     <div>
 

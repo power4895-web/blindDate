@@ -32,12 +32,19 @@
                gender,
                email,
                phone_number,
+               address_doro,
+               address_detail,
+               postal_code,
+               grade_score,
+               grade_code,
+               job,
+               purpose,
                introduce,
                today_profile_id,
                create_date,
                update_date,
                update_id,
-               (select image_name  from file t2 where t1.id = t2.ref_id and t2.flag = 'S' AND boss_type = "Y") image_name
+               (select image_name from file t2 where t1.id = t2.ref_id and t2.flag = 'S' AND boss_type = "Y") image_name
         FROM user t1
     </select>
 
@@ -52,6 +59,13 @@
                gender,
                email,
                phone_number,
+               address_doro,
+               address_detail,
+               postal_code,
+               grade_score,
+               grade_code,
+               job,
+               purpose,
                introduce,
                today_profile_id,
                create_date,
@@ -65,20 +79,27 @@
     <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
         /** selectUser **/
         SELECT id,
-            login_id,
-            password,
-            nickname,
-            real_name,
-            age,
-            gender,
-            email,
-            phone_number,
-            introduce,
-            today_profile_id,
-            create_date,
-            update_date,
-            update_id,
-            (select concat(filepath,image_name) from file where ref_id = t1.id and boss_type = "Y" AND flag = "S") as imgUrl
+        login_id,
+        password,
+        nickname,
+        real_name,
+        age,
+        gender,
+        email,
+        phone_number,
+        address_doro,
+        address_detail,
+        postal_code,
+        grade_score,
+        grade_code,
+        job,
+        purpose,
+        introduce,
+        today_profile_id,
+        create_date,
+        update_date,
+        update_id,
+        (select concat(filepath,image_name) from file where ref_id = t1.id and boss_type = "Y" AND flag = "S") as imgUrl
         FROM user t1
         WHERE 1=1
         <if test="id != null and id != ''">
@@ -106,6 +127,13 @@
                           , email
                           , introduce
                           , phone_number
+                          , address_doro,
+                          , address_detail,
+                          , postal_code,
+                          , grade_score,
+                          , grade_code,
+                          , job,
+                          , purpose,
                           , provider
                           , provider_id
                           , username
@@ -121,6 +149,11 @@
                , #{email}
                , #{introduce}
                , #{phoneNumber}
+               , #{addressDoro}
+               , #{addressDetail}
+               , #{postalCode}
+               , #{job}
+               , #{purpose}
                , #{provider}
                , #{providerId}
                , #{username}
@@ -130,9 +163,10 @@
 
 
     <update id="updateUser">
+        /** updateUser **/
         UPDATE user
-        SET login_id = #{loginId},
-            password = #{password},
+        SET login_id= #{loginId},
+            password= #{password},
             nickname= #{nickname},
             real_name= #{realName},
             age= #{age},
@@ -140,13 +174,18 @@
             email= #{email},
             phone_number= #{phoneNumber},
             introduce= #{introduce},
+            address_doro = #{addressDoro},
+            address_detail = #{addressDetail},
+            postal_code = #{postalCode},
+            job = #{job},
+            purpose = #{purpose},
             today_profile_id= #{todayProfileId},
             update_date= now()
         WHERE id = #{id}
-
-
     </update>
+
     <update id="updateTodayProfileId">
+        /** updateTodayProfileId **/
         UPDATE user
         SET today_profile_id = #{todayProfileId}
         WHERE id = #{id}

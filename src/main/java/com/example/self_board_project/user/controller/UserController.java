@@ -2,7 +2,6 @@ package com.example.self_board_project.user.controller;
 
 
 import com.example.self_board_project.core.authority.Auth;
-import com.example.self_board_project.core.authority.AuthInfo;
 import com.example.self_board_project.file.service.FileService;
 import com.example.self_board_project.file.vo.FileInfo;
 import com.example.self_board_project.user.service.UserService;
@@ -10,7 +9,6 @@ import com.example.self_board_project.user.vo.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +62,7 @@ public class UserController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/updateForm/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/updateForm/{id}", method = RequestMethod.GET)
     public String updateForm(Model model, @PathVariable int id, Auth auth) {
         logger.info("updateForm_id : {}" ,id);
         User user = new User();
@@ -88,7 +86,7 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public boolean userUpdate(Model model, User user) {
         userService.updateUser(user);
         return true;
@@ -96,7 +94,7 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "/todayProfile")
+    @RequestMapping(value = "/user/todayProfile")
     public String todayProfile(Model model, HttpServletResponse response,  Auth auth) {
         logger.info(" auth.getId : {}"+ auth.getId());
         User user = new User();
@@ -108,10 +106,11 @@ public class UserController {
         logger.info("대표사진이 있는 결과 result : {}", result);
         if(result == "true") {
             logger.info("대표사진 존재함");
+        }  else {
+            return result;
         }
         String ids = userInfo.getTodayProfileId();
         logger.info("todayId: {} " , ids);
-//        logger.info("todayId: {} " , ids.isBlank());
         if(ids == null || ids.equals("")) {
             logger.info("todayId가 존재하지 않음 ");
             userService.todayRandom(user);

@@ -30,31 +30,37 @@
                     <div class="col-lg-8 col-xl-6">
                         <form action="/register" name="frm" id="frm" data-sb-form-api-token="API_TOKEN">
                             <input type="hidden" id="id" name="id" value="${userInfo.id}">
+                            <!-- ID address input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="loginId" name="loginId" value="${userInfo.loginId}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                <label for="loginId">아이디</label>
+                                <div class="invalid-feedback" data-sb-feedback="loginId:required">A loginId is required.</div>
+                            </div>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
                                 <label for="realName">이름</label>
                                 <div class="invalid-feedback" data-sb-feedback="realName:required">A realName is required.</div>
                             </div>
-                            <!-- Name input-->
+                            <!-- nickname input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="nickname" name="nickname" value="${userInfo.nickname}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="nickname">닉네임</label>
                                 <div class="invalid-feedback" data-sb-feedback="nickname:required">A nickname is required.</div>
                             </div>
-                            <!-- Name input-->
+                            <!-- password input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="password" name="password" value="${userInfo.password}" type="password" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="password">비밀번호</label>
                                 <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
                             </div>
-                            <!-- Name input-->
+                            <!-- age input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="age" name="age" value="${userInfo.age}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="age">나이</label>
                                 <div class="invalid-feedback" data-sb-feedback="age:required">A age is required.</div>
                             </div>
-                            <!-- Name input-->
+                            <!-- gender input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="gender" name="gender" value="${userInfo.gender}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
                                 <label for="gender">성별</label>
@@ -67,17 +73,29 @@
                                 <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                 <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                             </div>
-                            <!-- ID address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="loginId" name="loginId" value="${userInfo.loginId}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="loginId">아이디</label>
-                                <div class="invalid-feedback" data-sb-feedback="loginId:required">A loginId is required.</div>
-                            </div>
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="phoneNumber" name="phoneNumber" value="${userInfo.phoneNumber}" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
                                 <label for="phoneNumber">핸드폰번호</label>
                                 <div class="invalid-feedback" data-sb-feedback="phoneNumber:required">A phone number is required.</div>
+                            </div>
+                            <!-- addressDoro input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="addressDoro" name="addressDoro" value="${userInfo.addressDoro}" data-sb-validations="required" />
+                                <label for="addressDoro">지역</label>
+                                <div class="invalid-feedback" data-sb-feedback="addressDoro:required">A phone number is required.</div>
+                            </div>
+                            <!-- job input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="job" name="job" value="${userInfo.job}"  data-sb-validations="required" />
+                                <label for="job">직업</label>
+                                <div class="invalid-feedback" data-sb-feedback="job:required">A phone number is required.</div>
+                            </div>
+                            <!-- purpose input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="purpose" name="purpose" value="${userInfo.purpose}" data-sb-validations="required" />
+                                <label for="purpose">목적</label>
+                                <div class="invalid-feedback" data-sb-feedback="purpose:required">A phone number is required.</div>
                             </div>
                             <!-- Message input-->
                             <div class="form-floating mb-3">
@@ -85,7 +103,6 @@
                                 <label for="introduce">introduce</label>
                                 <div class="invalid-feedback" data-sb-feedback="introduce:required">A introduce is required.</div>
                             </div>
-
                             <!-- Phone number input-->
                             <div class="form-floating mb-3">
                                 <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple" />
@@ -97,10 +114,10 @@
                                     <div class="container px-5 my-5" id="totalRemove">
                                         <div class="row gx-5 align-items-center">
                                             <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_1" />
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_1" />
                                             </div>
                                             <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="https://dummyimage.com/600x400/343a40/6c757d" alt="..." id="fileList${item}_2" />
+                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_2" />
                                             </div>
                                         </div>
                                     </div>
@@ -264,11 +281,14 @@
             "nickname" : frm.nickname,
             "gender" : frm.gender,
             "email" : frm.email,
+            "addressDoro" : frm.addressDoro,
+            "purpose" : frm.purpose,
+            "job" : frm.job,
             "introduce" : frm.introduce
         }
         $.ajax({
             type : 'post',
-            url : "/update",
+            url : "/user/update",
             data : params,
             // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
             success : function(data) { // 결과 성공 콜백함수
@@ -291,7 +311,7 @@
         if(confirm("이미지를 삭제하시겠습니까?") == false) { return false ;}
 
         //삭제하는 버튼의 div안에 img를 디폴트로 만들어준다.
-        $( '.btn-link:button' ).parent().parent('div').children('img').attr("src", "https://dummyimage.com/600x400/343a40/6c757d");
+        $( '.btn-link:button' ).parent().parent('div').children('img').attr("src", "/static/files/who5.png");
         //버튼의 상위 div를 없앤다(버튼없앤다)
         $( '.btn-link:button' ).parent().empty();
 
@@ -306,7 +326,7 @@
         console.log("DB파일 이후의 순서이기 때문에 DB+1을 해줌 , emptyFileCountPlusOne : ", emptyFileCountPlusOne)
         for( var i=0; i<emptyFileCount; i++ ) {
             if(filesTempArr[i] == null) {
-                img = 'https://dummyimage.com/600x400/343a40/6c757d'
+                img = '/static/files/who5.png'
             } else {
                 img = URL.createObjectURL(filesTempArr[i]);
             }
@@ -390,7 +410,7 @@
             success: function(data){
                 for(let i=1; i<7; i++) {
                     for(let j=1; j<3; j++) {
-                        $('#fileList' + i + '_' + j).attr("src", 'https://dummyimage.com/600x400/343a40/6c757d');
+                        $('#fileList' + i + '_' + j).attr("src", '/static/files/who5.png');
                         $('#deleteBtn' + i + '_' + j).remove();
                     }
                 }

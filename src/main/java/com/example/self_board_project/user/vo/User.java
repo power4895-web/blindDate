@@ -18,6 +18,15 @@ public class User {
     private String phoneNumber;
     private String introduce;
     private String todayProfileId;
+
+    private String addressDoro;
+    private String addressDetail;
+    private String postalCode;
+    private String gradeScore;
+    private String gradeCode;
+    private String job;
+    private String purpose;
+
     private Date createDate;
     private Date updateDate;
     private Integer updateId;
