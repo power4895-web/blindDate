@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.self_board_project.relationship.RelationshipMapper">
+    <sql id="selectQuery">
+        SELECT t1.id,
+               t1.send_id,
+               t1.get_id,
+               t1.accept_check,
+               t1.create_date
+        FROM relationship t1
+
+    </sql>
+    <select id="selectRelationshipList" resultType="com.example.self_board_project.relationship.vo.Relationship">
+        <include refid="selectQuery"/>
+        <where>
+            <if test="sendId != null and sendId != ''">
+                AND t1.`send_id` = #{sendId}
+            </if>
+
+            <if test="getId != null and getId != ''">
+                AND t1.`get_id` = #{getId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectRelationship" resultType="com.example.self_board_project.relationship.vo.Relationship">
+        <include refid="selectQuery"/>
+        <where>
+            <if test="sendId != null and sendId != ''">
+                AND t1.`send_id` = #{sendId}
+            </if>
+
+            <if test="getId != null and getId != ''">
+                AND t1.`get_id` = #{getId}
+            </if>
+        </where>
+
+    </select>
+    <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">
+        insert
+        into relationship (send_id,
+                           get_id,
+                           create_date)
+        values (sendId,
+                getId,
+                NOW());
+    </insert>
+    <!--    <update id="">-->
+
+    <!--    </update>-->
+
+    <!--    <delete id="">-->
+
+    <!--    </delete>-->
+
+
+</mapper>

@@ -74,12 +74,20 @@
                                         Monthly status reports
                                     </li>
                                 </ul>
-                                <div class="d-grid"><a class="btn btn-outline-primary" href="#!">Choose plan</a></div>
+                                <div class="d-grid"><a class="btn btn-outline-primary" onclick="sendRelationship(${item.id})" href="#!">Choose plan</a></div>
+<%--                                <div class="d-grid"><a class="btn btn-outline-primary" onclick="sendRelationship2()" href="#!">Choose plan</a></div>--%>
 
                             </div>
                         </div>
                     </div>
                 </c:forEach>
+
+                <form name="frm" type="post" action="/user/sendingRelationship">
+                    <input type="text" name="test" value="test">
+                    <input type="text" name="test2" value="test2">
+                    <input type="text" name="test3" value="test3">
+                </form>
+
 
                 <%--                        슬라이드--%>
                 <%--                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">--%>
@@ -133,6 +141,37 @@
             $(this).val("");
         })
     })
+
+    function sendRelationship(id) {
+        console.log("id",id)
+
+        const params = {
+            "aaa" : 'hello',
+            "bbb" : "them",
+        }
+
+        $.ajax({
+            type : 'post',
+            url : "/user/sendingRelationship",
+            data : params,
+            contentType: 'application/json',
+            // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
+            success : function(data) { // 결과 성공 콜백함수
+                console.log("data", data)
+            },
+            error : function(request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        });
+        alert(1)
+    }
+
+    function sendRelationship2() {
+        // console.log(">>", $('#frm'),val())
+        // return;
+        // var params = $("#frm").serializeObject();
+        document.frm.submit();
+    }
 
 
 </script>

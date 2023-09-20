@@ -43,8 +43,9 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
         if(user != null) {
         	
         	HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(60 * 30);		//초단위 30분
-            
+            session.setMaxInactiveInterval(86400);		//초단위 30분
+//            session.setMaxInactiveInterval(60 * 30);		//초단위 30분
+
             //로그인 시간 저장
 //            String ip = SysUtil.getRemoteIp(request);
 //            authService.insertLoginLog(user.getUser().getId(),ip);

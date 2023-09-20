@@ -96,6 +96,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/todayProfile")
     public String todayProfile(Model model, HttpServletResponse response,  Auth auth) {
+
         logger.info(" auth.getId : {}"+ auth.getId());
         User user = new User();
         user.setId(auth.getId());
