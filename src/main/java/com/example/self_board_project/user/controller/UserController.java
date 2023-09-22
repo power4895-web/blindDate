@@ -147,6 +147,27 @@ public class UserController {
     }
 
     /**
+     * default는 보낸 표현에서 친구해요
+     * @param model
+     * @param response
+     * @param auth
+     * @return
+     */
+    @RequestMapping(value = "/user/friendList")
+    public String friendList(Model model, HttpServletResponse response,  Auth auth) {
+
+        logger.info("friendList Start");
+        logger.info(" auth.getId : {}"+ auth.getId());
+        //relationship sendid가 로그인한유저의 list가져오기
+        Relationship relationship = new Relationship();
+        relationship.setSendId(auth.getId());
+        List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
+        model.addAttribute("dataList", relationshipList);
+
+        return "front:user/friendList";
+    }
+
+    /**
      * 파일이 등록되어있지 않아서 회원수정으로 다시 가는 메소드
      * @param user
      * @param response

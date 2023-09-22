@@ -8,8 +8,25 @@
                t1.send_id,
                t1.get_id,
                t1.accept_check,
-               t1.create_date
+               t1.create_date,
+               t2.id,
+               t2.real_name,
+               t2.nickname,
+               t2.age,
+               t2.gender,
+               t2.email,
+               t2.introduce,
+               t2.phone_number,
+               t2.address_doro,
+               t2.address_detail,
+               t2.postal_code,
+               t2.job,
+               t2.purpose,
+               (select concat(filepath, image_name)
+                from file
+                where ref_id = t1.get_id and boss_type = "Y" AND flag = "S") as imgUrl
         FROM relationship t1
+        join user t2 on t1.get_id = t2.id
 
     </sql>
     <select id="selectRelationshipList" resultType="com.example.self_board_project.relationship.vo.Relationship">
@@ -41,22 +58,22 @@
     <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">
 
         INSERT INTO `relationship`( send_id
-                          , get_id
-                          , create_date)
+                                  , get_id
+                                  , create_date)
 
         VALUES ( #{sendId}
                , #{getId}
                , now())
     </insert>
-<!--    <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">-->
-<!--        insert-->
-<!--        into relationship (send_id,-->
-<!--                           get_id,-->
-<!--                           create_date)-->
-<!--        values (#{sendId},-->
-<!--                #{getId},-->
-<!--                NOW())-->
-<!--    </insert>-->
+    <!--    <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">-->
+    <!--        insert-->
+    <!--        into relationship (send_id,-->
+    <!--                           get_id,-->
+    <!--                           create_date)-->
+    <!--        values (#{sendId},-->
+    <!--                #{getId},-->
+    <!--                NOW())-->
+    <!--    </insert>-->
     <!--    <update id="">-->
 
     <!--    </update>-->

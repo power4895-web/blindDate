@@ -127,13 +127,11 @@
                           , email
                           , introduce
                           , phone_number
-                          , address_doro,
-                          , address_detail,
-                          , postal_code,
-                          , grade_score,
-                          , grade_code,
-                          , job,
-                          , purpose,
+                          , address_doro
+                          , address_detail
+                          , postal_code
+                          , job
+                          , purpose
                           , provider
                           , provider_id
                           , username
