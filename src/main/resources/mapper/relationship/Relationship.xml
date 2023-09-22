@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.self_board_project.relationship.RelationshipMapper">
+<mapper namespace="com.example.self_board_project.relationship.mapper.RelationshipMapper">
     <sql id="selectQuery">
         SELECT t1.id,
                t1.send_id,
@@ -39,14 +39,24 @@
 
     </select>
     <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">
-        insert
-        into relationship (send_id,
-                           get_id,
-                           create_date)
-        values (sendId,
-                getId,
-                NOW());
+
+        INSERT INTO `relationship`( send_id
+                          , get_id
+                          , create_date)
+
+        VALUES ( #{sendId}
+               , #{getId}
+               , now())
     </insert>
+<!--    <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert-->
+<!--        into relationship (send_id,-->
+<!--                           get_id,-->
+<!--                           create_date)-->
+<!--        values (#{sendId},-->
+<!--                #{getId},-->
+<!--                NOW())-->
+<!--    </insert>-->
     <!--    <update id="">-->
 
     <!--    </update>-->

@@ -4,6 +4,8 @@ package com.example.self_board_project.user.controller;
 import com.example.self_board_project.core.authority.Auth;
 import com.example.self_board_project.file.service.FileService;
 import com.example.self_board_project.file.vo.FileInfo;
+import com.example.self_board_project.relationship.service.RelationshipService;
+import com.example.self_board_project.relationship.vo.Relationship;
 import com.example.self_board_project.user.service.UserService;
 import com.example.self_board_project.user.vo.User;
 import org.slf4j.Logger;
@@ -32,6 +34,8 @@ public class UserController {
 
     @Autowired
     private FileService fileService;
+    @Autowired
+    private RelationshipService relationshipService;
 
     /**
      * 회원목록
@@ -127,6 +131,15 @@ public class UserController {
             todayUser.setBossType("B");
             todayUser.setFlag("S");
             User userInfo2 = userService.selectUser(todayUser);
+            Relationship relationship = new Relationship();
+            relationship.setSendId(auth.getId());
+            relationship.setGetId(Integer.parseInt(item3));
+            Relationship relationshipInfo = relationshipService.selectRelationship(relationship);
+            if(relationshipInfo != null) {
+                userInfo2.setSendYn("Y");
+            } else {
+                userInfo2.setSendYn("N");
+            }
             dataList.add(userInfo2);
         }
         model.addAttribute("dataList", dataList);

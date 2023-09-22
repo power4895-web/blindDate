@@ -49,6 +49,7 @@ public class User {
     private String systemFilename;
     private String imgUrl;
 
-
+    //relationship
+    private String sendYn;
 
 }

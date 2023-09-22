@@ -29,7 +29,7 @@
                 <p class="lead fw-normal text-muted mb-0">Read the profile carefully and choose between the two</p>
             </div>
             <div class="row gx-5 justify-content-center">
-                <c:forEach var="item" items="${dataList}">
+                <c:forEach var="item" items="${dataList}" varStatus="status">
                     <div class="col-lg-6 col-xl-4">
                         <div class="card mb-5 mb-xl-0">
                             <div class="card-body p-5">
@@ -74,20 +74,22 @@
                                         Monthly status reports
                                     </li>
                                 </ul>
-                                <div class="d-grid"><a class="btn btn-outline-primary" onclick="sendRelationship(${item.id})" href="#!">Choose plan</a></div>
-<%--                                <div class="d-grid"><a class="btn btn-outline-primary" onclick="sendRelationship2()" href="#!">Choose plan</a></div>--%>
-
+                                <div class="d-grid">
+                                    <c:if test="${item.sendYn == 'N'}">
+                                        <a id="item_${status.index}" class="btn btn-outline-primary"  onclick="sendRelationship(${item.id},$(this))" href="#!">
+                                            <i class="bi bi-heart"></i>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${item.sendYn == 'Y'}">
+                                        <a id="item_${status.index}" class="btn btn-outline-primary" style="background-color: #0d6efd" href="#!">
+                                            <i class="bi bi-heart-fill" style="color: red"></i>
+                                        </a>
+                                    </c:if>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
-
-                <form name="frm" type="post" action="/user/sendingRelationship">
-                    <input type="text" name="test" value="test">
-                    <input type="text" name="test2" value="test2">
-                    <input type="text" name="test3" value="test3">
-                </form>
-
 
                 <%--                        슬라이드--%>
                 <%--                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">--%>
@@ -121,6 +123,7 @@
         </div>
         </div>
     </section>
+    <a class="btn btn-outline-primary" id="test" style="color:#0d6efd" href="#!">ddd</a>
 </main>
 <div>
     <div>
@@ -133,44 +136,34 @@
 <script>
 
     $(document).ready(function(){
-        $(document).on("change", "#file", function(e) {
-            var files = e.target.files;
-            if(files.length > 0) {
-                addFiles(e);
-            }
-            $(this).val("");
-        })
+
     })
 
-    function sendRelationship(id) {
-        console.log("id",id)
-
-        const params = {
-            "aaa" : 'hello',
-            "bbb" : "them",
+    function sendRelationship(id, obj) {
+        let params = {
+            getId : id
         }
-
         $.ajax({
             type : 'post',
             url : "/user/sendingRelationship",
             data : params,
-            contentType: 'application/json',
-            // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
             success : function(data) { // 결과 성공 콜백함수
                 console.log("data", data)
+                if(data == true) {
+                    //이벤트제거
+                    obj.attr('onclick', '').unbind('click');
+
+                    //하트채우기, red로 변경
+                    obj.children('i').attr('class','bi bi-heart-fill');
+                    obj.children('i').css('color', 'red');
+                    obj.css('backgroundColor', '#0d6efd');
+                }
+
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
             }
         });
-        alert(1)
-    }
-
-    function sendRelationship2() {
-        // console.log(">>", $('#frm'),val())
-        // return;
-        // var params = $("#frm").serializeObject();
-        document.frm.submit();
     }
 
 
