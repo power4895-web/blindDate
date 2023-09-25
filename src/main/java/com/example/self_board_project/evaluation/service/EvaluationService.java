@@ -10,18 +10,16 @@ import java.util.List;
 @Service
 public class EvaluationService {
     @Autowired
-    EvaluationMapper relationshipMapper;
+    EvaluationMapper evaluationMapper;
 
-    public List<Evaluation> selectRelationshipList(Evaluation relationship) {
-        return relationshipMapper.selectRelationshipList(relationship);
+    public List<Evaluation> selectEvaluationList(Evaluation evaluation) {
+        return evaluationMapper.selectEvaluationList(evaluation);
     }
-    public Evaluation selectRelationship(Evaluation relationship) {
-        return relationshipMapper.selectRelationship(relationship);
+    public Evaluation selectEvaluation(Evaluation evaluation) {
+        return evaluationMapper.selectEvaluation(evaluation);
     }
-    public void insertRelationship(Evaluation relationship) {
-        System.out.println(relationship.getGetId());
-        System.out.println(relationship.getSendId());
-        relationshipMapper.insertRelationship(relationship);
+    public void insertEvaluation(Evaluation evaluation) {
+        evaluationMapper.insertEvaluation(evaluation);
     }
 
 }

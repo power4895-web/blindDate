@@ -28,7 +28,6 @@
                 <h1 class="fw-bolder">FriendList</h1>
                 <p class="lead fw-normal text-muted mb-0">Friends with a show of affection</p>
             </div>
-
             <%--탭그리기--%>
             <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist" style="float :none;">
                 <li class="nav-item" role="presentation">
@@ -41,7 +40,7 @@
 
             <%--해시태그--%>
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <button type="button" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="getFriendList()">친구해요</button>
+                <button type="button" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendship()">친구해요</button>
                 <button type="button" class="btn btn-outline-info" data-bs-toggle="button" onclick="getGrade()">호감</button>
             </div>
 
@@ -50,111 +49,13 @@
             <div class="tab-content" id="pills-tabContent">
                 <%--첫번 째--%>
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                    <div class="row gy-xl-5 justify-content">
-                        <c:forEach var="item" items="${dataList}" varStatus="status">
-                            <div class="col-lg-6 col-xl-4">
-                                <div class="card mb-5 mb-xl-0">
-                                    <div class="card-body p-5">
-                                        <div class="mb-3">
-                                            <img class="card-img-top" src="${item.imgUrl}" alt="..." />
-                                        </div>
-                                        <ul class="list-unstyled mb-4">
-                                            <div class="small">
-                                                <div class="fw-bold">${item.nickname}, ${item.age}</div>
-                                                <div class="text-muted">${item.job},${item.purpose}</div>
-                                            </div>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                <strong>1 users</strong>
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                5GB storage
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Unlimited public projects
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Community access
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Unlimited private projects
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Dedicated support
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Free linked domain
-                                            </li>
-                                            <li class="text-muted">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Monthly status reports
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
+                    <div class="row gy-xl-5 justify-content" id="ksw4895">
                     </div>
                 </div>
                 <%--두번 째--%>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                    <div class="row gx-5 justify-content-center">
-                        <c:forEach var="item" items="${dataList}" varStatus="status">
-                            <div class="col-lg-6 col-xl-4">
-                                <div class="card mb-5 mb-xl-0">
-                                    <div class="card-body p-5">
-                                        <div class="mb-3">
-                                            <img class="card-img-top" src="${item.imgUrl}" alt="..." />
-                                        </div>
-                                        <ul class="list-unstyled mb-4">
-                                            <div class="small">
-                                                <div class="fw-bold">${item.nickname}, ${item.age}</div>
-                                                <div class="text-muted">${item.job},${item.purpose}</div>
-                                            </div>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                <strong>1 users</strong>
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                5GB storage
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Unlimited public projects
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Community access
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Unlimited private projects
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Dedicated support
-                                            </li>
-                                            <li class="mb-2">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Free linked domain
-                                            </li>
-                                            <li class="text-muted">
-                                                <i class="bi bi-check text-primary"></i>
-                                                Monthly status reports
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                    </div>
+                        <div class="row gy-xl-5 justify-content" id="ksw48956">
+                        </div>
                 </div>
             </div>
             <%--탭 내용 끝--%>
@@ -166,8 +67,81 @@
 <script>
 
     $(document).ready(function(){
+        getRelationshipList("send");
 
     })
+
+    //보낸표현버튼 > default realationship
+    function sendExpression() {
+        getRelationshipList("send");
+    }
+    //받은표현버튼 > default realationship
+    function getExpression() {
+        getRelationshipList("get");
+    }
+    function letFriendship() {
+        const tabEl = document.querySelector('button[data-bs-toggle="button"]')
+        console.log(tabEl);
+        $('button[data-bs-toggle="button"]').on('click', function (e) {     // here is the new selected tab id
+            var selectedTabId = e.target.id;
+            console.log('tab changed', selectedTabId);
+
+        });
+        // getRelationshipList("get");
+    }
+    function evaluation(type) {
+        getRelationshipList("get");
+    }
+
+
+    async function getRelationshipList(type) {
+        console.log("type", type)
+        $.ajax({
+            type : 'get',
+            url : "/user/relationshipList/" + type,
+            // data : params,
+            success : function(data) { // 결과 성공 콜백함수
+                if(type == "send") {
+                    $('#ksw4895').empty();
+                    $('#ksw48956').empty();
+                    $('#ksw4895').html(data);
+                }
+                if(type == "get") {
+                    $('#ksw4895').empty();
+                    $('#ksw48956').empty();
+                    $('#ksw48956').html(data);
+                }
+            },
+            error : function(request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        });
+    }
+    async function getEvaluationList(type) {
+        console.log("type", type)
+        $.ajax({
+            type : 'get',
+            url : "/user/evaluatonList/" + type,
+            success : function(data) { // 결과 성공 콜백함수
+                if(type == "send") {
+                    $('#ksw4895').empty();
+                    $('#ksw48956').empty();
+                    $('#ksw4895').html(data);
+                }
+                if(type == "get") {
+                    $('#ksw4895').empty();
+                    $('#ksw48956').empty();
+                    $('#ksw4895').empty();
+                    $('#ksw48956').html(data);
+                }
+            },
+            error : function(request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        });
+    }
+
+
 
 
     function sendRelationship(id, obj) {
@@ -198,7 +172,7 @@
     }
 
 
-    function getFriendship() {
+    function getGrade() {
     }
     function getRelationship() {
     }

@@ -155,16 +155,46 @@ public class UserController {
      */
     @RequestMapping(value = "/user/friendList")
     public String friendList(Model model, HttpServletResponse response,  Auth auth) {
-
-        logger.info("friendList Start");
+        logger.info("friendListForm Start");
+        return "front:user/friendList";
+    }
+    @RequestMapping(value = "/user/relationshipList/{type}")
+    public String relationshipList(Model model, HttpServletResponse response, Auth auth, @PathVariable String type) {
+        logger.info("friendList Start type: {}" , type);
         logger.info(" auth.getId : {}"+ auth.getId());
         //relationship sendid가 로그인한유저의 list가져오기
         Relationship relationship = new Relationship();
-        relationship.setSendId(auth.getId());
+        relationship.setType(type);
+        //보낸사람의 아이디, 받은 사람의 정보를 가져올 떄 ex: 내가 설윤한테 보냄(where에 내 id), 회원정보를 가져오는건 설윤정보필요(join에선 getId)
+        if(type.equals("send")) {
+            relationship.setSendId(auth.getId());
+        }
+        //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
+        if(type.equals("get")) {
+            relationship.setGetId(auth.getId());
+        }
         List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
         model.addAttribute("dataList", relationshipList);
-
-        return "front:user/friendList";
+        return "test";
+    }
+    @RequestMapping(value = "/user/evaluatonList/{type}")
+    public String evaluatonList(Model model, HttpServletResponse response, Auth auth, @PathVariable String type) {
+        logger.info("friendList Start type: {}" , type);
+        logger.info(" auth.getId : {}"+ auth.getId());
+        //relationship sendid가 로그인한유저의 list가져오기
+        Relationship relationship = new Relationship();
+        relationship.setType(type);
+        //보낸사람의 아이디, 받은 사람의 정보를 가져올 떄 ex: 내가 설윤한테 보냄(where에 내 id), 회원정보를 가져오는건 설윤정보필요(join에선 getId)
+        if(type.equals("send")) {
+            relationship.setSendId(auth.getId());
+        }
+        //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
+        if(type.equals("get")) {
+            relationship.setGetId(auth.getId());
+        }
+        List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
+        model.addAttribute("dataList", relationshipList);
+        return "test";
     }
 
     /**

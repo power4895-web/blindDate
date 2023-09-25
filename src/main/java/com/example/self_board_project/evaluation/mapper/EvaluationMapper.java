@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface EvaluationMapper {
-    public List<Evaluation> selectRelationshipList(Evaluation relationship);
-    public Evaluation selectRelationship(Evaluation relationship);
-    public void insertRelationship(Evaluation relationship);
+    public List<Evaluation> selectEvaluationList(Evaluation evaluation);
+    public Evaluation selectEvaluation(Evaluation evaluation);
+    public void insertEvaluation(Evaluation evaluation);
 }

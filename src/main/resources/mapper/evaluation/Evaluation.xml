@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.self_board_project.evaluation.mapper.EvaluationMapper">
+<!--    type이 send면, 내가 보낸것이기 때문에 where에서 id조건은 로그인한 아이디이고, 보낸 사람들의 정볼르 가져와야 하기 때문에, file정보와, join은 receive_id로-->
+
+    <sql id="selectQuery">
+        SELECT t1.id,
+        t1.evaluation_id,
+        t1.receive_id,
+        t1.score,
+        t1.create_date,
+        t2.id,
+        t2.real_name,
+        t2.nickname,
+        t2.age,
+        t2.gender,
+        t2.email,
+        t2.introduce,
+        t2.phone_number,
+        t2.address_doro,
+        t2.address_detail,
+        t2.postal_code,
+        t2.job,
+        t2.purpose,
+        if(${type == 'send'} ,(select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type =
+        "Y" AND flag = "S")
+        ,(select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))
+        as imgUrl
+        FROM evaluation t1
+        <if test='type.equals("send")'>
+            join user t2 on t1.receive_id = t2.id
+        </if>
+        <if test='type.equals("get")'>
+            join user t2 on t1.evaluation_id = t2.id
+        </if>
+    </sql>
+    <select id="selectEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        <include refid="selectQuery"/>
+        <where>
+            <if test="evaluationId != null and evaluationId != ''">
+                AND t1.`evaluation_id` = #{evaluationId}
+            </if>
+
+            <if test="receiveId != null and receiveId != ''">
+                AND t1.`receive_id` = #{receiveId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEvaluation" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        <include refid="selectQuery"/>
+        <where>
+            <if test="evaluationId != null and evaluationId != ''">
+                AND t1.`evaluation_id` = #{evaluationId}
+            </if>
+
+            <if test="receiveId != null and receiveId != ''">
+                AND t1.`receive_id` = #{receiveId}
+            </if>
+        </where>
+
+    </select>
+    <insert id="insertEvaluation" useGeneratedKeys="true" keyProperty="id">
+
+        INSERT INTO `evaluation`( evaluation_id
+                                  , receive_id
+                                  , score
+                                  , create_date)
+
+        VALUES ( #{evaluationId}
+               , #{receiveId}
+               , #{score}
+               , now())
+    </insert>
+    <!--    <insert id="insertEvaluation" useGeneratedKeys="true" keyProperty="id">-->
+    <!--        insert-->
+    <!--        into relationship (evaluation_id,-->
+    <!--                           receive_id,-->
+    <!--                           create_date)-->
+    <!--        values (#{evaluationId},-->
+    <!--                #{receive_id},-->
+    <!--                NOW())-->
+    <!--    </insert>-->
+    <!--    <update id="">-->
+
+    <!--    </update>-->
+
+    <!--    <delete id="">-->
+
+    <!--    </delete>-->
+
+
+</mapper>

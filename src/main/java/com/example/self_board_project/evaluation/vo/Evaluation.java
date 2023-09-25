@@ -9,8 +9,8 @@ import java.util.Date;
 @Setter
 public class Evaluation {
     private Integer id;
-    private int sendId;
-    private int getId;
-    private String acceptCheck;
+    private int evaluationId;
+    private int receiveId;
+    private int score;
     private Date createDate;
 }

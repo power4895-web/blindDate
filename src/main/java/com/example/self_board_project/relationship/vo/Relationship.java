@@ -13,6 +13,7 @@ public class Relationship extends User {
     private int sendId;
     private int getId;
     private String acceptCheck;
+    private String type;
     private Date createDate;
 
     //  file

@@ -171,7 +171,6 @@
                 console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
                 if(totalFileSize > 6){
                     totalTempFileCount -= files.length;
-                    console.log("최종적으로 남은 선택한 파일 개수: ", totalTempFileCount);
 //     			console.log("원래 파일업로드된 파일과 추가한 /파일을 더한결과 5개가 넘습니다.")
                     totalFileSize = 6;  //5가 넘었을 경우 토탈카운트 다시 5로 맞춰준다.
                     alert("파일은 6개까지 올릴 수 있습니다.")
@@ -186,7 +185,10 @@
         })
     })
 
+    //임시파일을 담아놓는 배열
     var filesTempArr = [];
+
+    //파일추가
     function addFiles(e) {
         var files = e.target.files;
         var filesArr = Array.prototype.slice.call(files);
@@ -414,9 +416,9 @@
                         $('#deleteBtn' + i + '_' + j).remove();
                     }
                 }
+                filesTempArr.length = 0; //임시파일 모두 없애줘야 하니 0으로 초기화
+                totalTempFileCount = 0; //임시파일 모두 없애줘야 하니 0으로 초기화
                 getFileList();
-                // liSize--;
-                console.log("현재 업로드되어있는 파일개수 totalFileSize" , totalFileSize)
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
@@ -457,6 +459,7 @@
             alert("최소 파일 한장을 등록해주셔야 활성화 됩니다.")
         }
         totalFileSize = realFileCount;
+        console.log("현재 업로드되어있는 파일개수 totalFileSize" , totalFileSize)
         var img = "";
 
         for(var i=0; i<realFile.length; i++) {
