@@ -15,8 +15,20 @@ public class EvaluationService {
     public List<Evaluation> selectEvaluationList(Evaluation evaluation) {
         return evaluationMapper.selectEvaluationList(evaluation);
     }
+    public List<Evaluation> selectSendEvaluationList(Evaluation evaluation) {
+        return evaluationMapper.selectSendEvaluationList(evaluation);
+    }
+    public List<Evaluation> selectGetEvaluationList(Evaluation evaluation) {
+        return evaluationMapper.selectGetEvaluationList(evaluation);
+    }
     public Evaluation selectEvaluation(Evaluation evaluation) {
         return evaluationMapper.selectEvaluation(evaluation);
+    }
+    public Evaluation selectSendEvaluation(Evaluation evaluation) {
+        return evaluationMapper.selectSendEvaluation(evaluation);
+    }
+    public Evaluation selectGetEvaluation(Evaluation evaluation) {
+        return evaluationMapper.selectGetEvaluation(evaluation);
     }
     public void insertEvaluation(Evaluation evaluation) {
         evaluationMapper.insertEvaluation(evaluation);

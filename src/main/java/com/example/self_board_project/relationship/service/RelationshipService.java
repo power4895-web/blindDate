@@ -15,8 +15,20 @@ public class RelationshipService {
     public List<Relationship> selectRelationshipList( Relationship relationship) {
         return relationshipMapper.selectRelationshipList(relationship);
     }
+    public List<Relationship> selectSendRelationshipList( Relationship relationship) {
+        return relationshipMapper.selectSendRelationshipList(relationship);
+    }
+    public List<Relationship> selectGetRelationshipList( Relationship relationship) {
+        return relationshipMapper.selectGetRelationshipList(relationship);
+    }
     public Relationship selectRelationship(Relationship relationship) {
         return relationshipMapper.selectRelationship(relationship);
+    }
+    public Relationship selectSendRelationship(Relationship relationship) {
+        return relationshipMapper.selectSendRelationship(relationship);
+    }
+    public Relationship selectGetRelationship(Relationship relationship) {
+        return relationshipMapper.selectGetRelationship(relationship);
     }
     public void insertRelationship(Relationship relationship) {
         System.out.println(relationship.getGetId());

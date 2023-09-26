@@ -29,8 +29,8 @@
                 <p class="lead fw-normal text-muted mb-0">Friends with a show of affection</p>
             </div>
 
-            <%--탭그리기--%>
-            <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist" style="float :none;">
+            <%--탭그리기 : 보낸표현,받은표현--%>
+            <ul class="nav nav-pills mb-3 justify-content-center" id="myTab" role="tablist" style="float :none;">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="pills-home-tab" onclick="sendExpression()" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">보낸표현</button>
                 </li>
@@ -38,24 +38,22 @@
                     <button class="nav-link" id="pills-profile-tab" onclick="getExpression()" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">받은표현</button>
                 </li>
             </ul>
-
-            <%--해시태그--%>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                <button type="button" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendship()">친구해요</button>
-                <button type="button" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluation()">호감</button>
+            <%--친구해요 호감 해시태그--%>
+            <div class="d-grid gap-2  d-md-flex justify-content-md-start">
+                <button type="button" id="relationship" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendship()">친구해요</button>
+                <button type="button" id="evaluation" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluation()">호감</button>
             </div>
-
 
             <%--탭 내용 시작--%>
             <div class="tab-content" id="pills-tabContent">
                 <%--첫번 째--%>
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                    <div class="row gy-xl-5 justify-content" id="ksw4895">
+                    <div class="row gy-xl-5 justify-content" id="profileOne">
                     </div>
                 </div>
                 <%--두번 째--%>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                        <div class="row gy-xl-5 justify-content" id="ksw48956">
+                        <div class="row gy-xl-5 justify-content" id="profileTwo">
                         </div>
                 </div>
             </div>
@@ -69,8 +67,9 @@
 
     $(document).ready(function(){
         getRelationshipList("send");
+
+        //현재 활성화된 탭 확인
         $('#myTab button').on('click', function (e) {
-            alert(1)
             e.preventDefault()
             $(this).tab('show');
         });
@@ -81,11 +80,16 @@
     //보낸표현버튼 > default realationship
     function sendExpression() {
         getRelationshipList("send");
+        activateTab("relationship"); // 친구해요 활성화
+        deactivateTab("evaluation"); // 호감 비활성화
+
     }
 
     //받은표현버튼 > default realationship
     function getExpression() {
         getRelationshipList("get");
+        activateTab("relationship"); // 친구해요 활성화
+        deactivateTab("evaluation"); // 호감 비활성화
     }
 
     //친구해요 태그
@@ -93,6 +97,9 @@
         var activeTab = $('#myTab li button.active').attr('id');
 
         console.log('현재 활성화된 탭:', activeTab);
+
+        deactivateTab("evaluation"); // 호감 비활성화
+
         if(activeTab == 'pills-home-tab') {
             console.log("보낸표현_친구해요")
             getRelationshipList("send")
@@ -107,6 +114,11 @@
     function evaluation(type) {
         var activeTab = $('#myTab li button.active').attr('id');
         console.log('현재 활성화된 탭:', activeTab);
+
+        //친구해요 active 해제
+        deactivateTab("relationship"); // 친구해요 비활성화
+
+
         if(activeTab == 'pills-home-tab') {
             console.log("보낸표현_호감")
             getEvaluationList("send")
@@ -115,26 +127,38 @@
             console.log("받은표현_호감")
             getEvaluationList("get")
         }
-
     }
 
-    //친구해요 service
+    //현재 선택하지 않은 태그 비활성화 시키기
+    function activateTab(tabId) {
+        const tab = $('#'+ tabId )[0];
+        tab.classList.add("active"); // active 클래스 추가
+        tab.setAttribute("aria-selected", "true"); // aria-selected 속성 업데이트
+    }
+    //현재 선택하지 않은 태그 비활성화 시키기
+    function deactivateTab(tabId) {
+        const tab = $('#'+ tabId )[0];
+        tab.classList.remove("active"); // active 클래스 제거
+        tab.setAttribute("aria-selected", "false"); // aria-selected 속성 업데이트
+    }
+
+    //친구해요 서버호출
     async function getRelationshipList(type) {
         console.log("type", type)
         $.ajax({
             type : 'get',
-            url : "/user/relationshipList/" + type,
+            url : "/relationship/relationshipList/" + type,
             // data : params,
             success : function(data) { // 결과 성공 콜백함수
                 if(type == "send") {
-                    $('#ksw4895').empty();
-                    $('#ksw48956').empty();
-                    $('#ksw4895').html(data);
+                    $('#profileOne').empty();
+                    $('#profileTwo').empty();
+                    $('#profileOne').html(data);
                 }
                 if(type == "get") {
-                    $('#ksw4895').empty();
-                    $('#ksw48956').empty();
-                    $('#ksw48956').html(data);
+                    $('#profileOne').empty();
+                    $('#profileTwo').empty();
+                    $('#profileTwo').html(data);
                 }
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
@@ -147,18 +171,18 @@
         console.log("type", type)
         $.ajax({
             type : 'get',
-            url : "/user/evaluatonList/" + type,
+            url : "/evaluaton/evaluatonList/" + type,
             success : function(data) { // 결과 성공 콜백함수
                 if(type == "send") {
-                    $('#ksw4895').empty();
-                    $('#ksw48956').empty();
-                    $('#ksw4895').html(data);
+                    $('#profileOne').empty();
+                    $('#profileTwo').empty();
+                    $('#profileOne').html(data);
                 }
                 if(type == "get") {
-                    $('#ksw4895').empty();
-                    $('#ksw48956').empty();
-                    $('#ksw4895').empty();
-                    $('#ksw48956').html(data);
+                    $('#profileOne').empty();
+                    $('#profileTwo').empty();
+                    $('#profileOne').empty();
+                    $('#profileTwo').html(data);
                 }
             },
             error : function(request, status, error) { // 결과 에러 콜백함수

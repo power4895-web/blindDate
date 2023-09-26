@@ -51,7 +51,8 @@ public class SecurityConfiguation extends WebSecurityConfigurerAdapter {
 //        http.csrf().ignoringAntMatchers("/mail/**");//이메일만 csrf예외처리가 되긴 한다.
 //        http.csrf().ignoringAntMatchers("/loginProc/**");//이메일만 csrf예외처리가 되긴 한다.
         http.authorizeRequests()
-                .antMatchers("/user/**").authenticated()
+
+                .antMatchers("/user","/relationship","/evaluation/**").authenticated()
                 .antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()

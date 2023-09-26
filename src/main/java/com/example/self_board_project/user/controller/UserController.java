@@ -56,10 +56,29 @@ public class UserController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/user/detail")
-    public String userDetail(Model model) {
-        logger.info("detail : {}" );
-        return "main";
+    @RequestMapping(value = "/user/view/{id}")
+    public String userView(Model model, Auth auth, @PathVariable int id) {
+        logger.info("로그인아이디 : {}", auth.getId() );
+        logger.info("조회 아이디 : {}", id );
+        User user = new User();
+        user.setId(id);
+        User userInfo = userService.selectUser(user);
+        model.addAttribute("userInfo", userInfo);
+
+        Relationship relationship = new Relationship();
+        relationship.setSendId(auth.getId());
+        relationship.setGetId(id);
+        relationship.setType("get");
+        Relationship relationshipInfo = relationshipService.selectRelationship(relationship);
+        model.addAttribute("relationshipInfo", relationshipInfo);
+
+        Evaluation evaluation = new Evaluation();
+        evaluation.setEvaluationId(auth.getId());
+        evaluation.setReceiveId(id);
+        evaluation.setType("get");
+        Evaluation evaluationInfo = evaluationService.selectEvaluation(evaluation);
+        model.addAttribute("evaluationInfo", evaluationInfo);
+        return "front:user/userView";
     }
 
 
@@ -161,46 +180,6 @@ public class UserController {
     public String friendList(Model model, HttpServletResponse response,  Auth auth) {
         logger.info("friendListForm Start");
         return "front:user/friendList";
-    }
-    @RequestMapping(value = "/user/relationshipList/{type}")
-    public String relationshipList(Model model, HttpServletResponse response, Auth auth, @PathVariable String type) {
-        logger.info("friendList Start type: {}" , type);
-        logger.info(" auth.getId : {}"+ auth.getId());
-        //relationship sendid가 로그인한유저의 list가져오기
-        Relationship relationship = new Relationship();
-        relationship.setType(type);
-        //보낸사람의 아이디, 받은 사람의 정보를 가져올 떄 ex: 내가 설윤한테 보냄(where에 내 id), 회원정보를 가져오는건 설윤정보필요(join에선 getId)
-        if(type.equals("send")) {
-            relationship.setSendId(auth.getId());
-        }
-        //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
-        if(type.equals("get")) {
-            relationship.setGetId(auth.getId());
-        }
-        List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
-        model.addAttribute("dataList", relationshipList);
-        model.addAttribute("type", type);
-        return "test";
-    }
-    @RequestMapping(value = "/user/evaluatonList/{type}")
-    public String evaluatonList(Model model, HttpServletResponse response, Auth auth, @PathVariable String type) {
-        logger.info("friendList Start type: {}" , type);
-        logger.info(" auth.getId : {}"+ auth.getId());
-        //relationship sendid가 로그인한유저의 list가져오기
-        Evaluation evaluation = new Evaluation();
-        evaluation.setType(type);
-        //보낸사람의 아이디, 받은 사람의 정보를 가져올 떄 ex: 내가 설윤한테 보냄(where에 내 id), 회원정보를 가져오는건 설윤정보필요(join에선 getId)
-        if(type.equals("send")) {
-            evaluation.setEvaluationId(auth.getId());
-        }
-        //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
-        if(type.equals("get")) {
-            evaluation.setReceiveId(auth.getId());
-        }
-        List<Evaluation> evaluationList = evaluationService.selectEvaluationList(evaluation);
-        model.addAttribute("dataList", evaluationList);
-        model.addAttribute("type", type);
-        return "test";
     }
 
     /**

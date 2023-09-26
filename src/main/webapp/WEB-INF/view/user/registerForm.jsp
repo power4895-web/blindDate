@@ -121,67 +121,67 @@
                                 <label for="purpose">목적</label>
                                 <div class="invalid-feedback" data-sb-feedback="purpose:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- smokingYn input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="smokingYn" name="smokingYn"  data-sb-validations="required" />
                                 <label for="smokingYn">흡연여부</label>
                                 <div class="invalid-feedback" data-sb-feedback="smokingYn:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- drinkingType input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="drinkingType" name="drinkingType"  data-sb-validations="required" />
                                 <label for="drinkingType">음주</label>
                                 <div class="invalid-feedback" data-sb-feedback="drinkingType:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- religionType input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="religionType" name="religionType"  data-sb-validations="required" />
                                 <label for="religionType">종교</label>
                                 <div class="invalid-feedback" data-sb-feedback="religionType:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- petType input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="petType" name="petType"  data-sb-validations="required" />
                                 <label for="petType">반려동물</label>
                                 <div class="invalid-feedback" data-sb-feedback="petType:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- hobby input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="hobby" name="hobby"  data-sb-validations="required" />
                                 <label for="hobby">취미</label>
                                 <div class="invalid-feedback" data-sb-feedback="hobby:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- idealType input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="idealType" name="idealType"  data-sb-validations="required" />
                                 <label for="idealType">이상형</label>
                                 <div class="invalid-feedback" data-sb-feedback="idealType:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- mbti input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="mbti" name="mbti"  data-sb-validations="required" />
                                 <label for="mbti">MBTI</label>
                                 <div class="invalid-feedback" data-sb-feedback="mbti:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- height input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="height" name="height"  data-sb-validations="required" />
                                 <label for="height">키</label>
                                 <div class="invalid-feedback" data-sb-feedback="height:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- academic input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="academic" name="academic"  data-sb-validations="required" />
                                 <label for="academic">학력</label>
                                 <div class="invalid-feedback" data-sb-feedback="academic:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- bodyType input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="bodyType" name="bodyType"  data-sb-validations="required" />
                                 <label for="bodyType">체형</label>
                                 <div class="invalid-feedback" data-sb-feedback="bodyType:required">A phone number is required.</div>
                             </div>
-                            <!-- purpose input-->
+                            <!-- personality input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="personality" name="personality"  data-sb-validations="required" />
                                 <label for="personality">성격</label>

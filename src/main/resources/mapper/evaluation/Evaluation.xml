@@ -11,6 +11,26 @@
         t1.evaluation_id,
         t1.receive_id,
         t1.score,
+        t1.create_date
+        FROM evaluation t1
+    </sql>
+    <select id="selectEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        <include refid="selectQuery"/>
+        <where>
+            <if test="evaluationId != null and evaluationId != ''">
+                AND t1.`evaluation_id` = #{evaluationId}
+            </if>
+
+            <if test="receiveId != null and receiveId != ''">
+                AND t1.`receive_id` = #{receiveId}
+            </if>
+        </where>
+    </select>
+    <select id="selectSendEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        SELECT t1.id,
+        t1.evaluation_id,
+        t1.receive_id,
+        t1.score,
         t1.create_date,
         t2.id,
         t2.real_name,
@@ -36,20 +56,52 @@
         t2.academic,
         t2.body_type,
         t2.workplace,
-        if(${type == 'send'} ,(select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type =
-        "Y" AND flag = "S")
-        ,(select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))
-        as imgUrl
+        (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type ="Y" AND flag = "S")imgUrl
         FROM evaluation t1
-        <if test='type.equals("send")'>
-            join user t2 on t1.receive_id = t2.id
-        </if>
-        <if test='type.equals("get")'>
-            join user t2 on t1.evaluation_id = t2.id
-        </if>
-    </sql>
-    <select id="selectEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
-        <include refid="selectQuery"/>
+        join user t2 on t1.receive_id = t2.id
+        <where>
+            <if test="evaluationId != null and evaluationId != ''">
+                AND t1.`evaluation_id` = #{evaluationId}
+            </if>
+
+            <if test="receiveId != null and receiveId != ''">
+                AND t1.`receive_id` = #{receiveId}
+            </if>
+        </where>
+    </select>
+    <select id="selectGetEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        SELECT t1.id,
+        t1.evaluation_id,
+        t1.receive_id,
+        t1.score,
+        t1.create_date,
+        t2.id,
+        t2.real_name,
+        t2.nickname,
+        t2.age,
+        t2.gender,
+        t2.email,
+        t2.introduce,
+        t2.phone_number,
+        t2.address_doro,
+        t2.address_detail,
+        t2.postal_code,
+        t2.job,
+        t2.purpose,
+        t2.smoking_yn,
+        t2.drinking_type,
+        t2.religion_type,
+        t2.pet_type,
+        t2.hobby,
+        t2.ideal_type,
+        t2.mbti,
+        t2.height,
+        t2.academic,
+        t2.body_type,
+        t2.workplace,
+        (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
+        FROM evaluation t1
+        join user t2 on t1.evaluation_id = t2.id
         <where>
             <if test="evaluationId != null and evaluationId != ''">
                 AND t1.`evaluation_id` = #{evaluationId}
@@ -72,8 +124,95 @@
                 AND t1.`receive_id` = #{receiveId}
             </if>
         </where>
-
     </select>
+    <select id="selectSendEvaluation" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        SELECT t1.id,
+        t1.evaluation_id,
+        t1.receive_id,
+        t1.score,
+        t1.create_date,
+        t2.id,
+        t2.real_name,
+        t2.nickname,
+        t2.age,
+        t2.gender,
+        t2.email,
+        t2.introduce,
+        t2.phone_number,
+        t2.address_doro,
+        t2.address_detail,
+        t2.postal_code,
+        t2.job,
+        t2.purpose,
+        t2.smoking_yn,
+        t2.drinking_type,
+        t2.religion_type,
+        t2.pet_type,
+        t2.hobby,
+        t2.ideal_type,
+        t2.mbti,
+        t2.height,
+        t2.academic,
+        t2.body_type,
+        t2.workplace,
+        (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type = "Y" AND flag = "S"))as imgUrl
+        FROM evaluation t1
+        join user t2 on t1.evaluation_id = t2.id
+        <where>
+            <if test="evaluationId != null and evaluationId != ''">
+                AND t1.`evaluation_id` = #{evaluationId}
+            </if>
+
+            <if test="receiveId != null and receiveId != ''">
+                AND t1.`receive_id` = #{receiveId}
+            </if>
+        </where>
+    </select>
+    <select id="selectGetEvaluation" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        SELECT t1.id,
+        t1.evaluation_id,
+        t1.receive_id,
+        t1.score,
+        t1.create_date,
+        t2.id,
+        t2.real_name,
+        t2.nickname,
+        t2.age,
+        t2.gender,
+        t2.email,
+        t2.introduce,
+        t2.phone_number,
+        t2.address_doro,
+        t2.address_detail,
+        t2.postal_code,
+        t2.job,
+        t2.purpose,
+        t2.smoking_yn,
+        t2.drinking_type,
+        t2.religion_type,
+        t2.pet_type,
+        t2.hobby,
+        t2.ideal_type,
+        t2.mbti,
+        t2.height,
+        t2.academic,
+        t2.body_type,
+        t2.workplace,
+        (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
+        FROM evaluation t1
+        join user t2 on t1.evaluation_id = t2.id
+        <where>
+            <if test="evaluationId != null and evaluationId != ''">
+                AND t1.`evaluation_id` = #{evaluationId}
+            </if>
+
+            <if test="receiveId != null and receiveId != ''">
+                AND t1.`receive_id` = #{receiveId}
+            </if>
+        </where>
+    </select>
+
+
     <insert id="insertEvaluation" useGeneratedKeys="true" keyProperty="id">
 
         INSERT INTO `evaluation`( evaluation_id
