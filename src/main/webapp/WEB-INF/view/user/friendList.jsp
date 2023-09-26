@@ -28,6 +28,7 @@
                 <h1 class="fw-bolder">FriendList</h1>
                 <p class="lead fw-normal text-muted mb-0">Friends with a show of affection</p>
             </div>
+
             <%--탭그리기--%>
             <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist" style="float :none;">
                 <li class="nav-item" role="presentation">
@@ -41,7 +42,7 @@
             <%--해시태그--%>
             <div class="d-grid gap-2 d-md-flex justify-content-md-center">
                 <button type="button" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendship()">친구해요</button>
-                <button type="button" class="btn btn-outline-info" data-bs-toggle="button" onclick="getGrade()">호감</button>
+                <button type="button" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluation()">호감</button>
             </div>
 
 
@@ -68,32 +69,56 @@
 
     $(document).ready(function(){
         getRelationshipList("send");
-
+        $('#myTab button').on('click', function (e) {
+            alert(1)
+            e.preventDefault()
+            $(this).tab('show');
+        });
     })
+
+
 
     //보낸표현버튼 > default realationship
     function sendExpression() {
         getRelationshipList("send");
     }
+
     //받은표현버튼 > default realationship
     function getExpression() {
         getRelationshipList("get");
     }
+
+    //친구해요 태그
     function letFriendship() {
-        const tabEl = document.querySelector('button[data-bs-toggle="button"]')
-        console.log(tabEl);
-        $('button[data-bs-toggle="button"]').on('click', function (e) {     // here is the new selected tab id
-            var selectedTabId = e.target.id;
-            console.log('tab changed', selectedTabId);
+        var activeTab = $('#myTab li button.active').attr('id');
 
-        });
-        // getRelationshipList("get");
+        console.log('현재 활성화된 탭:', activeTab);
+        if(activeTab == 'pills-home-tab') {
+            console.log("보낸표현_친구해요")
+            getRelationshipList("send")
+        }
+        if(activeTab == 'pills-profile-tab') {
+            console.log("받은표현_친구해요")
+
+            getRelationshipList("get")
+        }
     }
+    //호감 태그
     function evaluation(type) {
-        getRelationshipList("get");
+        var activeTab = $('#myTab li button.active').attr('id');
+        console.log('현재 활성화된 탭:', activeTab);
+        if(activeTab == 'pills-home-tab') {
+            console.log("보낸표현_호감")
+            getEvaluationList("send")
+        }
+        if(activeTab == 'pills-profile-tab') {
+            console.log("받은표현_호감")
+            getEvaluationList("get")
+        }
+
     }
 
-
+    //친구해요 service
     async function getRelationshipList(type) {
         console.log("type", type)
         $.ajax({
@@ -117,6 +142,7 @@
             }
         });
     }
+    //호감 service
     async function getEvaluationList(type) {
         console.log("type", type)
         $.ajax({
@@ -141,40 +167,5 @@
         });
     }
 
-
-
-
-    function sendRelationship(id, obj) {
-        let params = {
-            getId : id
-        }
-        $.ajax({
-            type : 'post',
-            url : "/user/sendingRelationship",
-            data : params,
-            success : function(data) { // 결과 성공 콜백함수
-                console.log("data", data)
-                if(data == true) {
-                    //이벤트제거
-                    obj.attr('onclick', '').unbind('click');
-
-                    //하트채우기, red로 변경
-                    obj.children('i').attr('class','bi bi-heart-fill');
-                    obj.children('i').css('color', 'red');
-                    obj.css('backgroundColor', '#0d6efd');
-                }
-
-            },
-            error : function(request, status, error) { // 결과 에러 콜백함수
-                console.log("error", error)
-            }
-        });
-    }
-
-
-    function getGrade() {
-    }
-    function getRelationship() {
-    }
 
 </script>

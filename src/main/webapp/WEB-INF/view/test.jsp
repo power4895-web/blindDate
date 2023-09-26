@@ -16,6 +16,7 @@
 </head>
 <body>
 <p id="indexListAjax">
+    ${test}
     <c:forEach var="item" items="${dataList}" varStatus="status" >
         <div class="col-lg-6 col-xl-4">
             <div class="card mb-5 mb-xl-0">
@@ -26,39 +27,52 @@
                     <ul class="list-unstyled mb-4">
                         <div class="small">
                             <div class="fw-bold">${item.nickname}, ${item.age}</div>
-                            <div class="text-muted">${item.job},${item.purpose}</div>
+                            <div class="text-muted">${item.addressDoro},${item.purpose}</div>
                         </div>
                         <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            <strong>1 users</strong>
+                            <label>직업: </label>
+                            <label>${item.job}</label>
                         </li>
                         <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            5GB storage
+                            <label>직장: </label>
+                            <label>${item.workplace}</label>
                         </li>
                         <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            Unlimited public projects
+                            <label>학력: </label>
+                            <label>${item.academic}</label>
                         </li>
                         <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            Community access
+                            <label>체형: </label>
+                            <label>${item.bodyType}</label>
                         </li>
                         <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            Unlimited private projects
+                            <label>성격: </label>
+                            <label>${item.personality}</label>
                         </li>
                         <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            Dedicated support
+                            <label>MBTI: </label>
+                            <label>${item.mbti}</label>
                         </li>
                         <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            Free linked domain
+                            <label>흡연: </label>
+                            <label>${item.smokingYn}</label>
                         </li>
-                        <li class="text-muted">
+                        <li class="mb-2">
                             <i class="bi bi-check text-primary"></i>
-                            Monthly status reports
+                            <label>음주: </label>
+                            <label>${item.drinkingType}</label>
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check text-primary"></i>
+                            <label>종교: </label>
+                            <label>${item.religionType}</label>
                         </li>
                     </ul>
                 </div>

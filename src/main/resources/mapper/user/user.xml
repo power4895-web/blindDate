@@ -3,26 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.self_board_project.user.mapper.UserMapper">
-    <!--    <sql id="selectUser">-->
-    <!--        SELECT id,-->
-    <!--               login_id,-->
-    <!--               password,-->
-    <!--               nickname,-->
-    <!--               real_name,-->
-    <!--               age,-->
-    <!--               gender,-->
-    <!--               email,-->
-    <!--               phone_number,-->
-    <!--               introduce,-->
-    <!--               create_date,-->
-    <!--               update_date,-->
-    <!--               update_id-->
-    <!--        FROM `user`;-->
-    <!--    </sql>-->
-
-
-    <select id="selectUserList" resultType="com.example.self_board_project.user.vo.User">
-        /** selectUserList **/
+    <sql id="selectQuery">
         SELECT id,
                login_id,
                password,
@@ -38,82 +19,62 @@
                grade_score,
                grade_code,
                job,
+               workplace,
                purpose,
                introduce,
                today_profile_id,
+               smoking_yn,
+               drinking_type,
+               religion_type,
+               pet_type,
+               hobby,
+               ideal_type,
+               mbti,
+               height,
+               academic,
+               body_type,
+               personality,
                create_date,
                update_date,
                update_id,
                (select image_name from file t2 where t1.id = t2.ref_id and t2.flag = 'S' AND boss_type = "Y") image_name
         FROM user t1
+    </sql>
+
+
+    <select id="selectUserList" resultType="com.example.self_board_project.user.vo.User">
+        /** selectUserList **/
+        <include refid="selectQuery"/>
     </select>
 
     <select id="selectUserRandomList" resultType="com.example.self_board_project.user.vo.User">
         /** selectUserRandomList **/
-        select id,
-               login_id,
-               password,
-               nickname,
-               real_name,
-               age,
-               gender,
-               email,
-               phone_number,
-               address_doro,
-               address_detail,
-               postal_code,
-               grade_score,
-               grade_code,
-               job,
-               purpose,
-               introduce,
-               today_profile_id,
-               create_date,
-               update_date,
-               update_id
-        from user
-        WHERE gender = #{gender}
-        order by rand() limit 2;
+        <include refid="selectQuery"/>
+        <where>
+            <if test="gender != null and gender != ''">
+                AND gender = #{gender}
+            </if>
+            order by rand() limit 2;
+        </where>
     </select>
 
     <select id="selectUser" resultType="com.example.self_board_project.user.vo.User">
         /** selectUser **/
-        SELECT id,
-        login_id,
-        password,
-        nickname,
-        real_name,
-        age,
-        gender,
-        email,
-        phone_number,
-        address_doro,
-        address_detail,
-        postal_code,
-        grade_score,
-        grade_code,
-        job,
-        purpose,
-        introduce,
-        today_profile_id,
-        create_date,
-        update_date,
-        update_id,
-        (select concat(filepath,image_name) from file where ref_id = t1.id and boss_type = "Y" AND flag = "S") as imgUrl
-        FROM user t1
-        WHERE 1=1
-        <if test="id != null and id != ''">
-            AND t1.id = #{id}
-        </if>
-        <if test="nickname != null and nickname != ''">
-            AND t1.nickname = #{nickname}
-        </if>
-        <if test="email != null and email != ''">
-            AND t1.email = #{email}
-        </if>
-        <if test="realName != null and realName != ''">
-            AND t1.real_name = #{realName}
-        </if>
+        <include refid="selectQuery"/>
+        <where>
+            <if test="id != null and id != ''">
+                AND t1.id = #{id}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                AND t1.nickname = #{nickname}
+            </if>
+            <if test="email != null and email != ''">
+                AND t1.email = #{email}
+            </if>
+            <if test="realName != null and realName != ''">
+                AND t1.real_name = #{realName}
+            </if>
+        </where>
     </select>
 
     <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
@@ -125,13 +86,25 @@
                           , age
                           , gender
                           , email
-                          , introduce
                           , phone_number
                           , address_doro
                           , address_detail
                           , postal_code
                           , job
+                          , workplace
                           , purpose
+                          , introduce
+                          , smoking_yn
+                          , drinking_type
+                          , religion_type
+                          , pet_type
+                          , hobby
+                          , ideal_type
+                          , mbti
+                          , height
+                          , academic
+                          , body_type
+                          , personality
                           , provider
                           , provider_id
                           , username
@@ -145,13 +118,25 @@
                , #{age}
                , #{gender}
                , #{email}
-               , #{introduce}
                , #{phoneNumber}
                , #{addressDoro}
                , #{addressDetail}
                , #{postalCode}
                , #{job}
+               , #{workplace}
                , #{purpose}
+               , #{introduce}
+               , #{smokingYn}
+               , #{drinkingType}
+               , #{religionType}
+               , #{petType}
+               , #{hobby}
+               , #{idealType}
+               , #{mbti}
+               , #{height}
+               , #{academic}
+               , #{bodyType}
+               , #{personality}
                , #{provider}
                , #{providerId}
                , #{username}
@@ -177,6 +162,18 @@
             postal_code = #{postalCode},
             job = #{job},
             purpose = #{purpose},
+            introduce = #{introduce},
+            smoking_yn = #{smokingYn},
+            drinking_type = #{drinkingType},
+            religion_type = #{religionType},
+            pet_type = #{petType},
+            hobby = #{hobby},
+            ideal_type = #{idealType},
+            mbti = #{mbti},
+            height = #{height},
+            academic = #{academic},
+            body_type = #{bodyType},
+            personality = #{personality},
             today_profile_id= #{todayProfileId},
             update_date= now()
         WHERE id = #{id}

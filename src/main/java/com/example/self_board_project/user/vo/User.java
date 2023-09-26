@@ -25,6 +25,7 @@ public class User {
     private String gradeScore;
     private String gradeCode;
     private String job;
+    private String workplace;
     private String purpose;
 
     private Date createDate;
@@ -40,6 +41,17 @@ public class User {
     private String providerId;
     private String username;
 
+    private String smokingYn;
+    private String drinkingType;
+    private String religionType;
+    private String petType;
+    private String hobby;
+    private String idealType;
+    private String mbti;
+    private int height;
+    private String academic;
+    private String bodyType;
+    private String personality;
 
 //  file
     private String bossType;

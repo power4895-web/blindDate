@@ -6,6 +6,7 @@
 <!--    type이 send면, 내가 보낸것이기 때문에 where에서 id조건은 로그인한 아이디이고, 보낸 사람들의 정볼르 가져와야 하기 때문에, file정보와, join은 receive_id로-->
 
     <sql id="selectQuery">
+        /** selectEvaluation **/
         SELECT t1.id,
         t1.evaluation_id,
         t1.receive_id,
@@ -24,6 +25,17 @@
         t2.postal_code,
         t2.job,
         t2.purpose,
+        t2.smoking_yn,
+        t2.drinking_type,
+        t2.religion_type,
+        t2.pet_type,
+        t2.hobby,
+        t2.ideal_type,
+        t2.mbti,
+        t2.height,
+        t2.academic,
+        t2.body_type,
+        t2.workplace,
         if(${type == 'send'} ,(select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type =
         "Y" AND flag = "S")
         ,(select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))

@@ -2,6 +2,8 @@ package com.example.self_board_project.user.controller;
 
 
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.evaluation.service.EvaluationService;
+import com.example.self_board_project.evaluation.vo.Evaluation;
 import com.example.self_board_project.file.service.FileService;
 import com.example.self_board_project.file.vo.FileInfo;
 import com.example.self_board_project.relationship.service.RelationshipService;
@@ -36,6 +38,8 @@ public class UserController {
     private FileService fileService;
     @Autowired
     private RelationshipService relationshipService;
+    @Autowired
+    private EvaluationService evaluationService;
 
     /**
      * 회원목록
@@ -175,6 +179,7 @@ public class UserController {
         }
         List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
         model.addAttribute("dataList", relationshipList);
+        model.addAttribute("type", type);
         return "test";
     }
     @RequestMapping(value = "/user/evaluatonList/{type}")
@@ -182,18 +187,19 @@ public class UserController {
         logger.info("friendList Start type: {}" , type);
         logger.info(" auth.getId : {}"+ auth.getId());
         //relationship sendid가 로그인한유저의 list가져오기
-        Relationship relationship = new Relationship();
-        relationship.setType(type);
+        Evaluation evaluation = new Evaluation();
+        evaluation.setType(type);
         //보낸사람의 아이디, 받은 사람의 정보를 가져올 떄 ex: 내가 설윤한테 보냄(where에 내 id), 회원정보를 가져오는건 설윤정보필요(join에선 getId)
         if(type.equals("send")) {
-            relationship.setSendId(auth.getId());
+            evaluation.setEvaluationId(auth.getId());
         }
         //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
         if(type.equals("get")) {
-            relationship.setGetId(auth.getId());
+            evaluation.setReceiveId(auth.getId());
         }
-        List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
-        model.addAttribute("dataList", relationshipList);
+        List<Evaluation> evaluationList = evaluationService.selectEvaluationList(evaluation);
+        model.addAttribute("dataList", evaluationList);
+        model.addAttribute("type", type);
         return "test";
     }
 
