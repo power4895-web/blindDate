@@ -32,28 +32,28 @@
             <%--탭그리기 : 보낸표현,받은표현--%>
             <ul class="nav nav-pills mb-3 justify-content-center" id="myTab" role="tablist" style="float :none;">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="pills-home-tab" onclick="sendExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">보낸표현</button>
+                    <button class="nav-link active" id="sendExpresstionBtnId" onclick="sendExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">보낸표현</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-profile-tab" onclick="getExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">받은표현</button>
+                    <button class="nav-link" id="getExpresstionBtnId" onclick="getExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">받은표현</button>
                 </li>
             </ul>
             <%--친구해요 호감 해시태그--%>
-            <div class="d-grid gap-2  d-md-flex justify-content-md-start">
-                <button type="button" id="totalFriend" class="btn btn-outline-secondary" aria-pressed="true" data-bs-toggle="button" onclick="totalTab()">전체</button>
-                <button type="button" id="relationship" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendshipTab()">친구해요</button>
-                <button type="button" id="evaluation" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluationTab()">매력</button>
+            <div class="d-grid gap-2  d-md-flex justify-content-md-start" id="myTag">
+                <button type="button" id="totalFriend" class="btn btn-outline-secondary" aria-pressed="true" data-bs-toggle="button" onclick="totalTag()">전체</button>
+                <button type="button" id="relationship" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendshipTag()">친구해요</button>
+                <button type="button" id="evaluation" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluationTag()">매력</button>
             </div>
 
             <%--탭 내용 시작--%>
             <div class="tab-content" id="pills-tabContent">
                 <%--첫번 째--%>
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="sendExpresstionBtnId" tabindex="0">
                     <div class="row gy-xl-5 justify-content" id="sendExpresstionProfile">
                     </div>
                 </div>
                 <%--두번 째--%>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="getExpresstionBtnId" tabindex="0">
                         <div class="row gy-xl-5 justify-content" id="getExpressionProfile">
                         </div>
                 </div>
@@ -68,15 +68,7 @@
 
     $(document).ready(function(){
         getRelationshipList("send");
-
-        //현재 활성화된 탭 확인
-        $('#myTab button').on('click', function (e) {
-            e.preventDefault()
-            $(this).tab('show');
-        });
     })
-
-
 
     //보낸표현버튼 > default realationship
     function sendExpressionBtn() {
@@ -93,57 +85,74 @@
         deactivateTab("evaluation"); // 호감 비활성화
     }
 
-    //전체 탭
-    function totalTab() {
+    //전체 태그
+    function totalTag() {
+
+        //태그 활성화인데 한번더 눌렀을 때 데이터 안가져오고 부트스트랩으로 인해 활성화 풀리는거 다시 활성화시킴
+        var activeTag = $('#myTag button.active').attr('id');
+        console.log('현재 활성화된 태그:', activeTag);
+        if(activeTag == undefined) {
+            activateTab("totalFriend")
+            return;
+        }
+
         var activeTab = $('#myTab li button.active').attr('id');
         console.log('현재 활성화된 탭:', activeTab);
-
         deactivateTab("relationship"); // 호감 비활성화
         deactivateTab("evaluation"); // 호감 비활성화
 
-        if(activeTab == 'pills-home-tab') {
+        if(activeTab == 'sendExpresstionBtnId') {
             console.log("보낸표현_전체")
             getTotalFriendList("send")
         }
-        if(activeTab == 'pills-profile-tab') {
+        if(activeTab == 'getExpresstionBtnId') {
             console.log("받은표현_전체")
             getTotalFriendList("get")
         }
     }
 
     //친구해요 태그
-    function letFriendshipTab() {
+    function letFriendshipTag() {
         var activeTab = $('#myTab li button.active').attr('id');
-
         console.log('현재 활성화된 탭:', activeTab);
+        var activeTag = $('#myTag button.active').attr('id');
+        console.log('현재 활성화된 태그:', activeTag);
+        if(activeTag == undefined) {
+            activateTab("relationship")
+            return;
+        }
 
         deactivateTab("totalFriend"); // 전체 비활성화
         deactivateTab("evaluation"); // 호감 비활성화
 
-        if(activeTab == 'pills-home-tab') {
+        if(activeTab == 'sendExpresstionBtnId') {
             console.log("보낸표현_친구해요")
             getRelationshipList("send")
         }
-        if(activeTab == 'pills-profile-tab') {
+        if(activeTab == 'getExpresstionBtnId') {
             console.log("받은표현_친구해요")
-
             getRelationshipList("get")
         }
     }
-    //호감 태그
-    function evaluationTab() {
+    //매력 태그
+    function evaluationTag() {
         var activeTab = $('#myTab li button.active').attr('id');
         console.log('현재 활성화된 탭:', activeTab);
-
+        var activeTag = $('#myTag button.active').attr('id');
+        console.log('현재 활성화된 태그:', activeTag);
+        if(activeTag == undefined) {
+            activateTab("evaluation")
+            return;
+        }
         deactivateTab("totalFriend"); // 전체 비활성화
         deactivateTab("relationship"); // 친구해요 비활성화
 
 
-        if(activeTab == 'pills-home-tab') {
+        if(activeTab == 'sendExpresstionBtnId') {
             console.log("보낸표현_호감")
             getEvaluationList("send")
         }
-        if(activeTab == 'pills-profile-tab') {
+        if(activeTab == 'getExpresstionBtnId') {
             console.log("받은표현_호감")
             getEvaluationList("get")
         }
