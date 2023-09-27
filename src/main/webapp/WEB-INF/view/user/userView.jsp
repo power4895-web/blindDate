@@ -22,20 +22,18 @@
 <body class="d-flex flex-column">
 <main class="flex-shrink-0">
     <!-- Page content-->
+    <input type="hidden" value="${relationshipInfo}" id="relationshipInfo">
+    <input type="hidden" value="${evaluationInfo}" id="evaluationInfo">
     <section class="bg-light py-5">
         <div class="container px-5 my-5">
             <div class="text-center mb-5">
                 <h1 class="fw-bolder">userView</h1>
                 <p class="lead fw-normal text-muted mb-0">Look at the profile</p>
             </div>
-
-
-
-
                 <div class="col-lg-6 mx-auto ">
-<%--                <div class="col-lg-6 col-xl-10 justify-content-center">--%>
                     <div class="card mb-5 mb-xl-0 ">
-                        <div class="card-body p-1 text-start">
+                        <%--p-0이 카드안의 패딩 조절--%>
+                        <div class="card-body p-0 text-start">
                             <div class="mb-3">
                                 <img class="card-img-top" src="${userInfo.imgUrl}" alt="..." />
                             </div>
@@ -91,20 +89,21 @@
                                 </li>
                             </ul>
                         </div>
-                        <c:if test="${evaluationInfo != null}">
-                            <span class="d-block p-2 text-bg-light text-start">${evaluationInfo.score}점으로 평가하였습니다.</span>
-                        </c:if>
-                        <c:if test="${evaluationInfo == null}">
+
+
+                        <div id="didEvaluate">
+                            <span class="d-block p-2 text-bg-light text-start" >${evaluationInfo.score}점으로 평가하였습니다.</span>
+                        </div>
+                        <div id="notEvaluate">
                             점수입력
-                        </c:if>
-                        <c:if test="${relationshipInfo != null}">
-                            <span class="d-block p-2 text-bg-info text-start">친구해요를 보냈어요</span>
-                        </c:if>
-                        <c:if test="${relationshipInfo == null}">
-                            <a id="item_${status.index}" class="btn btn-outline-primary"  onclick="sendRelationship(${userInfo.id},$(this))" href="#!">
-                                친구해요<i class="bi bi-heart"></i>
-                            </a>
-                        </c:if>
+                        </div>
+                        <div class="p-2 text-bg-info text-start" id="didRelationship">
+                            친구해요를 보냈어요
+                            <i class="bi bi-heart-fill" style="color: red"></i>
+                        </div>
+                        <button class="btn btn-outline-primary" id="notRelationship" onclick="sendRelationship(${userInfo.id},$(this))">
+                            친구해요<i class="bi bi-heart"></i>
+                        </button>
                     </div>
                 </div>
         </div>
@@ -115,7 +114,21 @@
 <script>
 
     $(document).ready(function(){
-
+        if($('#evaluationInfo').val() != '') {
+            console.log("평가했다")
+            $('#notEvaluate').hide()
+        } else {
+            console.log("평가x")
+            $('#didEvaluate').hide()
+            $('#test').hide()
+        }
+        if($('#relationshipInfo').val() != '') {
+            console.log("이미친구신청")
+            $('#notRelationship').hide()
+        } else {
+            console.log("친구x")
+            $('#didRelationship').hide()
+        }
     })
 
     function sendRelationship(id, obj) {
@@ -124,20 +137,16 @@
         }
         $.ajax({
             type : 'post',
-            url : "/user/sendingRelationship",
+            url : "/relationship/sendingRelationship",
             data : params,
             success : function(data) { // 결과 성공 콜백함수
                 console.log("data", data)
                 if(data == true) {
-                    //이벤트제거
-                    obj.attr('onclick', '').unbind('click');
-
-                    //하트채우기, red로 변경
-                    obj.children('i').attr('class','bi bi-heart-fill');
-                    obj.children('i').css('color', 'red');
-                    obj.css('backgroundColor', '#0d6efd');
+                    $('#didRelationship').show()
+                    $('#notRelationship').hide()
+                } else {
+                    alert("이미 친구해요를 보냈거나 실패했습니다")
                 }
-
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)

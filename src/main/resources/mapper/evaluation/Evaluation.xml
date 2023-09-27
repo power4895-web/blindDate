@@ -6,7 +6,6 @@
 <!--    type이 send면, 내가 보낸것이기 때문에 where에서 id조건은 로그인한 아이디이고, 보낸 사람들의 정볼르 가져와야 하기 때문에, file정보와, join은 receive_id로-->
 
     <sql id="selectQuery">
-        /** selectEvaluation **/
         SELECT t1.id,
         t1.evaluation_id,
         t1.receive_id,
@@ -15,6 +14,7 @@
         FROM evaluation t1
     </sql>
     <select id="selectEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
+        /** selectRelationshipList **/
         <include refid="selectQuery"/>
         <where>
             <if test="evaluationId != null and evaluationId != ''">
@@ -27,36 +27,38 @@
         </where>
     </select>
     <select id="selectSendEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
-        SELECT t1.id,
-        t1.evaluation_id,
-        t1.receive_id,
-        t1.score,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type ="Y" AND flag = "S")imgUrl
+        /** selectSendEvaluationList **/
+        SELECT
+            t1.id,
+            t1.evaluation_id,
+            t1.receive_id,
+            t1.score,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type ="Y" AND flag = "S")imgUrl
         FROM evaluation t1
         join user t2 on t1.receive_id = t2.id
         <where>
@@ -70,36 +72,38 @@
         </where>
     </select>
     <select id="selectGetEvaluationList" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
-        SELECT t1.id,
-        t1.evaluation_id,
-        t1.receive_id,
-        t1.score,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
+        /** selectGetEvaluationList **/
+        SELECT
+            t1.id,
+            t1.evaluation_id,
+            t1.receive_id,
+            t1.score,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
         FROM evaluation t1
         join user t2 on t1.evaluation_id = t2.id
         <where>
@@ -126,36 +130,38 @@
         </where>
     </select>
     <select id="selectSendEvaluation" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
-        SELECT t1.id,
-        t1.evaluation_id,
-        t1.receive_id,
-        t1.score,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type = "Y" AND flag = "S"))as imgUrl
+        /** selectSendEvaluation **/
+        SELECT
+            t1.id,
+            t1.evaluation_id,
+            t1.receive_id,
+            t1.score,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type = "Y" AND flag = "S"))as imgUrl
         FROM evaluation t1
         join user t2 on t1.evaluation_id = t2.id
         <where>
@@ -169,36 +175,38 @@
         </where>
     </select>
     <select id="selectGetEvaluation" resultType="com.example.self_board_project.evaluation.vo.Evaluation">
-        SELECT t1.id,
-        t1.evaluation_id,
-        t1.receive_id,
-        t1.score,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
+        /** selectGetEvaluation **/
+        SELECT
+            t1.id,
+            t1.evaluation_id,
+            t1.receive_id,
+            t1.score,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
         FROM evaluation t1
         join user t2 on t1.evaluation_id = t2.id
         <where>
@@ -214,7 +222,7 @@
 
 
     <insert id="insertEvaluation" useGeneratedKeys="true" keyProperty="id">
-
+        /** insertEvaluation **/
         INSERT INTO `evaluation`( evaluation_id
                                   , receive_id
                                   , score

@@ -32,60 +32,61 @@
                 <c:forEach var="item" items="${dataList}" varStatus="status">
                     <div class="col-lg-6 col-xl-4">
                         <div class="card mb-5 mb-xl-0">
-                            <div class="card-body p-5">
+                            <div class="card-body p-0">
                                 <div class="mb-3">
                                     <img class="card-img-top" src="${item.imgUrl}" alt="..." />
                                 </div>
                                 <ul class="list-unstyled mb-4">
                                     <div class="small">
-                                        <div class="fw-bold">${item.nickname}, ${item.age}</div>
+                                        <div class="fw-bold"><a href="/user/view/${item.id}">${item.nickname}, ${item.age}</a></div>
                                         <div class="text-muted">${item.job},${item.purpose}</div>
                                     </div>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        <strong>1 users</strong>
+                                        <label>직업: </label>
+                                        <label>${item.job}</label>
                                     </li>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        5GB storage
+                                        <label>직장: </label>
+                                        <label>${item.workplace}</label>
                                     </li>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        Unlimited public projects
+                                        <label>학력: </label>
+                                        <label>${item.academic}</label>
                                     </li>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        Community access
+                                        <label>체형: </label>
+                                        <label>${item.bodyType}</label>
                                     </li>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        Unlimited private projects
+                                        <label>성격: </label>
+                                        <label>${item.personality}</label>
                                     </li>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        Dedicated support
+                                        <label>MBTI: </label>
+                                        <label>${item.mbti}</label>
                                     </li>
                                     <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        Free linked domain
+                                        <label>흡연: </label>
+                                        <label>${item.smokingYn}</label>
                                     </li>
-                                    <li class="text-muted">
+                                    <li class="mb-2">
                                         <i class="bi bi-check text-primary"></i>
-                                        Monthly status reports
+                                        <label>음주: </label>
+                                        <label>${item.drinkingType}</label>
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="bi bi-check text-primary"></i>
+                                        <label>종교: </label>
+                                        <label>${item.religionType}</label>
                                     </li>
                                 </ul>
-                                <div class="d-grid">
-                                    <c:if test="${item.sendYn == 'N'}">
-                                        <a id="item_${status.index}" class="btn btn-outline-primary"  onclick="sendRelationship(${item.id},$(this))" href="#!">
-                                            <i class="bi bi-heart"></i>
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${item.sendYn == 'Y'}">
-                                        <a id="item_${status.index}" class="btn btn-outline-primary" style="background-color: #0d6efd" href="#!">
-                                            <i class="bi bi-heart-fill" style="color: red"></i>
-                                        </a>
-                                    </c:if>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -139,32 +140,6 @@
 
     })
 
-    function sendRelationship(id, obj) {
-        let params = {
-            getId : id
-        }
-        $.ajax({
-            type : 'post',
-            url : "/user/sendingRelationship",
-            data : params,
-            success : function(data) { // 결과 성공 콜백함수
-                console.log("data", data)
-                if(data == true) {
-                    //이벤트제거
-                    obj.attr('onclick', '').unbind('click');
-
-                    //하트채우기, red로 변경
-                    obj.children('i').attr('class','bi bi-heart-fill');
-                    obj.children('i').css('color', 'red');
-                    obj.css('backgroundColor', '#0d6efd');
-                }
-
-            },
-            error : function(request, status, error) { // 결과 에러 콜백함수
-                console.log("error", error)
-            }
-        });
-    }
 
 
 </script>

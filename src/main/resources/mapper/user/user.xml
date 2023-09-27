@@ -37,7 +37,7 @@
                create_date,
                update_date,
                update_id,
-               (select concat(filepath, image_name) from file t2 where t1.id = t2.ref_id and t2.flag = 'S' AND boss_type = "Y") img_url
+               (select concat(filepath, image_name) from file t2 where t1.id = t2.ref_id and t2.flag = 'M' AND boss_type = "Y") img_url
         FROM user t1
     </sql>
 

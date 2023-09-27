@@ -120,7 +120,13 @@ public class UserController {
     }
 
 
-
+    /**
+     * 오늘의 프로필
+     * @param model
+     * @param response
+     * @param auth
+     * @return
+     */
     @RequestMapping(value = "/user/todayProfile")
     public String todayProfile(Model model, HttpServletResponse response,  Auth auth) {
 
@@ -200,23 +206,4 @@ public class UserController {
             return "true";
         }
     }
-//    @RequestMapping(value = "/login")
-//    public void login(Model model, User user) {
-//        System.out.println(">>>>register" +  user.getLoginId());
-//        System.out.println(">>>>register" +  user.getPassword());
-//    }
-//    @RequestMapping(value = "/user/update")
-//    public String userUpdate(Model model) {
-//        System.out.println(">>>>userList");
-//        List<User> boardLIst = userService.selectBoardList();
-//        model.addAttribute("boardLIst", boardLIst);
-//        return "main";
-//    }
-//    @RequestMapping(value = "/user/delete")
-//    public String userDelete(Model model) {
-//        System.out.println(">>>>userList");
-//        List<User> boardLIst = userService.selectBoardList();
-//        model.addAttribute("boardLIst", boardLIst);
-//        return "main";
-//    }
 }

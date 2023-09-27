@@ -10,15 +10,16 @@
 <!--    나에게 친구해요를 보낸 사람들의 정보를 받고 싶을 때-->
 <!--    그냥 select는 내가 보냈는지, 받았는지에 대한 여부정보 확인-->
     <sql id="selectQuery">
-        /** selectRelationship **/
-        SELECT t1.id,
-        t1.send_id,
-        t1.get_id,
-        t1.accept_check,
-        t1.create_date
+        SELECT
+            t1.id,
+            t1.send_id,
+            t1.get_id,
+            t1.accept_check,
+            t1.create_date
         FROM relationship t1
     </sql>
     <select id="selectRelationshipList" resultType="com.example.self_board_project.relationship.vo.Relationship">
+        /** selectRelationshipList **/
         <include refid="selectQuery"/>
         <where>
             <if test="sendId != null and sendId != ''">
@@ -34,37 +35,39 @@
 
 <!--    내가 친구해요 보낸 회원들의 정보-->
     <select id="selectSendRelationshipList" resultType="com.example.self_board_project.relationship.vo.Relationship">
-        SELECT t1.id,
-        t1.send_id,
-        t1.get_id,
-        t1.accept_check,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.personality,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.get_id and boss_type ="Y" AND flag = "S")as imgUrl
+        /** selectSendRelationshipList **/
+        SELECT
+            t1.id,
+            t1.send_id,
+            t1.get_id,
+            t1.accept_check,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.personality,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.get_id and boss_type ="Y" AND flag = "S")as imgUrl
         FROM relationship t1
         join user t2 on t1.get_id = t2.id
         <where>
@@ -79,37 +82,39 @@
     </select>
     <!--    나에게 친구해욜르 보낸 회원들의 정보-->
     <select id="selectGetRelationshipList" resultType="com.example.self_board_project.relationship.vo.Relationship">
-        SELECT t1.id,
-        t1.send_id,
-        t1.get_id,
-        t1.accept_check,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.personality,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.send_id and boss_type ="Y" AND flag = "S")as imgUrl
+        /** selectGetRelationshipList **/
+        SELECT
+            t1.id,
+            t1.send_id,
+            t1.get_id,
+            t1.accept_check,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.personality,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.send_id and boss_type ="Y" AND flag = "S")as imgUrl
         FROM relationship t1
         join user t2 on t1.send_id = t2.id
         <where>
@@ -136,37 +141,39 @@
         </where>
     </select>
     <select id="selectSendRelationship" resultType="com.example.self_board_project.relationship.vo.Relationship">
-        SELECT t1.id,
-        t1.send_id,
-        t1.get_id,
-        t1.accept_check,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.personality,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.get_id and boss_type ="Y" AND flag = "S")as imgUrl
+        /** selectSendRelationship **/
+        SELECT
+            t1.id,
+            t1.send_id,
+            t1.get_id,
+            t1.accept_check,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.personality,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.get_id and boss_type ="Y" AND flag = "S")as imgUrl
         FROM relationship t1
         join user t2 on t1.send_id = t2.id
         <where>
@@ -180,37 +187,39 @@
         </where>
     </select>
     <select id="selectGetRelationship" resultType="com.example.self_board_project.relationship.vo.Relationship">
-        SELECT t1.id,
-        t1.send_id,
-        t1.get_id,
-        t1.accept_check,
-        t1.create_date,
-        t2.id,
-        t2.real_name,
-        t2.nickname,
-        t2.age,
-        t2.gender,
-        t2.email,
-        t2.introduce,
-        t2.phone_number,
-        t2.address_doro,
-        t2.address_detail,
-        t2.postal_code,
-        t2.job,
-        t2.purpose,
-        t2.smoking_yn,
-        t2.drinking_type,
-        t2.religion_type,
-        t2.pet_type,
-        t2.hobby,
-        t2.ideal_type,
-        t2.mbti,
-        t2.height,
-        t2.academic,
-        t2.body_type,
-        t2.personality,
-        t2.workplace,
-        (select concat(filepath, image_name) from file where ref_id = t1.send_id and boss_type ="Y" AND flag = "S")as imgUrl
+        /** selectGetRelationship **/
+        SELECT
+            t1.id,
+            t1.send_id,
+            t1.get_id,
+            t1.accept_check,
+            t1.create_date,
+            t2.id,
+            t2.real_name,
+            t2.nickname,
+            t2.age,
+            t2.gender,
+            t2.email,
+            t2.introduce,
+            t2.phone_number,
+            t2.address_doro,
+            t2.address_detail,
+            t2.postal_code,
+            t2.job,
+            t2.purpose,
+            t2.smoking_yn,
+            t2.drinking_type,
+            t2.religion_type,
+            t2.pet_type,
+            t2.hobby,
+            t2.ideal_type,
+            t2.mbti,
+            t2.height,
+            t2.academic,
+            t2.body_type,
+            t2.personality,
+            t2.workplace,
+            (select concat(filepath, image_name) from file where ref_id = t1.send_id and boss_type ="Y" AND flag = "S")as imgUrl
         FROM relationship t1
         join user t2 on t1.send_id = t2.id
         <where>
@@ -224,7 +233,7 @@
         </where>
     </select>
     <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">
-
+        /** insertRelationship **/
         INSERT INTO `relationship`( send_id
                                   , get_id
                                   , create_date)

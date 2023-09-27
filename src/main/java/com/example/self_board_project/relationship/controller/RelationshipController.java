@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -40,9 +41,18 @@ public class RelationshipController {
             List<Relationship> relationshipList = relationshipService.selectGetRelationshipList(relationship);
             model.addAttribute("dataList", relationshipList);
         }
-
-        model.addAttribute("type", type);
-        return "test";
+        model.addAttribute("type", "relationship");
+        return "friendListAjax";
     }
 
+
+    @RequestMapping(value="/relationship/sendingRelationship")
+    @ResponseBody
+    public Boolean insertRelationship(Relationship relationship, Auth auth) {
+        relationship.setSendId(auth.getId());
+        Boolean result = relationshipService.insertRelationship(relationship);
+        logger.info("relationship 생성된 아이디: {}", relationship.getId());
+        logger.info("result: {}", result);
+        return result;
+    }
 }

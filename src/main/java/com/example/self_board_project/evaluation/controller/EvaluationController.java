@@ -21,7 +21,7 @@ public class EvaluationController {
     @Autowired
     EvaluationService evaluationService;
 
-    @RequestMapping(value = "/evaluation/evaluatonList/{type}")
+    @RequestMapping(value = "/evaluation/evaluationList/{type}")
     public String evaluatonList(Model model, HttpServletResponse response, Auth auth, @PathVariable String type) {
         logger.info("friendList Start type: {}" , type);
         logger.info(" auth.getId : {}"+ auth.getId());
@@ -31,16 +31,16 @@ public class EvaluationController {
         //보낸사람의 아이디, 받은 사람의 정보를 가져올 떄 ex: 내가 설윤한테 보냄(where에 내 id), 회원정보를 가져오는건 설윤정보필요(join에선 getId)
         if(type.equals("send")) {
             evaluation.setEvaluationId(auth.getId());
-            List<Evaluation> evaluationList = evaluationService.selectEvaluationList(evaluation);
+            List<Evaluation> evaluationList = evaluationService.selectSendEvaluationList(evaluation);
             model.addAttribute("dataList", evaluationList);
         }
         //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
         if(type.equals("get")) {
             evaluation.setReceiveId(auth.getId());
-            List<Evaluation> evaluationList = evaluationService.selectEvaluationList(evaluation);
+            List<Evaluation> evaluationList = evaluationService.selectGetEvaluationList(evaluation);
             model.addAttribute("dataList", evaluationList);
         }
-        model.addAttribute("type", type);
-        return "test";
+        model.addAttribute("type", "evaluation");
+        return "friendListAjax";
     }
 }

@@ -16,17 +16,18 @@
 </head>
 <body>
 <p id="indexListAjax">
-    ${test}
     <c:forEach var="item" items="${dataList}" varStatus="status" >
         <div class="col-lg-6 col-xl-4">
             <div class="card mb-5 mb-xl-0">
-                <div class="card-body p-5">
+                <div class="card-body p-0">
                     <div class="mb-3">
                         <img class="card-img-top" src="${item.imgUrl}" alt="..." />
                     </div>
                     <ul class="list-unstyled mb-4">
                         <div class="small">
-                            <div class="fw-bold">${item.nickname}, ${item.age}</div>
+                            <div class="fw-bold">
+                                <a href="/user/view/${type == 'relationship' ? item.getId : item.receiveId}">${item.nickname}, ${item.age}</a>
+                            </div>
                             <div class="text-muted">${item.addressDoro},${item.purpose}</div>
                         </div>
                         <li class="mb-2">

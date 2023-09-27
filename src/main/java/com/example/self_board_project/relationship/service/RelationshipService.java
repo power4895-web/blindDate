@@ -30,10 +30,14 @@ public class RelationshipService {
     public Relationship selectGetRelationship(Relationship relationship) {
         return relationshipMapper.selectGetRelationship(relationship);
     }
-    public void insertRelationship(Relationship relationship) {
-        System.out.println(relationship.getGetId());
-        System.out.println(relationship.getSendId());
-        relationshipMapper.insertRelationship(relationship);
+    public Boolean insertRelationship(Relationship relationship) {
+        List<Relationship> relationshipList = selectRelationshipList(relationship);
+        if(relationshipList.size()>0) {
+            return false;
+        } else {
+            relationshipMapper.insertRelationship(relationship);
+            return true;
+        }
     }
 
 }

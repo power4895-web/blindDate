@@ -40,8 +40,9 @@
             </ul>
             <%--친구해요 호감 해시태그--%>
             <div class="d-grid gap-2  d-md-flex justify-content-md-start">
+                <button type="button" id="totalFriend" class="btn btn-outline-secondary" aria-pressed="true" data-bs-toggle="button" onclick="totalFriendList()">전체</button>
                 <button type="button" id="relationship" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendship()">친구해요</button>
-                <button type="button" id="evaluation" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluation()">호감</button>
+                <button type="button" id="evaluation" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluation()">매력</button>
             </div>
 
             <%--탭 내용 시작--%>
@@ -92,6 +93,24 @@
         deactivateTab("evaluation"); // 호감 비활성화
     }
 
+    //친구해요, 매력 태그
+    function totalFriendList() {
+        var activeTab = $('#myTab li button.active').attr('id');
+
+        console.log('현재 활성화된 탭:', activeTab);
+
+        deactivateTab("evaluation"); // 호감 비활성화
+
+        if(activeTab == 'pills-home-tab') {
+            console.log("보낸표현_친구해요")
+            getRelationshipList("send")
+        }
+        if(activeTab == 'pills-profile-tab') {
+            console.log("받은표현_친구해요")
+
+            getRelationshipList("get")
+        }
+    }
     //친구해요 태그
     function letFriendship() {
         var activeTab = $('#myTab li button.active').attr('id');
@@ -111,7 +130,7 @@
         }
     }
     //호감 태그
-    function evaluation(type) {
+    function evaluation() {
         var activeTab = $('#myTab li button.active').attr('id');
         console.log('현재 활성화된 탭:', activeTab);
 
@@ -131,6 +150,7 @@
 
     //현재 선택하지 않은 태그 비활성화 시키기
     function activateTab(tabId) {
+        // button 아이디 변수로
         const tab = $('#'+ tabId )[0];
         tab.classList.add("active"); // active 클래스 추가
         tab.setAttribute("aria-selected", "true"); // aria-selected 속성 업데이트
@@ -171,7 +191,7 @@
         console.log("type", type)
         $.ajax({
             type : 'get',
-            url : "/evaluaton/evaluatonList/" + type,
+            url : "/evaluation/evaluationList/" + type,
             success : function(data) { // 결과 성공 콜백함수
                 if(type == "send") {
                     $('#profileOne').empty();
