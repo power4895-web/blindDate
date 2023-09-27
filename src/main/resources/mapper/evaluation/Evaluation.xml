@@ -57,6 +57,7 @@
             t2.height,
             t2.academic,
             t2.body_type,
+            t2.personality,
             t2.workplace,
             (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type ="Y" AND flag = "S")imgUrl
         FROM evaluation t1
@@ -102,8 +103,9 @@
             t2.height,
             t2.academic,
             t2.body_type,
+            t2.personality,
             t2.workplace,
-            (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
+            (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S")as imgUrl
         FROM evaluation t1
         join user t2 on t1.evaluation_id = t2.id
         <where>
@@ -160,8 +162,9 @@
             t2.height,
             t2.academic,
             t2.body_type,
+            t2.personality,
             t2.workplace,
-            (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type = "Y" AND flag = "S"))as imgUrl
+            (select concat(filepath, image_name) from file where ref_id = t1.receive_id and boss_type = "Y" AND flag = "S")as imgUrl
         FROM evaluation t1
         join user t2 on t1.evaluation_id = t2.id
         <where>
@@ -205,8 +208,9 @@
             t2.height,
             t2.academic,
             t2.body_type,
+            t2.personality,
             t2.workplace,
-            (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S"))as imgUrl
+            (select concat(filepath, image_name) from file where ref_id = t1.evaluation_id and boss_type = "Y" AND flag = "S")as imgUrl
         FROM evaluation t1
         join user t2 on t1.evaluation_id = t2.id
         <where>

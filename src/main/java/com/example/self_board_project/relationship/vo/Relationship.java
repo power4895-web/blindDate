@@ -23,4 +23,11 @@ public class Relationship extends User {
     private String filepath;
     private String systemFilename;
     private String imgUrl;
+
+    //evaluate
+    private Integer evaluateId;
+    private int evaluationId;
+    private int receiveId;
+    private int score;
+
 }

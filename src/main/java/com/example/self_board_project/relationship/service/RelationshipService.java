@@ -21,6 +21,7 @@ public class RelationshipService {
     public List<Relationship> selectGetRelationshipList( Relationship relationship) {
         return relationshipMapper.selectGetRelationshipList(relationship);
     }
+
     public Relationship selectRelationship(Relationship relationship) {
         return relationshipMapper.selectRelationship(relationship);
     }

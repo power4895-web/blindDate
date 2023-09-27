@@ -32,13 +32,13 @@ public class EvaluationController {
         if(type.equals("send")) {
             evaluation.setEvaluationId(auth.getId());
             List<Evaluation> evaluationList = evaluationService.selectSendEvaluationList(evaluation);
-            model.addAttribute("dataList", evaluationList);
+            model.addAttribute("evaluationList", evaluationList);
         }
         //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
         if(type.equals("get")) {
             evaluation.setReceiveId(auth.getId());
             List<Evaluation> evaluationList = evaluationService.selectGetEvaluationList(evaluation);
-            model.addAttribute("dataList", evaluationList);
+            model.addAttribute("evaluationList", evaluationList);
         }
         model.addAttribute("type", "evaluation");
         return "friendListAjax";

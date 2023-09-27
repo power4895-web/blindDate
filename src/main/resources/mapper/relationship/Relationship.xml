@@ -242,22 +242,6 @@
                , #{getId}
                , now())
     </insert>
-    <!--    <insert id="insertRelationship" useGeneratedKeys="true" keyProperty="id">-->
-    <!--        insert-->
-    <!--        into relationship (send_id,-->
-    <!--                           get_id,-->
-    <!--                           create_date)-->
-    <!--        values (#{sendId},-->
-    <!--                #{getId},-->
-    <!--                NOW())-->
-    <!--    </insert>-->
-    <!--    <update id="">-->
-
-    <!--    </update>-->
-
-    <!--    <delete id="">-->
-
-    <!--    </delete>-->
 
 
 </mapper>
