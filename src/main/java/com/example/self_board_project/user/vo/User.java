@@ -1,9 +1,12 @@
 package com.example.self_board_project.user.vo;
 
+import com.example.self_board_project.file.vo.FileInfo;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
+
 @Getter
 @Setter
 public class User {
@@ -60,6 +63,8 @@ public class User {
     private String filepath;
     private String systemFilename;
     private String imgUrl;
+    private List<FileInfo> fileList;
+
 
     //relationship
     private String sendYn;

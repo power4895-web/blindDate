@@ -58,12 +58,20 @@ public class UserController {
      */
     @RequestMapping(value = "/user/view/{id}")
     public String userView(Model model, Auth auth, @PathVariable int id) {
+        logger.info("userView Start");
         logger.info("로그인아이디 : {}", auth.getId() );
         logger.info("조회 아이디 : {}", id );
         User user = new User();
         user.setId(id);
         User userInfo = userService.selectUser(user);
         model.addAttribute("userInfo", userInfo);
+
+        FileInfo fileInfo = new FileInfo();
+        fileInfo.setRefId(id);
+        fileInfo.setFlag("user");
+        List<FileInfo> fileList = fileService.selectFileList(fileInfo);
+        model.addAttribute("fileList", fileList);
+
 
         Relationship relationship = new Relationship();
         relationship.setSendId(auth.getId());
@@ -164,6 +172,18 @@ public class UserController {
             relationship.setSendId(auth.getId());
             relationship.setGetId(Integer.parseInt(item3));
             Relationship relationshipInfo = relationshipService.selectRelationship(relationship);
+
+            FileInfo fileInfo = new FileInfo();
+            fileInfo.setRefId(Integer.parseInt(item3));
+            fileInfo.setFlag("user");
+            List<FileInfo> fileList = fileService.selectFileList(fileInfo);
+//            model.addAttribute("fileList", fileList);
+            userInfo2.setFileList(fileList);
+            System.out.println(">>>>>" + userInfo2.getFileList());
+            System.out.println(">>>>>" + userInfo2.getFileList().size());
+            for (FileInfo test:userInfo2.getFileList()) {
+                System.out.println(test.getId());
+            }
             if(relationshipInfo != null) {
                 userInfo2.setSendYn("Y");
             } else {

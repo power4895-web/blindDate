@@ -30,8 +30,14 @@ public class EvaluationService {
     public Evaluation selectGetEvaluation(Evaluation evaluation) {
         return evaluationMapper.selectGetEvaluation(evaluation);
     }
-    public void insertEvaluation(Evaluation evaluation) {
-        evaluationMapper.insertEvaluation(evaluation);
+    public Boolean insertEvaluation(Evaluation evaluation) {
+        List<Evaluation> evaluationList = selectEvaluationList(evaluation);
+        if(evaluationList.size()>0) {
+            return false;
+        } else {
+            evaluationMapper.insertEvaluation(evaluation);
+            return true;
+        }
     }
 
 }

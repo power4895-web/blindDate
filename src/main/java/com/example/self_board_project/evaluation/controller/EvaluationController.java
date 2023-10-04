@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -43,4 +44,15 @@ public class EvaluationController {
         model.addAttribute("type", "evaluation");
         return "friendListAjax";
     }
+
+    @RequestMapping(value="/evaluation/sendingEvaluation")
+    @ResponseBody
+    public Boolean insertEvaluation(Evaluation evaluation, Auth auth) {
+        evaluation.setEvaluationId(auth.getId());
+        Boolean result = evaluationService.insertEvaluation(evaluation);
+        logger.info("evaluation 생성된 아이디: {}", evaluation.getId());
+        logger.info("result: {}", result);
+        return result;
+    }
+
 }

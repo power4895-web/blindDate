@@ -68,7 +68,7 @@ public class FileService {
         }
 
         //회원수정에서 S사이즈 리스트
-        fileInfo.setFlag("S");
+        fileInfo.setFlag("M");
         List<FileInfo> fileSmallList = fileMapper.selectFileList(fileInfo);
         return fileSmallList;
     }

@@ -13,5 +13,5 @@ public interface EvaluationMapper {
     public Evaluation selectEvaluation(Evaluation evaluation);
     public Evaluation selectSendEvaluation(Evaluation evaluation);
     public Evaluation selectGetEvaluation(Evaluation evaluation);
-    public void insertEvaluation(Evaluation evaluation);
+    public int insertEvaluation(Evaluation evaluation);
 }
