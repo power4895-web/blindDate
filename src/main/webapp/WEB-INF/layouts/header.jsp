@@ -17,7 +17,8 @@
 <script src="/static/js/commonUtil.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/static/js/scripts.js"></script>
-
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=42f0eba0161fc3396885c9e3336cdeee&libraries=services" type="text/javascript"></script>
 <html>
 <head>
     <meta charset="utf-8" />

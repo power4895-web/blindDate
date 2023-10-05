@@ -101,7 +101,14 @@
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="addressDoro" name="addressDoro" data-sb-validations="required" />
                                 <label for="addressDoro">지역</label>
+                                <input type="hidden" id="postalCode" name="postalCode" title="우편번호" >
+                                <input type="hidden" id="addressJibun" name="addressJibun" title="지번 주소" >
+                                <input type="hidden" id="latitude" name="latitude" title="위도" >
+                                <input type="hidden" id="longitude" name="longitude" title="경도" >
                                 <div class="invalid-feedback" data-sb-feedback="addressDoro:required">A phone number is required.</div>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <button type="button" class="btn btn-primary btn-sm" id="btnSearchPostalCode">주소검색</button>
                             </div>
                             <!-- job input-->
                             <div class="form-floating mb-3">
@@ -239,7 +246,6 @@
     </section>
 </main>
 </body>
-</html>
 <script>
 
 
@@ -279,7 +285,36 @@
                 addFiles(e);
             }
             $(this).val("");
+
         })
+
+        // 주소:
+        $("#btnSearchPostalCode").on("click", function () {
+            searchPostalCode({
+                postalCode: "postalCode",
+                addressDoro: "addressDoro",
+                addressJibun: "addressJibun",
+                callback: function (result) {
+                    console.log("result", result)
+                    if(result == false) {
+                        alert(1)
+                        $('#btnSearchPostalCode').trigger('click');
+                        return;
+                    }
+                    // const geocoder = new kakao.maps.services.Geocoder();
+                    // geocoder.addressSearch($("#addressDoro").val(), (result, status) => {
+                    //     if (status === kakao.maps.services.Status.OK) {
+                    //         console.log('위도 : ' + result[0].y);
+                    //         console.log('경도 : ' + result[0].x);
+                    //         $("#latitude").val(result[0].y);
+                    //         $("#longitude").val(result[0].x);
+                    //     }
+                    // })
+                    // $("#addressDetail").focus();
+                },
+            });
+        });
+
     })
 
     var filesTempArr = [];
@@ -449,8 +484,11 @@
             "gender" : frm.gender,
             "loginId" : frm.loginId,
             "phoneNumber" : frm.phoneNumber,
+            "postalCode" : frm.postalCode,
             "addressDoro" : frm.addressDoro,
-            // "postalCode" : frm.postalCode,
+            "addressJibun" : frm.addressJibun,
+            "latitude" : frm.latitude,
+            "longitude" : frm.longitude,
             // "addressDetail" : frm.addressDetail,
             "age" : frm.age,
             "nickname" : frm.nickname,
@@ -528,6 +566,7 @@
 
 
 </script>
+</html>
 <style>
     .col-lg-6 {
         position: relative;

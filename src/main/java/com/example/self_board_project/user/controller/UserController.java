@@ -2,6 +2,7 @@ package com.example.self_board_project.user.controller;
 
 
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.core.utils.SysUtil;
 import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
 import com.example.self_board_project.file.service.FileService;
@@ -138,10 +139,12 @@ public class UserController {
     @RequestMapping(value = "/user/todayProfile")
     public String todayProfile(Model model, HttpServletResponse response,  Auth auth) {
 
-        logger.info(" auth.getId : {}"+ auth.getId());
+        logger.info(" todayProfile Start");
+        logger.info(" 로그인 Id : {}"+ auth.getId());
         User user = new User();
         user.setId(auth.getId());
         User userInfo = userService.selectUser(user);
+        logger.info(" 로그인한 회원 이름 : {}"+ userInfo.getRealName());
 
         //자신의 대표사진이 없으면 회원수정으로 가기
         String result = goUpdateForm(user, response);
@@ -165,9 +168,13 @@ public class UserController {
         for (String item3 : todayIds) {
             User todayUser = new User();
             todayUser.setId(Integer.parseInt(item3));
-            todayUser.setBossType("B");
-            todayUser.setFlag("S");
             User userInfo2 = userService.selectUser(todayUser);
+            logger.info(" 오늘의 프로필 이름 :  : {}"+ userInfo.getRealName());
+
+            double distanceKiloMeter = SysUtil.getDistance(userInfo.getLatitude(), userInfo.getLongitude(), userInfo2.getLatitude(), userInfo2.getLongitude());
+            userInfo2.setDistance(Math.round(distanceKiloMeter));
+            logger.info(" 나와 이성간의 거리 :  : {}" + Math.round(distanceKiloMeter));
+
             Relationship relationship = new Relationship();
             relationship.setSendId(auth.getId());
             relationship.setGetId(Integer.parseInt(item3));
@@ -177,10 +184,7 @@ public class UserController {
             fileInfo.setRefId(Integer.parseInt(item3));
             fileInfo.setFlag("user");
             List<FileInfo> fileList = fileService.selectFileList(fileInfo);
-//            model.addAttribute("fileList", fileList);
             userInfo2.setFileList(fileList);
-            System.out.println(">>>>>" + userInfo2.getFileList());
-            System.out.println(">>>>>" + userInfo2.getFileList().size());
             for (FileInfo test:userInfo2.getFileList()) {
                 System.out.println(test.getId());
             }

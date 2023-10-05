@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
@@ -103,19 +104,15 @@ public class MainController {
     @ResponseBody
     public User price2 ( User user)
     {
-
         logger.info(">>>>>>>>>>>>>>>>>getLoginId : " + user.getLoginId());
-//        logger.info(">>>>>>>>>>>>>>>>>getPassword : " + user.getPassword());
-
         return user;
     }
     @RequestMapping(value="/pricing")
-    public String price (User user)
-    {
+    public String price (User user) throws IOException {
         logger.info(">>>>>>>>>>>>>>>>>");
-
         return "front:pricing";
     }
+
 
     @RequestMapping(value="/about")
     public static String about (Auth auth)

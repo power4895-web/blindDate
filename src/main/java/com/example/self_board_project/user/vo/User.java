@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 public class User {
     private Integer id;
+    private List<Integer> ids;
     private String loginId;
     private String password;
     private String nickname;
@@ -23,6 +24,9 @@ public class User {
     private String todayProfileId;
 
     private String addressDoro;
+    private String addressJibun;
+    private Double latitude;
+    private Double longitude;
     private String addressDetail;
     private String postalCode;
     private String gradeScore;
@@ -30,6 +34,7 @@ public class User {
     private String job;
     private String workplace;
     private String purpose;
+    private double distance;
 
     private Date createDate;
     private Date updateDate;

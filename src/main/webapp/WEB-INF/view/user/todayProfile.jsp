@@ -62,7 +62,7 @@
                                 <ul class="list-unstyled mb-4">
                                     <div class="small">
                                         <div class="fw-bold"><a href="/user/view/${item.id}">${item.nickname}, ${item.age}</a></div>
-                                        <div class="text-muted"><i class="bi bi-geo-alt-fill"></i>거리,${item.job}</div>
+                                        <div class="text-muted"><i class="bi bi-geo-alt-fill"></i>${item.distance}km,${item.job}</div>
                                     </div>
                                 </ul>
                             </div>

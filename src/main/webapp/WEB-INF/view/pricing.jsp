@@ -10,6 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=42f0eba0161fc3396885c9e3336cdeee&libraries=services" type="text/javascript"></script>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -179,8 +180,6 @@
         <button onclick="test()">test</button>
     </section>
 </main>
-</body>
-</html>
 <script>
 
     function test() {
@@ -205,32 +204,89 @@
         });
     }
 
-    function login() {
-        console.log(">>", $("#loginId").val().trim())
-        com.requestAjax({
-            type: "POST",
-            url : "/loginProc",
-            params : {
-                "loginId" : $("#loginId").val().trim(),
-                "password" : $("#password").val().trim(),
-            }
-            //call back
-        },function(data){
-            console.log(data)
-            if( data.isLogin == true ){
-                document.location.href = "../.."
+    function getLALOInfo () {
+        const placeAddress = "경기도 성남시 분당구"; //원하는 주소를 body값에 받거나 변수로 입력하여준다.
+        const url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURI(placeAddress);
 
+        console.log("url", url)
+        $.ajax({
+            method: 'get',
+            url : url,
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                key : 'Authorization',
+                value : 'ea770b65073c17f4aff659c751c6df85'
+            },
+            success : function(data) { // 결과 성공 콜백함수
+                console.log("data", data);
+            },
+            error : function(request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
             }
-
-            // if( data.isLogin == true ){
-            //     var referer = document.referrer;
-            //     console.log("referer", referer)
-            //     document.location.href = (referer == "" || referer.indexOf("login") > -1 || referer.indexOf("registerForm") > -1
-            //         || referer.indexOf("userSearch") > -1 || referer.indexOf("changePasswordForm") > -1) ?  "/" : referer;
-            // }else{
-            //     $("#errorMsg").show();
-            // }
         });
     }
 
+    function googleapisView() {
+        var address = encodeURIComponent('광주광역시 광산구 첨단내촌로 1');
+        var geocode = "http://maps.googleapis.com/maps/api/geocode/json?address="+address+"&sensor=true";
+        $.ajax({
+            url: geocode,
+            type: 'POST',
+            success: function(myJSONResult){
+                console.log("myJSONResult", myJSONResult)
+                if(myJSONResult.status == 'OK') {
+                    var tag = "";
+                    var i;
+                    for (i = 0; i < myJSONResult.results.length; i++) {
+                        tag += "주소 : " +myJSONResult.results[i].formatted_address+" <br />";
+                        tag += "위도 : " +myJSONResult.results[i].geometry.location.lat+" <br />";
+                        tag += "경도 : " +myJSONResult.results[i].geometry.location.lng+" <br />";
+                    }
+                    document.getElementById("message").innerHTML = tag;
+                } else if(myJSONResult.status == 'ZERO_RESULTS') {
+                    alert("지오코딩이 성공했지만 반환된 결과가 없음을 나타냅니다.\n\n이는 지오코딩이 존재하지 않는 address 또는 원격 지역의 latlng을 전달받는 경우 발생할 수 있습니다.")
+                } else if(myJSONResult.status == 'OVER_QUERY_LIMIT') {
+                    alert("할당량이 초과되었습니다.");
+                } else if(myJSONResult.status == 'REQUEST_DENIED') {
+                    alert("요청이 거부되었습니다.\n\n대부분의 경우 sensor 매개변수가 없기 때문입니다.");
+                } else if(myJSONResult.status == 'INVALID_REQUEST') {
+                    alert("일반적으로 쿼리(address 또는 latlng)가 누락되었음을 나타냅니다.");
+                }
+            }
+        });
+    }
+    function distance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // 지구 반지름 (단위: km)
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon/2) * Math.sin(dLon/2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        const distance = R * c; // 두 지점 간의 거리 (단위: km)
+        return distance;
+    }
+
+    function deg2rad(deg) {
+        return deg * (Math.PI/180);
+    }
+    function test () {
+
+        const seoulLat = 37.503380461986666;
+        const seoulLon = 126.76615421706116;
+        const busanLat = 37.53194431314597;
+        const busanLon = 126.91416233208527;
+        const dist = distance(seoulLat, seoulLon, busanLat, busanLon);
+        console.log("dies", dist)
+
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch("서울 영등포구 국회대로 지하 758 (국회의사당역)", (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+                console.log('위도 : ' + result[0].y);
+                console.log('경도 : ' + result[0].x);
+            }
+        })
+    }
 </script>
+</body>
+</html>

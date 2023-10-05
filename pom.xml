@@ -184,6 +184,12 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+<!--위도경도-->
+        <dependency>
+            <groupId>com.google.code.geocoder-java</groupId>
+            <artifactId>geocoder-java</artifactId>
+            <version>0.16</version>
+        </dependency>
 
     </dependencies>
 
