@@ -171,9 +171,13 @@ public class UserController {
             User userInfo2 = userService.selectUser(todayUser);
             logger.info(" 오늘의 프로필 이름 :  : {}"+ userInfo.getRealName());
 
-            double distanceKiloMeter = SysUtil.getDistance(userInfo.getLatitude(), userInfo.getLongitude(), userInfo2.getLatitude(), userInfo2.getLongitude());
-            userInfo2.setDistance(Math.round(distanceKiloMeter));
-            logger.info(" 나와 이성간의 거리 :  : {}" + Math.round(distanceKiloMeter));
+            if(userInfo.getLatitude() != null && userInfo.getLongitude() != null && userInfo2.getLatitude() != null && userInfo2.getLongitude() != null) {
+                double distanceKiloMeter = SysUtil.getDistance(userInfo.getLatitude(), userInfo.getLongitude(), userInfo2.getLatitude(), userInfo2.getLongitude());
+                userInfo2.setDistance(Math.round(distanceKiloMeter));
+                logger.info(" 나와 이성간의 거리 :  : {}" + Math.round(distanceKiloMeter));
+            } else {
+                logger.info("회원 중 위도, 적도 데이터 없음");
+            }
 
             Relationship relationship = new Relationship();
             relationship.setSendId(auth.getId());
@@ -185,9 +189,6 @@ public class UserController {
             fileInfo.setFlag("user");
             List<FileInfo> fileList = fileService.selectFileList(fileInfo);
             userInfo2.setFileList(fileList);
-            for (FileInfo test:userInfo2.getFileList()) {
-                System.out.println(test.getId());
-            }
             if(relationshipInfo != null) {
                 userInfo2.setSendYn("Y");
             } else {

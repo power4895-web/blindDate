@@ -30,7 +30,6 @@ public class MainController {
     public String main (Auth auth, Model model)
     {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        System.out.println(">>dddd");
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }
@@ -117,7 +116,6 @@ public class MainController {
     @RequestMapping(value="/about")
     public static String about (Auth auth)
     {
-        System.out.println(auth);
         return "front:about";
     }
 
