@@ -153,7 +153,7 @@
                     <%--회원추천--%>
                     <div id="similarCharm">
                         <div class="h4 pb-2 mb-4 border-bottom"></div>
-                        매력지수가 비슷한 이성 ⭐
+                        매력지수가 비슷한 이성 보러가기 ⭐
                     </div>
                 </div>
             </div>

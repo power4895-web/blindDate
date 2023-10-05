@@ -108,7 +108,7 @@ public class MainController {
     }
     @RequestMapping(value="/pricing")
     public String price (User user) throws IOException {
-        logger.info(">>>>>>>>>>>>>>>>>");
+        logger.info("pricing start");
         return "front:pricing";
     }
 
