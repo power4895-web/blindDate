@@ -33,6 +33,9 @@
                                 <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/registerForm">Sign up</a>
                                 <a class="btn btn-outline-light btn-lg px-4" href="/loginForm">Sign in</a>
                             </sec:authorize>
+<%--                            <sec:authorize access="isAuthenticated()">--%>
+<%--                                <input type="text" value="${info.user.id}" id="info">--%>
+<%--                            </sec:authorize>--%>
                         </div>
                     </div>
                 </div>
@@ -265,3 +268,22 @@
 
 </main>
 </body>
+
+<script>
+    $(document).ready(function (){
+        // if($('#info').val() != null) {
+        //     const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
+        //     eventSource.addEventListener('sse', event => {
+        //         console.log(">>>>>>>>>>>>>>>>>>>event : ",event);
+        //         console.log(">>>>>>>>>>>>>>>>>>>data : ",event.data);
+        //         if(event.data == '승낙') {
+        //             console.log(">>>>>>>>>>>>>>>>>>>승낙 >> mypage 채팅에 알람표시");
+        //         }
+        //         if(event.data == '승낙') {
+        //             console.log(">>>>>>>>>>>>>>>>>>>친구해요 :  mypage 친구리스트에 알람표시 ");
+        //         }
+        //     });
+        // }
+    })
+
+</script>

@@ -32,6 +32,7 @@
 
 
 <body class="d-flex flex-column h-100">
+
     <main class="flex-shrink-0">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -46,11 +47,24 @@
                         <li class="nav-item"><a class="nav-link" href="/pricing">Pricing</a></li>
                         <li class="nav-item"><a class="nav-link" href="/faq">FAQ</a></li>
                         <sec:authorize access="isAuthenticated()">
+                            <input type="hidden" value="${info.user.id}" id="info">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mypage</a>
+                            <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                <span class="visually-hidden">New alerts</span>
+                            </span>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mypage
+                                </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                                     <li><a class="dropdown-item" href="/user/todayProfile">오늘의 프로필</a></li>
-                                    <li><a class="dropdown-item" href="/user/friendList">친구리스트</a></li>
+                                    <li>
+                                        <a class="dropdown-item position-relative" href="/user/friendList">
+                                            친구리스트
+                                            <span class="position-absolute top-50 start-50 translate-middle p-1 bg-danger border border-light rounded-circle">
+                                                <span class="visually-hidden">New alerts</span>
+                                            </span>
+                                        </a>
+                                    </li>
                                     <li><a class="dropdown-item" href="blog-post.html">채팅</a></li>
                                     <li><a class="dropdown-item" href="/user/updateForm/${info.user.id}">내정보수정</a></li>
                                     <li><a class="dropdown-item" href="blog-post.html">스케줄</a></li>
@@ -66,3 +80,21 @@
     </main>
 </body>
 </html>
+<script>
+    $(document).ready(function (){
+        if($('#info').val() != null) {
+            const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
+            eventSource.addEventListener('sse', event => {
+                console.log(">>>>>>>>>>>>>>>>>>>event : ",event);
+                console.log(">>>>>>>>>>>>>>>>>>>data : ",event.data);
+                if(event.data == '승낙') {
+                    console.log(">>>>>>>>>>>>>>>>>>>승낙 >> mypage 채팅에 알람표시");
+                }
+                if(event.data == '친구해요') {
+                    navbarDropdownBlog
+                    console.log(">>>>>>>>>>>>>>>>>>>친구해요 :  mypage 친구리스트에 알람표시 ");
+                }
+            });
+        }
+    })
+</script>

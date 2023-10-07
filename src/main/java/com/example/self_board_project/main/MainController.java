@@ -29,7 +29,9 @@ public class MainController {
     @RequestMapping("/")
     public String main (Auth auth, Model model)
     {
+        //oauth로 로그인할 때 user값들어온다.
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        System.out.println("user" + user);
         if (user != null) {
             model.addAttribute("userName", user.getName());
         }

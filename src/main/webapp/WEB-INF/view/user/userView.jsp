@@ -242,6 +242,17 @@
                 if(data == true) {
                     $('#didRelationship').show()
                     $('#notRelationship').hide()
+                    $.ajax({
+                        type : 'get',
+                        url : "/notifications/send-data/" + id + "/" + "친구해요",
+                        success : function(data) { // 결과 성공 콜백함수
+                            console.log("data", data)
+                        },
+                        error : function(request, status, error) { // 결과 에러 콜백함수
+                            console.log("error", error)
+                        }
+                    });
+
                 } else {
                     alert("이미 친구해요를 보냈거나 실패했습니다")
                 }

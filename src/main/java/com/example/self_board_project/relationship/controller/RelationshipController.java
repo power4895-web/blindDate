@@ -56,6 +56,7 @@ public class RelationshipController {
         Boolean result = relationshipService.insertRelationship(relationship);
         logger.info("relationship 생성된 아이디: {}", relationship.getId());
         logger.info("result: {}", result);
+
         return result;
     }
     @RequestMapping(value="/relationship/totalFriendList/{type}")
