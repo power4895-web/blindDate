@@ -3,6 +3,8 @@ package com.example.self_board_project.evaluation.controller;
 import com.example.self_board_project.core.authority.Auth;
 import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
+import com.example.self_board_project.notification.service.NotificationService;
+import com.example.self_board_project.notification.vo.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,17 @@ public class EvaluationController {
 
     @Autowired
     EvaluationService evaluationService;
+    @Autowired
+    NotificationService notificationService;
 
+    /**
+     * 매력 리스트
+     * @param model
+     * @param response
+     * @param auth
+     * @param type
+     * @return
+     */
     @RequestMapping(value = "/evaluation/evaluationList/{type}")
     public String evaluatonList(Model model, HttpServletResponse response, Auth auth, @PathVariable String type) {
         logger.info("friendList Start type: {}" , type);
@@ -33,23 +45,44 @@ public class EvaluationController {
         if(type.equals("send")) {
             evaluation.setEvaluationId(auth.getId());
             List<Evaluation> evaluationList = evaluationService.selectSendEvaluationList(evaluation);
-            model.addAttribute("evaluationList", evaluationList);
+            if(evaluationList.size() != 0) {
+                model.addAttribute("evaluationList", evaluationList);
+            }
         }
         //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
         if(type.equals("get")) {
             evaluation.setReceiveId(auth.getId());
             List<Evaluation> evaluationList = evaluationService.selectGetEvaluationList(evaluation);
-            model.addAttribute("evaluationList", evaluationList);
+            if(evaluationList.size() != 0) {
+                model.addAttribute("evaluationList", evaluationList);
+            }
+            Notification notification = new Notification();
+            notification.setUserId(auth.getId());
+            notification.setField("evaluation");
+            notificationService.updateNotification(notification);
         }
-        model.addAttribute("type", "evaluation");
+        model.addAttribute("type", type);
+        model.addAttribute("field", "evaluation");
+        System.out.println("끝>>>>>>>>>>>>>>>>");
         return "friendListAjax";
     }
 
+    /**
+     * 매력 insert
+     * @param evaluation
+     * @param auth
+     * @return
+     */
     @RequestMapping(value="/evaluation/sendingEvaluation")
     @ResponseBody
     public Boolean insertEvaluation(Evaluation evaluation, Auth auth) {
         evaluation.setEvaluationId(auth.getId());
         Boolean result = evaluationService.insertEvaluation(evaluation);
+        Notification notification = new Notification();
+        notification.setUserId(evaluation.getReceiveId());
+        notification.setField("evaluation");
+        notification.setRefId(evaluation.getId());
+        notificationService.insertNotification(notification);
         logger.info("evaluation 생성된 아이디: {}", evaluation.getId());
         logger.info("result: {}", result);
         return result;

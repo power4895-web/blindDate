@@ -93,4 +93,11 @@ public class NotificationService {
         return notificationMapper.countNotification(notification);
     }
 
+    public void insertNotification(Notification notification) {
+        notificationMapper.insertNotification(notification);
+    }
+    public void updateNotification(Notification notification) {
+        notificationMapper.updateNotification(notification);
+    }
+
 }

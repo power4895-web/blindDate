@@ -23,6 +23,12 @@ public class NotificationController {
     private NotificationService notificationService;
 
     Logger logger = LoggerFactory.getLogger(getClass());
+
+    /**
+     * 알림 리스트
+     * @param auth
+     * @param model
+     */
     @RequestMapping(value = "/notifications/list")
     @ResponseBody
     public void notificationList(Auth auth, Model model) {
@@ -35,6 +41,13 @@ public class NotificationController {
         notification.setField("evaluation");
         List<Notification> evaluationNotificationList = notificationService.selectNotificationList(notification);
     }
+
+    /**
+     * 알림카운트 (친구해요, 평가, 읽지 않은 알람, 읽거나 안읽은 모든 알람 개수)
+     * @param auth
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/notification/count")
     @ResponseBody
     public Notification notificationCount(Auth auth, Model model) {
@@ -45,12 +58,23 @@ public class NotificationController {
         logger.info("notificationCount {}", notificationCount);
         return notificationCount;
     }
+
+    /**
+     * 로그인한 회원 구독하기
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/notifications/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter subscribe(@PathVariable Long id) {
         logger.info("subscribe start id : {}", id);
         return notificationService.subscribe(id);
     }
 
+    /**
+     * 구독한 회원에게 클라이언트로 호출하기
+     * @param id
+     * @param data
+     */
     @GetMapping("/notifications/send-data/{id}/{data}")
     @ResponseBody
     public void sendData(@PathVariable Long id, @PathVariable String data) {

@@ -271,22 +271,33 @@
 
 <script>
     $(document).ready(function (){
-        Notification.permission = 'denied';
-        var permission = Notification.requestPermission();
-        console.log(">>>",permission)
-        // if($('#info').val() != null) {
-        //     const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
-        //     eventSource.addEventListener('sse', event => {
-        //         console.log(">>>>>>>>>>>>>>>>>>>event : ",event);
-        //         console.log(">>>>>>>>>>>>>>>>>>>data : ",event.data);
-        //         if(event.data == '승낙') {
-        //             console.log(">>>>>>>>>>>>>>>>>>>승낙 >> mypage 채팅에 알람표시");
-        //         }
-        //         if(event.data == '승낙') {
-        //             console.log(">>>>>>>>>>>>>>>>>>>친구해요 :  mypage 친구리스트에 알람표시 ");
-        //         }
-        //     });
-        // }
+        console.log("Notification.permission", Notification.permission)
+        // 브라우저가 알림(notifications)를 지원하는지 확인
+        if (!("Notification" in window)) {
+            alert("브라우저가 notification을 지원하지 않음");
+        }
+        // 알림 허용이 되었는지 확인
+        else if (Notification.permission === "granted") {
+            // notification 생성
+            var notification = new Notification("알람을 받습니다.");
+            setTimeout(() => {
+                notification.close();
+            }, 10 * 1000);
+        }
+        // 사용자가 알림을 허용으로 바꿨을 경우
+        else if (Notification.permission !== 'denied') {
+            Notification.requestPermission().then((permission) => {
+                console.log("permission", permission)
+                // handlePermission(permission);
+                // 사용자가 허용하면 알림 띄우기
+                if (permission === "granted") {
+                    var notification = new Notification("알림 메세지를 받습니다.");
+                    setTimeout(() => {
+                        notification.close();
+                    }, 10 * 1000);
+                }
+            });
+        }
     })
 
 </script>

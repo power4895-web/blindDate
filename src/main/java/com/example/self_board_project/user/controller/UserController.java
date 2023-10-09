@@ -7,6 +7,8 @@ import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
 import com.example.self_board_project.file.service.FileService;
 import com.example.self_board_project.file.vo.FileInfo;
+import com.example.self_board_project.notification.service.NotificationService;
+import com.example.self_board_project.notification.vo.Notification;
 import com.example.self_board_project.relationship.service.RelationshipService;
 import com.example.self_board_project.relationship.vo.Relationship;
 import com.example.self_board_project.user.service.UserService;
@@ -41,6 +43,8 @@ public class UserController {
     private RelationshipService relationshipService;
     @Autowired
     private EvaluationService evaluationService;
+    @Autowired
+    private NotificationService notificationService;
 
     /**
      * 회원목록
@@ -210,6 +214,10 @@ public class UserController {
     @RequestMapping(value = "/user/friendList")
     public String friendList(Model model, HttpServletResponse response,  Auth auth) {
         logger.info("friendListForm Start");
+//        Notification notification = new Notification();
+//        notification.setUserId(auth.getId());
+//        notification.setField("relationship");
+//        notificationService.updateNotification(notification);
         return "front:user/friendList";
     }
 

@@ -37,7 +37,6 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
-                <button onclick="test()">test</button>
                 <a class="navbar-brand" href="/">MEET UP</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -59,7 +58,7 @@
                                     <li>
                                         <a class="dropdown-item position-relative" href="/user/friendList">
                                             친구리스트
-                                            <span class="badge text-bg-danger" id="relationshipCount"></span>
+                                            <span class="badge text-bg-danger" id="friendshipListCount"></span>
                                         </a>
                                     </li>
                                     <li><a class="dropdown-item" href="blog-post.html">채팅</a></li>
@@ -80,100 +79,30 @@
 </html>
 <script>
     $(document).ready(function (){
-        console.log("info", $('#info').val())
-
-        if (!("Notification" in window)) {
-            // 브라우저가 알림을 지원하는지 확인
-            alert("This browser does not support desktop notification");
-        } else if (Notification.permission === "granted") {
-            // 알림 권한이 이미 부여되었는지 확인합니다.
-            // 그렇다면 알림을 생성합니다.
-            alert("granted")
-            const notification = new Notification("Hi there!");
-            // …
-        } else if (Notification.permission === "denied") {
-            alert("!!denied")
-            // 사용자에게 권한을 요청해야 합니다.
-            Notification.requestPermission().then((permission) => {
-                // 사용자가 수락하면 알림을 생성합니다.
-                console.log("permission : ", permission);
-                if (permission === "granted") {
-                    const notification = new Notification("Hi there!");
-                    // …
-                }
-            });
-        }
-
-        return;
-
-
-
+        console.log("header start")
+        console.log("Notification.permission", Notification.permission)
         if($('#info').val() != null) {
-            // getNotificationCount();
+            sendNotification();
 
-
-            const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
-            eventSource.addEventListener('sse', event => {
-
-                console.log(">>>>>>>>>>>>>>>>>>>event : ",event);
-                console.log(">>>>>>>>>>>>>>>>>>>data : ",event.data);
-
-                if(event.data == '승낙') {
-                    console.log(">>>>>>>>>>>>>>>>>>>승낙 >> mypage 채팅에 알람표시");
-                }
-                if(event.data == '친구해요') {
-                    var permission = Notification.requestPermission();
-                    console.log(">>>",permission)
-
-
-                    console.log(">>>>>>>>>>>>>>>>>>>친구해요 :  mypage 친구리스트에 알람표시 ");
-                    $('#totalNCount').text(totalNCount + 1)
-                    $('#relationshipCount').text(relationshipCount + 1)
-
-                    // 브라우저 알림
-                    // 브라우저 알림 허용 권한
-                    let granted = false;
-                    if (Notification.permission === 'granted') {
-                        granted = true;
-                    }
-                    if (Notification.permission ==! 'granted') {
-                        console.log("새로운 메세지가 왔습니다. 하지만 현재 알림허용이 되어있지 않습니다. 알림을 받고 싶다면 캐시를 지우고 새로고침하여 알림을 확인해보세요.");
-                        return;
-                    }
-                    console.log("granted", granted)
-                    // 알림 보여주기
-                    if (granted) {
-                        const notification = new Notification('알림!!!', {
-                            body: "누군가가 친구신청을 했습니다."
-                        });
-                        setTimeout(() => {
-                            notification.close();
-                        }, 10 * 1000);
-                        notification.addEventListener('click', () => {
-                            window.open("localhost:8080/user/view/" + 2, '_blank');
-                        });
-                    }
-                }
-            });//eventSource.addEventListener end
         }//if end
     })//ready end
 
-    let relationshipCount= 0;
-    let totalNCount= 0;
 
+    let totalNCount= 0; //mypage,친구리스트 알람개수
+    //현재시점 알람개수 가져와서 매핑
     function getNotificationCount() {
         $.ajax({
             type : 'get',
             url : "/notification/count",
             success : function(data) { // 결과 성공 콜백함수
-                console.log("data", data)
-                if(data.relationshipCount != 0) {
-                    relationshipCount = data.relationshipCount
-                    $('#relationshipCount').text(data.relationshipCount)
-                }
+                console.log("notiCount", data)
                 if(data.totalNCount != 0) {
                     totalNCount = data.totalNCount
-                    $('#totalNCount').text(data.totalNCount)
+                    $('#totalNCount').text(totalNCount)
+                    $('#friendshipListCount').text(totalNCount)
+                } else {
+                    $('#totalNCount').text('')
+                    $('#friendshipListCount').text('')
                 }
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
@@ -182,8 +111,62 @@
       })
     }
 
-    function test(){
-        var permission = Notification.requestPermission();
-        console.log(">>>",permission)
+    //구독하기
+    // 최초 구독할 때 한번 호출
+    function sendNotification() {
+        //구독커넥션 연결
+        const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
+        eventSource.addEventListener('sse', event => {
+            //서버에서 send()를 하면 이부분부터 로직이 수행된다.
+            // 현재시점 알람가져오기
+            getNotificationCount();  //totalNCount의 변수 할당
+            console.log(">>>>>>>>>>>>>>>>>>>event : ",event);
+            if(event.data == '호감') {
+                alertNotification("이성이 높은 점수를 줬습니다.");
+            }
+            if(event.data == '친구해요') {
+                alertNotification("이성이 친구신청을 했습니다.");
+            }
+        });//eventSource.addEventListener end
+    }
+
+    //알림 띄우기
+    function alertNotification (message) {
+        console.log(">>>>>>>>>>>>>>>>>>>승낙 >> mypage 채팅에 알람표시");
+        if(Notification.permission !== "granted") {
+            alert("새로운 메세지가 있습니다. 실시간으로 알람을 받고 싶은 경우 브라우저에서 알림을 활성화 시켜주세요.")
+            Notification.requestPermission().then((permission) => {
+                console.log("permission", permission)
+                // handlePermission(permission);
+                // 사용자가 허용하면 알림 띄우기
+                if (permission === "granted") {
+                    var notification = new Notification("알림 메세지를 받습니다.");
+                }
+            });
+        }
+        //친구하기 또는 호감을 했기 때문에 알람개수 늘려주기
+        if(totalNCount != 0) {
+            console.log("totalNCount", totalNCount)
+            $('#totalNCount').text(totalNCount + 1)
+            $('#friendshipListCount').text(totalNCount + 1)
+        }
+
+        let granted = false;
+        if (Notification.permission === 'granted') {
+            granted = true;
+        }
+        console.log("granted", granted)
+        // 알림 보여주기
+        if (granted) {
+            const notification = new Notification('알림!!!', {
+                body: message
+            });
+            setTimeout(() => {
+                notification.close();
+            }, 10 * 1000);
+            notification.addEventListener('click', () => {
+                window.open("http://localhost:8080/user/friendList/", '_blank');
+            });
+        }
     }
 </script>

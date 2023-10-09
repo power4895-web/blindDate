@@ -32,10 +32,10 @@
             <%--탭그리기 : 보낸표현,받은표현--%>
             <ul class="nav nav-pills mb-3 justify-content-center" id="myTab" role="tablist" style="float :none;">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="sendExpresstionBtnId" onclick="sendExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">보낸표현</button>
+                    <button class="nav-link " id="sendExpresstionBtnId" onclick="sendExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false">보낸표현</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="getExpresstionBtnId" onclick="getExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">받은표현</button>
+                    <button class="nav-link active" id="getExpresstionBtnId" onclick="getExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true">받은표현</button>
                 </li>
             </ul>
             <%--친구해요 호감 해시태그--%>
@@ -48,12 +48,12 @@
             <%--탭 내용 시작--%>
             <div class="tab-content" id="pills-tabContent">
                 <%--첫번 째--%>
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="sendExpresstionBtnId" tabindex="0">
+                <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="sendExpresstionBtnId" tabindex="0">
                     <div class="row gy-xl-5 justify-content" id="sendExpresstionProfile">
                     </div>
                 </div>
                 <%--두번 째--%>
-                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="getExpresstionBtnId" tabindex="0">
+                <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="getExpresstionBtnId" tabindex="0">
                         <div class="row gy-xl-5 justify-content" id="getExpressionProfile">
                         </div>
                 </div>
@@ -67,7 +67,7 @@
 <script>
 
     $(document).ready(function(){
-        getRelationshipList("send");
+        getRelationshipList("get");
     })
 
     //보낸표현버튼 > default realationship
@@ -75,7 +75,7 @@
         getRelationshipList("send");
         activateTab("relationship"); // 친구해요 활성화
         deactivateTab("evaluation"); // 호감 비활성화
-
+        deactivateTab("totalFriend"); // 전체 비활성화
     }
 
     //받은표현버튼 > default realationship
@@ -83,6 +83,7 @@
         getRelationshipList("get");
         activateTab("relationship"); // 친구해요 활성화
         deactivateTab("evaluation"); // 호감 비활성화
+        deactivateTab("totalFriend"); // 전체 비활성화
     }
 
     //전체 태그
@@ -115,6 +116,10 @@
     function letFriendshipTag() {
         var activeTab = $('#myTab li button.active').attr('id');
         console.log('현재 활성화된 탭:', activeTab);
+        if(activeTab == 'sendExpresstionBtnId') {
+
+        }
+
         var activeTag = $('#myTag button.active').attr('id');
         console.log('현재 활성화된 태그:', activeTag);
         if(activeTag == undefined) {
@@ -207,12 +212,14 @@
                     $('#sendExpresstionProfile').empty();
                     $('#getExpressionProfile').empty();
                     $('#sendExpresstionProfile').html(data);
+                    getNotificationCount()
                 }
                 if(type == "get") {
                     $('#sendExpresstionProfile').empty();
                     $('#getExpressionProfile').empty();
                     $('#sendExpresstionProfile').empty();
                     $('#getExpressionProfile').html(data);
+                    getNotificationCount()
                 }
             },
             error : function(request, status, error) { // 결과 에러 콜백함수

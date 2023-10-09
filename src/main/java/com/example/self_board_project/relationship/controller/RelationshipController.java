@@ -3,6 +3,8 @@ package com.example.self_board_project.relationship.controller;
 import com.example.self_board_project.core.authority.Auth;
 import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
+import com.example.self_board_project.notification.service.NotificationService;
+import com.example.self_board_project.notification.vo.Notification;
 import com.example.self_board_project.relationship.service.RelationshipService;
 import com.example.self_board_project.relationship.vo.Relationship;
 import org.slf4j.Logger;
@@ -25,7 +27,17 @@ public class RelationshipController {
     RelationshipService relationshipService;
     @Autowired
     EvaluationService evaluationService;
+    @Autowired
+    NotificationService notificationService;
 
+    /**
+     * 마이페이지 > 친구리스트 (default 받은 친구해요)
+     * @param model
+     * @param response
+     * @param auth
+     * @param type
+     * @return
+     */
     @RequestMapping(value = "/relationship/relationshipList/{type}")
     public String relationshipList(Model model, HttpServletResponse response, Auth auth, @PathVariable String type) {
         logger.info("friendList Start type: {}" , type);
@@ -36,29 +48,57 @@ public class RelationshipController {
         if(type.equals("send")) {
             relationship.setSendId(auth.getId());
             List<Relationship> relationshipList = relationshipService.selectSendRelationshipList(relationship);
-            model.addAttribute("relationshipList", relationshipList);
+            if(relationshipList.size() != 0) {
+                model.addAttribute("relationshipList", relationshipList);
+            }
         }
         //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
         if(type.equals("get")) {
             relationship.setGetId(auth.getId());
             List<Relationship> relationshipList = relationshipService.selectGetRelationshipList(relationship);
-            model.addAttribute("relationshipList", relationshipList);
+            if(relationshipList.size() != 0) {
+                model.addAttribute("relationshipList", relationshipList);
+            }
+            Notification notification = new Notification();
+            notification.setUserId(auth.getId());
+            notification.setField("relationship");
+            notificationService.updateNotification(notification);
+
         }
-        model.addAttribute("type", "relationship");
+        model.addAttribute("type", type);
+        model.addAttribute("field", "relationship");
         return "friendListAjax";
     }
 
 
+    /**
+     * 친구해요 insert
+     * @param relationship
+     * @param auth
+     * @return
+     */
     @RequestMapping(value="/relationship/sendingRelationship")
     @ResponseBody
     public Boolean insertRelationship(Relationship relationship, Auth auth) {
         relationship.setSendId(auth.getId());
         Boolean result = relationshipService.insertRelationship(relationship);
+        Notification notification = new Notification();
+        notification.setUserId(relationship.getGetId());
+        notification.setField("relationship");
+        notification.setRefId(relationship.getId());
+        notificationService.insertNotification(notification);
         logger.info("relationship 생성된 아이디: {}", relationship.getId());
         logger.info("result: {}", result);
-
         return result;
     }
+
+    /**
+     * 친구리스트 > 전체태그
+     * @param auth
+     * @param model
+     * @param type
+     * @return
+     */
     @RequestMapping(value="/relationship/totalFriendList/{type}")
     public String totalSendFriendList(Auth auth, Model model,@PathVariable String type) {
         logger.info("totalSendFriendList Start type : {}", type);
@@ -69,23 +109,30 @@ public class RelationshipController {
         if(type.equals("send")) {
             relationship.setSendId(auth.getId());
             List<Relationship> relationshipList = relationshipService.selectSendRelationshipList(relationship);
-            model.addAttribute("relationshipList", relationshipList);
-
+            if(relationshipList.size() != 0) {
+                model.addAttribute("relationshipList", relationshipList);
+            }
             evaluation.setEvaluationId(auth.getId());
             List<Evaluation> evaluationList = evaluationService.selectSendEvaluationList(evaluation);
-            model.addAttribute("evaluationList", evaluationList);
-
+            if(evaluationList.size() != 0) {
+                model.addAttribute("evaluationList", evaluationList);
+            }
         }
         //받은사람의 아이디, 보낸 사람의 정보를 가져올 때
         if(type.equals("get")) {
             relationship.setGetId(auth.getId());
             List<Relationship> relationshipList = relationshipService.selectGetRelationshipList(relationship);
-            model.addAttribute("relationshipList", relationshipList);
-
+            if(relationshipList.size() != 0) {
+                model.addAttribute("relationshipList", relationshipList);
+            }
             evaluation.setReceiveId(auth.getId());
             List<Evaluation> evaluationList = evaluationService.selectGetEvaluationList(evaluation);
-            model.addAttribute("evaluationList", evaluationList);
+            if(evaluationList.size() != 0) {
+                model.addAttribute("evaluationList", evaluationList);
+            }
         }
+        model.addAttribute("type", type);
+        model.addAttribute("field", "total");
         return "friendListAjax";
     }
 }

@@ -16,11 +16,19 @@
 </head>
 <body>
 <p id="indexListAjax">
-    <c:if test="${relationshipList != null}">
-        <div class="mb-1">
-            <p class="lead fw-semibold text-muted mb-0">내가 친구해요를 보낸 이성  <i class="bi bi-heart-fill" style="color: red"></i></p>
-        </div>
+    <c:if test="${field == 'relationship' || field == 'total'}">
+        <c:if test="${relationshipList != null}">
+            <div class="mb-1">
+                <p class="lead fw-semibold text-muted mb-0">내가 친구해요를 ${type == 'send' ? '보낸' :  '받은'} 이성  <i class="bi bi-heart-fill" style="color: red"></i></p>
+            </div>
+        </c:if>
+        <c:if test="${relationshipList == null}">
+            <div class="mb-1">
+                <p class="lead fw-semibold text-muted mb-0">친구해요를 보낸 이성이 없습니다. 이성에게 먼저 다가가보세요.  <i class="bi bi-heart-fill" style="color: red"></i></p>
+            </div>
+        </c:if>
     </c:if>
+
     <c:forEach var="item" items="${relationshipList}" varStatus="status" >
         <div class="col-lg-6 col-xl-4">
             <div class="card mb-5 mb-xl-0">
@@ -31,7 +39,7 @@
                     <ul class="list-unstyled mb-4">
                         <div class="small">
                             <div class="fw-bold">
-                                <a href="/user/view/${type == 'relationship' ? item.getId : item.receiveId}">${item.nickname}, ${item.age}</a>
+                                <a href="/user/view/${type == 'send' ? item.getId : item.sendId}">${item.nickname}, ${item.age}</a>
                             </div>
                             <div class="text-muted">
                                 <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}
@@ -44,11 +52,20 @@
             </div>
         </div>
     </c:forEach>
-    <c:if test="${evaluationList != null}">
-        <div class="mb-1">
-            <p class="lead fw-semibold text-muted mb-0">내가 높은점수를 준 이성 <i class="bi bi-star-fill" style="color: orange"></i></p>
-        </div>
+
+    <c:if test="${field == 'evaluation' || field == 'total'}">
+        <c:if test="${evaluationList != null}">
+            <div class="mb-1">
+                <p class="lead fw-semibold text-muted mb-0">${type == 'send' ? '내가' :  '내게'}  높은점수를 준 이성  <i class="bi bi-heart-fill" style="color: red"></i></p>
+            </div>
+        </c:if>
+        <c:if test="${evaluationList == null}">
+            <div class="mb-1">
+                <p class="lead fw-semibold text-muted mb-0">호감을 ${type == 'send' ? '보낸이성이 없습니다. 호감을 표현하세요.' :  '받은 이성이 없습니다.'}    <i class="bi bi-heart-fill" style="color: red"></i></p>
+            </div>
+        </c:if>
     </c:if>
+
     <c:forEach var="item" items="${evaluationList}" varStatus="status" >
         <div class="col-lg-6 col-xl-4">
             <div class="card mb-5 mb-xl-0">
@@ -59,7 +76,7 @@
                     <ul class="list-unstyled mb-4">
                         <div class="small">
                             <div class="fw-bold">
-                                <a href="/user/view/${type == 'relationship' ? item.getId : item.receiveId}">${item.nickname}, ${item.age}</a>
+                                <a href="/user/view/${type == 'send' ? item.receiveId : item.evaluationId}">${item.nickname}, ${item.age}</a>
                             </div>
                             <div class="text-muted">
                                 <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}

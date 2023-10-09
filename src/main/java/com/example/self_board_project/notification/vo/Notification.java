@@ -9,10 +9,11 @@ import java.util.Date;
 @Setter
 public class Notification{
     private Integer id;
-    private int userId;
-    private String refId;
+    private Integer userId;
+    private Integer refId;
     private String field;
     private int relationshipCount;
+    private int friendshipCount;
     private int evaluationCount;
     private int totalNCount;
     private int totalCount;
