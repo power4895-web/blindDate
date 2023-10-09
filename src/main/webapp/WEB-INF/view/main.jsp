@@ -271,6 +271,9 @@
 
 <script>
     $(document).ready(function (){
+        Notification.permission = 'denied';
+        var permission = Notification.requestPermission();
+        console.log(">>>",permission)
         // if($('#info').val() != null) {
         //     const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
         //     eventSource.addEventListener('sse', event => {

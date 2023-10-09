@@ -213,6 +213,14 @@ public class UserController {
         return "front:user/friendList";
     }
 
+    @RequestMapping(value = "/user/getFriendList")
+    @ResponseBody
+    public String getFriendList(Model model, HttpServletResponse response,  Auth auth) {
+        logger.info("friendListForm Start");
+        return "front:user/friendList";
+    }
+
+
     /**
      * 파일이 등록되어있지 않아서 회원수정으로 다시 가는 메소드
      * @param user

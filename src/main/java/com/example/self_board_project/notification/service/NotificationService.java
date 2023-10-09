@@ -1,11 +1,15 @@
 package com.example.self_board_project.notification.service;
 
 import com.example.self_board_project.notification.mapper.EmitterRepository;
+import com.example.self_board_project.notification.mapper.NotificationMapper;
+import com.example.self_board_project.notification.vo.Notification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +18,10 @@ public class NotificationService {
     private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
 
     private final EmitterRepository emitterRepository;
+    @Autowired
+    private NotificationMapper notificationMapper;
+
+
 
     /**
      * 클라이언트가 구독을 위해 호출하는 메서드.
@@ -74,6 +82,15 @@ public class NotificationService {
         emitter.onTimeout(() -> emitterRepository.deleteById(id));
 
         return emitter;
+    }
+
+
+    public List<Notification> selectNotificationList(Notification notification) {
+        return notificationMapper.selectNotificationList(notification);
+    }
+    public Notification countNotification(Notification notification) {
+        System.out.println("countNotification Service");
+        return notificationMapper.countNotification(notification);
     }
 
 }
