@@ -135,14 +135,15 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="h4 pb-2 mb-4 border-bottom"></div>
                     <%--평가유무--%>
-                        <div id="notEvaluate" class="text-center">
-                            <div class="d-block p-2 text-bg-light" >${userInfo.realName} 님의 매력점수는?</div>
-                            <div class="ratings jq-stars" data-rating="0"></div>
-                        </div>
-                        <div id="didEvaluate">
-                            <span class="d-block p-2 text-bg-light text-start" >${userInfo.realName} 님의 매력을 ⭐${evaluationInfo.score}로 평가하였습니다.</span>
-                        </div>
+                    <div id="notEvaluate" class="text-center">
+                        <div class="d-block p-2 text-bg-light" >${userInfo.realName} 님의 매력점수는?</div>
+                        <div class="ratings jq-stars" data-rating="0"></div>
+                    </div>
+                    <div id="didEvaluate">
+                        <span class="d-block p-2 text-bg-light text-start" >${userInfo.realName} 님의 매력을 ⭐${evaluationInfo.score}로 평가하였습니다.</span>
+                    </div>
                     <%--친구해요 유무--%>
                     <div class="h4 pb-2 mb-4 border-bottom"></div>
                     <div class="p-2 text-bg-info text-start" id="didRelationship">
@@ -172,14 +173,34 @@
 </html>
 <script>
     $(document).ready(function(){
+        setting();
+    })
+
+    function setting() {
+        //호감세팅
         if($('#evaluationInfo').val() != '') {
             console.log("평가했다")
             $('#notEvaluate').hide()
         } else {
-            console.log("평가x")
+            console.log("평가안했다.")
             $('#didEvaluate').hide()
             $('#test').hide()
         }
+        //친구해요 세팅
+
+        if($('#relationshipInfo').val() == '' && $('#type').val() == '') {
+            console.log("오늘의 프로필에서 접근했습니다. 친구해요를 보내지 않았습니다.")
+            // $('#notRelationship').hide()
+            $('#didRelationship').hide()
+            $('#allowRelationship').hide()
+            $('#allowedRelationship').hide()
+        }
+        if($('#relationshipInfo').val() != '' && $('#type').val() == '') {
+            console.log("오늘의 프로필에서 접근했습니다. 친구해요를 보냈기 때문에 오늘의 프로필에 보이면 안되었습니다. 잘못된 접근입니다. 뒤로 돌아가야합니다.")
+            alert("이미친구해요를 신청했거나 잘못된 접근입니다.")
+            history.back();
+        }
+
         if($('#relationshipInfo').val() == '' && $('#type').val() == 'get') {
             console.log("친구해요를 받았습니다.")
             $('#notRelationship').hide()
@@ -257,8 +278,7 @@
                 // }
             }
         });
-
-    })
+    }
 
     function sendRelationship(id, obj) {
         let params = {

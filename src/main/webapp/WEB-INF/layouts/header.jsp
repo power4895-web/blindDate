@@ -118,7 +118,7 @@
         const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
         eventSource.addEventListener('sse', event => {
             //서버에서 send()를 하면 이부분부터 로직이 수행된다.
-            // 현재시점 알람가져오기
+            //현재시점 알람가져오기
             getNotificationCount();  //totalNCount의 변수 할당
             console.log(">>>>>>>>>>>>>>>>>>>event : ",event);
             if(event.data == '호감') {
