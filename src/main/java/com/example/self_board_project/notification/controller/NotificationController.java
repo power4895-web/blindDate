@@ -6,13 +6,9 @@ import com.example.self_board_project.notification.vo.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
@@ -63,10 +59,18 @@ public class NotificationController {
      * 로그인한 회원 구독하기
      * @param id
      * @return
+     * sse 통신을 하기 위해서는 MIME 타입을 text/event-stream로 해줘야한다.
      */
-    @GetMapping(value = "/notifications/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribe(@PathVariable Long id) {
+//    @GetMapping(value = "/notifications/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+//    public SseEmitter subscribe(@PathVariable Long id) {
+//        logger.info("subscribe start id : {}", id);
+//        return notificationService.subscribe(id);
+//    }
+//    @GetMapping(value = "/notifications/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @GetMapping(value = "/notifications/subscribe/{id}", produces = "text/event-stream")
+    public SseEmitter subscribe(@PathVariable Long id, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
         logger.info("subscribe start id : {}", id);
+        logger.info("lastEventId : {}", lastEventId);
         return notificationService.subscribe(id);
     }
 

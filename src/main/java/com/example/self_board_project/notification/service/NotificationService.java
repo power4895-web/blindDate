@@ -4,10 +4,11 @@ import com.example.self_board_project.notification.mapper.EmitterRepository;
 import com.example.self_board_project.notification.mapper.NotificationMapper;
 import com.example.self_board_project.notification.vo.Notification;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
+import org.slf4j.Logger;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NotificationService {
     // 기본 타임아웃 설정
+    Logger logger = LoggerFactory.getLogger(getClass());
     private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
 
     private final EmitterRepository emitterRepository;
@@ -28,10 +30,11 @@ public class NotificationService {
      *
      * @param userId - 구독하는 클라이언트의 사용자 아이디.
      * @return SseEmitter - 서버에서 보낸 이벤트 Emitter
+     * 연결 요청에 의해 SseEmitter가 생성되면 더미 데이터를 보내줘야한다. sse 연결이 이뤄진 후,
+     * 하나의 데이터도 전송되지 않는다면 SseEmitter의 유효 시간이 끝나면 503응답이 발생하는 문제가 있다. 따라서 연결시 바로 더미 데이터를 한 번 보내준다.
      */
     public SseEmitter subscribe(Long userId) {
         SseEmitter emitter = createEmitter(userId);
-
         sendToClient(userId, "EventStream Created. [userId=" + userId + "]");
         return emitter;
     }
@@ -73,9 +76,17 @@ public class NotificationService {
      * @return SseEmitter - 생성된 이벤트 Emitter.
      */
     private SseEmitter createEmitter(Long id) {
+
+        /*
+        클라이언트의 sse연결 요청에 응답하기 위해서는 SseEmitter 객체를 만들어 반환해줘야한다.
+        SseEmitter 객체를 만들 때 유효 시간을 줄 수 있다. 이때 주는 시간 만큼 sse 연결이 유지되고, 시간이 지나면 자동으로 클라이언트에서 재연결 요청을 보내게 된다.
+        id를 key로, SseEmitter를 value로 저장해둔다. 그리고 SseEmitter의 시간 초과 및 네트워크 오류를 포함한 모든 이유로 비동기 요청이 정상 동작할 수 없다면 저장해둔 SseEmitter를 삭제한다.
+         */
+        logger.info("createEmitter");
+        logger.info("DEFAULT_TIMEOUT : {}" , DEFAULT_TIMEOUT);
+
         SseEmitter emitter = new SseEmitter(DEFAULT_TIMEOUT);
         emitterRepository.save(id, emitter);
-
         // Emitter가 완료될 때(모든 데이터가 성공적으로 전송된 상태) Emitter를 삭제한다.
         emitter.onCompletion(() -> emitterRepository.deleteById(id));
         // Emitter가 타임아웃 되었을 때(지정된 시간동안 어떠한 이벤트도 전송되지 않았을 때) Emitter를 삭제한다.

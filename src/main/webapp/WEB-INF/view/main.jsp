@@ -284,7 +284,7 @@
                 notification.close();
             }, 10 * 1000);
         }
-        // 사용자가 알림을 허용으로 바꿨을 경우
+        // 사용자가 최초 웹전근시 default일 때, 사용자가 허용으로 바꿨을 경우
         else if (Notification.permission !== 'denied') {
             Notification.requestPermission().then((permission) => {
                 console.log("permission", permission)
