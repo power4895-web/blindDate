@@ -68,10 +68,11 @@ public class NotificationController {
 //    }
 //    @GetMapping(value = "/notifications/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     @GetMapping(value = "/notifications/subscribe/{id}", produces = "text/event-stream")
-    public SseEmitter subscribe(@PathVariable Long id, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+    public SseEmitter subscribe(@PathVariable Long id, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId, Auth auth) {
         logger.info("subscribe start id : {}", id);
         logger.info("lastEventId : {}", lastEventId);
-        return notificationService.subscribe(id);
+        String userId = String.valueOf(id);
+        return notificationService.subscribe(userId,lastEventId,auth.getRealName());
     }
 
     /**
@@ -79,12 +80,26 @@ public class NotificationController {
      * @param id
      * @param data
      */
-    @GetMapping("/notifications/send-data/{id}/{data}")
+    @GetMapping("/notifications/send-data/{id}/{refId}/{data}")
     @ResponseBody
-    public void sendData(@PathVariable Long id, @PathVariable String data) {
+    public void sendData(@PathVariable Long id, @PathVariable String data, @PathVariable int refId, Auth auth) {
         logger.info("send-data start");
         logger.info("send-data start id: {}", id);
         logger.info("send-data start data: {}", data);
-        notificationService.notify(id, data);
+        logger.info("send-data start refId: {}", refId);
+        String userId = String.valueOf(id);
+        String authId = String.valueOf(auth.getId());
+
+        Notification notification = new Notification();
+        notification.setUserId(Integer.parseInt(String.valueOf(id)));
+        if(data.equals("친구해요") || data.equals("승낙해요")) {
+            notification.setField("relationship");
+        } else {
+            notification.setField("evaluation");
+        }
+        notification.setRefId(refId);
+        notificationService.insertNotification(notification);
+
+        notificationService.notify(userId, data);
     }
 }

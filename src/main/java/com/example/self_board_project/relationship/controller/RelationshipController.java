@@ -79,17 +79,35 @@ public class RelationshipController {
      */
     @RequestMapping(value="/relationship/sendingRelationship")
     @ResponseBody
-    public Boolean insertRelationship(Relationship relationship, Auth auth) {
+    public int insertRelationship(Relationship relationship, Auth auth) {
         relationship.setSendId(auth.getId());
         Boolean result = relationshipService.insertRelationship(relationship);
-        Notification notification = new Notification();
-        notification.setUserId(relationship.getGetId());
-        notification.setField("relationship");
-        notification.setRefId(relationship.getId());
-        notificationService.insertNotification(notification);
         logger.info("relationship 생성된 아이디: {}", relationship.getId());
         logger.info("result: {}", result);
-        return result;
+        if(result) {
+            return relationship.getId();
+        } else {
+            return 0;
+        }
+//        Notification notification = new Notification();
+//        notification.setUserId(relationship.getGetId());
+//        notification.setField("relationship");
+//        notification.setRefId(relationship.getId());
+//        notificationService.insertNotification(notification);
+    }
+    /**
+     * 친구해요 insert
+     * @param relationship
+     * @param auth
+     * @return
+     */
+    @RequestMapping(value="/relationship/allowRelationship")
+    @ResponseBody
+    public int allowRelationship(Relationship relationship, Auth auth) {
+        relationship.setGetId(auth.getId());
+        int relationshipId = relationshipService.allowRelationship(relationship);
+        logger.info("relationshipId 아이디: {}", relationshipId);
+        return relationshipId;
     }
 
     /**

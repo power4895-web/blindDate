@@ -242,6 +242,13 @@
                , #{getId}
                , now())
     </insert>
+    <update id="allowRelationship">
+        /** allowRelationship **/
+        UPDATE `relationship`
+        SET accept_check = 'Y',
+            update_date = now()
+        WHERE id = #{id}
+    </update>
 
 
 </mapper>

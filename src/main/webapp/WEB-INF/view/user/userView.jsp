@@ -28,6 +28,7 @@
     <input type="hidden" value="${relationshipInfo}" id="relationshipInfo">
     <input type="hidden" value="${evaluationInfo}" id="evaluationInfo">
     <input type="hidden" value="${userInfo.id}" id="userId">
+    <input type="hidden" value="${type}" id="type">
     <section class="bg-light py-5">
         <div class="container px-5 my-5">
             <div class="text-center mb-5">
@@ -147,9 +148,16 @@
                     <div class="p-2 text-bg-info text-start" id="didRelationship">
                         친구해요를 보냈어요<i class="bi bi-heart-fill" style="color: red"></i>
                     </div>
+                    <div class="p-2 text-bg-info text-start" id="allowedRelationship">
+                        친구해요를 승낙했어요<i class="bi bi-heart-fill" style="color: red"></i>
+                    </div>
+                    <button class="btn btn-outline-primary" id="allowRelationship" onclick="allowRelationship(${userInfo.id},$(this))">
+                        친구해요 승낙하기<i class="bi bi-heart"></i>
+                    </button>
                     <button class="btn btn-outline-primary" id="notRelationship" onclick="sendRelationship(${userInfo.id},$(this))">
                         친구해요<i class="bi bi-heart"></i>
                     </button>
+
                     <%--회원추천--%>
                     <div id="similarCharm">
                         <div class="h4 pb-2 mb-4 border-bottom"></div>
@@ -172,12 +180,23 @@
             $('#didEvaluate').hide()
             $('#test').hide()
         }
-        if($('#relationshipInfo').val() != '') {
-            console.log("이미친구신청")
+        if($('#relationshipInfo').val() == '' && $('#type').val() == 'get') {
+            console.log("친구해요를 받았습니다.")
             $('#notRelationship').hide()
-        } else {
-            console.log("친구x")
             $('#didRelationship').hide()
+            $('#allowedRelationship').hide()
+        }
+        if($('#relationshipInfo').val() != '' && $('#type').val() == 'send') {
+            console.log("현재 친구해요를 보낸 상태입니다.")
+            $('#notRelationship').hide()
+            $('#allowRelationship').hide()
+            $('#allowedRelationship').hide()
+        }
+        if($('#relationshipInfo').val() != '' && $('#type').val() == 'get') {
+            console.log("현재 친구관계입니다")
+            $('#notRelationship').hide()
+            $('#allowRelationship').hide()
+            $('#allowedRelationship').hide()
         }
 
         $(".ratings").starRating({
@@ -250,13 +269,48 @@
             url : "/relationship/sendingRelationship",
             data : params,
             success : function(data) { // 결과 성공 콜백함수
-                console.log("data", data)
-                if(data == true) {
+                console.log("insert된 pk값", data)
+                if(data != 0) {
                     $('#didRelationship').show()
                     $('#notRelationship').hide()
                     $.ajax({
                         type : 'get',
-                        url : "/notifications/send-data/" + id + "/" + "친구해요",
+                        url : "/notifications/send-data/" + id + "/" + data + "/" + "친구해요",
+                        success : function(data) { // 결과 성공 콜백함수
+                            console.log("data", data)
+                        },
+                        error : function(request, status, error) { // 결과 에러 콜백함수
+                            console.log("error", error)
+                        }
+                    });
+
+                } else {
+                    alert("이미 친구해요를 보냈거나 실패했습니다")
+                }
+            },
+            error : function(request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        });
+    }
+    function allowRelationship(id, obj) {
+        let params = {
+            sendId : id
+        }
+        $.ajax({
+            type : 'post',
+            url : "/relationship/allowRelationship",
+            data : params,
+            success : function(data) { // 결과 성공 콜백함수
+                console.log("update한 pk값", data)
+                if(data != null) {
+                    $('#allowedRelationship').show()
+                    $('#allowRelationship').hide()
+                    $('#didRelationship').hide()
+                    $('#notRelationship').hide()
+                    $.ajax({
+                        type : 'get',
+                        url : "/notifications/send-data/" + id + "/" + data + "/" + "승낙해요",
                         success : function(data) { // 결과 성공 콜백함수
                             console.log("data", data)
                         },

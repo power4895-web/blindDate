@@ -39,7 +39,7 @@
                     <ul class="list-unstyled mb-4">
                         <div class="small">
                             <div class="fw-bold">
-                                <a href="/user/view/${type == 'send' ? item.getId : item.sendId}">${item.nickname}, ${item.age}</a>
+                                <a href="/user/view/${type == 'send' ? item.getId : item.sendId}/${type}">${item.nickname}, ${item.age}</a>
                             </div>
                             <div class="text-muted">
                                 <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}
@@ -76,7 +76,7 @@
                     <ul class="list-unstyled mb-4">
                         <div class="small">
                             <div class="fw-bold">
-                                <a href="/user/view/${type == 'send' ? item.receiveId : item.evaluationId}">${item.nickname}, ${item.age}</a>
+                                <a href="/user/view/${type == 'send' ? item.receiveId : item.evaluationId}/${type}">${item.nickname}, ${item.age}</a>
                             </div>
                             <div class="text-muted">
                                 <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}

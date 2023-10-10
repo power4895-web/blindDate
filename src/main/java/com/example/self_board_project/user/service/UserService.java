@@ -63,7 +63,8 @@ public class UserService {
         logger.info("todayRandom user : {}", user.getId());
         List<User> arrayUserList = new ArrayList<>();
 
-
+        //user.getId가 있는 경우는, 현재 오늘의 소개회원이 없어 로그인한 회원의 아이디로 이 메소드가 호출된 경우, arrayUserList에 넣는다.
+        //user.getId가없는 경우는, 12시지나서 모든 회원들의 정보를 arrayUserList에 넣는다.
         if(user.getId() != null) {
             arrayUserList.add(selectUser(user));
         } else {
@@ -72,17 +73,21 @@ public class UserService {
                 arrayUserList.add(item);
             }
         }
+
         for (User item: arrayUserList) {
             String todayProfileId = "";
 
             /*친구해요*/
             Relationship relationship = new Relationship();
             relationship.setSendId(item.getId());
+            //현재 회원의 친구해요 보낸사람 list 가져와서 내가 친구해요를 보낸 사람의 아이디(getId)를 가져온 후 getId를 ids에 다 담아 user를 검색할 때
+            //getId가 없는 유저만 검색(결국 친구해요 안한 회원들만 검색하게 된다)
             List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
             List<Integer> ids = new ArrayList<>();
             for (int i = 0; i < relationshipList.size(); i++) {
                 ids.add(relationshipList.get(i).getGetId());
             }
+            //호감
             Evaluation evaluation = new Evaluation();
             evaluation.setEvaluationId(item.getId());
             List<Evaluation> evaluationList = evaluationService.selectEvaluationList(evaluation);

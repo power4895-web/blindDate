@@ -14,4 +14,5 @@ public interface RelationshipMapper {
     public Relationship selectSendRelationship(Relationship relationship);
     public Relationship selectGetRelationship(Relationship relationship);
     public int insertRelationship(Relationship relationship);
+    public int allowRelationship(Relationship relationship);
 }

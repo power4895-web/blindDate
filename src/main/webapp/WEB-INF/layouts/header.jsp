@@ -127,6 +127,9 @@
             if(event.data == '친구해요') {
                 alertNotification("이성이 친구신청을 했습니다.");
             }
+            if(event.data == '승낙해요') {
+                alertNotification("이성이 친구신청을 승낙했습니다.");
+            }
         });//eventSource.addEventListener end
     }
 

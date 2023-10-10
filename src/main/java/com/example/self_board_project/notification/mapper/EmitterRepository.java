@@ -5,6 +5,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Repository
 public class EmitterRepository {
@@ -14,7 +15,7 @@ public class EmitterRepository {
      * emitterRepo에 save(id, ssemitter(timeout))을 저장함으로써 향후 이벤트가 발생됐을때 클라이언트에게 데이터를 전송할 수있다.
      * 이때 repo에서는 sseEmitter를 관리하는 스레드들이 콜백할때 스레드가 다를수 있기에 ThreadSafe한 구조인 ConcurrentHashMap을 사용해서 해당 메시지를 저장해야한다.
      */
-    private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
+    private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
     private final Map<String, Object> eventCache = new ConcurrentHashMap<>();
     /**
      * 주어진 아이디와 이미터를 저장
@@ -22,7 +23,7 @@ public class EmitterRepository {
      * @param id      - 사용자 아이디.
      * @param emitter - 이벤트 Emitter.
      */
-    public void save(Long id, SseEmitter emitter) {
+    public void save(String id, SseEmitter emitter) {
         emitters.put(id, emitter);
     }
 
@@ -31,7 +32,7 @@ public class EmitterRepository {
      *
      * @param id - 사용자 아이디.
      */
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         emitters.remove(id);
     }
 
@@ -41,11 +42,16 @@ public class EmitterRepository {
      * @param id - 사용자 아이디.
      * @return SseEmitter - 이벤트 Emitter.
      */
-    public SseEmitter get(Long id) {
+    public SseEmitter get(String id) {
         return emitters.get(id);
     }
 
 
+    public Map<String, Object> findAllEventCacheStartWithByMemberId(String memberId) {
+        return eventCache.entrySet().stream()
+                .filter(entry -> entry.getKey().startsWith(memberId))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
 
 //    public void saveEventCache(String id, Object event) {
 //        eventCache.put(id, event);

@@ -8,7 +8,6 @@ import com.example.self_board_project.evaluation.vo.Evaluation;
 import com.example.self_board_project.file.service.FileService;
 import com.example.self_board_project.file.vo.FileInfo;
 import com.example.self_board_project.notification.service.NotificationService;
-import com.example.self_board_project.notification.vo.Notification;
 import com.example.self_board_project.relationship.service.RelationshipService;
 import com.example.self_board_project.relationship.vo.Relationship;
 import com.example.self_board_project.user.service.UserService;
@@ -18,10 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -61,11 +57,13 @@ public class UserController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/user/view/{id}")
-    public String userView(Model model, Auth auth, @PathVariable int id) {
+//    @RequestMapping(value = "/user/view/{type}/{id}")
+    @RequestMapping(value = {"/user/view/{id}/{type}", "/user/view/{id}"})
+    public String userView(Model model, Auth auth, @PathVariable int id,  @PathVariable(required = false) String type) {
         logger.info("userView Start");
         logger.info("로그인아이디 : {}", auth.getId() );
         logger.info("조회 아이디 : {}", id );
+        logger.info("type : {}", type );
         User user = new User();
         user.setId(id);
         User userInfo = userService.selectUser(user);
@@ -81,16 +79,16 @@ public class UserController {
         Relationship relationship = new Relationship();
         relationship.setSendId(auth.getId());
         relationship.setGetId(id);
-        relationship.setType("get");
         Relationship relationshipInfo = relationshipService.selectRelationship(relationship);
         model.addAttribute("relationshipInfo", relationshipInfo);
+        model.addAttribute("type", type);
 
         Evaluation evaluation = new Evaluation();
         evaluation.setEvaluationId(auth.getId());
         evaluation.setReceiveId(id);
-        evaluation.setType("get");
         Evaluation evaluationInfo = evaluationService.selectEvaluation(evaluation);
         model.addAttribute("evaluationInfo", evaluationInfo);
+        model.addAttribute("type", type);
         return "front:user/userView";
     }
 
