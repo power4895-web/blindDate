@@ -19,10 +19,10 @@ import java.util.Map;
 public class NotificationService {
     // 기본 타임아웃 설정
     Logger logger = LoggerFactory.getLogger(getClass());
-//    private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60; 1시간
+    private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60; //1시간
 
     //35초정도
-    private static final Long DEFAULT_TIMEOUT = 60L * 600; //36초
+//    private static final Long DEFAULT_TIMEOUT = 60L * 600; //36초
 
     private final EmitterRepository emitterRepository;
     @Autowired
