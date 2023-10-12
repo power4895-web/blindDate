@@ -36,15 +36,11 @@
 
     <select id="selectNotification" resultType="com.example.self_board_project.notification.vo.Notification">
         <include refid="selectQuery"/>
-        <!--        <where>-->
-        <!--            <if test="sendId != null and sendId != ''">-->
-        <!--                AND t1.`send_id` = #{sendId}-->
-        <!--            </if>-->
-
-        <!--            <if test="getId != null and getId != ''">-->
-        <!--                AND t1.`get_id` = #{getId}-->
-        <!--            </if>-->
-        <!--        </where>-->
+                <where>
+                    <if test="id != null and id != ''">
+                        AND t1.`id` = #{id}
+                    </if>
+                </where>
     </select>
     <insert id="insertNotification" useGeneratedKeys="true" keyProperty="id">
         /** insertNotification **/

@@ -111,6 +111,10 @@ public class MainController {
     @RequestMapping(value="/pricing")
     public String price (User user) throws IOException {
         logger.info("pricing start");
+        String lastEventId = "1_1697094828468";
+        int result = lastEventId.compareTo("1_1697094823719");
+        System.out.println("result"+  result);
+
         return "front:pricing";
     }
 

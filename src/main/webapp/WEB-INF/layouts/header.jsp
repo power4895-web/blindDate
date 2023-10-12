@@ -117,6 +117,8 @@
         //구독커넥션 연결
         const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
         eventSource.addEventListener('sse', event => {
+            const lastEventId = event.lastEventId;
+            console.log(">>>event.lastEventId : ", event.lastEventId)
             //서버에서 send()를 하면 이부분부터 로직이 수행된다.
             //현재시점 알람가져오기
             getNotificationCount();  //totalNCount의 변수 할당

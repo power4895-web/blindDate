@@ -8,6 +8,7 @@ import java.util.List;
 @Mapper
 public interface NotificationMapper {
     public Notification countNotification(Notification notification);
+    public Notification selectNotification(Notification notification);
     public List<Notification> selectNotificationList(Notification notification);
     public void insertNotification(Notification notification);
     public void updateNotification(Notification notification);
