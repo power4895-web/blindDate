@@ -168,7 +168,7 @@ public class NotificationService {
         return notificationMapper.selectNotification(notification);
     }
     public Notification countNotification(Notification notification) {
-        System.out.println("countNotification Service");
+        logger.info("countNotification Service");
         return notificationMapper.countNotification(notification);
     }
 

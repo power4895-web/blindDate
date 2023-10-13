@@ -52,7 +52,7 @@
             </div>
         </div>
     </c:forEach>
-
+    <br><br>
     <c:if test="${field == 'evaluation' || field == 'total'}">
         <c:if test="${evaluationList != null}">
             <div class="mb-1">

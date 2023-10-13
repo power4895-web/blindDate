@@ -209,9 +209,10 @@ public class UserController {
      * @param auth
      * @return
      */
-    @RequestMapping(value = "/user/friendList")
-    public String friendList(Model model, HttpServletResponse response,  Auth auth) {
-        logger.info("friendListForm Start");
+    @RequestMapping(value = "/user/friendList/{flag}")
+    public String friendList(Model model, HttpServletResponse response,  Auth auth, @PathVariable String flag) {
+        logger.info("friendListForm Start flag : {}", flag);
+        model.addAttribute("flag", flag);
 //        Notification notification = new Notification();
 //        notification.setUserId(auth.getId());
 //        notification.setField("relationship");

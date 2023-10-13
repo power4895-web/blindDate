@@ -75,17 +75,21 @@ public class EvaluationController {
      */
     @RequestMapping(value="/evaluation/sendingEvaluation")
     @ResponseBody
-    public Boolean insertEvaluation(Evaluation evaluation, Auth auth) {
+    public int insertEvaluation(Evaluation evaluation, Auth auth) {
         evaluation.setEvaluationId(auth.getId());
         Boolean result = evaluationService.insertEvaluation(evaluation);
-        Notification notification = new Notification();
-        notification.setUserId(evaluation.getReceiveId());
-        notification.setField("evaluation");
-        notification.setRefId(evaluation.getId());
-        notificationService.insertNotification(notification);
+//        Notification notification = new Notification();
+//        notification.setUserId(evaluation.getReceiveId());
+//        notification.setField("evaluation");
+//        notification.setRefId(evaluation.getId());
+//        notificationService.insertNotification(notification);
         logger.info("evaluation 생성된 아이디: {}", evaluation.getId());
         logger.info("result: {}", result);
-        return result;
+        if(result) {
+            return evaluation.getId();
+        } else {
+            return 0;
+        }
     }
 
 }

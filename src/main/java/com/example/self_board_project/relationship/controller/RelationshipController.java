@@ -58,11 +58,6 @@ public class RelationshipController {
             if(relationshipList.size() != 0) {
                 model.addAttribute("relationshipList", relationshipList);
             }
-//            Notification notification = new Notification();
-//            notification.setUserId(auth.getId());
-//            notification.setField("relationship");
-//            notificationService.updateNotification(notification);
-
         }
         model.addAttribute("type", type);
         model.addAttribute("field", "relationship");

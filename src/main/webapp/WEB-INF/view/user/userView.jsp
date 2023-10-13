@@ -28,6 +28,7 @@
     <input type="hidden" value="${relationshipInfo}" id="relationshipInfo">
     <input type="hidden" value="${evaluationInfo}" id="evaluationInfo">
     <input type="hidden" value="${userInfo.id}" id="userId">
+    <input type="hidden" value="${userInfo.realName}" id="realName">
     <input type="hidden" value="${type}" id="type">
     <section class="bg-light py-5">
         <div class="container px-5 my-5">
@@ -240,13 +241,14 @@
                     data : params,
                     success : function(data) { // 결과 성공 콜백함수
                         console.log("data", data)
-                        if(data == true) {
+                        if(data != 0) {
                             $('#didEvaluate').show()
+                            $('#didEvaluate').text($('#realName').val() + `님의 매력을 ⭐\${currentRating}점으로 평가하였습니다.`);
                             $('#notEvaluate').hide()
 
                             $.ajax({
                                 type : 'get',
-                                url : "/notifications/send-data/" + params.receiveId + "/" + "호감",
+                                url : "/notifications/send-data/" + params.receiveId + "/" + data + "/" + "호감",
                                 success : function(data) { // 결과 성공 콜백함수
                                     console.log("data", data)
                                 },

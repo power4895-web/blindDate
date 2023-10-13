@@ -92,6 +92,7 @@ public class NotificationController {
         //알림 데이터 저장
         Notification notification = new Notification();
         notification.setUserId(Integer.parseInt(id));
+        notification.setRefId(refId);
         if(data.equals("친구해요") || data.equals("승낙해요")) {
             notification.setField("relationship");
         } else {
@@ -105,12 +106,12 @@ public class NotificationController {
      * 구독한 회원에게 알림보내기
      */
     @ResponseBody
-    @RequestMapping("/notifications/update")
-    public Boolean updateNotification(Auth auth) {
-        logger.info("updateNotification start");
+    @RequestMapping("/notifications/update/{flag}")
+    public Boolean updateNotification(Auth auth, @PathVariable String flag) {
+        logger.info("updateNotification start , flag: {}", flag);
         Notification notification = new Notification();
-        notification.setUserId(auth.getId());
-//        notification.setField("relationship");
+        notification.setUserId(1);
+        notification.setField(flag);
         notificationService.updateNotification(notification);
         return true;
     }

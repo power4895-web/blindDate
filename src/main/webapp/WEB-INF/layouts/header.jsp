@@ -61,7 +61,7 @@
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
                                 <li><a class="dropdown-item" href="/user/todayProfile">오늘의 프로필</a></li>
                                 <li>
-                                    <a class="dropdown-item position-relative" href="/user/friendList">
+                                    <a class="dropdown-item position-relative" href="/user/friendList/relationship">
                                         친구리스트
                                         <span class="badge text-bg-danger" id="friendshipListCount"></span>
                                     </a>
@@ -89,14 +89,7 @@
 
         //로그인한 상태일때만 페이지 이동시 계속 구독 요청
         if ($('#info').val() != null) {
-            //친구해요 입장시 알람을 모두 읽음으로 업데이트하고, 구독요청 => 이렇게 해야 구독요청할 때마다 현재알람의 상태를 빨간색 번호로 표시하게 되는데, 읽음으로 처리하고 구독요청시 카운트 0으로 세팅할 수 있음
-            //친구리스트 입장 안하면 알림은 계속 나타내는걸로
-            if( $(location).attr('pathname') == '/user/friendList') {
-                updateNotification()
-            } else {
-                sendNotification();
-            }
-
+            sendNotification();
         }//if end
     })//ready end
 
@@ -155,19 +148,19 @@
             getNotificationCount();  //totalNCount의 변수 할당
             console.log(">>>>>>>>>>>>>>>>>>>event : ", event);
             if (event.data == '호감') {
-                alertNotification("이성이 높은 점수를 줬습니다.");
+                alertNotification("이성이 높은 점수를 줬습니다.", "evaluation");
             }
             if (event.data == '친구해요') {
-                alertNotification("이성이 친구신청을 했습니다.");
+                alertNotification("이성이 친구신청을 했습니다.","relationship");
             }
             if (event.data == '승낙해요') {
-                alertNotification("이성이 친구신청을 승낙했습니다.");
+                alertNotification("이성이 친구신청을 승낙했습니다.","chat");
             }
         });//eventSource.addEventListener end
     }
 
     //알림 띄우기
-    function alertNotification(message) {
+    function alertNotification(message, flag) {
         console.log(">>>>>>>>>>>>>>>>>>>승낙 >> mypage 채팅에 알람표시");
         if (Notification.permission !== "granted") {
             alert("새로운 메세지가 있습니다. 실시간으로 알람을 받고 싶은 경우 브라우저에서 알림을 활성화 시켜주세요.")
@@ -201,7 +194,7 @@
                 notification.close();
             }, 10 * 1000);
             notification.addEventListener('click', () => {
-                window.open("http://localhost:8080/user/friendList/", '_blank');
+                window.open("http://localhost:8080/user/friendList/" + flag, '_blank');
             });
         }
     }
