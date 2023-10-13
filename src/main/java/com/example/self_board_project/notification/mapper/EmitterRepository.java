@@ -53,7 +53,7 @@ public class EmitterRepository {
     }
 
 
-    public Map<String, Object> findAllEventCacheStartWithByMemberId(String memberId) {
+    public Map<String, Object> findAllEventCacheStartWithByUserId(String memberId) {
         logger.info("findAllEventCacheStartWithByMemberId start");
         logger.info("eventCache.isEmpty() : {}", eventCache.isEmpty());
         return eventCache.entrySet().stream()
@@ -61,7 +61,7 @@ public class EmitterRepository {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public Map<String, SseEmitter> findAllEmitterStartWithByMemberId(String memberId) {
+    public Map<String, SseEmitter> findAllEmitterStartWithByUserId(String memberId) {
         return emitters.entrySet().stream()
                 .filter(entry -> entry.getKey().startsWith(memberId))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

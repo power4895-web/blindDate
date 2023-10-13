@@ -54,7 +54,7 @@ public class oldNotificationService {
         return !lastEventId.isEmpty();
     }
     private void sendLostData(String lastEventId, String userEmail, String emitterId, SseEmitter emitter) { // (6)
-        Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByMemberId(String.valueOf(userEmail));
+        Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByUserId(String.valueOf(userEmail));
         eventCaches.entrySet().stream()
                 .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
                 .forEach(entry -> sendNotification(emitter, entry.getKey(), emitterId, entry.getValue()));

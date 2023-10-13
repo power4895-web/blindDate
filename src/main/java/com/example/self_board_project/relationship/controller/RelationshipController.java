@@ -4,7 +4,6 @@ import com.example.self_board_project.core.authority.Auth;
 import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
 import com.example.self_board_project.notification.service.NotificationService;
-import com.example.self_board_project.notification.vo.Notification;
 import com.example.self_board_project.relationship.service.RelationshipService;
 import com.example.self_board_project.relationship.vo.Relationship;
 import org.slf4j.Logger;
@@ -59,10 +58,10 @@ public class RelationshipController {
             if(relationshipList.size() != 0) {
                 model.addAttribute("relationshipList", relationshipList);
             }
-            Notification notification = new Notification();
-            notification.setUserId(auth.getId());
-            notification.setField("relationship");
-            notificationService.updateNotification(notification);
+//            Notification notification = new Notification();
+//            notification.setUserId(auth.getId());
+//            notification.setField("relationship");
+//            notificationService.updateNotification(notification);
 
         }
         model.addAttribute("type", type);
@@ -96,7 +95,7 @@ public class RelationshipController {
 //        notificationService.insertNotification(notification);
     }
     /**
-     * 친구해요 insert
+     * 친구승낙
      * @param relationship
      * @param auth
      * @return

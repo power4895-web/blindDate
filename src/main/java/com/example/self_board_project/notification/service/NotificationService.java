@@ -74,7 +74,7 @@ public class NotificationService {
         logger.info("userId : {} " , userId);
         logger.info("lastEventId : {} , " , lastEventId);
         logger.info("user의 pk값으로, userId_*******로 되어있는 모든 아이디들을 불러온다., 그 후 아래의 lastEventId과 시간을 따져봐야한다.");
-        Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByMemberId(String.valueOf(userId));
+        Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByUserId(String.valueOf(userId));
         logger.info("eventCaches.toString() : {} ",eventCaches.toString());
 
         //lastEventId는 해당 웹브라우저가 마지막으로 수신하게된 eventId이다. lastEventId가 캐시에 저장된 eventId보다 작을경우(더 오래전일 경우) 음수를 반환하게 되고 sendNotification이
@@ -102,13 +102,13 @@ public class NotificationService {
     public void saveEventCacheAndSendNotification(String userId, Object event) {
         logger.info("send Start");
         String eventId = userId + "_" + System.currentTimeMillis();
-        Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByMemberId(userId);
+        Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByUserId(userId);
         logger.info("emitters.isEmpty : {}", emitters.isEmpty());
         logger.info("emitters : {}", emitters);
         emitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, event);
-//                    sendNotification(emitter, eventId, key, event);
+                    sendNotification(emitter, eventId, key, event); //lst이벤트 테스트시 주석
                 }
         );
     }

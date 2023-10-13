@@ -180,7 +180,7 @@
     //친구해요 서버호출
     async function getRelationshipList(type) {
         console.log("type", type)
-        $.ajax({
+        await $.ajax({
             type : 'get',
             url : "/relationship/relationshipList/" + type,
             // data : params,
@@ -195,11 +195,13 @@
                     $('#getExpressionProfile').empty();
                     $('#getExpressionProfile').html(data);
                 }
+                return data;
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)
             }
         });
+        // console.log("test", test);
     }
     //호감 service
     async function getEvaluationList(type) {
