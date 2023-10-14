@@ -29,6 +29,26 @@
             <if test="getId != null and getId != ''">
                 AND t1.`get_id` = #{getId}
             </if>
+<!--            <if test="acceptCheck != null and acceptCheck != ''">-->
+<!--                AND (send_id = 1 and accept_check = 'Y') or (get_id = 1 and accept_check = 'Y')-->
+<!--            </if>-->
+        </where>
+    </select>
+    <select id="selectAcceptIsYList" resultType="com.example.self_board_project.relationship.vo.Relationship">
+        /** selectAcceptIsYList **/
+        SELECT
+            t1.id,
+            t1.send_id,
+            t1.get_id,
+            t1.accept_check,
+            t1.create_date,
+            t2.id,
+            t2.nickname,
+            (select concat(filepath, image_name) from file t3 where t2.id = t3.ref_id and t3.flag = 'S' AND boss_type = "Y") img_url
+        FROM relationship t1
+        join `user` t2 on t1.send_id = t2.id
+        <where>
+            accept_check = 'Y' and get_id = #{getId}
         </where>
     </select>
 
@@ -236,10 +256,12 @@
         /** insertRelationship **/
         INSERT INTO `relationship`( send_id
                                   , get_id
+                                  , accept_check
                                   , create_date)
 
         VALUES ( #{sendId}
                , #{getId}
+               , #{acceptCheck}
                , now())
     </insert>
     <update id="allowRelationship">

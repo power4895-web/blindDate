@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.self_board_project.room.mapper.RoomMapper">
+    <sql id="selectQuery">
+        SELECT t1.id,
+               t1.room_id,
+               t1.room_boss_id,
+               t1.room_staff_id,
+               t1.create_date
+        FROM room t1
+    </sql>
+    <select id="countRoom" resultType="com.example.self_board_project.room.vo.Room">
+        /** countRoom **/
+        select SUM(if(t1.field = 'relationship' and t1.read_yn = 'N', 1, 0)) relationshipCount,
+               SUM(if(t1.field = 'evaluation' and t1.read_yn = 'N', 1, 0))   evaluationCount,
+               SUM(if(t1.read_yn = 'N', 1, 0))                               totalNCount,
+               count(1)                                                      totalCount
+        from room t1
+        WHERE t1.user_id = #{userId}
+    </select>
+    <select id="selectRoomList" resultType="com.example.self_board_project.room.vo.Room">
+        /** selectRoomList **/
+        <include refid="selectQuery"/>
+        <!--        <where>-->
+        <!--            <if test="sendId != null and sendId != ''">-->
+        <!--                AND t1.`send_id` = #{sendId}-->
+        <!--            </if>-->
+
+        <!--            <if test="getId != null and getId != ''">-->
+        <!--                AND t1.`get_id` = #{getId}-->
+        <!--            </if>-->
+        <!--        </where>-->
+    </select>
+
+    <select id="selectRoom" resultType="com.example.self_board_project.room.vo.Room">
+        <include refid="selectQuery"/>
+                <where>
+                    <if test="id != null and id != ''">
+                        AND t1.`id` = #{id}
+                    </if>
+                </where>
+    </select>
+    <insert id="insertRoom" useGeneratedKeys="true" keyProperty="id">
+        /** insertRoom **/
+        INSERT INTO `room`( room_boss_id
+                                  , room_staff_id
+                                  , create_date)
+
+        VALUES ( #{roomBossId}
+               , #{roomStaffId}
+               , now())
+    </insert>
+
+    <update id="updateRoom">
+        update `room`
+        set read_yn = 'Y'
+        WHERE user_id = #{userId}
+        <if test="field != null and field != ''">
+            AND field = #{field}
+        </if>
+    </update>
+
+
+</mapper>

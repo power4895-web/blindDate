@@ -62,6 +62,7 @@
 
     function wsOpen(){
         console.log("wsOpen")
+        console.log("wsOpen", location.host)
         ws = new WebSocket("ws://" + location.host + "/chating/"+$("#roomNumber").val());
         wsEvt();
     }

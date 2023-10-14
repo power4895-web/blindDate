@@ -9,6 +9,7 @@ import java.util.List;
 public interface RelationshipMapper {
     public List<Relationship> selectRelationshipList(Relationship relationship);
     public List<Relationship> selectSendRelationshipList(Relationship relationship);
+    public List<Relationship> selectAcceptIsYList(Relationship relationship);
     public List<Relationship> selectGetRelationshipList(Relationship relationship);
     public Relationship selectRelationship(Relationship relationship);
     public Relationship selectSendRelationship(Relationship relationship);

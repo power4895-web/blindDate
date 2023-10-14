@@ -271,7 +271,7 @@
 
 <script>
     $(document).ready(function (){
-        console.log("Notification.permission", Notification.permission)
+        console.log("====main_Notification.permission", Notification.permission)
         // 브라우저가 알림(notifications)를 지원하는지 확인
         if (!("Notification" in window)) {
             alert("브라우저가 notification을 지원하지 않음");

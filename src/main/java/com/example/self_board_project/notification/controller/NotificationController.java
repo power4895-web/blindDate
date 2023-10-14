@@ -66,10 +66,10 @@ public class NotificationController {
      */
     @GetMapping(value = "/notifications/subscribe/{id}", produces = "text/event-stream")
     public SseEmitter subscribe(@PathVariable Long id, @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
-        logger.info("subscribe controller start id : {}", id);
-        logger.info("lastEventId는 emitters가 만료되었을 때, 혹은 서버가 나갔을 때 클라이언트에서 보내서 서버에서 받을 수 있다" +
-                ". 하지만 서버를 내렸다 다시 올리면 캐시에 저장했던 알림 데이터는 모두 사라진다.");
-        logger.info("lastEventId : {}", lastEventId);
+//        logger.info("subscribe controller start id : {}", id);
+//        logger.info("lastEventId는 emitters가 만료되었을 때, 혹은 서버가 나갔을 때 클라이언트에서 보내서 서버에서 받을 수 있다" +
+//                ". 하지만 서버를 내렸다 다시 올리면 캐시에 저장했던 알림 데이터는 모두 사라진다.");
+//        logger.info("lastEventId : {}", lastEventId);
 
         String userId = String.valueOf(id);
         return notificationService.subscribe(id,lastEventId);

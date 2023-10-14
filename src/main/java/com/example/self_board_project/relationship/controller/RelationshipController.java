@@ -75,6 +75,7 @@ public class RelationshipController {
     @ResponseBody
     public int insertRelationship(Relationship relationship, Auth auth) {
         relationship.setSendId(auth.getId());
+        relationship.setAcceptCheck("N");
         Boolean result = relationshipService.insertRelationship(relationship);
         logger.info("relationship 생성된 아이디: {}", relationship.getId());
         logger.info("result: {}", result);
@@ -100,7 +101,12 @@ public class RelationshipController {
     public int allowRelationship(Relationship relationship, Auth auth) {
         relationship.setGetId(auth.getId());
         int relationshipId = relationshipService.allowRelationship(relationship);
-        logger.info("relationshipId 아이디: {}", relationshipId);
+
+        relationship.setGetId(relationship.getSendId());
+        relationship.setSendId(auth.getId());
+        relationship.setAcceptCheck("Y");
+        relationshipService.insertRelationship(relationship);
+
         return relationshipId;
     }
 

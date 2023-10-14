@@ -66,7 +66,7 @@
                                         <span class="badge text-bg-danger" id="friendshipListCount"></span>
                                     </a>
                                 </li>
-                                <li><a class="dropdown-item" href="blog-post.html">채팅</a></li>
+                                <li><a class="dropdown-item" href="/chat/acceptIsYRelationship">채팅</a></li>
                                 <li><a class="dropdown-item" href="/user/updateForm/${info.user.id}">내정보수정</a></li>
                                 <li><a class="dropdown-item" href="blog-post.html">스케줄</a></li>
                             </ul>
@@ -85,7 +85,7 @@
 </html>
 <script>
     $(document).ready(function () {
-        console.log("Notification.permission", Notification.permission)
+        console.log("=====header_Notification.permission", Notification.permission)
 
         //로그인한 상태일때만 페이지 이동시 계속 구독 요청
         if ($('#info').val() != null) {
@@ -137,16 +137,15 @@
     //구독하기
     // 최초 구독할 때 한번 호출
     function sendNotification() {
-        console.log("sendNotification 구독 start")
+        // console.log("sendNotification 구독 start")
         //구독커넥션 연결
         const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
         eventSource.addEventListener('sse', event => {
-            const lastEventId = event.lastEventId;
-            console.log(">>>event.lastEventId : ", event.lastEventId)
+            // console.log(">>>event.lastEventId : ", event.lastEventId)
             //서버에서 send()를 하면 이부분부터 로직이 수행된다.
             //현재시점 알람가져오기
             getNotificationCount();  //totalNCount의 변수 할당
-            console.log(">>>>>>>>>>>>>>>>>>>event : ", event);
+            // console.log(">>>>>>>>>>>>>>>>>>>event : ", event);
             if (event.data == '호감') {
                 alertNotification("이성이 높은 점수를 줬습니다.", "evaluation");
             }

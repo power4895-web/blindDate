@@ -16,6 +16,11 @@ public class Relationship extends User {
     private String type;
     private Date createDate;
 
+
+    //user
+    private String nickname;
+    private int userId;
+
     //  file
     private String bossType;
     private String imageName;

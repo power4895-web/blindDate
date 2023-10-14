@@ -25,6 +25,9 @@ public class RelationshipService {
     public List<Relationship> selectSendRelationshipList(Relationship relationship) {
         return relationshipMapper.selectSendRelationshipList(relationship);
     }
+    public List<Relationship> selectAcceptIsYList(Relationship relationship) {
+        return relationshipMapper.selectAcceptIsYList(relationship);
+    }
 
     public List<Relationship> selectGetRelationshipList(Relationship relationship) {
         return relationshipMapper.selectGetRelationshipList(relationship);

@@ -1,0 +1,68 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
+<!--        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+
+<!--<mapper namespace="com.example.self_board_project.notification.mapper.NotificationMapper">-->
+<!--    <sql id="selectQuery">-->
+<!--        SELECT t1.id,-->
+<!--               t1.ref_id,-->
+<!--               t1.field,-->
+<!--               t1.read_yn,-->
+<!--               t1.create_date-->
+<!--        FROM notification t1-->
+<!--    </sql>-->
+<!--    <select id="countNotification" resultType="com.example.self_board_project.notification.vo.Notification">-->
+<!--        /** countNotification **/-->
+<!--        select SUM(if(t1.field = 'relationship' and t1.read_yn = 'N', 1, 0)) relationshipCount,-->
+<!--               SUM(if(t1.field = 'evaluation' and t1.read_yn = 'N', 1, 0))   evaluationCount,-->
+<!--               SUM(if(t1.read_yn = 'N', 1, 0))                               totalNCount,-->
+<!--               count(1)                                                      totalCount-->
+<!--        from notification t1-->
+<!--        WHERE t1.user_id = #{userId}-->
+<!--    </select>-->
+<!--    <select id="selectNotificationList" resultType="com.example.self_board_project.notification.vo.Notification">-->
+<!--        /** selectNotificationList **/-->
+<!--        <include refid="selectQuery"/>-->
+<!--        &lt;!&ndash;        <where>&ndash;&gt;-->
+<!--        &lt;!&ndash;            <if test="sendId != null and sendId != ''">&ndash;&gt;-->
+<!--        &lt;!&ndash;                AND t1.`send_id` = #{sendId}&ndash;&gt;-->
+<!--        &lt;!&ndash;            </if>&ndash;&gt;-->
+
+<!--        &lt;!&ndash;            <if test="getId != null and getId != ''">&ndash;&gt;-->
+<!--        &lt;!&ndash;                AND t1.`get_id` = #{getId}&ndash;&gt;-->
+<!--        &lt;!&ndash;            </if>&ndash;&gt;-->
+<!--        &lt;!&ndash;        </where>&ndash;&gt;-->
+<!--    </select>-->
+
+<!--    <select id="selectNotification" resultType="com.example.self_board_project.notification.vo.Notification">-->
+<!--        <include refid="selectQuery"/>-->
+<!--                <where>-->
+<!--                    <if test="id != null and id != ''">-->
+<!--                        AND t1.`id` = #{id}-->
+<!--                    </if>-->
+<!--                </where>-->
+<!--    </select>-->
+<!--    <insert id="insertNotification" useGeneratedKeys="true" keyProperty="id">-->
+<!--        /** insertNotification **/-->
+<!--        INSERT INTO `notification`( user_id-->
+<!--                                  , ref_id-->
+<!--                                  , field-->
+<!--                                  , create_date)-->
+
+<!--        VALUES ( #{userId}-->
+<!--               , #{refId}-->
+<!--               , #{field}-->
+<!--               , now())-->
+<!--    </insert>-->
+
+<!--    <update id="updateNotification">-->
+<!--        update `notification`-->
+<!--        set read_yn = 'Y'-->
+<!--        WHERE user_id = #{userId}-->
+<!--        <if test="field != null and field != ''">-->
+<!--            AND field = #{field}-->
+<!--        </if>-->
+<!--    </update>-->
+
+
+<!--</mapper>-->

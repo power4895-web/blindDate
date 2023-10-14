@@ -1,8 +1,13 @@
-package com.example.self_board_project.chat.controller;
+package com.example.self_board_project.room.controller;
 
-import com.example.self_board_project.chat.vo.Room;
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.room.service.RoomService;
+import com.example.self_board_project.room.vo.Room;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,31 +20,34 @@ import java.util.stream.Collectors;
 
 @Controller
 public class RoomController {
+    Logger logger = LoggerFactory.getLogger(getClass());
     List<Room> roomList = new ArrayList<Room>();
     static int roomNumber = 0;
+    @Autowired
+    RoomService roomService;
 
     @RequestMapping(value="/room")
     public String room(Auth auth) {
         System.out.println("chat");
         return "user/room";
     }
+
     /**
-     * 방 생성하기
-     * @param params
+     * 방생성하기
+     * @param model
+     * @param auth
+     * @param room
      * @return
      */
-    @RequestMapping("/createRoom")
-//    public @ResponseBody List<Room> createRoom(@RequestParam String params){
-    public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){
-//        String roomName = params;
-         String roomName = (String)params.get("roomName");
-//        System.out.println("roomName" + roomName);
-        if(roomName != null && !roomName.trim().equals("")) {
-            Room room = new Room();
-            room.setRoomNumber(++roomNumber);
-            room.setRoomName(roomName);
-            roomList.add(room);
-        }
+    @RequestMapping("/room/insert")
+    @ResponseBody
+    public List<Room> insertRoom(Model model , Auth auth, Room room){
+        logger.info("====createRoom");
+//        logger.info("====setRoomName : {}", room.getRoomName());
+        logger.info("====setRoomName : {}", room.getRoomBossId());
+        logger.info("====setRoomName : {}", room.getRoomStaffId());
+//        room.setRoomNumber(++roomNumber);
+        roomService.insertRoom(room);
         return roomList;
     }
 
