@@ -41,13 +41,32 @@ public class RoomController {
      */
     @RequestMapping("/room/insert")
     @ResponseBody
-    public List<Room> insertRoom(Model model , Auth auth, Room room){
+    public int insertRoom(Model model , Auth auth, Room room){
         logger.info("====createRoom");
 //        logger.info("====setRoomName : {}", room.getRoomName());
         logger.info("====setRoomName : {}", room.getRoomBossId());
         logger.info("====setRoomName : {}", room.getRoomStaffId());
 //        room.setRoomNumber(++roomNumber);
-        roomService.insertRoom(room);
+        Room roomInfo = roomService.selectRoom(room);
+        if(roomInfo == null) {
+            return roomService.insertRoom(room);
+        } else {
+            return roomInfo.getId();
+        }
+    }
+
+    @RequestMapping("/createRoom")
+//    public @ResponseBody List<Room> createRoom(@RequestParam String params){
+    public @ResponseBody List<Room> createRoom(@RequestParam HashMap<Object, Object> params){
+//        String roomName = params;
+        String roomName = (String)params.get("roomName");
+//        System.out.println("roomName" + roomName);
+        if(roomName != null && !roomName.trim().equals("")) {
+            Room room = new Room();
+            room.setRoomNumber(++roomNumber);
+            room.setRoomName(roomName);
+            roomList.add(room);
+        }
         return roomList;
     }
 

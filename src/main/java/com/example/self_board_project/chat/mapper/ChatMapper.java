@@ -9,4 +9,5 @@ import java.util.List;
 public interface ChatMapper {
     public List<Chat> selectChatList (Chat chat) ;
     public Chat selectChat (Chat chat);
+    public int insertChat (Chat chat);
 }

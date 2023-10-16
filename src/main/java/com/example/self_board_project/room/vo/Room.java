@@ -14,5 +14,7 @@ public class Room {
     private int roomId;
     private int roomBossId;
     private int roomStaffId;
+    private String sessionId;
+    private String session;
     private Date createDate;
 }

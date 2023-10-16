@@ -2,39 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.self_board_project.room.mapper.RoomMapper">
+<mapper namespace="com.example.self_board_project.chat.mapper.ChatMapper">
     <sql id="selectQuery">
         SELECT t1.id,
                t1.room_id,
-               t1.room_boss_id,
-               t1.room_staff_id,
+               t1.from_id,
+               t1.to_id,
+               t1.content,
+               t1.read_check,
                t1.create_date
-        FROM room t1
+        FROM chat t1
     </sql>
-    <select id="countRoom" resultType="com.example.self_board_project.room.vo.Room">
-        /** countRoom **/
+    <select id="countChat" resultType="com.example.self_board_project.chat.vo.Chat">
+        /** countChat **/
         select SUM(if(t1.field = 'relationship' and t1.read_yn = 'N', 1, 0)) relationshipCount,
                SUM(if(t1.field = 'evaluation' and t1.read_yn = 'N', 1, 0))   evaluationCount,
                SUM(if(t1.read_yn = 'N', 1, 0))                               totalNCount,
                count(1)                                                      totalCount
-        from room t1
+        from chat t1
         WHERE t1.user_id = #{userId}
     </select>
-    <select id="selectRoomList" resultType="com.example.self_board_project.room.vo.Room">
-        /** selectRoomList **/
+    <select id="selectChatList" resultType="com.example.self_board_project.chat.vo.Chat">
+        /** selectChatList **/
         <include refid="selectQuery"/>
         <where>
-            <if test="roomBossId != null and roomBossId != ''">
-                AND t1.`roomBossId` = #{roomBossId}
-            </if>
+<!--            <if test="chatBossId != null and chatBossId != ''">-->
+<!--                AND t1.`chatBossId` = #{chatBossId}-->
+<!--            </if>-->
 
-            <if test="roomStaffId != null and roomStaffId != ''">
-                AND t1.`room_staff_id` = #{roomStaffId}
-            </if>
+<!--            <if test="chatStaffId != null and chatStaffId != ''">-->
+<!--                AND t1.`chat_staff_id` = #{chatStaffId}-->
+<!--            </if>-->
         </where>
     </select>
 
-    <select id="selectRoom" resultType="com.example.self_board_project.room.vo.Room">
+    <select id="selectChat" resultType="com.example.self_board_project.chat.vo.Chat">
         <include refid="selectQuery"/>
                 <where>
                     <if test="id != null and id != ''">
@@ -42,20 +44,24 @@
                     </if>
                 </where>
     </select>
-    <insert id="insertRoom" useGeneratedKeys="true" keyProperty="id">
-        /** insertRoom **/
-        INSERT INTO `room`( room_boss_id
-                                  , room_staff_id
+    <insert id="insertChat" useGeneratedKeys="true" keyProperty="id">
+        /** insertChat **/
+        INSERT INTO `chat`( room_id
+                                  , from_id
+                                  , to_id
+                                  , read_check
                                   , create_date)
 
-        VALUES ( #{roomBossId}
-               , #{roomStaffId}
+        VALUES ( #{roomId}
+               , #{fromId}
+               , #{toId}
+               , #{readCheck}
                , now())
     </insert>
 
-    <update id="updateRoom">
-        /** updateRoom **/
-        update `room`
+    <update id="updateChat">
+        /** updateChat **/
+        update `chat`
         set session_id = #{sessionId},
             session = #{session}
         WHERE id = #{Id}

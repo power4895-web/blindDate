@@ -33,4 +33,8 @@ public class RoomService {
         logger.info("===insertRoom Start");
         return roomMapper.insertRoom(room);
     }
+    public int updateRoom(Room room) {
+        logger.info("===updateRoom Start");
+        return roomMapper.updateRoom(room);
+    }
 }

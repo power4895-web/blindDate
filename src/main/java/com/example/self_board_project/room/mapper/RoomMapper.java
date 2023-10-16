@@ -11,4 +11,5 @@ public interface RoomMapper {
     public Room selectRoom (Room room);
 
     public int insertRoom(Room room);
+    public int updateRoom(Room room);
 }

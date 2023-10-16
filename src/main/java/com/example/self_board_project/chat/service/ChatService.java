@@ -28,4 +28,8 @@ public class ChatService {
         logger.info("===selectChat Start");
         return chatMapper.selectChat(chat);
     }
+
+    public int insertChat(Chat chat) {
+        return chatMapper.insertChat(chat);
+    }
 }

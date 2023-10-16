@@ -62,13 +62,13 @@
         }
 
         console.log("params", params)
-        return;
         $.ajax({
             type : 'post',
             url : "/room/insert",
-            data : params
+            data : params,
             success : function(data) { // 결과 성공 콜백함수
                 console.log("data", data)
+                document.location.href = "/chat2/" + data;
                 // 1번
             },
             error : function(request, status, error) { // 결과 에러 콜백함수
