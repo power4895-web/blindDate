@@ -43,7 +43,7 @@
                 </c:if>
                 <c:if test="${userId == item.toId}">
                     <div class="chat ch1">
-                        <div class="icon"><i class="fa-solid fa-user"></i></div>
+                        <div class="icon"><img class="img-fluid rounded-circle" src="${imgUrl}" alt="..." /></div>
                             ${yourNickname}
                         <div class="textbox">${item.content}</div>
                     </div>

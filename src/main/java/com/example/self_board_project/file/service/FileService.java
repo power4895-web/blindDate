@@ -117,6 +117,13 @@ public class FileService {
                 });
                 imageList.add(new HashMap<String, Object>() {
                     {
+                        put("name", createTumbnail(projectPath, filename, 50, 50));
+                        put("flag", "XS");
+                        put("bossType", finalBossType);
+                    }
+                });
+                imageList.add(new HashMap<String, Object>() {
+                    {
                         put("name", createTumbnail(projectPath, filename, 200, 200));
                         put("flag", "S");
                         put("bossType", finalBossType);

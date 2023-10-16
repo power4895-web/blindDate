@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!--user정보 가져올 땐 flag값 없이 그냥 가져오면 대표이미지로 M값 가져옴
+근데 S나 다른 Xs 가져오고 싶을 땐 flga값을 넣어주면 대표미이지로 된 다른 flag값 가져온다-->
 <mapper namespace="com.example.self_board_project.user.mapper.UserMapper">
     <sql id="selectQuery">
         SELECT t1.id,
@@ -40,8 +41,14 @@
                t1.create_date,
                t1.update_date,
                t1.update_id,
-               (select concat(filepath, image_name) from file t2 where t1.id = t2.ref_id and t2.flag = 'M' AND boss_type = "Y") img_url
+               concat(t2.filepath, t2.image_name) img_url
         FROM user t1
+        <if test="flag != null and flag != ''">
+            join file t2 on t1.id = t2.ref_id and flag = #{flag} AND boss_type = 'Y'
+        </if>
+        <if test="flag == null ">
+            join file t2 on t1.id = t2.ref_id and flag = 'M' AND boss_type = "Y"
+        </if>
     </sql>
 
 

@@ -18,7 +18,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center mt-1 mb-1">
 <%--                    <img class="img-fluid rounded-circle" src="${item.imgUrl}" alt="..." />--%>
-                    <img class="img-fluid rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                    <img class="img-fluid rounded-circle" src="${item.imgUrl}" alt="..." />
                     <div class="ms-3">
                         <div class="fw-bold">${item.nickname}</div>
                         <div class="fw-bold">${item.sendId}</div>

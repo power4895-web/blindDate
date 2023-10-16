@@ -44,7 +44,7 @@
             t1.create_date,
             t2.id,
             t2.nickname,
-            (select concat(filepath, image_name) from file t3 where t2.id = t3.ref_id and t3.flag = 'S' AND boss_type = "Y") img_url
+            (select concat(filepath, image_name) from file t3 where t2.id = t3.ref_id and t3.flag = 'XS' AND boss_type = "Y") img_url
         FROM relationship t1
         join `user` t2 on t1.send_id = t2.id
         <where>

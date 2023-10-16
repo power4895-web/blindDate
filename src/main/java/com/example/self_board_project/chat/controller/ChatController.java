@@ -58,8 +58,10 @@ public class ChatController {
             }
             User user = new User();
             user.setId(yourId);
+            user.setFlag("XS");
             User userInfo = userService.selectUser(user);
             model.addAttribute("yourNickname", userInfo.getNickname());
+            model.addAttribute("imgUrl", userInfo.getImgUrl());
 
             Chat chat = new Chat();
             chat.setRoomId(roomId);
