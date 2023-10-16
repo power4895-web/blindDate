@@ -26,10 +26,9 @@
         /** selectChatList **/
         <include refid="selectQuery"/>
         <where>
-<!--            <if test="chatBossId != null and chatBossId != ''">-->
-<!--                AND t1.`chatBossId` = #{chatBossId}-->
-<!--            </if>-->
-
+            <if test="roomId != null and roomId != ''">
+                AND t1.`room_id` = #{roomId}
+            </if>
 <!--            <if test="chatStaffId != null and chatStaffId != ''">-->
 <!--                AND t1.`chat_staff_id` = #{chatStaffId}-->
 <!--            </if>-->
@@ -38,11 +37,11 @@
 
     <select id="selectChat" resultType="com.example.self_board_project.chat.vo.Chat">
         <include refid="selectQuery"/>
-                <where>
-                    <if test="id != null and id != ''">
-                        AND t1.`id` = #{id}
-                    </if>
-                </where>
+        <where>
+            <if test="roomId != null and roomId != ''">
+                AND t1.`room_id` = #{roomId}
+            </if>
+        </where>
     </select>
     <insert id="insertChat" useGeneratedKeys="true" keyProperty="id">
         /** insertChat **/
@@ -50,12 +49,14 @@
                                   , from_id
                                   , to_id
                                   , read_check
+                                  , content
                                   , create_date)
 
         VALUES ( #{roomId}
                , #{fromId}
                , #{toId}
                , #{readCheck}
+               , #{content}
                , now())
     </insert>
 

@@ -19,13 +19,11 @@ public class ChatService {
     Logger logger = LoggerFactory.getLogger(getClass());
 
     public List<Chat> selectChatList(Chat chat) {
-        logger.info("===selectChatList Start");
         return chatMapper.selectChatList(chat);
 
     }
 
     public Chat selectChat(Chat chat) {
-        logger.info("===selectChat Start");
         return chatMapper.selectChat(chat);
     }
 
