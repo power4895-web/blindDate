@@ -67,7 +67,7 @@ public class ChatController {
             model.addAttribute("chatList", chatList);
         }
         //사용자 이름
-        return "chat";
+        return "user/chat";
     }
     @RequestMapping(value="/chat/list")
     public String chatList(Auth auth, Chat chat) {

@@ -208,18 +208,27 @@
             $('#didRelationship').hide()
             $('#allowedRelationship').hide()
         }
-        if($('#relationshipInfo').val() != '' && $('#type').val() == 'send') {
-            console.log("현재 친구해요를 보낸 상태입니다.")
-            $('#notRelationship').hide()
-            $('#allowRelationship').hide()
-            $('#allowedRelationship').hide()
-        }
         if($('#relationshipInfo').val() != '' && $('#type').val() == 'get') {
             console.log("현재 친구관계입니다")
             $('#notRelationship').hide()
             $('#allowRelationship').hide()
             $('#allowedRelationship').hide()
         }
+        if($('#relationshipInfo').val() != '' && $('#type').val() == 'send') {
+            console.log("현재 친구해요를 보낸 상태입니다.")
+            $('#notRelationship').hide()
+            $('#allowRelationship').hide()
+            $('#allowedRelationship').hide()
+        }
+        if($('#relationshipInfo').val() == '' && $('#type').val() == 'send') {
+            console.log("현재 친구해요를 보내지 않았습니다.")
+            $('#didRelationship').hide()
+            $('#allowRelationship').hide()
+            $('#allowedRelationship').hide()
+        }
+
+
+
 
         $(".ratings").starRating({
             totalStars: 5,
