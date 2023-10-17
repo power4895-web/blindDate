@@ -30,6 +30,7 @@
     <input type="text" id="yourNickname" value="${yourNickname}" name="yourNickname">
     <input type="text" id="chatList" value="${chatList}" name="chatList">
     <input type="text" value="${userInfo}" id="userInfo" name="userInfo">
+    <input type="text" value="${imgUrl}" id="imgUrl" >
 
 
     <%--    <div id="chating" class="chating">--%>
@@ -158,6 +159,7 @@
             } else if (d.type == "message") {
                 let nickname = $('#nickname').val();
                 let yourNickname = $('#yourNickname').val();
+                let imgUrl = $('#imgUrl').val();
                 if (d.sessionId == $("#sessionId").val()) {
                     $("#chating").append(
                         `<div class='chat ch2'>
@@ -167,7 +169,7 @@
                 } else {
                     $("#chating").append(
                         `<div class='chat ch1'>
-                                <div class=icon><i class=fa-solid fa-user></i></div>
+                                <div class=icon><img class=img-fluid rounded-circle src=\${imgUrl} alt="..." /></div>
                                 \${yourNickname}
                                 <div class=textbox>\${d.msg}</div>
                                 </div>`

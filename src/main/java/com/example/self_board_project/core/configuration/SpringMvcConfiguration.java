@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -44,6 +46,30 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
         System.out.println("userHandlerMethodArgumentResolver : ");
         return new UserHandlerMethodArgumentResolver();
     }
+
+    /**
+     * static resources
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+        if("local".equals(deploy)) {
+            registry.addResourceHandler( uploadResourcePath + "**").addResourceLocations("file:///" + fileRootPath); //data 말고 다른 이름으로 해줘도 된다.
+        }
+    }
+
+    /**
+     * Max FileSize 4mb
+     * 1024 * 1024  * 1000 * 4는 4GB
+     * @return
+     */
+    @Bean
+    public MultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setMaxUploadSize(1024 * 1024 * 4);
+        return resolver;
+    }
+
     /**
      * Tiles View
      *
@@ -83,16 +109,9 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
         return resolver;
     }
 
-    /**
-     * static resources
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
-        if("local".equals(deploy)) {
-            registry.addResourceHandler( uploadResourcePath + "**").addResourceLocations("file:///" + fileRootPath); //data 말고 다른 이름으로 해줘도 된다.
-        }
-    }
+
+
+
 
 
 }
