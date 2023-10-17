@@ -42,9 +42,7 @@ public class ChatController {
         System.out.println("chat");
 
         model.addAttribute("userInfo",auth);
-        model.addAttribute("nickname",auth.getNickname());
         model.addAttribute("roomId",roomId);
-        model.addAttribute("userId", auth.getId());
 
         Room room = new Room();
         room.setId(roomId);
@@ -69,7 +67,7 @@ public class ChatController {
             model.addAttribute("chatList", chatList);
         }
         //사용자 이름
-        return "user/chat2";
+        return "chat";
     }
     @RequestMapping(value="/chat/list")
     public String chatList(Auth auth, Chat chat) {

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
 <%--<script src="/static/js/jquery.form.js"></script>--%>
 <script type="text/javascript" src="/static/js/jquery-2.2.4.js"></script>
@@ -26,60 +27,83 @@
     <h1>${roomName}의 채팅방</h1>
     <input type="text" id="sessionId" value="">
     <input type="text" id="roomId" value="${roomId}">
-    <input type="text" id="nickname" value="${userInfo.nickname}" name="nickname">
+    <input type="text" id="myNickname" value="${userInfo.nickname}" name="myNickname">
     <input type="text" id="yourNickname" value="${yourNickname}" name="yourNickname">
     <input type="text" id="chatList" value="${chatList}" name="chatList">
-    <input type="text" value="${userInfo}" id="userInfo" name="userInfo">
     <input type="text" value="${imgUrl}" id="imgUrl" >
 
 
     <%--    <div id="chating" class="chating">--%>
     <div class="wrap" id="chating">
         <c:if test="${chatList != null}">
-            <c:forEach var="item" items="${chatList}">
-                <c:if test="${userId == item.fromId}">
+            <c:forEach var="item" items="${chatList}" varStatus="status">
+                <fmt:formatDate  var="date1" value="${chatList[status.index].createDate}" type="DATE" pattern="a h:mm"/>
+                <fmt:formatDate  var="date2" value="${chatList[status.index-1].createDate}" type="DATE" pattern="a h:mm"/>
+                <c:if test="${userInfo.id == item.fromId}">
+                    <%--나--%>
                     <div class="chat ch2">
                         <div class="textbox">${item.content}</div>
+                        <div class="myTextboxDate">
+                            <c:if test="${date1 != date2}">
+<%--                                다르다:--%>
+                                <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
+                            </c:if>
+                            <c:if test="${date1 == date2 && chatList[status.index].fromId != chatList[status.index -1].fromId}">
+<%--                               같지만 아이디가 다르다--%>
+                                <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
+                            </c:if>
+                        </div>
                     </div>
                 </c:if>
-                <c:if test="${userId == item.toId}">
+                <c:if test="${userInfo.id == item.toId}">
                     <div class="chat ch1">
-                        <div class="icon"><img class="img-fluid rounded-circle" src="${imgUrl}" alt="..." /></div>
+                        <c:if test="${chatList[status.index].toId == chatList[status.index -1].toId && date1 == date2}">
+<%--                            이전과 지금 시간이 같고, 이전에 받은 사람과 지금 받는사람이 같다. > 민지가 2번보낸것이다. 이럴땐 imgurl없다.--%>
+                            <div class="textbox2">
+                                    ${item.content}
+                            </div>
+                        </c:if>
+                        <c:if test="${chatList[status.index].toId != chatList[status.index -1].toId}">
+<%--                            이전에 받은 사람과 지금 받는사람이 다르다. > 내가 받고, 민지가 받은것이다 imgUrl있다.--%>
+                            <div class="icon"><img class="img-fluid rounded-circle" src="${imgUrl}" alt="..." />
+                            </div>
+                            <p>${yourNickname}</p>
+                            <div class="textbox">
+                                    ${item.content}
+                            </div>
+                        </c:if>
+                        <c:if test="${date1 != date2 && chatList[status.index].toId == chatList[status.index -1].toId}">
+<%--                            시간이 다르게 민지가 2번보낸것이다--%>
+                            <div class="icon"><img class="img-fluid rounded-circle" src="${imgUrl}" alt="..." /></div>
                             ${yourNickname}
-                        <div class="textbox">${item.content}</div>
+                            <div class="textbox">
+                                    ${item.content}
+                            </div>
+                        </c:if>
+
+
+<%--                        <div class="icon"><img class="img-fluid rounded-circle" src="${imgUrl}" alt="..." /></div>--%>
+<%--                            ${yourNickname}--%>
+
+
+                        <div class="yourTextboxDate">
+                            <c:if test="${date1 != date2}">
+<%--                                다르다:--%>
+                                <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
+                            </c:if>
+                            <c:if test="${date1 == date2 && chatList[status.index].fromId != chatList[status.index -1].fromId}">
+<%--                                같지만 아이디가 다르다--%>
+                                <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
+                            </c:if>
+<%--                            <fmt:formatDate value="${item.createDate}" pattern="a h:mm"/>--%>
+                        </div>
                     </div>
                 </c:if>
             </c:forEach>
         </c:if>
     </div>
 
-    <%--    </div>--%>
-    <%--    <div id="chating" class="chating">--%>
-    <%--        <c:if test="${chatList != null}">--%>
-    <%--            <c:forEach var="item" items="${chatList}">--%>
-    <%--                <c:if test="${userId == item.fromId}">--%>
-    <%--                    <p class='me'>${userInfo.nickname}: ${item.content}</p>--%>
-    <%--                </c:if>--%>
-    <%--                <c:if test="${userId == item.toId}">--%>
-    <%--                    <p class='others'>${yourNickname}: ${item.content}</p>--%>
-    <%--                </c:if>--%>
-    <%--            </c:forEach>--%>
-    <%--        </c:if>--%>
-    <%--    </div>--%>
-
-    <div id="yourName">
-        <table class="inputTable">
-            <tr>
-                <th>사용자명</th>
-                <%--                <input type="text" id="nickname" value="${nickname}" name="nickname">--%>
-                <%--                <th><input type="text" name="nickname" id="nickname"></th>--%>
-                <th>
-                    <button onclick="chatName()" id="startBtn">이름 등록</button>
-                </th>
-            </tr>
-        </table>
-    </div>
-    <div id="yourMsg">
+    <div>
         <table class="inputTable">
             <tr>
                 <th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
@@ -98,11 +122,11 @@
 
 
 </body>
-</html>
 <script type="text/javascript">
 
     $(document).ready(function () {
-        console.log($('#chatList').val())
+        console.log(">>", $('.myTextboxDate').val());
+
         chatName()
         getChatList();
     })
@@ -157,22 +181,38 @@
                     $("#sessionId").val(si);
                 }
             } else if (d.type == "message") {
-                let nickname = $('#nickname').val();
                 let yourNickname = $('#yourNickname').val();
                 let imgUrl = $('#imgUrl').val();
+
+                let today = new Date();
+                let hours = ('0' + today.getHours()).slice(-2);
+                let minutes = ('0' + today.getMinutes()).slice(-2);
+                let timeString = hours + ':' + minutes;
+
+                console.log(timeString);
+
                 if (d.sessionId == $("#sessionId").val()) {
                     $("#chating").append(
                         `<div class='chat ch2'>
                                 <div class=textbox>\${d.msg}</div>
-                                </div>`
+                                    <div class=myTextboxDate>
+                                        \${timeString}
+                                    </div>
+                         </div>
+                         `
                     );
                 } else {
                     $("#chating").append(
                         `<div class='chat ch1'>
                                 <div class=icon><img class=img-fluid rounded-circle src=\${imgUrl} alt="..." /></div>
                                 \${yourNickname}
-                                <div class=textbox>\${d.msg}</div>
-                                </div>`
+                                <div class=textbox>\${d.msg}
+                                    <div class=yourTextboxDate>
+                                        \${timeString}
+                                    </div>
+                                </div>
+                         </div>
+                        `
                     );
                 }
             } else {
@@ -187,16 +227,9 @@
         });
     }
 
-    function chatName(nickname) {
-        console.log("chatName")
-        var nickname = $("#nickname").val();
-        if (nickname == null || nickname.trim() == "") {
-            alert("사용자 이름을 입력해주세요.");
-        } else {
-            wsOpen();
-            $("#yourName").hide();
-            $("#yourMsg").show();
-        }
+    function chatName() {
+        wsOpen();
+        $("#yourMsg").show();
     }
 
     function send() {
@@ -205,7 +238,7 @@
             type: "message",
             roomId: $("#roomId").val(),
             sessionId: $("#sessionId").val(),
-            nickname: $("#nickname").val(),
+            nickname: $("#myNickname").val(),
             msg: $("#chatting").val()
         }
         var params = {
@@ -231,6 +264,7 @@
         $('#chatting').val("");
     }
 </script>
+</html>
 <style>
     * {
         margin: 0;
@@ -238,7 +272,7 @@
     }
 
     .container {
-        width: 500px;
+        width: 1000px;
         margin: 0 auto;
         padding: 25px
     }
@@ -251,36 +285,10 @@
         margin-bottom: 20px;
     }
 
-    .chating {
-        background-color: #7f7f8d3b;
-        width: 500px;
-        height: 500px;
-        overflow: auto;
-    }
-
-    .chating .me {
-        color: #0808083b;
-        text-align: right;
-        border-radius: 50%;
-        border-bottom-color: #0a53be;
-        /*width: 10px;*/
-        /*height: 10px;background-color: blue;border-radius: 50%*/
-    }
-
-    .chating .others {
-        color: #0808083b;
-        text-align: left;
-    }
-
     input {
         width: 330px;
         height: 25px;
     }
-
-    #yourMsg {
-        display: none;
-    }
-
     * {
         padding: 0;
         margin: 0;
@@ -297,6 +305,7 @@
     }
 
     .wrap .chat {
+        position: relative;
         display: flex;
         align-items: flex-start;
         padding: 20px;
@@ -337,14 +346,41 @@
         font-size: 1.5rem;
     }
 
+
     .wrap .ch1 .textbox {
-        margin-left: -7px;
-        /*margin-left: 20px;*/
-        margin-top: 38px; /*ksw4895 추가*/
+        position: relative;
+        margin-left: -12px;
+        margin-top: 45px;
         background-color: #ddd;
     }
+    /*.wrap .ch1 .textbox::before {*/
+    /*    left: -12px;*/
+    /*    top: -15px;*/
+    /*    content: "↖";*/
+    /*    font-weight: bolder;*/
+    /*    color: #ddd;*/
+    /*}*/
 
-    .wrap .ch1 .textbox::before {
+    .wrap .ch1 .textbox2 {
+        /*padding: 10px;*/
+        position: absolute;
+        font-size: 13px;
+        border-radius: 10px;
+        background-color: #ddd;
+        margin-left: 84px;
+        margin-top: -23px;
+    }
+
+
+    .wrap .ch1 .yourTextboxDate {
+        /*margin-left: 241px;*/
+        margin-top: 87px;
+        position: relative;
+        font-size: 12px;
+        color: #5b5555;
+        padding-left: 14px;
+    }
+    .wrap .ch1 .textbox .yourTextboxDate::before {
         left: -12px;
         top: -15px;
         content: "↖";
@@ -362,9 +398,16 @@
     }
 
     .wrap .ch2 .textbox::before {
-        right: -15px;
-        content: "";
+        /*right: -15px;*/
+        /*content: "";*/
         /*content: "▶";*/
-        color: #F9EB54;
+        /*color: #F9EB54;*/
+    }
+    .myTextboxDate {
+        /*margin-right: 173px;*/
+        margin-top: 42px;
+        /*position: absolute;*/
+        font-size: 12px;
+        color: #5b5555;
     }
 </style>
