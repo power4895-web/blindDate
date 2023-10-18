@@ -5,6 +5,12 @@ body{
     margin: 0; /* 페이지의 여유공간 없애버림 */
 }
 
+/*ksw4895*/
+#chat_container {
+    height: 85vh;
+    overflow: auto;
+}
+
 /* grid container 적용 */
 #chat-body{
     top: 0;
@@ -23,6 +29,7 @@ body{
 #chat-body, .setting_bar, .main-menu, header{
     /*background-image: url(../pic/talk_background.jpg);*/
     /*background-color: url(../pic/talk_background.jpg);*/
+    background-color: #ecf5ff;
     background-repeat: repeat;
     background-position: top left;
     background-attachment: fixed;
@@ -245,13 +252,16 @@ main{
 .insert-content{
     background-color: white;
     padding: 0.4375rem;
-    position: sticky;
+    position: fixed;
     bottom: 0;
+    margin: -10px; /*ksw4895*/
 }
 textarea{
     resize: none;
     border: none;
-    height: 4.375rem;
+    height: 5.375rem;
+    /*border: solid;*/
+    width: 100rem;
 }
 
 /* 채팅 입력창 flex로 정렬 */
@@ -261,10 +271,10 @@ form[name="chatform"]{
     justify-content: flex-start;
     align-items: flex-start;
 }
-form[name="chatform"] > textarea{
-    flex-basis: 100%;
-    flex-grow: 1;
-}
+/*form[name="chatform"] > textarea{*/
+/*    flex-basis: 100%;*/
+/*    flex-grow: 1;*/
+/*}*/
 .chat-submit{
     margin-left: 10px;
     border: 1px solid rgb(94, 122, 100);
