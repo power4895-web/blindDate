@@ -44,14 +44,27 @@ public class RoomController {
     public int insertRoom(Model model , Auth auth, Room room){
         logger.info("====createRoom");
 //        logger.info("====setRoomName : {}", room.getRoomName());
-        logger.info("====setRoomName : {}", room.getRoomBossId());
-        logger.info("====setRoomName : {}", room.getRoomStaffId());
-//        room.setRoomNumber(++roomNumber);
-        Room roomInfo = roomService.selectRoom(room);
-        if(roomInfo == null) {
-            return roomService.insertRoom(room);
+        logger.info("====getRoomBossId = get= 나 : {}", room.getRoomBossId());
+        logger.info("====getRoomStaffId = send =상대방 : {}", room.getRoomStaffId());
+
+        int oldBossId = room.getRoomBossId();
+        int oldStaffId = room.getRoomStaffId();
+
+        Room myRoomInfo = roomService.selectRoom(room);
+        Room room2 = new Room();
+        room2.setRoomBossId(oldStaffId);
+        room2.setRoomStaffId(oldBossId);
+        Room yourRoomInfo = roomService.selectRoom(room2);
+
+        if(myRoomInfo == null && yourRoomInfo == null) {
+            roomService.insertRoom(room);
+            return room.getId();
         } else {
-            return roomInfo.getId();
+            if(myRoomInfo == null) {
+                return yourRoomInfo.getId();
+            } else {
+                return myRoomInfo.getId();
+            }
         }
     }
 

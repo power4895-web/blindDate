@@ -30,4 +30,7 @@ public class ChatService {
     public int insertChat(Chat chat) {
         return chatMapper.insertChat(chat);
     }
+    public int updateChat(Chat chat) {
+        return chatMapper.updateChat(chat);
+    }
 }

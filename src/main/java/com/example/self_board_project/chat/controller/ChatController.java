@@ -39,8 +39,8 @@ public class ChatController {
     }
     @RequestMapping(value="/chat2/{roomId}")
     public String chat2(Auth auth , @PathVariable int roomId, Model model) {
-        logger.info("chat2 : {}", auth.getNickname());
-        System.out.println("chat");
+        logger.info("chat2 Start");
+        logger.info("roomId : {}", roomId);
 
         model.addAttribute("userInfo",auth);
         model.addAttribute("roomId",roomId);
@@ -48,6 +48,7 @@ public class ChatController {
         Room room = new Room();
         room.setId(roomId);
         Room roomInfo = roomService.selectRoom(room);
+        logger.info("roomInfo : {}", roomInfo.getId());
         if(roomInfo != null) {
             int yourId = 0;
             if(auth.getId() == roomInfo.getRoomBossId()) {
@@ -84,7 +85,7 @@ public class ChatController {
     }
     @RequestMapping(value="/chat/acceptIsYRelationship")
     public String acceptIsYRelationship(Auth auth, Model model) {
-        System.out.println("chat");
+        System.out.println("acceptIsYRelationship Start");
         Relationship relationship = new Relationship();
         relationship.setGetId(auth.getId());
         model.addAttribute("acceptIsYRelationshipList", relationshipService.selectAcceptIsYList(relationship));

@@ -9,7 +9,7 @@
                t1.from_id,
                t1.to_id,
                t1.content,
-               t1.read_check,
+               t1.read_yn,
                t1.create_date
         FROM chat t1
     </sql>
@@ -48,14 +48,12 @@
         INSERT INTO `chat`( room_id
                                   , from_id
                                   , to_id
-                                  , read_check
                                   , content
                                   , create_date)
 
         VALUES ( #{roomId}
                , #{fromId}
                , #{toId}
-               , #{readCheck}
                , #{content}
                , now())
     </insert>
@@ -63,12 +61,8 @@
     <update id="updateChat">
         /** updateChat **/
         update `chat`
-        set session_id = #{sessionId},
-            session = #{session}
-        WHERE id = #{Id}
-<!--        <if test="field != null and field != ''">-->
-<!--            AND field = #{field}-->
-<!--        </if>-->
+        set read_yn = "Y"
+        WHERE room_id = #{roomId}
     </update>
 
 

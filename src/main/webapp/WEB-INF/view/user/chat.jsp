@@ -40,7 +40,7 @@
 <body>
 <div id="chat_container">
     <div id="chat-body">
-        <input type="hidden" id="sessionId" value="">
+        <input type="text" id="sessionId" value="">
         <input type="hidden" id="roomId" value="${roomId}">
         <input type="hidden" id="myNickname" value="${userInfo.nickname}" name="myNickname">
         <input type="hidden" id="yourNickname" value="${yourNickname}" name="yourNickname">
@@ -95,6 +95,7 @@
                         <div class="me-chat-col">
                             <span class="balloon">${item.content}</span>
                         </div>
+                        <p class="readYn">${item.readyn == 'N' ? '1' : ''}</p>
                         <c:if test="${date1 != date2}">
                             <%--                                다르다:--%>
                             <time datetime="07:32:00+09:00"><fmt:formatDate  value="${item.createDate}" pattern="a h:mm" /></time>
@@ -244,6 +245,7 @@
         console.log("wsEvt")
         ws.onopen = function (data) {
             console.log("소켓이 열리면 동작")
+            console.log("data", data)
             //소켓이 열리면 동작
         }
 
@@ -254,6 +256,7 @@
             var msg = data.data;
             var d = JSON.parse(msg); //보낼 땐 문자열로 보냈고, 받을 땐 json오브젝트를 자바스크립트 오브젝트로 변환
             console.log("d", d)
+            console.log("d.readYn", d.readYn)
             console.log("d.type", d.type)
             console.log("d.msg", d.msg)
             if (d.type == "getId") {
@@ -272,6 +275,10 @@
                 console.log("timeString", timeString);
                 console.log("oldTime", oldTime);
 
+                d.readYn = d.readYn == "N" ? 1 : "";
+
+                console.log("d.readYn",d.readYn)
+
                 if (d.sessionId == $("#sessionId").val()) {
                     console.log("내가 쓴 채팅")
                     $("#chating").append(
@@ -279,6 +286,7 @@
                                 <div class=me-chat-col>
                                     <span class=balloon>\${d.msg}</span>
                                 </div>
+                                <p class=readYn >\${d.readYn}<p>
                                 <time datetime="07:32:00+09:00">
                                     \${timeString == oldTime ? '' : timeString}
                                 </time>
@@ -327,6 +335,9 @@
                 oldTime = timeString
                 oldSesstionId = d.sessionId
 
+            } else if(d.type == "online") {
+                console.log("online", "읽음처리 다 없애기")
+                $('.readYn').remove();
             } else {
                 console.warn("unknown type!")
             }
@@ -334,9 +345,10 @@
             $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
         }
 
+        //메세지 전송 엔터
         document.addEventListener("keypress", function (e) {
-            console.log("e", e)
-            console.log("chatInsert", $('#chatInsert').val())
+            // console.log("e", e)
+            // console.log("chatInsert", $('#chatInsert').val())
             if (e.code == 'Enter') { //enter press
                 if($('#chatInsert').val() == '') {
                     e.preventDefault(); // 기본 동작을 막음 (새 줄 추가 방지)

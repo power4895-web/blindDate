@@ -30,7 +30,7 @@
                         <div class="d-flex">
                             <div class="ms-3">
                                 <div class="fw-bold">Commenter Name</div>
-                                <button class="btn btn-info" onclick="insertRoom(${item.sendId},${item.getId} )">대화시작하기</button>
+                                <button class="btn btn-info" onclick="insertRoom(${item.getId},${item.sendId} )">대화시작하기</button>
                             </div>
                         </div>
                     </div>

@@ -11,6 +11,7 @@ public class Room {
     private int id;
     private int roomNumber;
     private String roomName;
+    private String url;
     private int roomId;
     private int roomBossId;
     private int roomStaffId;

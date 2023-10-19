@@ -194,6 +194,10 @@ main{
     margin-top: 0.3125rem;
     margin-bottom: 0.3125rem;
 }
+.readYn{
+    color: orange;
+    /*margin-left: 10px;*/
+}
 .me-chat-col > .balloon{
     margin-top: 0.3125rem;
     padding: 0.4375rem;

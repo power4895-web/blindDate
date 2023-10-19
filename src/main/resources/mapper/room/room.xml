@@ -35,10 +35,17 @@
     </select>
 
     <select id="selectRoom" resultType="com.example.self_board_project.room.vo.Room">
+        /** selectRoom **/
         <include refid="selectQuery"/>
                 <where>
                     <if test="id != null and id != ''">
                         AND t1.`id` = #{id}
+                    </if>
+                    <if test="roomBossId != null and roomBossId != ''">
+                        AND t1.`room_boss_id` = #{roomBossId}
+                    </if>
+                    <if test="roomStaffId != null and roomStaffId != ''">
+                        AND t1.`room_staff_id` = #{roomStaffId}
                     </if>
                 </where>
     </select>
