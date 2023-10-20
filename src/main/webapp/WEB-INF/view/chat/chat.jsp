@@ -182,6 +182,7 @@
 
     $(document).ready(function () {
 
+        updateChat();
         //가장 맨 아래로 스크롤 내리기
         $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
 
@@ -204,29 +205,8 @@
 
             console.log(event.target);
         });
-
-
         chatName()
-        getChatList();
     })
-
-    function getChatList() {
-        $("#roomId").val();
-        let params = {
-            roomId: $("#roomId").val()
-        }
-        $.ajax({
-            type: 'post',
-            url: "/chat/list",
-            data: params,
-            success: function (data) { // 결과 성공 콜백함수
-                // console.log("data", data)
-            },
-            error: function (request, status, error) { // 결과 에러 콜백함수
-                console.log("error", error)
-            }
-        })
-    }
 
 
     var ws;
@@ -367,6 +347,23 @@
         wsOpen();
         $("#yourMsg").show();
     }
+    //채팅방 들어온 아이디 읽지 않은거 모두 읽은걸로 업데이트
+    function updateChat() {
+        const params = {
+            'roomId' : $('#roomdId').val()
+        }
+        $.ajax({
+            type: 'post',
+            url: "/chat/update/",
+            data: params,
+            success: function (data) { // 결과 성공 콜백함수
+                console.log("data", data)
+            },
+            error: function (request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        })
+    }
 
     function send() {
         var option = {
@@ -386,8 +383,6 @@
             data: params,
             success: function (data) { // 결과 성공 콜백함수
                 console.log("data", data)
-                // document.location.href = "/chat2/" + data;
-                // 1번
             },
             error: function (request, status, error) { // 결과 에러 콜백함수
                 console.log("error", error)

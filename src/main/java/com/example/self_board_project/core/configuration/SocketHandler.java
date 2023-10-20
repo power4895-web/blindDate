@@ -160,10 +160,7 @@ public class SocketHandler extends TextWebSocketHandler {
 
             //map에다가 왜 넣는거지??  , 주석하게 되면 본인이 사용한 메세지를 받을수 없다.
             //session_id, url, roomId
-
-
             for (int i = 0; i < rls.size(); i++) {
-
                     String rN = (String) rls.get(i).get("roomId");
                     if (roomId.equals(rN)) { //같은값의 방이 존재한다면
                         logger.info("rls.get(i) : {}", rls.get(i));

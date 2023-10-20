@@ -81,9 +81,20 @@
 
     <update id="updateChat">
         /** updateChat **/
-        update `chat`
+        update `chat` t1
         set read_yn = "Y"
-        WHERE room_id = #{roomId}
+         <where>
+              <if test="roomId != null and roomId != ''">
+                  AND t1.`room_id` = #{roomId}
+              </if>
+              <if test="toId != null and toId != ''">
+                  AND t1.`to_id` = #{toId}
+              </if>
+              <if test="fromId != null and fromId != ''">
+                  AND t1.`from_id` = #{fromId}
+              </if>
+         </where>
+
     </update>
 
 

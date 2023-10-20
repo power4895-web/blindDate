@@ -29,19 +29,12 @@ public class ChatController {
     @Autowired
     UserService userService;
 
-
-//    @RequestMapping(value="/chat")
-//    public String chat(Auth auth) {
-//        System.out.println("chat");
-//        return "user/chat";
-//    }
-
     /**
-     * 해당 채팅방 입장
+     * 해당 채팅방 입장 => 채팅방의 방번호로 모든 리스트 가져오기
      * @param auth
      * @return
      */
-    @RequestMapping(value="/chat2/{roomId}")
+    @RequestMapping(value="/chat/{roomId}")
     public String chat2(Auth auth , @PathVariable int roomId, Model model) {
         logger.info("chat2 Start");
         logger.info("roomId : {}", roomId);
@@ -76,20 +69,6 @@ public class ChatController {
         return "chat/chat";
     }
 
-
-//    @RequestMapping(value="/chat/list")
-//    public String chatList(Auth auth, Chat chat) {
-//        logger.info("chatList");
-//        chatService.selectChatList(chat);
-//        return "front:user/chatList";
-//    }
-//    @RequestMapping(value="/chat/view")
-//    public String chatView(Auth auth, Chat chat) {
-//        logger.info("chatView");
-//        chatService.selectChat(chat);
-//        return "front:user/chatList";
-//    }
-
     @RequestMapping(value="/chat/insert")
     @ResponseBody
     public int insertChat(Auth auth, Model model, Chat chat) {
@@ -104,6 +83,16 @@ public class ChatController {
         }
         chat.setFromId(auth.getId());
         chatService.insertChat(chat);
+        return chat.getId();
+    }
+    @RequestMapping(value="/chat/update")
+    @ResponseBody
+    public int updateChat(Auth auth, Model model, Chat chat) {
+        logger.info("updateChat start");
+        logger.info("roomId : {}", chat.getRoomId());
+        chat.setRoomId(chat.getRoomId());
+        chat.setToId(auth.getId());
+        chatService.updateChat(chat);
         return chat.getId();
     }
 }
