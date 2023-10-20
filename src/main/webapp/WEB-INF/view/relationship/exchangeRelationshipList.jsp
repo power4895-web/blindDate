@@ -24,7 +24,7 @@
         </c:if>
             <span class="badge bg-primary rounded-pill">${item.readIsNotCount != 0 ? item.readIsNotCount : ''}</span>
             <div class="d-flex w-100 justify-content-between">
-                <img class="img-fluid rounded-circle " src="${item.imgUrl}" alt="..." />
+            <img class="img-fluid rounded-circle " src="${item.imgUrl}" alt="..." onclick="userView(${item.sendId})"/>
                 <c:if test="${item.roomYn == 'Y'}">
                     <small >${item.lastMessage}</small>
                 </c:if>
@@ -55,6 +55,9 @@
 </html>
 <script>
 
+    $(document).ready(function () {
+    })
+
     function insertRoom(roomBossId, roomStaffId) {
 
         console.log("roomBossId", roomBossId)
@@ -78,6 +81,9 @@
                 console.log("error", error)
             }
         })
+    }
+    function userView(id){
+        document.location.href = '/user/view/' + id;
     }
 
 </script>
