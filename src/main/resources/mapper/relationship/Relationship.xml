@@ -34,8 +34,8 @@
 <!--            </if>-->
         </where>
     </select>
-    <select id="selectAcceptIsYList" resultType="com.example.self_board_project.relationship.vo.Relationship">
-        /** selectAcceptIsYList **/
+    <select id="selectExchangeRelationshipList" resultType="com.example.self_board_project.relationship.vo.Relationship">
+        /** selectExchangeRelationshipList **/
         SELECT
             t1.id,
             t1.send_id,

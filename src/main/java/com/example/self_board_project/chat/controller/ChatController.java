@@ -3,8 +3,6 @@ package com.example.self_board_project.chat.controller;
 import com.example.self_board_project.chat.service.ChatService;
 import com.example.self_board_project.chat.vo.Chat;
 import com.example.self_board_project.core.authority.Auth;
-import com.example.self_board_project.relationship.service.RelationshipService;
-import com.example.self_board_project.relationship.vo.Relationship;
 import com.example.self_board_project.room.service.RoomService;
 import com.example.self_board_project.room.vo.Room;
 import com.example.self_board_project.user.service.UserService;
@@ -27,16 +25,22 @@ public class ChatController {
     @Autowired
     ChatService chatService;
     @Autowired
-    RelationshipService relationshipService;
-    @Autowired
     RoomService roomService;
     @Autowired
     UserService userService;
-    @RequestMapping(value="/chat")
-    public String chat(Auth auth) {
-        System.out.println("chat");
-        return "user/chat";
-    }
+
+
+//    @RequestMapping(value="/chat")
+//    public String chat(Auth auth) {
+//        System.out.println("chat");
+//        return "user/chat";
+//    }
+
+    /**
+     * 해당 채팅방 입장
+     * @param auth
+     * @return
+     */
     @RequestMapping(value="/chat2/{roomId}")
     public String chat2(Auth auth , @PathVariable int roomId, Model model) {
         logger.info("chat2 Start");
@@ -69,28 +73,23 @@ public class ChatController {
             model.addAttribute("chatList", chatList);
         }
         //사용자 이름
-        return "user/chat";
+        return "chat/chat";
     }
-    @RequestMapping(value="/chat/list")
-    public String chatList(Auth auth, Chat chat) {
-        logger.info("chatList");
-        chatService.selectChatList(chat);
-        return "front:user/chatList";
-    }
-    @RequestMapping(value="/chat/view")
-    public String chatView(Auth auth, Chat chat) {
-        logger.info("chatView");
-        chatService.selectChat(chat);
-        return "front:user/chatList";
-    }
-    @RequestMapping(value="/chat/acceptIsYRelationship")
-    public String acceptIsYRelationship(Auth auth, Model model) {
-        System.out.println("acceptIsYRelationship Start");
-        Relationship relationship = new Relationship();
-        relationship.setGetId(auth.getId());
-        model.addAttribute("acceptIsYRelationshipList", relationshipService.selectAcceptIsYList(relationship));
-        return "front:user/chatList";
-    }
+
+
+//    @RequestMapping(value="/chat/list")
+//    public String chatList(Auth auth, Chat chat) {
+//        logger.info("chatList");
+//        chatService.selectChatList(chat);
+//        return "front:user/chatList";
+//    }
+//    @RequestMapping(value="/chat/view")
+//    public String chatView(Auth auth, Chat chat) {
+//        logger.info("chatView");
+//        chatService.selectChat(chat);
+//        return "front:user/chatList";
+//    }
+
     @RequestMapping(value="/chat/insert")
     @ResponseBody
     public int insertChat(Auth auth, Model model, Chat chat) {

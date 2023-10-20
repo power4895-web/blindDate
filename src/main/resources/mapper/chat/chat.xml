@@ -13,14 +13,24 @@
                t1.create_date
         FROM chat t1
     </sql>
-    <select id="countChat" resultType="com.example.self_board_project.chat.vo.Chat">
+    <select id="countChat" resultType="int">
         /** countChat **/
-        select SUM(if(t1.field = 'relationship' and t1.read_yn = 'N', 1, 0)) relationshipCount,
-               SUM(if(t1.field = 'evaluation' and t1.read_yn = 'N', 1, 0))   evaluationCount,
-               SUM(if(t1.read_yn = 'N', 1, 0))                               totalNCount,
-               count(1)                                                      totalCount
+        select count(*)
         from chat t1
-        WHERE t1.user_id = #{userId}
+        <where>
+            <if test="toId != null and toId != ''">
+                AND t1.`to_id` = #{toId}
+            </if>
+            <if test="fromId != null and fromId != ''">
+                AND t1.`from_id` = #{fromId}
+            </if>
+            <if test="roomId != null and roomId != ''">
+                AND t1.`room_id` = #{roomId}
+            </if>
+            <if test="readYn != null and readYn != ''">
+                AND t1.`read_yn` = #{readYn}
+            </if>
+        </where>
     </select>
     <select id="selectChatList" resultType="com.example.self_board_project.chat.vo.Chat">
         /** selectChatList **/
@@ -42,6 +52,17 @@
                 AND t1.`room_id` = #{roomId}
             </if>
         </where>
+    </select>
+    <select id="selectLastChat" resultType="com.example.self_board_project.chat.vo.Chat">
+        select MAX(t1.id),
+               t1.room_id,
+               t1.from_id,
+               t1.to_id,
+               t1.content,
+               t1.read_yn,
+               t1.create_date
+        from chat t1
+        where room_id = #{roomId};
     </select>
     <insert id="insertChat" useGeneratedKeys="true" keyProperty="id">
         /** insertChat **/

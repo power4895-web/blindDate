@@ -10,6 +10,7 @@ import java.util.Date;
 @Setter
 public class Relationship extends User {
     private Integer id;
+    private int userId;
     private int sendId;
     private int getId;
     private String acceptCheck;
@@ -19,7 +20,6 @@ public class Relationship extends User {
 
     //user
     private String nickname;
-    private int userId;
 
     //  file
     private String bossType;
@@ -34,5 +34,13 @@ public class Relationship extends User {
     private int evaluationId;
     private int receiveId;
     private int score;
+
+    //room
+    private String roomYn;
+
+    //chat
+    private String lastMessage;
+    private Date lastChatCreateDate;
+    private int readIsNotCount;
 
 }

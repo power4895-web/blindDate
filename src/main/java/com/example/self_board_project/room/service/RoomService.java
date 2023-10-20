@@ -1,6 +1,5 @@
 package com.example.self_board_project.room.service;
 
-import com.example.self_board_project.relationship.service.RelationshipService;
 import com.example.self_board_project.room.mapper.RoomMapper;
 import com.example.self_board_project.room.vo.Room;
 import org.slf4j.Logger;
@@ -12,8 +11,6 @@ import java.util.List;
 
 @Service
 public class RoomService {
-    @Autowired
-    RelationshipService relationshipService;
     @Autowired
     RoomMapper roomMapper;
     Logger logger = LoggerFactory.getLogger(getClass());

@@ -1,11 +1,13 @@
 package com.example.self_board_project.relationship.controller;
 
+import com.example.self_board_project.chat.service.ChatService;
 import com.example.self_board_project.core.authority.Auth;
 import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
 import com.example.self_board_project.notification.service.NotificationService;
 import com.example.self_board_project.relationship.service.RelationshipService;
 import com.example.self_board_project.relationship.vo.Relationship;
+import com.example.self_board_project.room.service.RoomService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,10 @@ public class RelationshipController {
     EvaluationService evaluationService;
     @Autowired
     NotificationService notificationService;
+    @Autowired
+    RoomService roomService;
+    @Autowired
+    ChatService chatService;
 
     /**
      * 마이페이지 > 친구리스트 (default 받은 친구해요)
@@ -153,4 +159,22 @@ public class RelationshipController {
         model.addAttribute("field", "total");
         return "friendListAjax";
     }
+
+    /**
+     * header에서 채팅 눌렀을 떄 > 서로 relation을 보낸 사람들
+     * @param auth
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/relationship/exchangeRelationship")
+    public String exchangeRelationship(Auth auth, Model model) {
+        logger.info("exchangeRelationship Start");
+        Relationship relationship = new Relationship();
+        relationship.setGetId(auth.getId());
+        List<Relationship> relationshipList = relationshipService.selectExchangeRelationshipList(relationship);
+
+        model.addAttribute("exchangeRelationshipList", relationshipList);
+        return "front:relationship/exchangeRelationshipList";
+    }
+
 }

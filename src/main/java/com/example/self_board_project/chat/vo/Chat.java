@@ -14,6 +14,6 @@ public class Chat {
     private int toId;
     private String content;
     private Date createDate;
-    private String readyn;
+    private String readYn;
 
 }

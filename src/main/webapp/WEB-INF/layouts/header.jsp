@@ -64,7 +64,7 @@
                                         <span class="badge text-bg-danger" id="friendshipListCount"></span>
                                     </a>
                                 </li>
-                                <li><a class="dropdown-item" href="/chat/acceptIsYRelationship">채팅</a></li>
+                                <li><a class="dropdown-item" href="/relationship/exchangeRelationship">채팅</a></li>
                                 <li><a class="dropdown-item" href="/user/updateForm/${info.user.id}">내정보수정</a></li>
                                 <li><a class="dropdown-item" href="blog-post.html">스케줄</a></li>
                             </ul>

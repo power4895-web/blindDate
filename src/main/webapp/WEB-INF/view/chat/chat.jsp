@@ -95,7 +95,7 @@
                         <div class="me-chat-col">
                             <span class="balloon">${item.content}</span>
                         </div>
-                        <p class="readYn">${item.readyn == 'N' ? '1' : ''}</p>
+                        <p class="readYn">${item.readYn == 'N' ? '1' : ''}</p>
                         <c:if test="${date1 != date2}">
                             <%--                                다르다:--%>
                             <time datetime="07:32:00+09:00"><fmt:formatDate  value="${item.createDate}" pattern="a h:mm" /></time>

@@ -111,7 +111,7 @@ public class RoomController {
             System.out.println("/user/chat");
             mv.addObject("roomName", params.get("roomName"));
             mv.addObject("roomNumber", params.get("roomNumber"));
-            mv.setViewName("/user/chat");
+            mv.setViewName("chat/chat");
         }else {
             System.out.println("/user/room");
             mv.setViewName("/user/room");
