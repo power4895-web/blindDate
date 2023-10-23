@@ -149,24 +149,25 @@
                         </c:forEach>
                     </c:if>
                     <!-- 채팅 입력창 -->
-                </div>
-                <div class="insert-content">
-                    <form name="chatform" id="chatform">
-                        <textarea name="chat-insert" id="chatInsert"></textarea>
-                        <button class="chat-submit" onclick="send()" id="sendBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-send-fill" viewBox="0 0 16 16">
-                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                            </svg>
-                        </button>
-                    </form>
-                    <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
-                    <div class="insert-menu">
-                        <i class="icon-smile">😀</i>
-                        <i class="icon-attach">➕</i>
-                        <i class="icon-phone">📞</i>
-                        <i class="icon-calendar-empty">📆</i>
-                        <i class="icon-camera">📷</i>
+                    <div class="insert-content">
+                        <form name="chatform" id="chatform">
+                            <textarea name="chat-insert" id="chatInsert"></textarea>
+                            <button class="chat-submit" onclick="send()" id="sendBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-send-fill" viewBox="0 0 16 16">
+                                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                                </svg>
+                            </button>
+                            <input class="chat-submit" value="" onclick="send()" >
+                        </form>
+                        <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
+                        <div class="insert-menu">
+                            <i class="icon-smile"></i>
+                            <i class="icon-attach"></i>
+                            <i class="icon-phone"></i>
+                            <i class="icon-calendar-empty"></i>
+                            <i class="icon-camera"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -364,7 +365,7 @@
         })
     }
 
-    async function send() {
+    function send() {
         var option = {
             type: "message",
             roomId: $("#roomId").val(),
@@ -373,10 +374,9 @@
             msg: $("#chatInsert").val()
         }
         var params = {
-            'content': option.msg,
-            'roomId': option.roomId,
+            content: option.msg,
+            roomId: option.roomId,
         }
-        // await chatInsertAjax(params);
         $.ajax({
             type: 'post',
             url: "/chat/insert",
@@ -393,35 +393,6 @@
         ws.send(JSON.stringify(option))  //자바에서 handleTextMessage실행, 문자열로 보내야 서버에서 메세지를 받음
         $('#chatInsert').val("");
     }
-
-
-    function chatInsertAjax(params) {
-        console.log("chatInsertAjax");
-        console.log("params", params);
-        console.log("params", params.content);
-        console.log("params", params.getId);
-        return new Promise(function(resolve, reject){ // promise 정의
-            $.ajax({
-                type : 'post',
-                url: "/chat/insert",
-                async: true, //비동기 여부
-                data: params,
-                timeout: 10000, //타임 아웃 설정 (1000 = 1초)
-                dataType: "JSON", //응답받을 데이터 타입 (XML,JSON,TEXT,HTML,JSONP)
-                contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
-                success : function(data) { // 결과 성공 콜백함수
-                    resolve(data);
-                    console.log("data", data)
-
-                },
-                error: function (request, status, error) { // 결과 에러 콜백함수
-                    console.log("error", error)
-                    reject(error);
-                }
-            });
-        });
-    };
-
 </script>
 </html>
 <style>

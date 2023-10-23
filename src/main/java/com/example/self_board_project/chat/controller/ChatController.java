@@ -73,6 +73,8 @@ public class ChatController {
     @ResponseBody
     public int insertChat(Auth auth, Model model, Chat chat) {
         logger.info("chat start");
+        logger.info("content : {}", chat.getContent());
+        logger.info("roomId : {}", chat.getRoomId());
         Room room = new Room();
         room.setId(chat.getRoomId());
         Room roomInfo = roomService.selectRoom(room);

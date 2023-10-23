@@ -39,9 +39,9 @@
             <if test="roomId != null and roomId != ''">
                 AND t1.`room_id` = #{roomId}
             </if>
-<!--            <if test="chatStaffId != null and chatStaffId != ''">-->
-<!--                AND t1.`chat_staff_id` = #{chatStaffId}-->
-<!--            </if>-->
+            <!--            <if test="chatStaffId != null and chatStaffId != ''">-->
+            <!--                AND t1.`chat_staff_id` = #{chatStaffId}-->
+            <!--            </if>-->
         </where>
     </select>
 
@@ -54,23 +54,24 @@
         </where>
     </select>
     <select id="selectLastChat" resultType="com.example.self_board_project.chat.vo.Chat">
-        select MAX(t1.id),
-               t1.room_id,
-               t1.from_id,
-               t1.to_id,
-               t1.content,
-               t1.read_yn,
-               t1.create_date
+        /*selectLastChat*/
+        select MAX(t1.id) id,
+               MAX(t1.room_id) roomId,
+               MAX(t1.from_id) fromId,
+               MAX(t1.to_id) toId,
+               MAX(t1.content) content,
+               MAX(t1.read_yn) readYn,
+               MAX(t1.create_date) createDate
         from chat t1
         where room_id = #{roomId};
     </select>
     <insert id="insertChat" useGeneratedKeys="true" keyProperty="id">
         /** insertChat **/
         INSERT INTO `chat`( room_id
-                                  , from_id
-                                  , to_id
-                                  , content
-                                  , create_date)
+                          , from_id
+                          , to_id
+                          , content
+                          , create_date)
 
         VALUES ( #{roomId}
                , #{fromId}
@@ -83,17 +84,17 @@
         /** updateChat **/
         update `chat` t1
         set read_yn = "Y"
-         <where>
-              <if test="roomId != null and roomId != ''">
-                  AND t1.`room_id` = #{roomId}
-              </if>
-              <if test="toId != null and toId != ''">
-                  AND t1.`to_id` = #{toId}
-              </if>
-              <if test="fromId != null and fromId != ''">
-                  AND t1.`from_id` = #{fromId}
-              </if>
-         </where>
+        <where>
+            <if test="roomId != null and roomId != ''">
+                AND t1.`room_id` = #{roomId}
+            </if>
+            <if test="toId != null and toId != ''">
+                AND t1.`to_id` = #{toId}
+            </if>
+            <if test="fromId != null and fromId != ''">
+                AND t1.`from_id` = #{fromId}
+            </if>
+        </where>
 
     </update>
 

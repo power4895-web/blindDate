@@ -73,8 +73,7 @@ public class RelationshipService {
                 chat.setRoomId(roomId);
                 Chat lastChatInfo = chatService.selectLastChat(chat);
                 if(lastChatInfo != null) {
-
-
+                logger.info("미지막 메세지가 있다면");
                     chat.setToId(relationship.getGetId());
                     chat.setReadYn("N");
                     int setReadIsNotCount = chatService.countChat(chat);
