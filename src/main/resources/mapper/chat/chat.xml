@@ -55,15 +55,9 @@
     </select>
     <select id="selectLastChat" resultType="com.example.self_board_project.chat.vo.Chat">
         /*selectLastChat*/
-        select MAX(t1.id) id,
-               MAX(t1.room_id) roomId,
-               MAX(t1.from_id) fromId,
-               MAX(t1.to_id) toId,
-               MAX(t1.content) content,
-               MAX(t1.read_yn) readYn,
-               MAX(t1.create_date) createDate
-        from chat t1
-        where room_id = #{roomId};
+        SELECT *
+        FROM chat t1
+        WHERE t1.id = (SELECT MAX(id) FROM chat where room_id = #{roomId});
     </select>
     <insert id="insertChat" useGeneratedKeys="true" keyProperty="id">
         /** insertChat **/

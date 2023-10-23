@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -62,8 +63,16 @@ public class ChatController {
 
             Chat chat = new Chat();
             chat.setRoomId(roomId);
+            
             List<Chat> chatList = chatService.selectChatList(chat);
             model.addAttribute("chatList", chatList);
+            
+            //마지막 채팅 시간
+            Chat chatLastList = chatService.selectLastChat(chat);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(chatLastList.getCreateDate());
+            model.addAttribute("lastHour", calendar.get(Calendar.HOUR_OF_DAY));
+            model.addAttribute("lastMinute", calendar.get(Calendar.MINUTE));
         }
         //사용자 이름
         return "chat/chat";
