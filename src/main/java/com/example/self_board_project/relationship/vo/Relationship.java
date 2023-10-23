@@ -41,6 +41,11 @@ public class Relationship extends User {
     //chat
     private String lastMessage;
     private Date lastChatCreateDate;
+
+    private long lastChatCreate;
+    private int hourValue;
+    private int minuteValue;
+    private int secondValue;
     private int readIsNotCount;
 
 }

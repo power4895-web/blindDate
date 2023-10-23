@@ -65,7 +65,7 @@
                 AND gender = #{gender}
             </if>
             <if test="ids != null and ids.size > 0">
-                AND id NOT IN
+                AND t1.id NOT IN
                 <foreach collection="ids" item="id" open="(" close=")" separator=",">
                     #{id}
                 </foreach>

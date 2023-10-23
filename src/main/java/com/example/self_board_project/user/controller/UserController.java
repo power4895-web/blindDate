@@ -54,10 +54,10 @@ public class UserController {
 
     /**
      * 회원상세
+     * 친구리스트에서, 내가 보낸 친구해요일 땐 type이 send
      * @param model
      * @return
      */
-//    @RequestMapping(value = "/user/view/{type}/{id}")
     @RequestMapping(value = {"/user/view/{id}/{type}", "/user/view/{id}"})
     public String userView(Model model, Auth auth, @PathVariable int id,  @PathVariable(required = false) String type) {
         logger.info("userView Start");

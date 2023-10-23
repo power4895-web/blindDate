@@ -29,6 +29,7 @@
         <if test="flag != null and flag != ''">
             AND t1.flag = #{flag}
         </if>
+        ORDER BY FIELD(boss_type , 'Y','N');
 
     </select>
 

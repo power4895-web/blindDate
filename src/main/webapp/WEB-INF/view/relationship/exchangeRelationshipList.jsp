@@ -16,35 +16,36 @@
 <c:forEach var="item" items="${exchangeRelationshipList}">
     <div class="list-group">
         <%--방이 존재하면 리스트 선택시 채팅방으로 , 없으면 아무일도 안일어난다--%>
-        <c:if test="${item.roomYn == 'Y'}">
-            <a href="#" class="list-group-item list-group-item-action" aria-current="true" onclick="insertRoom(${item.getId},${item.sendId} )">
-        </c:if>
-        <c:if test="${item.roomYn == 'N'}">
             <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-        </c:if>
             <span class="badge bg-primary rounded-pill">${item.readIsNotCount != 0 ? item.readIsNotCount : ''}</span>
             <div class="d-flex w-100 justify-content-between">
             <img class="img-fluid rounded-circle " src="${item.imgUrl}" alt="..." onclick="userView(${item.sendId})"/>
                 <c:if test="${item.roomYn == 'Y'}">
-                    <small >${item.lastMessage}</small>
+                    <small class="contentButton" data-get="${item.getId}" data-send="${item.sendId}">${item.lastMessage}</small>
                 </c:if>
                 <c:if test="${item.roomYn == 'N'}">
                     <button class="btn btn-info" onclick="insertRoom(${item.getId},${item.sendId} )">대화시작하기</button>
                 </c:if>
-                <c:set var="ymd" value="<%=new java.util.Date()%>" />
-                <c:set var="dateDifference" value="${ymd.time - item.lastChatCreateDate.time}" />
-                <c:choose>
-                    <c:when test="${dateDifference ge 172800000}"> <!-- 2일 이상 차이 -->
-                        <c:set var="result" value="2일 전" />
-                    </c:when>
-                    <c:when test="${dateDifference ge 259200000}"> <!-- 3일 이상 차이 -->
-                        <c:set var="result" value="3일 전" />
-                    </c:when>
-                    <c:otherwise>
-                        <c:set var="result" value="현재 또는 1일 이내" />
-                    </c:otherwise>
-                </c:choose>
-                <small>${result}</small>
+
+                <c:if test="${item.lastChatCreate != 0}">
+                    <small >${item.lastChatCreate}일전</small>
+                </c:if>
+                <c:if test="${item.hourValue != 0 && item.lastChatCreate == 0}">
+                    <small>${item.hourValue}시간 전</small>
+                </c:if>
+                <c:if test="${item.hourValue == 0 && item.minuteValue != 0}">
+                    <small>${item.minuteValue}분전</small>
+                </c:if>
+                <c:if test="${item.hourValue == 0 && item.minuteValue == 0 && item.secondValue != 0}">
+                    <small>${item.secondValue}초전</small>
+                </c:if>
+                <c:if test="${item.lastChatCreate == 0 && item.hourValue == 0 && item.minuteValue == 0 && item.secondValue == 0}">
+                    <small></small>
+                </c:if>
+
+                <c:if test="${item.roomYn == 'N'}">
+                    <button class="btn btn-info" onclick="insertRoom(${item.getId},${item.sendId} )">대화시작하기</button>
+                </c:if>
             </div>
             <strong class="mb-1">${item.nickname}</strong>
         </a>
@@ -56,6 +57,16 @@
 <script>
 
     $(document).ready(function () {
+
+        //컨텐츠 class값으로 이벤트발생
+        $(".contentButton").on("click", function () {
+            var getId = $(this).data("get");
+            var sendId = $(this).data("send");
+            handleEvent(getId, sendId);
+        })
+        function handleEvent(getId, sendId) {
+            insertRoom(getId,sendId)
+        }
     })
 
     function insertRoom(roomBossId, roomStaffId) {
