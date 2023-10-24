@@ -69,16 +69,31 @@ public class ChatController {
             //마지막 채팅 시간
             Chat chatLastList = chatService.selectLastChat(chat);
             if(chatLastList != null) {
-                model.addAttribute("chatLastCreateDate", chatLastList.getCreateDate());
+                model.addAttribute("chatLastList", chatLastList);
             }
         }
         //사용자 이름
         return "chat/chat";
     }
+    /**
+     * 해당 채팅방 입장 => 채팅방의 방번호로 모든 리스트 가져오기
+     * @param auth
+     * @return
+     */
+    @RequestMapping(value="/lastChatTime/{roomId}")
+    @ResponseBody
+    public Chat lastChatTime(Auth auth , @PathVariable int roomId, Model model) {
+        logger.info("lastChatTime Start");
+        logger.info("roomId : {}", roomId);
+        Chat chat = new Chat();
+        chat.setRoomId(roomId);
+        Chat chatInfo = chatService.selectLastChat(chat);
+        return chatInfo;
+    }
 
     @RequestMapping(value="/chat/insert")
     @ResponseBody
-    public int insertChat(Auth auth, Model model, Chat chat) {
+    public Chat insertChat(Auth auth, Model model, Chat chat) {
         logger.info("chat start");
         logger.info("content : {}", chat.getContent());
         logger.info("roomId : {}", chat.getRoomId());
@@ -92,7 +107,8 @@ public class ChatController {
         }
         chat.setFromId(auth.getId());
         chatService.insertChat(chat);
-        return chat.getId();
+        Chat chatInfo = chatService.selectChat(chat);
+        return chatInfo;
     }
     @RequestMapping(value="/chat/update")
     @ResponseBody

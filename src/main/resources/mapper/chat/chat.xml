@@ -48,6 +48,9 @@
     <select id="selectChat" resultType="com.example.self_board_project.chat.vo.Chat">
         <include refid="selectQuery"/>
         <where>
+            <if test="id != null and id != ''">
+                AND t1.`id` = #{id}
+            </if>
             <if test="roomId != null and roomId != ''">
                 AND t1.`room_id` = #{roomId}
             </if>
@@ -64,12 +67,14 @@
         INSERT INTO `chat`( room_id
                           , from_id
                           , to_id
+                          , session_id
                           , content
                           , create_date)
 
         VALUES ( #{roomId}
                , #{fromId}
                , #{toId}
+               , #{sessionId}
                , #{content}
                , now())
     </insert>

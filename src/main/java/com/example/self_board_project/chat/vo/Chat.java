@@ -12,6 +12,7 @@ public class Chat {
     private int roomId;
     private int fromId;
     private int toId;
+    private String sessionId;
     private String content;
     private Date createDate;
     private String readYn;

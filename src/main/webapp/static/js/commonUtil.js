@@ -198,7 +198,7 @@ var com = {
 		var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		var dateString = date;
 		var dateParts = dateString.split(' ');
-
+		console.log(">>>", dateParts);
 		var year = parseInt(dateParts[5]);
 		var month = monthNames.indexOf(dateParts[1]) + 1;
 		var day = parseInt(dateParts[2]);
@@ -214,10 +214,12 @@ var com = {
 		// 시간, 분, 초 추출
 		var hour = parseInt(timeParts[0]);
 		var minute = parseInt(timeParts[1]);
+		let minutes = (minute < 10) ? '0' + minute : minute;
+
 		var second = parseInt(timeParts[2]);
 
 		console.log("시간: " + hour);
-		console.log("분: " + minute);
+		console.log("분: " + minutes);
 		console.log("초: " + second);
 
 		var dateTime = {
