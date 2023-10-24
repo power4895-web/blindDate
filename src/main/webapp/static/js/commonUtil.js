@@ -137,6 +137,103 @@ var com = {
 		$(obj).val( $(obj).val().replace(/,/g,'').replace(/\B(?=(\d{3})+(?!\d))/g, ",") );
 	},
 
+	/**
+	 * 날자 변환
+	 * yyyy-MM-dd, yyyy-MM-dd HH:mm:ss, yyyy-MM-dd a/p hh:mm:ss, yyyy-MM-dd E
+	 * @param {날짜 Date} format
+	 * @returns
+	 */
+	getDate: function (format, date) {
+
+		if (date == null) return "";
+
+		let weekName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+		let d = new Date(date);
+		let h;
+		String.prototype.string = function (len) {
+			var s = '', i = 0;
+			while (i++ < len) {
+				s += this;
+			}
+			return s;
+		};
+		String.prototype.zf = function (len) {
+			return "0".string(len - this.length) + this;
+		};
+		Number.prototype.zf = function (len) {
+			return this.toString().zf(len);
+		};
+
+		return format.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function ($1) {
+			switch ($1) {
+				case "yyyy":
+					return d.getFullYear();
+				case "yy":
+					return (d.getFullYear() % 1000).zf(2);
+				case "MM":
+					return (d.getMonth() + 1).zf(2);
+				case "dd":
+					return d.getDate().zf(2);
+				case "E":
+					return weekName[d.getDay()];
+				case "HH":
+					return d.getHours().zf(2);
+				// case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+				case "hh":
+					return ((h = d.getHours() % 12) ? h : 12);
+				case "mm":
+					return d.getMinutes().zf(2);
+				case "ss":
+					return d.getSeconds().zf(2);
+				case "a/p":
+					return d.getHours() < 12 ? "오전" : "오후";
+				default:
+					return $1;
+			}
+		});
+	},
+
+	//datetime 데이터를 스트링으로 변환
+	fromDateToString : function (date) {
+		var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		var dateString = date;
+		var dateParts = dateString.split(' ');
+
+		var year = parseInt(dateParts[5]);
+		var month = monthNames.indexOf(dateParts[1]) + 1;
+		var day = parseInt(dateParts[2]);
+		// 결과 출력
+		console.log("년: " + year);
+		console.log("월: " + month);
+		console.log("일: " + day);
+
+
+		// 콜론(:)을 기준으로 문자열을 분리
+		var timeParts = dateParts[3].split(':');
+
+		// 시간, 분, 초 추출
+		var hour = parseInt(timeParts[0]);
+		var minute = parseInt(timeParts[1]);
+		var second = parseInt(timeParts[2]);
+
+		console.log("시간: " + hour);
+		console.log("분: " + minute);
+		console.log("초: " + second);
+
+		var dateTime = {
+			year : year,
+			month : month,
+			day : day,
+			hour : hour,
+			minute : minute,
+			second : second
+		}
+
+
+		return dateTime;
+	},
+
+
 
 	bytesToSize : function(bytes) {
 		   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];

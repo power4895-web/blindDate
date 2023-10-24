@@ -46,9 +46,7 @@
         <input type="hidden" id="yourNickname" value="${yourNickname}" name="yourNickname">
         <input type="hidden" id="chatList" value="${chatList}" name="chatList">
         <input type="hidden" value="${imgUrl}" id="imgUrl" >
-        <input type="hidden" value="${chatLastList}" id="chatLastCreateDate" >
-        <input type="hidden" value="${lastHour}" id="lastHour" >
-        <input type="hidden" value="${lastMinute}" id="lastMinute" >
+        <input type="hidden" value="${chatLastCreateDate}" id="chatLastCreateDate" >
 
         <!-- 설정바(최소화, 닫기 버튼 등) -->
         <div class="setting_bar">
@@ -180,6 +178,17 @@
 
     $(document).ready(function () {
 
+        if($('#chatLastCreateDate').val() != '') {
+            var dateTime = com.fromDateToString($('#chatLastCreateDate').val());
+            var oldHours = dateTime.hour; // 시간
+            var oldMinutes = dateTime.minute; // 분
+            if(oldTime == null) {
+                oldTime = oldHours + ':' + oldMinutes
+            }
+        }
+        console.log("과거 채팅 시간 24시간 형식: ", oldTime);
+
+
         updateChat();
         //가장 맨 아래로 스크롤 내리기
         $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
@@ -237,6 +246,8 @@
             console.log("d.readYn", d.readYn)
             console.log("d.type", d.type)
             console.log("d.msg", d.msg)
+            console.log("메세지를 보낸 사람의 세션 아이디: ", d.sessionId)
+            console.log("현재 채팅페이지의 세션 아이디: ", $("#sessionId").val())
             if (d.type == "getId") {
                 var si = d.sessionId != null ? d.sessionId : "";
                 if (si != '') {
@@ -283,20 +294,24 @@
                     );
                 } else {
                     console.log("상대방 쓴 채팅")
-                    if(oldSesstionId == d.sessionId && now24TimeString == oldTime) {
-                        console.log("시간이 같게 민지가 두번보낸것")
-                        $("#chating").append(
-                            `<div class='friend-chat'>
+
+                    if(oldSesstionId == null) {
+                        console.log(">>oldSesstionId is null")
+                        console.log(">>now24TimeString : ", now24TimeString)
+                        console.log(">>oldTime : ", oldTime)
+                        if(now24TimeString == oldTime) {
+                            console.log("now24TimeString == oldTime")
+                            $("#chating").append(
+                                `<div class='friend-chat'>
                                 <div class="friend-chat-col">
                                     <span class="balloon" style="position: relative; margin-left: 60px;">\${d.msg}</span>
                                 </div>
                             </div>`
-                        );
-                    }
-                    if(oldSesstionId != d.sessionId ) {
-                        console.log("내가 받고, 민지가 받은것이다 imgUrl있다.")
-                        $("#chating").append(
-                            `<div class='friend-chat'>
+                            );
+                        } else {
+                            console.log("now24TimeString != oldTime")
+                            $("#chating").append(
+                                `<div class='friend-chat'>
                                 <img class="profile-img" src="\${imgUrl}" alt="쀼프로필사진">
                                 <div class="friend-chat-col">
                                     <span class="profile-name">\${yourNickname}</span>
@@ -306,19 +321,66 @@
                                     \${ampm +  " " + now12TimeString}
                                 </time>
                              </div>`
-                        );
-                    }
-                    if(oldSesstionId == d.sessionId && now24TimeString != oldTime) {
-                        console.log("시간이 다르게 민지가 2번보낸것이다.")
-                        $("#chating").append(
-                            `<div class='friend-chat'>
+                            );
+                        }
+                    } else {
+                        if(oldSesstionId == d.sessionId && now24TimeString == oldTime) {
+                            console.log("시간이 같게 민지가 두번보낸것")
+                            $("#chating").append(
+                                `<div class='friend-chat'>
+                                <div class="friend-chat-col">
+                                    <span class="balloon" style="position: relative; margin-left: 60px;">\${d.msg}</span>
+                                </div>
+                            </div>`
+                            );
+                        }
+                        console.log(">>>oldSesstionId : ", oldSesstionId)
+                        console.log(">>> d.sessionId : ", d.sessionId)
+                        if(oldSesstionId != d.sessionId && now24TimeString == oldTime) {
+                            console.log("이전에 내가 보낸 뒤, 현재 상대방이 나에게 보낸 것인 동시에 시간이 같은 것, 시간표시x.")
+                            $("#chating").append(
+                                `<div class='friend-chat'>
+                                    <img class="profile-img" src="\${imgUrl}" alt="쀼프로필사진">
+                                    <div class="friend-chat-col">
+                                         <span class="profile-name">\${yourNickname}</span>
+                                         <span class="balloon">\${d.msg}</span>
+                                    </div>
+                                    <time datetime="07:32:00+09:00">
+                                        \${ampm +  " " + now12TimeString}
+                                    </time>
+                                </div>`
+                            );
+                        }
+                        if(oldSesstionId != d.sessionId && now24TimeString != oldTime) {
+                            console.log("이전에 내가 보낸 뒤, 현재 상대방이 나에게 보낸 동시에 시간이 다른것 시간표시!, imgUrl있다.")
+                            $("#chating").append(
+                                `<div class='friend-chat'>
                                 <img class="profile-img" src="\${imgUrl}" alt="쀼프로필사진">
                                 <div class="friend-chat-col">
                                     <span class="profile-name">\${yourNickname}</span>
                                     <span class="balloon">\${d.msg}</span>
                                 </div>
+                                <time datetime="07:32:00+09:00">
+                                    \${ampm +  " " + now12TimeString}
+                                </time>
                              </div>`
-                        );
+                            );
+                        }
+                        if(oldSesstionId == d.sessionId && now24TimeString != oldTime) {
+                            console.log("시간이 다르게 민지가 2번보낸것이다.")
+                            $("#chating").append(
+                                `<div class='friend-chat'>
+                                <img class="profile-img" src="\${imgUrl}" alt="쀼프로필사진">
+                                <div class="friend-chat-col">
+                                    <span class="profile-name">\${yourNickname}</span>
+                                    <span class="balloon">\${d.msg}</span>
+                                </div>
+                                <time datetime="07:32:00+09:00">
+                                    \${ampm +  " " + now12TimeString}
+                                </time>
+                             </div>`
+                            );
+                        }
                     }
                 }
                 oldTime = now24TimeString  //비교를 위해 과거 시간 저장 24시간 형식
@@ -375,12 +437,6 @@
     }
 
     async function send() {
-        var oldHours = $('#lastHour').val(); // 시간
-        var oldMinutes = $('#lastMinute').val(); // 분
-        if(oldTime == null) {
-            oldTime = oldHours + ':' + oldMinutes
-        }
-        console.log("과거 채팅 시간 24시간 형식: ", oldTime);
 
         var option = {
             type: "message",
