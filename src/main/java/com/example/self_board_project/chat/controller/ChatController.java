@@ -106,6 +106,10 @@ public class ChatController {
             chat.setToId(roomInfo.getRoomBossId());
         }
         chat.setFromId(auth.getId());
+        Chat lastChatInfo = chatService.selectLastChat(chat);
+        logger.info("lastChatInfo : {}", lastChatInfo);
+        chat.setLastCreateDate(lastChatInfo.getCreateDate());
+        chat.setLastFromId(lastChatInfo.getFromId());
         chatService.insertChat(chat);
         Chat chatInfo = chatService.selectChat(chat);
         return chatInfo;

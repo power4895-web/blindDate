@@ -12,9 +12,11 @@ public class Chat {
     private int roomId;
     private int fromId;
     private int toId;
+    private int lastFromId;
     private String sessionId;
     private String content;
     private Date createDate;
+    private Date lastCreateDate;
     private String readYn;
 
 }

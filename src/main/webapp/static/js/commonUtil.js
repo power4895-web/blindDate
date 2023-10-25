@@ -198,14 +198,14 @@ var com = {
 		var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 		var dateString = date;
 		var dateParts = dateString.split(' ');
-		console.log(">>>", dateParts);
+		// console.log(">>>", dateParts);
 		var year = parseInt(dateParts[5]);
 		var month = monthNames.indexOf(dateParts[1]) + 1;
 		var day = parseInt(dateParts[2]);
 		// 결과 출력
-		console.log("년: " + year);
-		console.log("월: " + month);
-		console.log("일: " + day);
+		// console.log("년: " + year);
+		// console.log("월: " + month);
+		// console.log("일: " + day);
 
 
 		// 콜론(:)을 기준으로 문자열을 분리
@@ -218,9 +218,9 @@ var com = {
 
 		var second = parseInt(timeParts[2]);
 
-		console.log("시간: " + hour);
-		console.log("분: " + minutes);
-		console.log("초: " + second);
+		// console.log("시간: " + hour);
+		// console.log("분: " + minutes);
+		// console.log("초: " + second);
 
 		var dateTime = {
 			year : year,
