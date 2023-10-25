@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -19,7 +20,48 @@ public class ChatService {
         return chatMapper.countChat(chat);
     }
     public List<Chat> selectChatList(Chat chat) {
-        return chatMapper.selectChatList(chat);
+        logger.info("selectChatList Service");
+        List<Chat> chatList = chatMapper.selectChatList(chat);
+
+        Calendar calendar = Calendar.getInstance();
+        if(chatList.size() > 0) {
+            int i=0;
+            for (Chat item:chatList) {
+                if(item.getLastCreateDate() == null) {
+                    item.setShowCreateDate(item.getCreateDate());
+                } else {
+                    calendar.setTime(item.getCreateDate());
+                    int yearValue = calendar.get(Calendar.YEAR);
+                    int monthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+                    int dayValue = calendar.get(Calendar.DAY_OF_MONTH);
+                    logger.info("현재 채팅시점 연도 : {}" , yearValue);
+                    logger.info("현재 채팅시점 월 : {}" , monthValue);
+                    logger.info("현재 채팅시점 일 : {}" , dayValue);
+                    calendar.setTime(item.getLastCreateDate());
+                    int lastYearValue = calendar.get(Calendar.YEAR);
+                    int lastMonthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+                    int lastDayValue = calendar.get(Calendar.DAY_OF_MONTH);
+                    logger.info("현재 채팅시점 연도 : {}" , lastYearValue);
+                    logger.info("현재 채팅시점 월 : {}" , lastMonthValue);
+                    logger.info("현재 채팅시점 일 : {}" , lastDayValue);
+
+                    logger.info("현재 채팅시점 년,월,일 : {}" , yearValue + ":" + monthValue + "+" + dayValue);
+                    logger.info("과거 채팅시점 년,월,일 : {}" , lastYearValue + ":" + lastMonthValue + "+" + lastDayValue);
+                    String nowDate = yearValue + ":" + monthValue + "+" + dayValue;
+                    String lastDate = lastYearValue + ":" + lastMonthValue + "+" + lastDayValue;
+                    if(nowDate != lastDate) {
+                        item.setShowCreateDate(item.getCreateDate());
+                    }
+
+                }
+                logger.info("create date : {}", item.getCreateDate());
+            }
+        }
+
+
+
+
+        return chatList;
     }
 
     public Chat selectChat(Chat chat) {

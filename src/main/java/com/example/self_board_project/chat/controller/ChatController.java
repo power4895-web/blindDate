@@ -88,7 +88,10 @@ public class ChatController {
         Chat chat = new Chat();
         chat.setRoomId(roomId);
         Chat chatInfo = chatService.selectLastChat(chat);
-        return chatInfo;
+        if(chatInfo != null) {
+            return chatInfo;
+        }
+        return chat;
     }
 
     @RequestMapping(value="/chat/insert")
@@ -107,12 +110,18 @@ public class ChatController {
         }
         chat.setFromId(auth.getId());
         Chat lastChatInfo = chatService.selectLastChat(chat);
-        logger.info("lastChatInfo : {}", lastChatInfo);
-        chat.setLastCreateDate(lastChatInfo.getCreateDate());
-        chat.setLastFromId(lastChatInfo.getFromId());
-        chatService.insertChat(chat);
-        Chat chatInfo = chatService.selectChat(chat);
-        return chatInfo;
+        if(lastChatInfo != null) {
+            logger.info("lastChatInfo : {}", lastChatInfo);
+            chat.setLastCreateDate(lastChatInfo.getCreateDate());
+            chat.setLastFromId(lastChatInfo.getFromId());
+            chatService.insertChat(chat);
+            Chat chatInfo = chatService.selectChat(chat);
+            return chatInfo;
+        } else {
+            chatService.insertChat(chat);
+            Chat chatInfo = chatService.selectChat(chat);
+            return chatInfo;
+        }
     }
     @RequestMapping(value="/chat/update")
     @ResponseBody

@@ -46,8 +46,8 @@
         <input type="hidden" id="yourNickname" value="${yourNickname}" name="yourNickname">
         <input type="hidden" id="chatList" value="${chatList}" name="chatList">
         <input type="hidden" value="${imgUrl}" id="imgUrl" >
-        <input type="hidden" value="${chatLastList.createDate}" id="chatLastCreateDate" >
-        <input type="hidden" value="${chatLastList.sessionId}" id="lastSessionId" >
+        <input type="text" value="${chatLastList.createDate}" id="chatLastCreateDate" >
+        <input type="text" value="${chatLastList.sessionId}" id="lastSessionId" >
         <input type="hidden" value="${userInfo.id}" id="userId" >
 
         <!-- 설정바(최소화, 닫기 버튼 등) -->
@@ -82,13 +82,17 @@
             <!-- 채팅 내용 시작 -->
             <div class="chat-content">
                 <!-- 메시지 시작 날짜 -->
-                <%--            <div class="date-line">--%>
-                <%--                <time datetime="2021-03-29">2021년 3월 29일 월요일</time>--%>
-                <%--            </div>--%>
+
                 <!-- 채팅 내용 -->
                 <div class="main-chat" id="chating">
                     <c:if test="${chatList != null}">
                         <c:forEach var="item" items="${chatList}" varStatus="status">
+                            <c:if test="${item.showCreateDate != null}">
+                                <div class="date-line">
+                                    <fmt:formatDate  value="${item.showCreateDate}" pattern="yyyy년 MM월 dd일 E요일" />
+                                </div>
+                            </c:if>
+
                             <fmt:formatDate  var="date1" value="${chatList[status.index].createDate}" type="DATE" pattern="a h:mm"/>
                             <fmt:formatDate  var="date2" value="${chatList[status.index-1].createDate}" type="DATE" pattern="a h:mm"/>
                             <c:if test="${userInfo.id == item.fromId}">
@@ -493,8 +497,6 @@
     }
 
     async function send() {
-        // await getLastChatTime($('#roomId').val());
-
         var option = {
             type: "message",
             roomId: $("#roomId").val(),
@@ -516,7 +518,7 @@
 
 
     function chatInsertAjax(params) {
-        // console.log("chatInsertAjax");
+        console.log("chatInsertAjax");
         // console.log("params", params);
         // console.log("params", params.content);
         // console.log("params", params.getId);
@@ -558,15 +560,15 @@
                 contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
                 success : function(data) { // 결과 성공 콜백함수
                     resolve(data);
-                    console.log("getLastChatTime : ", data)
-                    if(data != null) {
-                        lastFromId = data.lastFromId;
-                        fromId = data.fromId;
-                        lastToId = data.toId;
-                        let test = new Date(data.lastCreateDate);
-                        let minutes = (test.getMinutes() < 10) ? '0' + test.getMinutes() : test.getMinutes();
-                        chatLastTimeString = test.getHours() + ':' + minutes;
-                    }
+                    // console.log("getLastChatTime : ", data)
+                    // if(data != null) {
+                    //     lastFromId = data.lastFromId;
+                    //     fromId = data.fromId;
+                    //     lastToId = data.toId;
+                    //     let test = new Date(data.lastCreateDate);
+                    //     let minutes = (test.getMinutes() < 10) ? '0' + test.getMinutes() : test.getMinutes();
+                    //     chatLastTimeString = test.getHours() + ':' + minutes;
+                    // }
                 },
                 error: function (request, status, error) { // 결과 에러 콜백함수
                     console.log("error", error)
