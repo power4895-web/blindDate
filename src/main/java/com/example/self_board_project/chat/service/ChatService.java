@@ -24,6 +24,14 @@ public class ChatService {
         List<Chat> chatList = chatMapper.selectChatList(chat);
 
         Calendar calendar = Calendar.getInstance();
+
+        int yearValue = 0;
+        int monthValue = 0; // 월은 0부터 시작하므로 1을 더해줍니다.
+        int dayValue = 0;
+        int lastYearValue = 0;
+        int lastMonthValue = 0;
+        int lastDayValue = 0;
+
         if(chatList.size() > 0) {
             int i=0;
             for (Chat item:chatList) {
@@ -32,20 +40,17 @@ public class ChatService {
                     item.setShowCreateDate(item.getCreateDate());
                 } else {
                     logger.info("lastDate있다");
+                    //현재시간
                     calendar.setTime(item.getCreateDate());
-                    int yearValue = calendar.get(Calendar.YEAR);
-                    int monthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-                    int dayValue = calendar.get(Calendar.DAY_OF_MONTH);
-                    logger.info("현재 채팅시점 연도 : {}" , yearValue);
-                    logger.info("현재 채팅시점 월 : {}" , monthValue);
-                    logger.info("현재 채팅시점 일 : {}" , dayValue);
+                    yearValue = calendar.get(Calendar.YEAR);
+                    monthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+                    dayValue = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    //과거시간
                     calendar.setTime(item.getLastCreateDate());
-                    int lastYearValue = calendar.get(Calendar.YEAR);
-                    int lastMonthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
-                    int lastDayValue = calendar.get(Calendar.DAY_OF_MONTH);
-                    logger.info("현재 채팅시점 연도 : {}" , lastYearValue);
-                    logger.info("현재 채팅시점 월 : {}" , lastMonthValue);
-                    logger.info("현재 채팅시점 일 : {}" , lastDayValue);
+                    lastYearValue = calendar.get(Calendar.YEAR);
+                    lastMonthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+                    lastDayValue = calendar.get(Calendar.DAY_OF_MONTH);
 
                     logger.info("현재 채팅시점 년,월,일 : {}" , yearValue + ":" + monthValue + "+" + dayValue);
                     logger.info("과거 채팅시점 년,월,일 : {}" , lastYearValue + ":" + lastMonthValue + "+" + lastDayValue);
@@ -57,7 +62,6 @@ public class ChatService {
                     }
 
                 }
-                logger.info("create date : {}", item.getCreateDate());
             }
         }
 
