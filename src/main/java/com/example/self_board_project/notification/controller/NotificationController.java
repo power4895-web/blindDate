@@ -103,14 +103,14 @@ public class NotificationController {
         notificationService.saveEventCacheAndSendNotification(id, data);
     }
     /**
-     * 구독한 회원에게 알림보내기
+     * 알림 읽음처리 업데이트
      */
     @ResponseBody
     @RequestMapping("/notifications/update/{flag}")
     public Boolean updateNotification(Auth auth, @PathVariable String flag) {
         logger.info("updateNotification start , flag: {}", flag);
         Notification notification = new Notification();
-        notification.setUserId(1);
+        notification.setUserId(auth.getId());
         notification.setField(flag);
         notificationService.updateNotification(notification);
         return true;
