@@ -188,9 +188,10 @@
     let lastToId = null;
 
     let chatLastTimeString = null;
+    let chatLastCreateTimeString = null;
     let userId = $('#userId').val();
     let sendResult = false;
-
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
 
     $(document).ready(function () {
         if($('#lastSessionId').val() != '') {
@@ -204,6 +205,12 @@
             if(oldTime == null) {
                 oldTime = oldMinute + ':' + oldMinute
             }
+
+            console.log(">>", dateTime.year)
+            console.log(">>", dateTime.month)
+            console.log(">>", dateTime.day)
+            chatLastCreateTimeString = dateTime.year + dateTime.month + dateTime.day;
+
         }
         // console.log("과거 채팅 시간 24시간 형식: ", oldTime);
 
@@ -276,6 +283,25 @@
                 let yourNickname = $('#yourNickname').val(); //사용
                 let imgUrl = $('#imgUrl').val(); //사용
                 let today = new Date();
+
+                let nowDateTime= today.getFullYear() + today.getMonth() + 1 + today.getDate();
+                let nowDateTimeString = today.getFullYear() + "년 " + (today.getMonth() + 1) + "월 " + today.getDate() + "일 " + week[today.getDay()] + "요일";
+                console.log("현재 채팅보내는 년, 월, 일", nowDateTime);
+                console.log("마지막 채팅보내는 년, 월, 일", chatLastCreateTimeString);
+
+                if(chatLastCreateTimeString != nowDateTime) {
+
+                    $("#chating").append(
+                        `<div class='friend-chat'>
+                                <div class="date-line">
+                                    \${nowDateTimeString}
+                                </div>
+                             </div>`
+                    );
+
+                    console.log("마지막 채팅시간과 현재날짜의 하루 이상이 지났기 때문에 날짜 보여줘야 한다.")
+                }
+
                 var twentyFourHours = today.getHours();
                 var ampm = twentyFourHours >= 12 ? '오후' : '오전';
 
@@ -560,15 +586,19 @@
                 contentType: "application/json; charset=utf-8", //헤더의 Content-Type을 설정
                 success : function(data) { // 결과 성공 콜백함수
                     resolve(data);
-                    // console.log("getLastChatTime : ", data)
-                    // if(data != null) {
-                    //     lastFromId = data.lastFromId;
-                    //     fromId = data.fromId;
-                    //     lastToId = data.toId;
-                    //     let test = new Date(data.lastCreateDate);
-                    //     let minutes = (test.getMinutes() < 10) ? '0' + test.getMinutes() : test.getMinutes();
-                    //     chatLastTimeString = test.getHours() + ':' + minutes;
-                    // }
+                    console.log("getLastChatTime : ", data)
+                    if(data != null) {
+                        lastFromId = data.lastFromId;
+                        fromId = data.fromId;
+                        lastToId = data.toId;
+                        let lastLastCreateDate = new Date(data.lastCreateDate);
+                        let lastCreateDate = new Date(data.createDate);
+                        let minutes = (lastLastCreateDate.getMinutes() < 10) ? '0' + lastLastCreateDate.getMinutes() : lastLastCreateDate.getMinutes();
+                        chatLastTimeString = lastLastCreateDate.getHours() + ':' + minutes;
+
+                        chatLastCreateTimeString = lastCreateDate.getFullYear() + lastCreateDate.getMonth() + 1 + lastCreateDate.getDate();
+                        console.log("chatLastCreateTimeString", chatLastCreateTimeString);
+                    }
                 },
                 error: function (request, status, error) { // 결과 에러 콜백함수
                     console.log("error", error)

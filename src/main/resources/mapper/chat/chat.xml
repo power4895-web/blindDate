@@ -10,6 +10,8 @@
                t1.to_id,
                t1.content,
                t1.read_yn,
+               t1.session_id,
+               t1.last_create_date,
                t1.create_date
         FROM chat t1
     </sql>

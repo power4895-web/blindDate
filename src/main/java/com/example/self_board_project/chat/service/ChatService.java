@@ -28,8 +28,10 @@ public class ChatService {
             int i=0;
             for (Chat item:chatList) {
                 if(item.getLastCreateDate() == null) {
+                    logger.info("lastDate없다");
                     item.setShowCreateDate(item.getCreateDate());
                 } else {
+                    logger.info("lastDate있다");
                     calendar.setTime(item.getCreateDate());
                     int yearValue = calendar.get(Calendar.YEAR);
                     int monthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
@@ -49,7 +51,8 @@ public class ChatService {
                     logger.info("과거 채팅시점 년,월,일 : {}" , lastYearValue + ":" + lastMonthValue + "+" + lastDayValue);
                     String nowDate = yearValue + ":" + monthValue + "+" + dayValue;
                     String lastDate = lastYearValue + ":" + lastMonthValue + "+" + lastDayValue;
-                    if(nowDate != lastDate) {
+                    if(!nowDate.equals(lastDate)) {
+                        logger.info("nowDate != lastDate");
                         item.setShowCreateDate(item.getCreateDate());
                     }
 
