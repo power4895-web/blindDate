@@ -181,7 +181,19 @@
     </section>
 </main>
 <script>
+    $( window ).on( "scroll", function() {
+        var scrollPosition = $(window).scrollTop();
 
+        var documentHeight = $(document).height();
+
+        var windowHeight = $(window).height();
+        console.log("scrollPosition", scrollPosition)
+        console.log("documentHeight", documentHeight)
+        console.log("windowHeight", windowHeight)
+        if (scrollPosition + windowHeight >= documentHeight) {
+            console.log(">>>>>>>>>>>>>>>>>!");
+        }
+    } );
     function test() {
         const params = {
             "loginId" : 'hello',

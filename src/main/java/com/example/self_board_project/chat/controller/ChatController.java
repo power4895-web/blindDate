@@ -35,7 +35,7 @@ public class ChatController {
      * @return
      */
     @RequestMapping(value="/chat/{roomId}")
-    public String chat2(Auth auth , @PathVariable int roomId, Model model) {
+    public String chat(Auth auth , @PathVariable int roomId, Model model) {
         logger.info("chat2 Start");
         logger.info("roomId : {}", roomId);
 
@@ -74,7 +74,7 @@ public class ChatController {
             }
         }
         //사용자 이름
-        return "chat/chat";
+        return "front:chat/chat";
     }
     /**
      * 해당 채팅방 입장 => 채팅방의 방번호로 모든 리스트 가져오기

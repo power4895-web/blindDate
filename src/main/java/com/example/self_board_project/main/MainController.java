@@ -120,8 +120,8 @@ public class MainController {
     @RequestMapping(value="/faq")
     public String faq (User user){
         logger.info("faq");
-
-        return "chat2";
+        return "front:chat2";
+//        return "front:faq";
     }
 
 

@@ -221,12 +221,17 @@ main{
     align-items: flex-start;
     position: sticky;
 }
-.me-chat3{
+.fade-lastChatBtn{
     opacity:0.8; /* 80% 불투명도 */
     padding: 0.4375rem;
     position: sticky;
     bottom: 134px;
-    display: none;
+
+    opacity: 0; /* 서서히 나타나는 효과를 위한 트랜지션 */
+    transition: opacity 1s; /* 서서히 나타나는 효과를 위한 트랜지션 */
+
+    /*//오른쪽 걸렬*/
+    display: flex;
     flex-direction: row-reverse;
     justify-content: flex-start;
     align-items: flex-start;

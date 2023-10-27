@@ -1,176 +1,160 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--%>
-<%--<script src="/static/js/jquery.form.js"></script>--%>
 <script type="text/javascript" src="/static/js/jquery-2.2.4.js"></script>
 <script type="text/javascript" src="/static/js/commonUtil.js"></script>
-<html lang="ko" data-dark="false">
-<head>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <meta charset="UTF-8">
-    <title>Kakao Talk Chat Room</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="description" content="Kakao Talk Clone Chat Page">
-    <meta name="robotos" content="noindex, nofollow">
-    <link rel="stylesheet" href="/static/css/chat-room.css">
-    <link rel="stylesheet" href="/static/css/general.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/static/css/chat-room.css">
+        <link rel="stylesheet" href="/static/css/general.css">
+    </head>
 
-<body>
-<div id="chat_container">
-    <div id="chat-body">
-        <input type="hidden" id="sessionId" value="">
-        <input type="hidden" id="roomId" value="${roomId}">
-        <input type="hidden" id="myNickname" value="${userInfo.nickname}" name="myNickname">
-        <input type="hidden" id="yourNickname" value="${yourNickname}" name="yourNickname">
-        <input type="hidden" id="chatList" value="${chatList}" name="chatList">
-        <input type="hidden" value="${imgUrl}" id="imgUrl" >
-        <input type="hidden" value="${chatLastList.createDate}" id="chatLastCreateDate" >
-        <input type="hidden" value="${chatLastList.sessionId}" id="lastSessionId" >
-        <input type="hidden" value="${userInfo.id}" id="userId" >
+        <div id="chat-body">
+            <input type="hidden" id="sessionId" value="">
+            <input type="hidden" id="roomId" value="${roomId}">
+            <input type="hidden" id="myNickname" value="${userInfo.nickname}" name="myNickname">
+            <input type="hidden" id="yourNickname" value="${yourNickname}" name="yourNickname">
+            <input type="hidden" id="chatList" value="${chatList}" name="chatList">
+            <input type="hidden" value="${imgUrl}" id="imgUrl" >
+            <input type="hidden" value="${chatLastList.createDate}" id="chatLastCreateDate" >
+            <input type="hidden" value="${chatLastList.sessionId}" id="lastSessionId" >
+            <input type="hidden" value="${userInfo.id}" id="userId" >
 
-        <!-- 설정바(최소화, 닫기 버튼 등) -->
-        <div class="setting_bar">
-            <i class="bi bi-list"></i>
-            <i class="bi bi-search"></i>
-<%--            <i class="icon-window-minimize" alt="최소화버튼" title="최소화">s</i>--%>
-<%--            <i class="icon-window-maximize" alt="최대화버튼" title="최대화">s</i>--%>
-<%--            <i class="icon-cancel" alt="닫기버튼" title="닫기"></i>--%>
-        </div>
-
-        <!-- 알림, 메뉴 기능 -->
-        <div class="main-menu">
-            <i class="icon-bell" title="알림">알림</i>
-            <i class="icon-ellipsis" title="메뉴">메뉴</i>
-        </div>
-        <!-- 프로필 사진, 프로필명 -->
-        <header>
-            <div class="profile-col2">
-                <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer"></i>
-                <p class="profile-name">${yourInfo.nickname}</p>
+            <!-- 설정바(최소화, 닫기 버튼 등) -->
+            <div class="setting_bar">
+                <i class="bi bi-list"></i>
+                <i class="bi bi-search"></i>
+    <%--            <i class="icon-window-minimize" alt="최소화버튼" title="최소화">s</i>--%>
+    <%--            <i class="icon-window-maximize" alt="최대화버튼" title="최대화">s</i>--%>
+    <%--            <i class="icon-cancel" alt="닫기버튼" title="닫기"></i>--%>
             </div>
-        </header>
-        <main>
-            <!-- 고정된 공지사항 영역 -->
-            <%--        <div class="notice-bar">--%>
-            <%--            <i class="icon-bullhorn"></i>--%>
-            <%--            <span>멘트를 고정해놓는 곳입니다.</span>--%>
-            <%--            <i class="icon-down-open-big"></i>--%>
-            <%--        </div>--%>
-            <!-- 채팅 내용 시작 -->
-            <div class="chat-content">
-                <!-- 채팅 내용 -->
 
-                <div class="main-chat" id="chating">
-                    <div class="profile-col">
-                        <img class="profile-img" src="${yourInfo.imgUrl}">
-                        <span class="profile-name">${yourInfo.nickname}</span>
-                        <span class="profile-name">안녕하세요. 저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
-                    </div>
-                    <c:if test="${chatList != null}">
-                        <c:forEach var="item" items="${chatList}" varStatus="status">
-                            <!-- 메시지 시작 날짜 -->
-                            <c:if test="${item.showCreateDate != null}">
-                                <div class="date-line">
-                                    <fmt:formatDate  value="${item.showCreateDate}" pattern="yyyy년 MM월 dd일 E요일" />
-                                </div>
-                            </c:if>
+            <!-- 알림, 메뉴 기능 -->
+            <div class="main-menu">
+                <i class="icon-bell" title="알림">알림</i>
+                <i class="icon-ellipsis" title="메뉴">메뉴</i>
+            </div>
+            <!-- 프로필 사진, 프로필명 -->
+            <header>
+                <div class="profile-col2">
+                    <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer"></i>
+                    <p class="profile-name">${yourInfo.nickname}</p>
+                </div>
+            </header>
+            <main>
+                <!-- 고정된 공지사항 영역 -->
+                <%--        <div class="notice-bar">--%>
+                <%--            <i class="icon-bullhorn"></i>--%>
+                <%--            <span>멘트를 고정해놓는 곳입니다.</span>--%>
+                <%--            <i class="icon-down-open-big"></i>--%>
+                <%--        </div>--%>
+                <!-- 채팅 내용 시작 -->
+                <div class="chat-content">
+                    <!-- 채팅 내용 -->
 
-                            <fmt:formatDate  var="date1" value="${chatList[status.index].createDate}" type="DATE" pattern="a h:mm"/>
-                            <fmt:formatDate  var="date2" value="${chatList[status.index-1].createDate}" type="DATE" pattern="a h:mm"/>
-                            <c:if test="${userInfo.id == item.fromId}">
-                                <%--나--%>
-                                <div class="me-chat">
-                                    <div class="me-chat-col">
-                                        <span class="balloon">${item.content}</span>
+                    <div class="main-chat" id="chating">
+                        <div class="profile-col">
+                            <img class="profile-img" src="${yourInfo.imgUrl}">
+                            <span class="profile-name">${yourInfo.nickname}</span>
+                            <span class="profile-name">안녕하세요. 저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
+                        </div>
+                        <c:if test="${chatList != null}">
+                            <c:forEach var="item" items="${chatList}" varStatus="status">
+                                <!-- 메시지 시작 날짜 -->
+                                <c:if test="${item.showCreateDate != null}">
+                                    <div class="date-line">
+                                        <fmt:formatDate  value="${item.showCreateDate}" pattern="yyyy년 MM월 dd일 E요일" />
                                     </div>
-                                    <p class="readYn">${item.readYn == 'N' ? '1' : ''}</p>
-                                    <c:if test="${date1 != date2}">
-                                        <%--                                다르다:--%>
-                                        <time datetime="07:32:00+09:00"><fmt:formatDate  value="${item.createDate}" pattern="a h:mm" /></time>
-                                    </c:if>
-                                    <c:if test="${date1 == date2 && chatList[status.index].fromId != chatList[status.index -1].fromId}">
-                                        <%--                               같지만 아이디가 다르다--%>
-                                        <time datetime="07:32:00+09:00"><fmt:formatDate  value="${item.createDate}" pattern="a h:mm" /></time>
-                                    </c:if>
-                                </div>
-                            </c:if>
-                            <c:if test="${userInfo.id == item.toId}">
-                                <%--상대방--%>
-                                <div class="friend-chat">
-                                    <c:if test="${chatList[status.index].toId == chatList[status.index -1].toId && date1 == date2}">
-                                        <%--이전과 지금 시간이 같고, 이전에 받은 사람과 지금 받는사람이 같다. > 민지가 2번보낸것이다. 이럴땐 imgurl없다.--%>
-                                        <div class="friend-chat-col" >
-                                            <span class="balloon" style="position: relative; margin-left: 60px;">${item.content}</span>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${chatList[status.index].toId != chatList[status.index -1].toId}">
-                                        <%--이전에 받은 사람과 지금 받는사람이 다르다. > 내가 받고, 민지가 받은것이다 imgUrl있다.--%>
-                                        <img class="profile-img" src="${imgUrl}" alt="쀼프로필사진">
-                                        <div class="friend-chat-col">
-                                            <span class="profile-name">${yourNickname}</span>
-                                            <span class="balloon">${item.content}</span>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${date1 != date2 && chatList[status.index].toId == chatList[status.index -1].toId}">
-                                        <%--시간이 다르게 민지가 2번보낸것이다--%>
-                                        <img class="profile-img" src="${imgUrl}" alt="쀼프로필사진">
-                                        <div class="friend-chat-col">
-                                            <span class="profile-name">${yourNickname}</span>
-                                            <span class="balloon">${item.content}</span>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${date1 != date2}">
-                                        <%--                                다르다:--%>
-                                        <time datetime="07:30:00+09:00">
-                                            <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
-                                        </time>
-                                    </c:if>
-                                    <c:if test="${date1 == date2 && chatList[status.index].fromId != chatList[status.index -1].fromId}">
-                                        <%--                                같지만 아이디가 다르다--%>
-                                        <time datetime="07:30:00+09:00">
-                                            <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
-                                        </time>
-                                    </c:if>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                    </c:if>
-                    <!-- 채팅 입력창 -->
-                </div>
-                <div class="me-chat3" >
-                    <i class="bi bi-arrow-down-circle" style="background-color: white;font-size: 1.5rem;"></i>
-                </div>
+                                </c:if>
 
-                <div class="insert-content">
-                    <form name="chatform" id="chatform">
-                        <textarea name="chat-insert" id="chatInsert"></textarea>
-                        <button class="chat-submit" onclick="send()" id="sendBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-send-fill" viewBox="0 0 16 16">
-                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
-                            </svg>
-                        </button>
-                    </form>
-                    <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
-                    <div class="insert-menu">
-                        <i class="icon-smile">😀</i>
-                        <i class="icon-attach">➕</i>
-                        <i class="icon-phone">📞</i>
-                        <i class="icon-calendar-empty">📆</i>
-                        <i class="icon-camera">📷</i>
+                                <fmt:formatDate  var="date1" value="${chatList[status.index].createDate}" type="DATE" pattern="a h:mm"/>
+                                <fmt:formatDate  var="date2" value="${chatList[status.index-1].createDate}" type="DATE" pattern="a h:mm"/>
+                                <c:if test="${userInfo.id == item.fromId}">
+                                    <%--나--%>
+                                    <div class="me-chat">
+                                        <div class="me-chat-col">
+                                            <span class="balloon">${item.content}</span>
+                                        </div>
+                                        <p class="readYn">${item.readYn == 'N' ? '1' : ''}</p>
+                                        <c:if test="${date1 != date2}">
+                                            <%--                                다르다:--%>
+                                            <time datetime="07:32:00+09:00"><fmt:formatDate  value="${item.createDate}" pattern="a h:mm" /></time>
+                                        </c:if>
+                                        <c:if test="${date1 == date2 && chatList[status.index].fromId != chatList[status.index -1].fromId}">
+                                            <%--                               같지만 아이디가 다르다--%>
+                                            <time datetime="07:32:00+09:00"><fmt:formatDate  value="${item.createDate}" pattern="a h:mm" /></time>
+                                        </c:if>
+                                    </div>
+                                </c:if>
+                                <c:if test="${userInfo.id == item.toId}">
+                                    <%--상대방--%>
+                                    <div class="friend-chat">
+                                        <c:if test="${chatList[status.index].toId == chatList[status.index -1].toId && date1 == date2}">
+                                            <%--이전과 지금 시간이 같고, 이전에 받은 사람과 지금 받는사람이 같다. > 민지가 2번보낸것이다. 이럴땐 imgurl없다.--%>
+                                            <div class="friend-chat-col" >
+                                                <span class="balloon" style="position: relative; margin-left: 60px;">${item.content}</span>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${chatList[status.index].toId != chatList[status.index -1].toId}">
+                                            <%--이전에 받은 사람과 지금 받는사람이 다르다. > 내가 받고, 민지가 받은것이다 imgUrl있다.--%>
+                                            <img class="profile-img" src="${imgUrl}" alt="쀼프로필사진">
+                                            <div class="friend-chat-col">
+                                                <span class="profile-name">${yourNickname}</span>
+                                                <span class="balloon">${item.content}</span>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${date1 != date2 && chatList[status.index].toId == chatList[status.index -1].toId}">
+                                            <%--시간이 다르게 민지가 2번보낸것이다--%>
+                                            <img class="profile-img" src="${imgUrl}" alt="쀼프로필사진">
+                                            <div class="friend-chat-col">
+                                                <span class="profile-name">${yourNickname}</span>
+                                                <span class="balloon">${item.content}</span>
+                                            </div>
+                                        </c:if>
+                                        <c:if test="${date1 != date2}">
+                                            <%--                                다르다:--%>
+                                            <time datetime="07:30:00+09:00">
+                                                <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
+                                            </time>
+                                        </c:if>
+                                        <c:if test="${date1 == date2 && chatList[status.index].fromId != chatList[status.index -1].fromId}">
+                                            <%--                                같지만 아이디가 다르다--%>
+                                            <time datetime="07:30:00+09:00">
+                                                <fmt:formatDate  value="${item.createDate}" pattern="a h:mm" />
+                                            </time>
+                                        </c:if>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+                        <!-- 채팅 입력창 -->
+                    </div>
+                    <div class="fade-lastChatBtn" >
+                        <i class="bi bi-arrow-down-circle" style="background-color: white;font-size: 1.5rem;"></i>
+                    </div>
+
+                    <div class="insert-content">
+                        <form name="chatform" id="chatform">
+                            <textarea name="chat-insert" id="chatInsert"></textarea>
+                            <button class="chat-submit" onclick="send()" id="sendBtn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-send-fill" viewBox="0 0 16 16">
+                                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                                </svg>
+                            </button>
+                        </form>
+                        <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
+                        <div class="insert-menu">
+                            <i class="icon-smile">😀</i>
+                            <i class="icon-attach">➕</i>
+                            <i class="icon-phone">📞</i>
+                            <i class="icon-calendar-empty">📆</i>
+                            <i class="icon-camera">📷</i>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
-</div>
-
+            </main>
+        </div>
 <script type="text/javascript">
     let oldSesstionId = null;
     let fromId = null;
@@ -184,38 +168,27 @@
     let sendResult = false;
     const week = ['일', '월', '화', '수', '목', '금', '토'];
 
-
-
     $(document).ready(function () {
+        //스크롤 가장 아래로 이동
+        window.scrollTo(0, document.body.scrollHeight);
 
-        // 스크롤 이벤트 리스너를 추가
-        $('#chat_container').scroll(function(){
+        //스크롤 이벤트 발생
+        $(window).scroll(function() {
+            //발생시 가장아래로 가는 버튼 보이게
+            $('.fade-lastChatBtn').css("opacity", "1");
+            var documentHeight = $(document).height();
+            var windowHeight = $(window).innerHeight();
+            var scrollPosition = $(window).scrollTop();
+            var test = Math.ceil(scrollPosition + windowHeight);
 
-            // 스크롤 위치를 확인
-            var scrollPosition = $(this).scrollTop(); // 현재 스크롤 위치를 가져옵니다.
-            var windowHeight = $(this).innerHeight(); // 창의 높이를 가져옵니다.
-            var documentHeight = $(document).height(); // 문서의 전체 높이를 가져옵니다.
-
-            console.log(">>scrollPosition : ", scrollPosition);
-            console.log(">>windowHeight : ", windowHeight);
-            console.log(">>documentHeight : ", documentHeight);
-            if (scrollPosition === 0) {
-                // 스크롤이 맨 위에 도달했을 때의 동작
-                console.log('스크롤이 맨 위에 도달했습니다.');
-            }
-
-            if (scrollPosition + windowHeight === documentHeight) {
-                // 스크롤이 맨 아래에 도달했을 때의 동작
-                console.log('스크롤이 맨 아래에 도달했습니다.');
-            }
-
-            // 스크롤 위치에 따라 원하는 동작 수행
-            if (scrollPosition < 300) {
-                // 스크롤이 200px 이상일 때 원하는 동작 수행
-                $('.me-chat3').css('display', 'flex');
+            // 스크롤 위치가 맨 아래에 도달했을 때 이벤트를 발생
+            if (test >= documentHeight) {
+                // 맨 아래로 스크롤될 때 실행할 이벤트를 여기에 추가
+                console.log("맨 아래로 스크롤되었습니다.");
+                //맨 아래 갔을 때 안보이게
+                $('.fade-lastChatBtn').css("opacity", "0");
             }
         });
-
 
 
         //뒤로가기
@@ -223,9 +196,11 @@
             history.back();
         })
 
+        //lastsession아이디 세팅
         if($('#lastSessionId').val() != '') {
             oldSesstionId = $('#lastSessionId').val();
         }
+        //라스트채팅날짜 세팅
         if($('#chatLastCreateDate').val() != '') {
             var dateTime = com.fromDateToString($('#chatLastCreateDate').val());
             var oldHours = dateTime.hour; // 시간
@@ -234,38 +209,25 @@
             if(oldTime == null) {
                 oldTime = oldMinute + ':' + oldMinute
             }
-
-            console.log(">>", dateTime.year)
-            console.log(">>", dateTime.month)
-            console.log(">>", dateTime.day)
             chatLastCreateTimeString = dateTime.year + dateTime.month + dateTime.day;
-
         }
         // console.log("과거 채팅 시간 24시간 형식: ", oldTime);
 
-
+        //읽음처리
         updateChat();
-        //가장 맨 아래로 스크롤 내리기
-        $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
-
 
         // 하단 스크롤 이동 버튼
-        $('.me-chat3').click(function(e){
-            $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
-        // 애니메이션 효과를 주고 싶다면
-        $('#chat_container').animate({
-         	scrollTop: $('#chat_container')[0].scrollHeight
-        }, 400);
+        $('.fade-lastChatBtn').click(function(e){
+            window.scrollTo(0, document.body.scrollHeight);
         });
 
-        // console.log(">>", $('.myTextboxDate').val());
+        //form안날라가게(카카오 css때문에 어쩔수 없이 form을 사용해야함
         const chatform = document.chatform
         chatform.addEventListener("submit", (event) => {
             // 동작(이벤트)을 실행하지 못하게 막는 메서드입니다.
             event.preventDefault();
-            // console.log(event.target);
         });
-        // chatName()
+        chatName()
     })
 
 
@@ -356,23 +318,23 @@
 
 
                 if(sendResult == true) {
-                        console.log("============================================보낸다.========================================")
-                        if(lastFromId != null) {
-                                console.log("이전에 보낸 채팅이력이 있다.")
-                                if(fromId == lastFromId) {
-                                    console.log("내가 나에게 연속으로 채팅")
-                                    if(now24TimeString == chatLastTimeString) {
-                                        $("#chating").append(
-                                            `<div class='me-chat'>
+                    console.log("============================================보낸다.========================================")
+                    if(lastFromId != null) {
+                        console.log("이전에 보낸 채팅이력이 있다.")
+                        if(fromId == lastFromId) {
+                            console.log("내가 나에게 연속으로 채팅")
+                            if(now24TimeString == chatLastTimeString) {
+                                $("#chating").append(
+                                    `<div class='me-chat'>
                                             <div class=me-chat-col>
                                                 <span class=balloon>\${d.msg}</span>
                                             </div>
                                             <p class=readYn >\${d.readYn}</p>
                                         </div>`
-                                        )
-                                    } else {
-                                        $("#chating").append(
-                                            `<div class='me-chat'>
+                                )
+                            } else {
+                                $("#chating").append(
+                                    `<div class='me-chat'>
                                             <div class=me-chat-col>
                                                 <span class=balloon>\${d.msg}</span>
                                             </div>
@@ -381,12 +343,12 @@
                                                 \${now24TimeString == chatLastTimeString ? '' :ampm +  " " + now12TimeString}
                                             </time>
                                         </div>`
-                                        )
-                                    }
-                                } else {
-                                    console.log("상대방이 보낸 다음 내가 보낸 것 ")
-                                    $("#chating").append(
-                                        `<div class='me-chat'>
+                                )
+                            }
+                        } else {
+                            console.log("상대방이 보낸 다음 내가 보낸 것 ")
+                            $("#chating").append(
+                                `<div class='me-chat'>
                                         <div class=me-chat-col>
                                             <span class=balloon>\${d.msg}</span>
                                         </div>
@@ -395,25 +357,25 @@
                                             \${ampm +  " " + now24TimeString}
                                         </time>
                                  </div>`
-                                    )
-                                }
-                        } else {
-                            console.log("채팅을 처음 보낸다.")
-                            if(userId == fromId && oldTime == now24TimeString) {
-                                console.log("내가 나에게 보낸다.")
-                                $("#chating").append(
-                                    `<div class='me-chat'>
+                            )
+                        }
+                    } else {
+                        console.log("채팅을 처음 보낸다.")
+                        if(userId == fromId && oldTime == now24TimeString) {
+                            console.log("내가 나에게 보낸다.")
+                            $("#chating").append(
+                                `<div class='me-chat'>
                                         <div class=me-chat-col>
                                             <span class=balloon>\${d.msg}</span>
                                         </div>
                                         <p class=readYn >\${d.readYn}</p>
                                     </div>`
-                                )
-                            }
-                            if(userId == fromId && oldTime != now24TimeString) {
-                                console.log("내가 나에게 보낸다.")
-                                $("#chating").append(
-                                    `<div class='me-chat'>
+                            )
+                        }
+                        if(userId == fromId && oldTime != now24TimeString) {
+                            console.log("내가 나에게 보낸다.")
+                            $("#chating").append(
+                                `<div class='me-chat'>
                                         <div class=me-chat-col>
                                             <span class=balloon>\${d.msg}</span>
                                         </div>
@@ -422,25 +384,25 @@
                                             \${now24TimeString == chatLastTimeString ? '' :ampm +  " " + now12TimeString}
                                         </time>
                                     </div>`
-                                )
-                            }
+                            )
                         }
+                    }
 
-                    } else {
-                        //채팅을 받는 입장
-                        console.log("============================================받는다========================================")
+                } else {
+                    //채팅을 받는 입장
+                    console.log("============================================받는다========================================")
 
-                        //시간이 같을 때
-                        console.log("lastFromId : ",lastFromId)
-                        console.log("fromId : ",fromId)
-                        console.log("userId : ",userId)
-                        console.log("chatLastTimeString : ",chatLastTimeString)
-                        console.log("now24TimeString : ",now24TimeString)
-                        console.log("oldTime : ",oldTime)
-                            if(lastFromId != fromId && oldTime == now24TimeString) {
-                                console.log("이전에 내가 보냈고, 상대방으로부터 받았는데 시간이 같을 때")
-                                $("#chating").append(
-                                    `<div class='friend-chat'>
+                    //시간이 같을 때
+                    console.log("lastFromId : ",lastFromId)
+                    console.log("fromId : ",fromId)
+                    console.log("userId : ",userId)
+                    console.log("chatLastTimeString : ",chatLastTimeString)
+                    console.log("now24TimeString : ",now24TimeString)
+                    console.log("oldTime : ",oldTime)
+                    if(lastFromId != fromId && oldTime == now24TimeString) {
+                        console.log("이전에 내가 보냈고, 상대방으로부터 받았는데 시간이 같을 때")
+                        $("#chating").append(
+                            `<div class='friend-chat'>
                                     <img class="profile-img" src="\${imgUrl}" alt="쀼프로필사진">
                                     <div class="friend-chat-col">
                                         <span class="profile-name">\${yourNickname}</span>
@@ -450,12 +412,12 @@
                                         \${ampm +  " " + now12TimeString}
                                     </time>
                              </div>`
-                                );
-                            }
-                            if(lastFromId != fromId && oldTime != now24TimeString) {
-                                console.log("이전에 내가 보냈고, 상대방으로부터 받았는데 시간이 다를 때")
-                                $("#chating").append(
-                                    `<div class='friend-chat'>
+                        );
+                    }
+                    if(lastFromId != fromId && oldTime != now24TimeString) {
+                        console.log("이전에 내가 보냈고, 상대방으로부터 받았는데 시간이 다를 때")
+                        $("#chating").append(
+                            `<div class='friend-chat'>
                                 <img class="profile-img" src="\${imgUrl}" alt="쀼프로필사진">
                                 <div class="friend-chat-col">
                                     <span class="profile-name">\${yourNickname}</span>
@@ -465,12 +427,12 @@
                                     \${ampm +  " " + now12TimeString}
                                 </time>
                              </div>`
-                                );
-                            }
-                            if(lastFromId == fromId && oldTime == now24TimeString) {
-                                console.log("상대방이 여러번 보내는데 같은 시간")
-                                $("#chating").append(
-                                    `<div class='friend-chat'>
+                        );
+                    }
+                    if(lastFromId == fromId && oldTime == now24TimeString) {
+                        console.log("상대방이 여러번 보내는데 같은 시간")
+                        $("#chating").append(
+                            `<div class='friend-chat'>
                                     <div class="friend-chat-col">
                                         <span class="balloon" style="position: relative; margin-left: 60px;">\${d.msg}</span>
                                     </div>
@@ -478,12 +440,12 @@
                                         \${now24TimeString == chatLastTimeString ? '' :ampm +  " " + now12TimeString}
                                     </time>
                              </div>`
-                                );
-                            }
-                            if(lastFromId == fromId && oldTime != now24TimeString) {
-                                console.log("상대방이 여러번 보내는데 시간이 다른 시간")
-                                $("#chating").append(
-                                    `<div class='friend-chat'>
+                        );
+                    }
+                    if(lastFromId == fromId && oldTime != now24TimeString) {
+                        console.log("상대방이 여러번 보내는데 시간이 다른 시간")
+                        $("#chating").append(
+                            `<div class='friend-chat'>
                                 <img class="profile-img" src="\${imgUrl}" alt="쀼프로필사진">
                                 <div class="friend-chat-col">
                                     <span class="profile-name">\${yourNickname}</span>
@@ -493,9 +455,9 @@
                                     \${ampm +  " " + now12TimeString}
                                 </time>
                              </div>`
-                                );
-                            }
+                        );
                     }
+                }
 
                 oldTime = now24TimeString  //비교를 위해 과거 시간 저장 24시간 형식
                 oldSesstionId = d.sessionId
@@ -507,7 +469,7 @@
                 console.warn("unknown type!")
             }
             // 송신, 또는 수신시 맨 아래로 이동
-            $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
+            window.scrollTo(0, document.body.scrollHeight);
             sendResult = false
         }
 
@@ -638,8 +600,3 @@
     };
 
 </script>
-</body>
-</html>
-<style>
-
-</style>
