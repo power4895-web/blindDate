@@ -57,6 +57,7 @@ public class ChatController {
             user.setId(yourId);
             user.setFlag("XS");
             User userInfo = userService.selectUser(user);
+            model.addAttribute("yourInfo", userInfo);
             model.addAttribute("yourNickname", userInfo.getNickname());
             model.addAttribute("imgUrl", userInfo.getImgUrl());
 

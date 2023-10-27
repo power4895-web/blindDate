@@ -117,6 +117,12 @@ public class MainController {
 
         return "front:pricing";
     }
+    @RequestMapping(value="/faq")
+    public String faq (User user){
+        logger.info("faq");
+
+        return "chat2";
+    }
 
 
     @RequestMapping(value="/about")

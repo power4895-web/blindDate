@@ -24,7 +24,7 @@
             <!-- Contact form-->
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="text-center mb-5">
-                    <h1 class="fw-bolder">내 정보 변경</h1>
+                    <h1 class="fw-bolder">내 정보 변경 <i class="bi bi-gear-fill"></i></h1>
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: anjdu
-  Date: 2023-06-20
-  Time: 오후 12:34
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -12,20 +5,13 @@
 <%--<script src="/static/js/jquery.form.js"></script>--%>
 <script type="text/javascript" src="/static/js/jquery-2.2.4.js"></script>
 <script type="text/javascript" src="/static/js/commonUtil.js"></script>
-<%--수정합니다2234--%>
-<html>
+<html lang="ko" data-dark="false">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
-    <title>Chating</title>
-</head>
-<!DOCTYPE html>
-<html lang="ko" data-dark="false">
-<head>
-    <meta charset="utf-8">
     <title>Kakao Talk Chat Room</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
@@ -33,45 +19,42 @@
     <meta name="robotos" content="noindex, nofollow">
     <link rel="stylesheet" href="/static/css/chat-room.css">
     <link rel="stylesheet" href="/static/css/general.css">
-<%--    <link rel="stylesheet" href="fontello/css/fontello.css">--%>
-<%--    <link rel="preconnect" href="https://fonts.gstatic.com">--%>
-<%--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap">--%>
 </head>
+
 <body>
 <div id="chat_container">
     <div id="chat-body">
-        <input type="text" id="sessionId" value="">
+        <input type="hidden" id="sessionId" value="">
         <input type="hidden" id="roomId" value="${roomId}">
         <input type="hidden" id="myNickname" value="${userInfo.nickname}" name="myNickname">
         <input type="hidden" id="yourNickname" value="${yourNickname}" name="yourNickname">
         <input type="hidden" id="chatList" value="${chatList}" name="chatList">
         <input type="hidden" value="${imgUrl}" id="imgUrl" >
-        <input type="text" value="${chatLastList.createDate}" id="chatLastCreateDate" >
-        <input type="text" value="${chatLastList.sessionId}" id="lastSessionId" >
+        <input type="hidden" value="${chatLastList.createDate}" id="chatLastCreateDate" >
+        <input type="hidden" value="${chatLastList.sessionId}" id="lastSessionId" >
         <input type="hidden" value="${userInfo.id}" id="userId" >
 
         <!-- 설정바(최소화, 닫기 버튼 등) -->
         <div class="setting_bar">
-            <i class="icon-window-minimize" alt="최소화버튼" title="최소화"></i>
-            <i class="icon-window-maximize" alt="최대화버튼" title="최대화"></i>
-            <i class="icon-cancel" alt="닫기버튼" title="닫기"></i>
+            <i class="bi bi-list"></i>
+            <i class="bi bi-search"></i>
+<%--            <i class="icon-window-minimize" alt="최소화버튼" title="최소화">s</i>--%>
+<%--            <i class="icon-window-maximize" alt="최대화버튼" title="최대화">s</i>--%>
+<%--            <i class="icon-cancel" alt="닫기버튼" title="닫기"></i>--%>
         </div>
+
         <!-- 알림, 메뉴 기능 -->
         <div class="main-menu">
-            <i class="icon-bell" title="알림"></i>
-            <i class="icon-ellipsis" title="메뉴"></i>
+            <i class="icon-bell" title="알림">알림</i>
+            <i class="icon-ellipsis" title="메뉴">메뉴</i>
         </div>
         <!-- 프로필 사진, 프로필명 -->
-        <%--    <header>--%>
-        <%--        <img class="profile-img" src="./pic/default.png" alt="쀼프로필사진">--%>
-        <%--        <div class="profile-col">--%>
-        <%--            <span class="profile-name">쀼사원</span>--%>
-        <%--            <div class="sub-menu">--%>
-        <%--                <i class="icon-box" title="채팅방 서랍"></i>--%>
-        <%--                <i class="icon-search" title="검색"></i>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <%--    </header>--%>
+        <header>
+            <div class="profile-col2">
+                <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer"></i>
+                <p class="profile-name">${yourInfo.nickname}</p>
+            </div>
+        </header>
         <main>
             <!-- 고정된 공지사항 영역 -->
             <%--        <div class="notice-bar">--%>
@@ -81,12 +64,17 @@
             <%--        </div>--%>
             <!-- 채팅 내용 시작 -->
             <div class="chat-content">
-                <!-- 메시지 시작 날짜 -->
-
                 <!-- 채팅 내용 -->
+
                 <div class="main-chat" id="chating">
+                    <div class="profile-col">
+                        <img class="profile-img" src="${yourInfo.imgUrl}">
+                        <span class="profile-name">${yourInfo.nickname}</span>
+                        <span class="profile-name">안녕하세요. 저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
+                    </div>
                     <c:if test="${chatList != null}">
                         <c:forEach var="item" items="${chatList}" varStatus="status">
+                            <!-- 메시지 시작 날짜 -->
                             <c:if test="${item.showCreateDate != null}">
                                 <div class="date-line">
                                     <fmt:formatDate  value="${item.showCreateDate}" pattern="yyyy년 MM월 dd일 E요일" />
@@ -155,6 +143,10 @@
                     </c:if>
                     <!-- 채팅 입력창 -->
                 </div>
+                <div class="me-chat3" >
+                    <i class="bi bi-arrow-down-circle" style="background-color: white;font-size: 1.5rem;"></i>
+                </div>
+
                 <div class="insert-content">
                     <form name="chatform" id="chatform">
                         <textarea name="chat-insert" id="chatInsert"></textarea>
@@ -179,7 +171,6 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
     let oldSesstionId = null;
     let fromId = null;
@@ -193,7 +184,45 @@
     let sendResult = false;
     const week = ['일', '월', '화', '수', '목', '금', '토'];
 
+
+
     $(document).ready(function () {
+
+        // 스크롤 이벤트 리스너를 추가
+        $('#chat_container').scroll(function(){
+
+            // 스크롤 위치를 확인
+            var scrollPosition = $(this).scrollTop(); // 현재 스크롤 위치를 가져옵니다.
+            var windowHeight = $(this).innerHeight(); // 창의 높이를 가져옵니다.
+            var documentHeight = $(document).height(); // 문서의 전체 높이를 가져옵니다.
+
+            console.log(">>scrollPosition : ", scrollPosition);
+            console.log(">>windowHeight : ", windowHeight);
+            console.log(">>documentHeight : ", documentHeight);
+            if (scrollPosition === 0) {
+                // 스크롤이 맨 위에 도달했을 때의 동작
+                console.log('스크롤이 맨 위에 도달했습니다.');
+            }
+
+            if (scrollPosition + windowHeight === documentHeight) {
+                // 스크롤이 맨 아래에 도달했을 때의 동작
+                console.log('스크롤이 맨 아래에 도달했습니다.');
+            }
+
+            // 스크롤 위치에 따라 원하는 동작 수행
+            if (scrollPosition < 300) {
+                // 스크롤이 200px 이상일 때 원하는 동작 수행
+                $('.me-chat3').css('display', 'flex');
+            }
+        });
+
+
+
+        //뒤로가기
+        $(".bi-arrow-left").on("click", function () {
+            history.back();
+        })
+
         if($('#lastSessionId').val() != '') {
             oldSesstionId = $('#lastSessionId').val();
         }
@@ -221,22 +250,22 @@
 
 
         // 하단 스크롤 이동 버튼
-        // $('.scroll_bottom_btn').click(function(e){
-        //     $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
+        $('.me-chat3').click(function(e){
+            $('#chat_container').scrollTop($('#chat_container')[0].scrollHeight);
         // 애니메이션 효과를 주고 싶다면
-        // $('#chat_container').animate({
-        //  	scrollTop: $('#chat_container')[0].scrollHeight
-        // }, 400);
-        // });
+        $('#chat_container').animate({
+         	scrollTop: $('#chat_container')[0].scrollHeight
+        }, 400);
+        });
+
         // console.log(">>", $('.myTextboxDate').val());
         const chatform = document.chatform
         chatform.addEventListener("submit", (event) => {
             // 동작(이벤트)을 실행하지 못하게 막는 메서드입니다.
             event.preventDefault();
-
             // console.log(event.target);
         });
-        chatName()
+        // chatName()
     })
 
 
@@ -611,87 +640,6 @@
 </script>
 </body>
 </html>
-</html>
 <style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
 
-    a {
-        text-decoration: none;
-    }
-
-    .wrap {
-        padding: 40px 0;
-        background-color: #A8C0D6;
-    }
-
-    .wrap .chat {
-        display: flex;
-        align-items: flex-start;
-        padding: 20px;
-    }
-
-    .wrap .chat .icon {
-        position: relative;
-        overflow: hidden;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: #eee;
-    }
-
-    .wrap .chat .icon i {
-        position: absolute;
-        top: 10px;
-        left: 50%;
-        font-size: 2.5rem;
-        color: #aaa;
-        transform: translateX(-50%);
-    }
-
-    .wrap .chat .textbox {
-        position: relative;
-        display: inline-block;
-        max-width: calc(100% - 70px);
-        padding: 10px;
-        margin-top: 7px;
-        font-size: 13px;
-        border-radius: 10px;
-    }
-
-    .wrap .chat .textbox::before {
-        position: absolute;
-        display: block;
-        top: 0;
-        font-size: 1.5rem;
-    }
-
-    .wrap .ch1 .textbox {
-        margin-left: 20px;
-        background-color: #ddd;
-    }
-
-    .wrap .ch1 .textbox::before {
-        left: -15px;
-        content: "◀";
-        color: #ddd;
-    }
-
-    .wrap .ch2 {
-        flex-direction: row-reverse;
-    }
-
-    .wrap .ch2 .textbox {
-        margin-right: 20px;
-        background-color: #F9EB54;
-    }
-
-    .wrap .ch2 .textbox::before {
-        right: -15px;
-        content: "▶";
-        color: #F9EB54;
-    }
 </style>

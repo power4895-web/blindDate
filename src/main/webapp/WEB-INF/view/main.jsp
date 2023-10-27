@@ -33,9 +33,6 @@
                                 <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/registerForm">Sign up</a>
                                 <a class="btn btn-outline-light btn-lg px-4" href="/loginForm">Sign in</a>
                             </sec:authorize>
-<%--                            <sec:authorize access="isAuthenticated()">--%>
-<%--                                <input type="text" value="${info.user.id}" id="info">--%>
-<%--                            </sec:authorize>--%>
                         </div>
                     </div>
                 </div>
@@ -51,24 +48,24 @@
                 <div class="col-lg-8">
                     <div class="row gx-5 row-cols-1 row-cols-md-2">
                         <div class="col mb-5 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
+                            <div class="feature bg-dark bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
                             <h2 class="h5">근처에서 만나기</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                            <p class="mb-0">recommend someone close to me.</p>
                         </div>
                         <div class="col mb-5 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
+                            <div class="feature bg-dark bg-gradient text-white rounded-3 mb-3"><i class="bi bi-chat-dots"></i></div>
                             <h2 class="h5">관심사 공유</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                            <p class="mb-0">share movies, games, food, everyday life, and so on.</p>
                         </div>
                         <div class="col mb-5 mb-md-0 h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
+                            <div class="feature bg-dark bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
                             <h2 class="h5">내게 딱 맞는 섬세한 추천</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                            <p class="mb-0">Simple settings and smart recommendations.</p>
                         </div>
                         <div class="col h-100">
-                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
+                            <div class="feature bg-dark bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
                             <h2 class="h5">과금유도X</h2>
-                            <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
+                            <p class="mb-0">Who pays to check your profile these days? Now check your profile for free on Meet Up!</p>
                         </div>
                     </div>
                 </div>
@@ -81,7 +78,7 @@
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-10 col-xl-7">
                     <div class="text-center">
-                        <div class="fs-4 mb-4 fst-italic">"Create a party based on the concept, place, and schedule of the meeting and continue the meeting"</div>
+                        <div class="fs-4 mb-4 fst-italic">"Meeting is easy and comfortable"</div>
                         <div class="d-flex align-items-center justify-content-center">
                             <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                             <div class="fw-bold">
@@ -242,30 +239,16 @@
             <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                 <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
                     <div class="mb-4 mb-xl-0">
-                        <div class="fs-3 fw-bold text-white">Make a new connection.</div>
+                        <div class="fs-3 fw-bold text-white">Get out. Together.</div>
                         <div class="text-white-50">Simply sign up for membership.</div>
                     </div>
                     <div class="ms-xl-2">
-                        <div class="input-group mb-2">
-<%--                            <input class="form-control" type="text" placeholder="Email address..." aria-label="Email address..." aria-describedby="button-newsletter" />--%>
-                        </div>
-                        <button class="btn btn-outline-light" id="button-newsletter" type="button">Sign up</button>
-<%--                        <div class="small text-white-50">No bills, no ghost members</div>--%>
+                        <a class="btn btn-outline-light" href="/registerForm">Sign up</a>
                     </div>
                 </div>
             </aside>
         </div>
     </section>
-
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-6">
-                <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
-            </div>
-        </div>
-
-    </div>
-
 </main>
 </body>
 
