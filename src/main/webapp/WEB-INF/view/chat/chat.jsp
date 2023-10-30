@@ -19,7 +19,6 @@
             <input type="hidden" value="${chatLastList.createDate}" id="chatLastCreateDate" >
             <input type="hidden" value="${chatLastList.sessionId}" id="lastSessionId" >
             <input type="hidden" value="${userInfo.id}" id="userId" >
-
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <div class="setting_bar">
                 <i class="bi bi-list"></i>
@@ -39,6 +38,12 @@
                 <div class="profile-col2">
                     <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer"></i>
                     <p class="profile-name">${yourInfo.nickname}</p>
+                </div>
+                <div class="col-md-8 offset-md-2" style="display: none" id="chatSearchId">
+                    <div class="input-group mb-sm-2 m" >
+                        <input type="text" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="inputGroup-sizing-sm" id="chatSearchContent">
+                        <span class="input-group-text" id="basic-addon2" onclick="findAllChat();">찾기</span>
+                    </div>
                 </div>
             </header>
             <main>
@@ -133,6 +138,11 @@
                         <i class="bi bi-arrow-down-circle" style="background-color: white;font-size: 1.5rem;"></i>
                     </div>
 
+                    <div class="fade-searchBtn" style="display: none">
+                        <i class="bi bi-arrow-up-circle-fill"></i>
+                        <i class="bi bi-arrow-down-circle-fill"></i>
+                    </div>
+
                     <div class="insert-content">
                         <form name="chatform" id="chatform">
                             <textarea name="chat-insert" id="chatInsert"></textarea>
@@ -168,8 +178,12 @@
     let sendResult = false;
     const week = ['일', '월', '화', '수', '목', '금', '토'];
 
+
     $(document).ready(function () {
+        // $('.fade-searchBtn').css("opacity", "0");
+
         //스크롤 가장 아래로 이동
+        // $('.chat-content').scrollTop($('.chat-content')[0].scrollHeight);
         window.scrollTo(0, document.body.scrollHeight);
 
         //스크롤 이벤트 발생
@@ -192,9 +206,7 @@
 
 
         //뒤로가기
-        $(".bi-arrow-left").on("click", function () {
-            history.back();
-        })
+        back();
 
         //lastsession아이디 세팅
         if($('#lastSessionId').val() != '') {
@@ -217,9 +229,21 @@
         updateChat();
 
         // 하단 스크롤 이동 버튼
+
         $('.fade-lastChatBtn').click(function(e){
+            alert(1)
             window.scrollTo(0, document.body.scrollHeight);
         });
+
+
+        //돋보기 버튼 검색
+        chatSearchBtn();
+
+        //위검색
+        upSearchBtn();
+        //아래검색
+        downSearchBtn();
+
 
         //form안날라가게(카카오 css때문에 어쩔수 없이 form을 사용해야함
         const chatform = document.chatform
@@ -514,6 +538,9 @@
     }
 
     async function send() {
+        if($("#chatInsert").val().trim() == '') {
+            return;
+        }
         var option = {
             type: "message",
             roomId: $("#roomId").val(),
@@ -599,4 +626,154 @@
         });
     };
 
+    var elements = document.querySelectorAll('.balloon');
+    var currentIndex = elements.length - 1;
+    var currentIndex2 = 0;
+    var oldCurrentIndex = 0;
+    var searchString = "";
+
+
+    //찾기 검색버튼
+    function findAllChat() {
+
+        $('.fade-lastChatBtn').css("opacity", "0");
+
+        // 사용자가 입력한 검색어 가져오기
+        searchString = $('#chatSearchContent').val();
+
+
+        for (var i = currentIndex2; i < elements.length; i++) {
+            var text = elements[i].textContent;
+            if (text.includes(searchString)) {
+                console.log("text",text);
+                elements[i].style.backgroundColor = 'yellow';
+            }
+        }
+
+        // 검색한 단어를 가진 요소 찾기
+        showNextMatch();
+    }
+
+    //한칸한칸 하이라이트와 흔들기
+    function showNextMatch() {
+        // 찾은 요소들을 보여주고 스크롤, 노란색으로 표시
+        console.log("showNextMatch Start")
+        console.log("currentIndex : ", currentIndex)
+        for (var i = currentIndex; i >= 0; i--) {
+            var text = elements[i].textContent;
+            if (text.includes(searchString)) {
+                console.log("text", text)
+                console.log("i", i)
+                elements[i].scrollIntoView({ behavior: 'smooth' });
+                elements[i].classList.add("shaking");
+                elements[oldCurrentIndex].classList.remove("shaking");
+
+
+                currentIndex = i - 1;
+                oldCurrentIndex = i;
+                console.log("oldCurrentIndex", oldCurrentIndex)
+                return;
+            }
+        }
+
+    }
+    //한칸한칸 하이라이트와 흔들기
+    function showNextMatch2() {
+        // 찾은 요소들을 보여주고 스크롤, 노란색으로 표시
+        console.log("showNextMatch Start")
+        console.log("currentIndex : ", currentIndex)
+        for (var i = currentIndex; i >= 0; i--) {
+            var text = elements[i].textContent;
+            if (text.includes(searchString)) {
+                console.log("text", text)
+                console.log("i", i)
+                elements[i].scrollIntoView({ behavior: 'smooth' });
+                elements[i].classList.add("shaking");
+                elements[oldCurrentIndex].classList.remove("shaking");
+
+                currentIndex = i + 1;
+                oldCurrentIndex = i;
+                console.log("oldCurrentIndex", oldCurrentIndex)
+                return;
+
+            }
+        }
+
+    }
+
+    // 뒤로가기 버튼
+    function back() {
+        $(".bi-arrow-left").on("click", function () {
+            if ($(".fade-searchBtn").css("display") == "none") {
+                alert("요소는 현재 숨겨져 있습니다.");
+                history.back();
+
+            } else {
+                alert("요소는 현재 보여집니다.");
+                $('.fade-searchBtn').hide();
+                $('#chatSearchId').hide();
+                $('.insert-content').show();
+
+
+                //하이라이트 제거
+                for (var i = currentIndex2; i < elements.length; i++) {
+                    var text = elements[i].textContent;
+                    if (text.includes(searchString)) {
+                        console.log("text",text);
+                        elements[i].style.backgroundColor = 'white';
+                    }
+                }
+                //흔들기 제거
+                elements[oldCurrentIndex].classList.remove("shaking");
+
+            }
+        })
+    }
+
+    //돋보기검색
+    function chatSearchBtn() {
+        $('.bi-search').click(function(e){
+            $('#chatSearchId').show();
+            $('.fade-searchBtn').show();
+            $('.insert-content').hide();
+        });
+    }
+
+    //위검색
+    function upSearchBtn() {
+        $('.bi-arrow-up-circle-fill').click(function(e){
+            showNextMatch();
+        });
+    }
+    //아래검색
+    function downSearchBtn() {
+        $('.bi-arrow-down-circle-fill').click(function(e){
+            console.log("currentIndex : ", currentIndex);
+            console.log("elements.length-1 : ", elements.length-1);
+
+            // if(currentIndex + 2>elements.length-1) {
+            //     alert("맨 아래")
+            //     return;
+            // }
+
+            // currentIndex = currentIndex + 1;
+            showNextMatch2();
+        });
+    }
+
+
 </script>
+<style>
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px) rotate(5deg); }
+        50% { transform: translateX(5px) rotate(-5deg); }
+        75% { transform: translateX(-5px) rotate(5deg); }
+        100% { transform: translateX(0); }
+    }
+
+    .shaking {
+        animation: shake 0.5s infinite;
+        display: inline-block; /* 요소가 인라인 블록으로 표시되도록 설정 */
+    }
+</style>
