@@ -262,6 +262,7 @@
         upSearchBtn();
         //아래검색
         downSearchBtn();
+        quitRoom();
 
 
         //form안날라가게(카카오 css때문에 어쩔수 없이 form을 사용해야함
@@ -717,7 +718,7 @@
                 // console.log("oldCurrentIndex : ", oldCurrentIndex)
                 //header때문에 안보이기 때문에 좀 더 높게 보이게끔, 0,1,2는 맨위로, 나머지는 -3을 해서 더 위로
                 if(i == 0 || i == 1 || i == 2 ) {
-                    window.scrollTo(0, 0);
+                    window.scrollTo(0, 0); //가장위로
                 } else {
                     elements[i-3].scrollIntoView({ behavior: 'auto' });
                 }
@@ -774,36 +775,52 @@
 
         for (var i = currentIndex; i >= 0; i++) {
             console.log(">>>>>>>>>>>>>>i", i)
-            var text = elements[i].textContent;
-            if (text.includes(searchString)) {
-                console.log("text", text)
-                console.log("i", i)
-                console.log("oldCurrentIndex : ", oldCurrentIndex)
-                if(i == elements.length - 1 || i == elements.length - 2 || i == elements.length - 3 ) {
-                    window.scrollTo(0, document.body.scrollHeight);
-                } else {
-                    alert(1)
-                    elements[i-3].scrollIntoView({ behavior: 'auto' });
-                }
-                elements[i].classList.add("shaking");
-                elements[oldCurrentIndex].classList.remove("shaking");
+            console.log(">>>>>>>>>>>>>>elements[i]", elements[i])
+            if(elements[i] != undefined) {
+                var text = elements[i].textContent;
+                if (text.includes(searchString)) {
+                    console.log("text", text)
+                    console.log("i", i)
+                    console.log("oldCurrentIndex : ", oldCurrentIndex)
 
-                if(i == elements.length - 1) {
-                    console.log("가장 맨 아래이다.")
-                    // oldCurrentIndex = i-1;
-                    // currentIndex = i - 1;
-                    oldCurrentIndex = i;
-                } else {
-                    currentIndex = i + 1;
-                    oldCurrentIndex = i;
-                }
+                    if(i == 0 || i == 1 || i == 2 ) {
+                        window.scrollTo(0, 0); //가장위로
+                    } else {
+                        elements[i-3].scrollIntoView({ behavior: 'auto' });
+                    }
 
-                console.log("===============이벤트 끝================")
-                console.log("currentIndex", currentIndex)
-                console.log("oldCurrentIndex", oldCurrentIndex)
-                upDownResult = false;
+
+                    // if(i == elements.length - 1 || i == elements.length - 2 || i == elements.length - 3 ) {
+                    //     window.scrollTo(0, document.body.scrollHeight);
+                    // } else {
+                    //     alert(1)
+                    //     elements[i-3].scrollIntoView({ behavior: 'auto' });
+                    // }
+
+                    elements[i].classList.add("shaking");
+                    elements[oldCurrentIndex].classList.remove("shaking");
+
+                    if(i == elements.length - 1) {
+                        console.log("가장 맨 아래이다.")
+                        // oldCurrentIndex = i-1;
+                        // currentIndex = i - 1;
+                        oldCurrentIndex = i;
+                    } else {
+                        currentIndex = i + 1;
+                        oldCurrentIndex = i;
+                    }
+
+                    console.log("===============이벤트 끝================")
+                    console.log("currentIndex", currentIndex)
+                    console.log("oldCurrentIndex", oldCurrentIndex)
+                    upDownResult = false;
+                    return;
+                }
+            } else {
+                console.log("검색할게 더이상 없다.")
                 return;
             }
+
         }
     }
 
@@ -838,7 +855,7 @@
         });
     }
     //낙가기
-    function chatSearchBtn() {
+    function quitRoom() {
         let params = {
             id : $('#roomId').val(),
             userId : $('#userId').val(),
@@ -859,9 +876,6 @@
                     console.log("error", error)
                 }
             })
-
-
-
         });
     }
 
