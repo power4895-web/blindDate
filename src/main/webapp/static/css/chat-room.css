@@ -90,6 +90,9 @@ header{
     align-items: baseline;
     justify-content: center;
 }
+.profile-col3{
+    display: flex;
+}
 
 
 .profile-sub{

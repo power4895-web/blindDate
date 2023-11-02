@@ -23,16 +23,18 @@
             <div class="setting_bar">
                 <i class="bi bi-list"></i>
                 <i class="bi bi-search"></i>
+                <i class="bi bi-alarm"></i>
     <%--            <i class="icon-window-minimize" alt="최소화버튼" title="최소화">s</i>--%>
     <%--            <i class="icon-window-maximize" alt="최대화버튼" title="최대화">s</i>--%>
     <%--            <i class="icon-cancel" alt="닫기버튼" title="닫기"></i>--%>
             </div>
 
             <!-- 알림, 메뉴 기능 -->
-            <div class="main-menu">
-                <i class="icon-bell" title="알림">알림</i>
-                <i class="icon-ellipsis" title="메뉴">메뉴</i>
-            </div>
+<%--            <div class="main-menu">--%>
+<%--                <i class="bi bi-alarm"></i>--%>
+<%--                <i class="icon-ellipsis" title="메뉴">메뉴</i>--%>
+<%--            </div>--%>
+
             <!-- 프로필 사진, 프로필명 -->
             <header>
                 <div class="profile-col2">
@@ -178,9 +180,13 @@
     let sendResult = false;
     const week = ['일', '월', '화', '수', '목', '금', '토'];
 
+    let inputElement = $('#chatSearchContent');//검색엔터
 
     $(document).ready(function () {
-        // $('.fade-searchBtn').css("opacity", "0");
+        // 검색엔터
+        searchEnter();
+
+        // $('.fade-searchBtn').css("opacity", "0");//가장마지막아래 버튼 안보이게
 
         //스크롤 가장 아래로 이동
         // $('.chat-content').scrollTop($('.chat-content')[0].scrollHeight);
@@ -194,6 +200,12 @@
             var windowHeight = $(window).innerHeight();
             var scrollPosition = $(window).scrollTop();
             var test = Math.ceil(scrollPosition + windowHeight);
+
+            console.log("windowHeight : ", windowHeight);
+            console.log("scrollPosition : ", scrollPosition);
+            console.log("windowHeight + scrollPosition : ", windowHeight + scrollPosition);
+            console.log("test : ", test);
+            console.log("documentHeight : ", documentHeight);
 
             // 스크롤 위치가 맨 아래에 도달했을 때 이벤트를 발생
             if (test >= documentHeight) {
@@ -231,14 +243,11 @@
         // 하단 스크롤 이동 버튼
 
         $('.fade-lastChatBtn').click(function(e){
-            alert(1)
             window.scrollTo(0, document.body.scrollHeight);
         });
 
-
         //돋보기 버튼 검색
         chatSearchBtn();
-
         //위검색
         upSearchBtn();
         //아래검색
@@ -251,6 +260,7 @@
             // 동작(이벤트)을 실행하지 못하게 막는 메서드입니다.
             event.preventDefault();
         });
+
         chatName()
     })
 
@@ -564,8 +574,6 @@
     function chatInsertAjax(params) {
         console.log("chatInsertAjax");
         // console.log("params", params);
-        // console.log("params", params.content);
-        // console.log("params", params.getId);
         return new Promise(function(resolve, reject){ // promise 정의
             $.ajax({
                 type : 'post',
@@ -625,106 +633,186 @@
             });
         });
     };
-
     var elements = document.querySelectorAll('.balloon');
     var currentIndex = elements.length - 1;
     var currentIndex2 = 0;
-    var oldCurrentIndex = 0;
-    var searchString = "";
+    var oldCurrentIndex = 0;    //이전index번호
+    var searchString = "";  //현재검색어
+    var oldSearchString  = "";  //이전검색어
 
 
     //찾기 검색버튼
     function findAllChat() {
-
-        $('.fade-lastChatBtn').css("opacity", "0");
+        currentIndex = elements.length - 1;
 
         // 사용자가 입력한 검색어 가져오기
         searchString = $('#chatSearchContent').val();
 
+        if(searchString.trim() == '' ) {
+            alert('검색어를 입력해주세요.')
+            return;
+        }
 
+        if(oldSearchString == searchString) {
+            alert('검색어가 같습니다. oldCurrentIndex-1을 해줍니다.')
+            oldCurrentIndex = oldCurrentIndex-1
+        } else {
+            alert('검색어가 다릅니다. 처음으로 되돌립니다.')
+            //다시 find할 때 색깔 원래대로
+            chatContentReset();
+        }
+
+
+
+
+        //검색대상 전체 하이라이트 입히기
         for (var i = currentIndex2; i < elements.length; i++) {
             var text = elements[i].textContent;
             if (text.includes(searchString)) {
-                console.log("text",text);
                 elements[i].style.backgroundColor = 'yellow';
             }
         }
 
-        // 검색한 단어를 가진 요소 찾기
+        // 검색한 단어를 가진 요소 찾기(아래에서 위로)
         showNextMatch();
+        oldSearchString = searchString;
     }
 
-    //한칸한칸 하이라이트와 흔들기
+    let upDownResult = null;
+    //위로 검색
     function showNextMatch() {
         // 찾은 요소들을 보여주고 스크롤, 노란색으로 표시
-        console.log("showNextMatch Start")
+        console.log("=================위에 버튼========================")
+
+        if(upDownResult == false && currentIndex != elements.length - 1) {
+            console.log("이전에 down을 누른 상태 > 그러므로 -2를 해줘야")
+            currentIndex = currentIndex-2;
+        } else {
+            console.log("이전에 down 누른 상태 > 그러므로 -1을 할 필요없다.")
+        }
+        console.log("upDownResult",upDownResult);
+        if(upDownResult == false && currentIndex == elements.length - 1) {
+            console.log("이전에 down을 누른 상태이면서 가장 아래부분인상태, 그러므로 -1을 해줘야")
+            currentIndex = currentIndex-1;
+        }
+
         console.log("currentIndex : ", currentIndex)
+
         for (var i = currentIndex; i >= 0; i--) {
             var text = elements[i].textContent;
+            console.log(">>text", text);
             if (text.includes(searchString)) {
-                console.log("text", text)
-                console.log("i", i)
-                elements[i].scrollIntoView({ behavior: 'smooth' });
+                // console.log("찾고자 하는 검색어 : ", text)
+                // console.log("i : ", i)
+                // console.log("oldCurrentIndex : ", oldCurrentIndex)
+                //header때문에 안보이기 때문에 좀 더 높게 보이게끔, 0,1,2는 맨위로, 나머지는 -3을 해서 더 위로
+                if(i == 0 || i == 1 || i == 2 ) {
+                    window.scrollTo(0, 0);
+                } else {
+                    elements[i-3].scrollIntoView({ behavior: 'auto' });
+                }
+
                 elements[i].classList.add("shaking");
                 elements[oldCurrentIndex].classList.remove("shaking");
-
 
                 currentIndex = i - 1;
                 oldCurrentIndex = i;
+                console.log("===============이벤트 끝================")
+                console.log("currentIndex", currentIndex)
                 console.log("oldCurrentIndex", oldCurrentIndex)
+                upDownResult = true;
                 return;
+            } else {
+                upDownResult = '';
             }
         }
+        if(upDownResult == '') {
+            alert("검색어가 존재하지 않습니다.")
+            //모든 흔들기효과를 지웁니다.
+            elements.forEach(function(element) {
+                element.classList.remove('shake-effect'); // "shake-effect" 클래스를 제거
+            });
+        }
+
 
     }
-    //한칸한칸 하이라이트와 흔들기
-    function showNextMatch2() {
+    //아래로 하이라이트와 흔들기
+    function showPreviousMatch() {
+        console.log("===============아래버튼===================")
+        console.log("currentIndex", currentIndex)
+
+        if(currentIndex == oldCurrentIndex) {
+            console.log("가장 아래에서 아래를 눌렀기 때문에 검색할게 없다.")
+            return;
+        }
+
         // 찾은 요소들을 보여주고 스크롤, 노란색으로 표시
-        console.log("showNextMatch Start")
+        if(upDownResult == true && currentIndex != elements.length - 1) {
+            console.log("이전에 up을 누른 상태 > 그러므로 +2를 해줘야")
+            currentIndex = currentIndex + 2;
+        } else {
+            console.log("이전에 down 누른 상태 > 그러므로 +1을 할 필요없다.")
+        }
         console.log("currentIndex : ", currentIndex)
-        for (var i = currentIndex; i >= 0; i--) {
+
+        if(upDownResult == true && currentIndex < 0) {
+            //가장 맨 위에서 아래를 눌렀을 경우,
+            console.log("가장 맨 위에서 아래를 눌렀을 경우")
+            currentIndex = 0;
+        }
+
+
+        for (var i = currentIndex; i >= 0; i++) {
+            console.log(">>>>>>>>>>>>>>i", i)
             var text = elements[i].textContent;
             if (text.includes(searchString)) {
                 console.log("text", text)
                 console.log("i", i)
-                elements[i].scrollIntoView({ behavior: 'smooth' });
+                console.log("oldCurrentIndex : ", oldCurrentIndex)
+                if(i == elements.length - 1 || i == elements.length - 2 || i == elements.length - 3 ) {
+                    window.scrollTo(0, document.body.scrollHeight);
+                } else {
+                    alert(1)
+                    elements[i-3].scrollIntoView({ behavior: 'auto' });
+                }
                 elements[i].classList.add("shaking");
                 elements[oldCurrentIndex].classList.remove("shaking");
 
-                currentIndex = i + 1;
-                oldCurrentIndex = i;
-                console.log("oldCurrentIndex", oldCurrentIndex)
-                return;
+                if(i == elements.length - 1) {
+                    console.log("가장 맨 아래이다.")
+                    // oldCurrentIndex = i-1;
+                    // currentIndex = i - 1;
+                    oldCurrentIndex = i;
+                } else {
+                    currentIndex = i + 1;
+                    oldCurrentIndex = i;
+                }
 
+                console.log("===============이벤트 끝================")
+                console.log("currentIndex", currentIndex)
+                console.log("oldCurrentIndex", oldCurrentIndex)
+                upDownResult = false;
+                return;
             }
         }
-
     }
 
     // 뒤로가기 버튼
     function back() {
         $(".bi-arrow-left").on("click", function () {
             if ($(".fade-searchBtn").css("display") == "none") {
-                alert("요소는 현재 숨겨져 있습니다.");
+                // alert("요소는 현재 숨겨져 있습니다.");
                 history.back();
 
             } else {
-                alert("요소는 현재 보여집니다.");
+                // alert("요소는 현재 보여집니다.");
                 $('.fade-searchBtn').hide();
                 $('#chatSearchId').hide();
                 $('.insert-content').show();
 
+                chatContentReset();
 
-                //하이라이트 제거
-                for (var i = currentIndex2; i < elements.length; i++) {
-                    var text = elements[i].textContent;
-                    if (text.includes(searchString)) {
-                        console.log("text",text);
-                        elements[i].style.backgroundColor = 'white';
-                    }
-                }
-                //흔들기 제거
-                elements[oldCurrentIndex].classList.remove("shaking");
+
 
             }
         })
@@ -736,6 +824,7 @@
             $('#chatSearchId').show();
             $('.fade-searchBtn').show();
             $('.insert-content').hide();
+            $('#chatSearchContent').focus();
         });
     }
 
@@ -748,16 +837,34 @@
     //아래검색
     function downSearchBtn() {
         $('.bi-arrow-down-circle-fill').click(function(e){
-            console.log("currentIndex : ", currentIndex);
-            console.log("elements.length-1 : ", elements.length-1);
+            showPreviousMatch();
+        });
+    }
+    //흔들기제거, 색상 deafult
+    function chatContentReset() {
+        let className;
+        for (var i = currentIndex2; i < elements.length; i++) {
+            className = elements[i].closest("div").className;
+            if(className == 'me-chat-col') {
+                elements[i].style.backgroundColor = 'rgb(94, 122, 100)';
+            }
+            if(className == 'friend-chat-col') {
+                elements[i].style.backgroundColor = 'rgb(228, 233, 230)';
+            }
+        }
+        elements.forEach(function(element) {
+            element.classList.remove('shaking'); // "shake-effect" 클래스를 제거
+        });
+    }
 
-            // if(currentIndex + 2>elements.length-1) {
-            //     alert("맨 아래")
-            //     return;
-            // }
-
-            // currentIndex = currentIndex + 1;
-            showNextMatch2();
+    //검색엔터
+    function searchEnter() {
+        // <input> 요소에 대한 keydown 이벤트 핸들러 등록
+        inputElement.on('keydown', function(event) {
+            if (event.which === 13) { // 13은 Enter 키의 key code입니다.
+                // Enter 키를 눌렀을 때 실행할 코드 또는 이벤트를 여기에 작성
+                findAllChat();
+            }
         });
     }
 
