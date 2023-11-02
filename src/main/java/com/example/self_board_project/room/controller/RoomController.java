@@ -1,6 +1,8 @@
 package com.example.self_board_project.room.controller;
 
 import com.example.self_board_project.core.authority.Auth;
+import com.example.self_board_project.relationship.service.RelationshipService;
+import com.example.self_board_project.relationship.vo.Relationship;
 import com.example.self_board_project.room.service.RoomService;
 import com.example.self_board_project.room.vo.Room;
 import org.slf4j.Logger;
@@ -25,6 +27,8 @@ public class RoomController {
     static int roomNumber = 0;
     @Autowired
     RoomService roomService;
+    @Autowired
+    RelationshipService relationshipService;
 
     @RequestMapping(value="/room")
     public String room(Auth auth) {
@@ -118,6 +122,35 @@ public class RoomController {
         }
         return mv;
     }
+
+
+    @RequestMapping("/quit")
+    @ResponseBody
+    public boolean quitRoom(Room room, @RequestParam int userId, @RequestParam int yourId){
+
+        logger.info("room : {}", room.getId());
+        logger.info("userId : {}", userId);
+        logger.info("yourId : {}", yourId);
+        Room roomInfo = roomService.selectRoom(room);
+
+        Relationship relationship = new Relationship();
+        relationship.setQuitYn("Y");
+        relationship.setSendId(yourId);
+        relationship.setGetId(userId);
+        relationshipService.allowRelationship(relationship);
+
+        if(roomInfo != null) {
+            if(roomInfo.getRoomBossId() == userId) {
+                room.setRoomStaffId(roomInfo.getRoomStaffId());
+            }
+            if(roomInfo.getRoomStaffId() == userId) {
+                room.setRoomBossId(roomInfo.getRoomBossId());
+            }
+        }
+        roomService.quitRoom(room);
+        return true;
+    }
+
 //    @RequestMapping("/moveChating")
 //    public ModelAndView chating(@RequestParam HashMap<Object, Object> params) {
 //        ModelAndView mv = new ModelAndView();

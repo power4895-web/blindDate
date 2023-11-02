@@ -34,4 +34,9 @@ public class RoomService {
         logger.info("===updateRoom Start");
         return roomMapper.updateRoom(room);
     }
+    public int quitRoom(Room room) {
+        logger.info("===quitRoom Start");
+
+        return roomMapper.quitRoom(room);
+    }
 }

@@ -70,6 +70,20 @@
 <!--            AND field = #{field}-->
 <!--        </if>-->
     </update>
+    <update id="quitRoom">
+        /** quitRoom **/
+        update `room`
+            <set>
+                <if test="roomBossId != null and roomBossId != ''">
+                    room_staff_id = null,
+                </if>
+                <if test="roomStaffId != null and roomStaffId != ''">
+                    room_boss_id = null,
+                </if>
+            </set>
+        WHERE id = #{id}
+
+    </update>
 
 
 </mapper>

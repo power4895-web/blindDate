@@ -42,10 +42,6 @@
                 <c:if test="${item.lastChatCreate == 0 && item.hourValue == 0 && item.minuteValue == 0 && item.secondValue == 0}">
                     <small></small>
                 </c:if>
-
-                <c:if test="${item.roomYn == 'N'}">
-                    <button class="btn btn-info" onclick="insertRoom(${item.getId},${item.sendId} )">대화시작하기</button>
-                </c:if>
             </div>
             <strong class="mb-1">${item.nickname}</strong>
         </a>

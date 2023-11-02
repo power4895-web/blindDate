@@ -179,6 +179,7 @@ public class RelationshipService {
     public int allowRelationship(Relationship relationship) {
         Relationship relationshipInfo = selectRelationship(relationship);
         relationship.setId(relationshipInfo.getId());
+        relationship.setAcceptCheck("Y");
         relationshipMapper.allowRelationship(relationship);
         return relationshipInfo.getId();
     }

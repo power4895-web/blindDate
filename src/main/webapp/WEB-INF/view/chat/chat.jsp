@@ -19,11 +19,13 @@
             <input type="hidden" value="${chatLastList.createDate}" id="chatLastCreateDate" >
             <input type="hidden" value="${chatLastList.sessionId}" id="lastSessionId" >
             <input type="hidden" value="${userInfo.id}" id="userId" >
+            <input type="hidden" value="${yourInfo.id}" id="yourId" >
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <div class="setting_bar">
                 <i class="bi bi-list"></i>
                 <i class="bi bi-search"></i>
-                <i class="bi bi-alarm"></i>
+                <i class="bi bi-arrow-bar-right"></i>
+<%--                <i class="bi bi-alarm"></i>--%>
     <%--            <i class="icon-window-minimize" alt="최소화버튼" title="최소화">s</i>--%>
     <%--            <i class="icon-window-maximize" alt="최대화버튼" title="최대화">s</i>--%>
     <%--            <i class="icon-cancel" alt="닫기버튼" title="닫기"></i>--%>
@@ -60,11 +62,19 @@
                     <!-- 채팅 내용 -->
 
                     <div class="main-chat" id="chating">
-                        <div class="profile-col">
-                            <img class="profile-img" src="${yourInfo.imgUrl}">
-                            <span class="profile-name">${yourInfo.nickname}</span>
-                            <span class="profile-name">안녕하세요. 저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
-                        </div>
+                        <c:if test="${yourInfo.imgUrl != null}">
+                            <div class="profile-col">
+                                <img class="profile-img" src="${yourInfo.imgUrl}">
+                                <span class="profile-name">${yourInfo.nickname}</span>
+                                <span class="profile-name">안녕하세요. 저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
+                            </div><br><br>
+                        </c:if>
+                        <c:if test="${yourInfo.imgUrl == null}">
+                            <div class="profile-col">
+                                <span class="profile-name">상대방이 방을 나갔습니다.</span>
+                            </div><br><br>
+                        </c:if>
+
                         <c:if test="${chatList != null}">
                             <c:forEach var="item" items="${chatList}" varStatus="status">
                                 <!-- 메시지 시작 날짜 -->
@@ -104,7 +114,7 @@
                                         </c:if>
                                         <c:if test="${chatList[status.index].toId != chatList[status.index -1].toId}">
                                             <%--이전에 받은 사람과 지금 받는사람이 다르다. > 내가 받고, 민지가 받은것이다 imgUrl있다.--%>
-                                            <img class="profile-img" src="${imgUrl}" alt="쀼프로필사진">
+                                            <img class="profile-img" src="${imgUrl}" alt="익명">
                                             <div class="friend-chat-col">
                                                 <span class="profile-name">${yourNickname}</span>
                                                 <span class="balloon">${item.content}</span>
@@ -112,7 +122,7 @@
                                         </c:if>
                                         <c:if test="${date1 != date2 && chatList[status.index].toId == chatList[status.index -1].toId}">
                                             <%--시간이 다르게 민지가 2번보낸것이다--%>
-                                            <img class="profile-img" src="${imgUrl}" alt="쀼프로필사진">
+                                            <img class="profile-img" src="${imgUrl}" alt="익명">
                                             <div class="friend-chat-col">
                                                 <span class="profile-name">${yourNickname}</span>
                                                 <span class="balloon">${item.content}</span>
@@ -825,6 +835,33 @@
             $('.fade-searchBtn').show();
             $('.insert-content').hide();
             $('#chatSearchContent').focus();
+        });
+    }
+    //낙가기
+    function chatSearchBtn() {
+        let params = {
+            id : $('#roomId').val(),
+            userId : $('#userId').val(),
+            yourId : $('#yourId').val()
+        }
+        $('.bi-arrow-bar-right').click(function(e){
+            $.ajax({
+                type: 'post',
+                url: "/quit",
+                data: params,
+                success: function (data) { // 결과 성공 콜백함수
+                    console.log("data", data)
+                    if(data) {
+                        history.back();
+                    }
+                },
+                error: function (request, status, error) { // 결과 에러 콜백함수
+                    console.log("error", error)
+                }
+            })
+
+
+
         });
     }
 

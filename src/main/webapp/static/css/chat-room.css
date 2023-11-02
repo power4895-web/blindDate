@@ -90,10 +90,6 @@ header{
     align-items: baseline;
     justify-content: center;
 }
-.profile-col3{
-    display: flex;
-}
-
 
 .profile-sub{
     /* 프로필 사진 스타일 */

@@ -53,13 +53,22 @@ public class ChatController {
             } else if (auth.getId() == roomInfo.getRoomStaffId()) {
                 yourId = roomInfo.getRoomBossId();
             }
-            User user = new User();
-            user.setId(yourId);
-            user.setFlag("XS");
-            User userInfo = userService.selectUser(user);
-            model.addAttribute("yourInfo", userInfo);
-            model.addAttribute("yourNickname", userInfo.getNickname());
-            model.addAttribute("imgUrl", userInfo.getImgUrl());
+            logger.info("yourId : {}", yourId);
+
+            if(yourId == 0) {
+                logger.info("yourId = 0");
+            }else {
+                logger.info("yourId =! 0");
+                User user = new User();
+                user.setId(yourId);
+                user.setFlag("XS");
+                User userInfo = userService.selectUser(user);
+                model.addAttribute("yourInfo", userInfo);
+                model.addAttribute("yourNickname", userInfo.getNickname());
+                model.addAttribute("imgUrl", userInfo.getImgUrl());
+            }
+
+
 
             Chat chat = new Chat();
             chat.setRoomId(roomId);
