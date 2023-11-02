@@ -39,7 +39,7 @@
 
             <!-- 프로필 사진, 프로필명 -->
             <header>
-                <div class="profile-col2">
+                <div class="header-col">
                     <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer"></i>
                     <p class="profile-name">${yourInfo.nickname}</p>
                 </div>
@@ -65,8 +65,9 @@
                         <c:if test="${yourInfo.imgUrl != null}">
                             <div class="profile-col">
                                 <img class="profile-img" src="${yourInfo.imgUrl}">
-                                <span class="profile-name">${yourInfo.nickname}</span>
-                                <span class="profile-name">안녕하세요. 저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
+                            </div>
+                            <div class="profile-col">
+                                <span class="profile-name ">안녕하세요. <br>저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
                             </div><br><br>
                         </c:if>
                         <c:if test="${yourInfo.imgUrl == null}">

@@ -77,18 +77,22 @@ header{
 /*    align-items: flex-start;*/
 /*    justify-content: center;*/
 /*}*/
-.profile-col{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-col2{
+/*.profile-col{*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+/*chat>header>뒤로가기,닉네임*/
+.header-col{
     display: flex;
     flex-direction: row;
     align-items: baseline;
     justify-content: center;
+}
+/*chat>프로필이미지 인사말*/
+.profile-col{
+    text-align: center;
 }
 
 .profile-sub{
