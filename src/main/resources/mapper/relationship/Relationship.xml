@@ -91,7 +91,8 @@
             (select concat(filepath, image_name) from file where ref_id = t1.get_id and boss_type ="Y" AND flag = "S")as imgUrl
         FROM relationship t1
         join user t2 on t1.get_id = t2.id
-        <where>
+        WHERE t1.accept_check = 'N'
+       <!-- <where>-->
             <if test="sendId != null and sendId != ''">
                 AND t1.`send_id` = #{sendId}
             </if>
@@ -99,7 +100,7 @@
             <if test="getId != null and getId != ''">
                 AND t1.`get_id` = #{getId}
             </if>
-        </where>
+        <!--</where>-->
     </select>
     <!--    나에게 친구해욜르 보낸 회원들의 정보-->
     <select id="selectGetRelationshipList" resultType="com.example.self_board_project.relationship.vo.Relationship">
@@ -138,7 +139,8 @@
             (select concat(filepath, image_name) from file where ref_id = t1.send_id and boss_type ="Y" AND flag = "S")as imgUrl
         FROM relationship t1
         join user t2 on t1.send_id = t2.id
-        <where>
+        WHERE t1.accept_check = 'N'
+         <!--<where>-->
             <if test="sendId != null and sendId != ''">
                 AND t1.`send_id` = #{sendId}
             </if>
@@ -146,7 +148,7 @@
             <if test="getId != null and getId != ''">
                 AND t1.`get_id` = #{getId}
             </if>
-        </where>
+         <!--</where>-->
     </select>
 
     <select id="selectRelationship" resultType="com.example.self_board_project.relationship.vo.Relationship">
@@ -269,9 +271,13 @@
     <update id="allowRelationship">
         /** allowRelationship **/
         UPDATE `relationship`
-        SET accept_check = #{acceptCheck},
-            quit_yn = #{quitYn},
-            update_date = now()
+        SET update_date = now()
+            <if test="acceptCheck != null and acceptCheck != ''">
+                , accept_check = #{acceptCheck}
+            </if>
+            <if test="quitYn != null and quitYn != ''">
+                , quit_yn = #{quitYn}
+            </if>
         WHERE id = #{id}
     </update>
 

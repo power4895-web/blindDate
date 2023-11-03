@@ -171,7 +171,30 @@ public class RelationshipService {
             return false;
         } else {
             logger.info("최초 친구해요를 보냅니다.");
-            relationshipMapper.insertRelationship(relationship);
+            //근데 만약에 상대방이 이미 보냈다면?
+            int userId = relationship.getSendId();
+            int yourId = relationship.getGetId();
+            relationship.setSendId(yourId);
+            relationship.setGetId(userId);
+            Relationship relationshipInfo = selectRelationship(relationship);
+            if (relationshipInfo != null) {
+                logger.info("상대방이 이미 친구해요를 보냈습니다. 수락합니다 relationshipId : {}", relationship.getId());
+                //상대방이 보낸거 Y로 변경
+                relationship.setId(relationshipInfo.getId());
+                relationship.setAcceptCheck("Y");
+                relationshipMapper.allowRelationship(relationship);
+
+                //내가 상대방에서 Y로 친구해요 보내기
+                relationship.setSendId(userId);
+                relationship.setGetId(yourId);
+                relationshipMapper.insertRelationship(relationship);
+            }  else {
+                logger.info("상대방이 친구해요를 보내지 않았습니다");
+                relationship.setSendId(userId);
+                relationship.setGetId(yourId);
+                relationshipMapper.insertRelationship(relationship);
+            }
+
             return true;
         }
     }

@@ -26,6 +26,7 @@
 <main class="flex-shrink-0">
     <!-- Page content-->
     <input type="hidden" value="${relationshipInfo}" id="relationshipInfo">
+    <input type="hidden" value="${relationshipInfo.acceptCheck}" id="relationshipAcceptCheck">
     <input type="hidden" value="${evaluationInfo}" id="evaluationInfo">
     <input type="hidden" value="${userInfo.id}" id="userId">
     <input type="hidden" value="${userInfo.realName}" id="realName">
@@ -159,9 +160,9 @@
                     <button class="btn btn-outline-primary" id="notRelationship" onclick="sendRelationship(${userInfo.id},$(this))">
                         친구해요<i class="bi bi-heart"></i>
                     </button>
-                        <div id="didEvaluate">
-                            <span class="d-block p-2 text-bg-light text-start" >💕축하합니다. 서로 친구이기 때문에 채팅을 할 수 있습니다.</span>
-                        </div>
+                    <div id="twoRelationship">
+                        <span class="d-block p-2 text-bg-light text-start" >💕축하합니다. 서로 친구이기 때문에 채팅을 할 수 있습니다.<br><a href="/relationship/exchangeRelationship">채팅하러가기</a></span>
+                    </div>
 
                     <%--회원추천--%>
                     <div id="similarCharm">
@@ -198,15 +199,28 @@
             $('#didRelationship').hide()
             $('#allowRelationship').hide()
             $('#allowedRelationship').hide()
+            $('#twoRelationship').hide()
+
         }
-        if($('#relationshipInfo').val() != '' && $('#type').val() == '') {
-            console.log("오늘의 프로필에서 접근했습니다. 친구해요를 보냈기 때문에 오늘의 프로필에 보이면 안되었습니다. 잘못된 접근입니다. 뒤로 돌아가야합니다.")
+        if($('#relationshipInfo').val() != '' && $('#type').val() == '' && $('#relationshipAcceptCheck').val() == 'Y') {
+            console.log(">>", $('#relationshipAcceptCheck').val())
+            console.log("오늘의 프로필에서 접근했습니다. 서로친구관계입니다. 잘못된 접근입니다. 뒤로 돌아가야합니다.")
             // alert("이미친구해요를 신청하여 오늘의 프로필에 등자아지 말아야 하는데, 등장했기때문에 접근한 잘못된 접근입니다.")
             // history.back();
             $('#notRelationship').hide()
             $('#didRelationship').hide()
             $('#allowedRelationship').hide()
             $('#allowRelationship').hide()
+            // $('#twoRelationship').hide()
+        }
+        if($('#relationshipInfo').val() != '' && $('#type').val() == ''&& $('#relationshipAcceptCheck').val() == 'N') {
+            console.log(">>", $('#relationshipAcceptCheck').val())
+            console.log("오늘의 프로필에서 접근했습니다. 친구해요를 보냈기 때문에 오늘의 프로필에 보이면 안되었습니다. 잘못된 접근입니다. 뒤로 돌아가야합니다.")
+            // alert("이미친구해요를 신청하여 오늘의 프로필에 등자아지 말아야 하는데, 등장했기때문에 접근한 잘못된 접근입니다.")
+            $('#notRelationship').hide()
+            $('#allowedRelationship').hide()
+            $('#allowRelationship').hide()
+            $('#twoRelationship').hide()
         }
 
         if($('#relationshipInfo').val() == '' && $('#type').val() == 'get') {
@@ -214,6 +228,7 @@
             $('#notRelationship').hide()
             $('#didRelationship').hide()
             $('#allowedRelationship').hide()
+            $('#twoRelationship').hide()
         }
         if($('#relationshipInfo').val() != '' && $('#type').val() == 'get') {
             console.log("현재 친구관계입니다")
@@ -232,6 +247,7 @@
             $('#didRelationship').hide()
             $('#allowRelationship').hide()
             $('#allowedRelationship').hide()
+            $('#twoRelationship').hide()
         }
 
 

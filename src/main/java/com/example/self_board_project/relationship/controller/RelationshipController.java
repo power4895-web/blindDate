@@ -90,11 +90,6 @@ public class RelationshipController {
         } else {
             return 0;
         }
-//        Notification notification = new Notification();
-//        notification.setUserId(relationship.getGetId());
-//        notification.setField("relationship");
-//        notification.setRefId(relationship.getId());
-//        notificationService.insertNotification(notification);
     }
     /**
      * 친구승낙
