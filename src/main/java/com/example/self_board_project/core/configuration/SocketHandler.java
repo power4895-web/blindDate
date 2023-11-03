@@ -205,9 +205,11 @@ public class SocketHandler extends TextWebSocketHandler {
             map.put("roomId", roomId);
             logger.info("session.getId() : {} " , session.getId());
             logger.info("session : {} " , session);
-//            room.setSession(String.valueOf(session));
-//            room.setSessionId(session.getId());
-//            roomService.updateRoom(room);
+
+/*            room.setSession(String.valueOf(session));
+            room.setSessionId(session.getId());
+            roomService.updateRoom(room);*/
+
             map.put(session.getId(), session);
             rls.add(map);
         }

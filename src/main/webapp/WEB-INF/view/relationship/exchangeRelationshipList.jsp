@@ -49,6 +49,16 @@
         </a>
     </div>
 </c:forEach>
+<c:if test="${exchangeRelationshipList.size() == 0}">
+    <div class="list-group">
+            <%--방이 존재하면 리스트 선택시 채팅방으로 , 없으면 아무일도 안일어난다--%>
+        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+            <div class="d-flex w-100 justify-content-center">
+                채팅이력이 없습니다. 친구해요를 먼저 보내세요.
+            </div>
+        </a>
+    </div>
+</c:if>
 </main>
 </body>
 </html>

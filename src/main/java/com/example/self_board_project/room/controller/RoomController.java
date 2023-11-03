@@ -170,7 +170,7 @@ public class RoomController {
 
                 if(roomInfo != null) {
                     room.setQuitId(userId);
-                    roomService.quitRoom(room);
+                    roomService.updateRoom(room);
                 }
             }
         }
