@@ -123,31 +123,57 @@ public class RoomController {
         return mv;
     }
 
-
-    @RequestMapping("/quit")
+    /**
+     * 채팅방 나가기(최초 나갔을 때, 한명이 나간상태에서 다른 사람이 나갔을 때 방 상제)
+     * @param room
+     * @param userId
+     * @param yourId
+     * @return
+     */
+    @RequestMapping("/room/quit")
     @ResponseBody
-    public boolean quitRoom(Room room, @RequestParam int userId, @RequestParam int yourId){
+    public boolean quitRoom(Room room, @RequestParam int userId, @RequestParam(required = false) int yourId){
 
         logger.info("room : {}", room.getId());
         logger.info("userId : {}", userId);
         logger.info("yourId : {}", yourId);
         Room roomInfo = roomService.selectRoom(room);
-
         Relationship relationship = new Relationship();
-        relationship.setQuitYn("Y");
-        relationship.setSendId(yourId);
-        relationship.setGetId(userId);
-        relationshipService.allowRelationship(relationship);
 
         if(roomInfo != null) {
-            if(roomInfo.getRoomBossId() == userId) {
-                room.setRoomStaffId(roomInfo.getRoomStaffId());
-            }
-            if(roomInfo.getRoomStaffId() == userId) {
-                room.setRoomBossId(roomInfo.getRoomBossId());
+            logger.info("roomInfo.getQuitId() : {}", roomInfo.getQuitId());
+            if(roomInfo.getQuitId() != 0) {
+                relationship.setSendId(roomInfo.getQuitId());
+                relationship.setGetId(userId);
+                Relationship relationshipInfo =  relationshipService.selectRelationship(relationship);
+                if(relationshipInfo != null) {
+                    logger.info("친구요청 지우기");
+                    relationshipService.deleteRelationship(relationshipInfo.getId());
+                }
+                logger.info("한명이 나간상태 ->  room지우기");
+                roomService.deleteRoom(room.getId());
+            } else {
+                logger.info("현재 2명이 있는 상태 > 한명이 나가는중");
+
+                //내가 친구해요 지우기
+                relationship.setSendId(yourId);
+                relationship.setGetId(userId);
+                Relationship relationshipInfo =  relationshipService.selectRelationship(relationship);
+                if(relationshipInfo != null) {
+                    relationshipService.deleteRelationship(relationshipInfo.getId());
+                }
+                //상대방이 친구해요 > quit_yn > y로 바꾸기
+                relationship.setQuitYn("Y");
+                relationship.setSendId(userId);
+                relationship.setGetId(yourId);
+                relationshipService.allowRelationship(relationship);
+
+                if(roomInfo != null) {
+                    room.setQuitId(userId);
+                    roomService.quitRoom(room);
+                }
             }
         }
-        roomService.quitRoom(room);
         return true;
     }
 

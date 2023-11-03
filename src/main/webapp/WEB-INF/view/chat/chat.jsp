@@ -14,12 +14,12 @@
             <input type="hidden" id="roomId" value="${roomId}">
             <input type="hidden" id="myNickname" value="${userInfo.nickname}" name="myNickname">
             <input type="hidden" id="yourNickname" value="${yourNickname}" name="yourNickname">
+            <input type="hidden" value="${imgUrl}" id="imgUrl" > <%--상대방 이미지--%>
+            <input type="hidden" value="${yourInfo.id}" id="yourId" >
             <input type="hidden" id="chatList" value="${chatList}" name="chatList">
-            <input type="hidden" value="${imgUrl}" id="imgUrl" >
             <input type="hidden" value="${chatLastList.createDate}" id="chatLastCreateDate" >
             <input type="hidden" value="${chatLastList.sessionId}" id="lastSessionId" >
             <input type="hidden" value="${userInfo.id}" id="userId" >
-            <input type="hidden" value="${yourInfo.id}" id="yourId" >
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <div class="setting_bar">
                 <i class="bi bi-list"></i>
@@ -68,11 +68,6 @@
                             </div>
                             <div class="profile-col">
                                 <span class="profile-name ">안녕하세요. <br>저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
-                            </div><br><br>
-                        </c:if>
-                        <c:if test="${yourInfo.imgUrl == null}">
-                            <div class="profile-col">
-                                <span class="profile-name">상대방이 방을 나갔습니다.</span>
                             </div><br><br>
                         </c:if>
 
@@ -145,8 +140,14 @@
                                 </c:if>
                             </c:forEach>
                         </c:if>
+                        <c:if test="${yourInfo.imgUrl == null}">
+                            <div class="profile-col">
+                                <span class="profile-name">상대방이 방을 나갔습니다.</span>
+                            </div><br><br>
+                        </c:if>
                         <!-- 채팅 입력창 -->
                     </div>
+
                     <div class="fade-lastChatBtn" >
                         <i class="bi bi-arrow-down-circle" style="background-color: white;font-size: 1.5rem;"></i>
                     </div>
@@ -157,9 +158,9 @@
                     </div>
 
                     <div class="insert-content">
-                        <form name="chatform" id="chatform">
-                            <textarea name="chat-insert" id="chatInsert"></textarea>
-                            <button class="chat-submit" onclick="send()" id="sendBtn">
+                        <form name="chatform" id="chatform" >
+                            <textarea name="chat-insert" id="chatInsert" ${yourInfo.id == null ? 'disabled' : ''}></textarea>
+                            <button class="chat-submit" onclick="send()" id="sendBtn" ${yourInfo.id == null ? 'disabled' : ''}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-send-fill" viewBox="0 0 16 16">
                                     <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
@@ -194,6 +195,11 @@
     let inputElement = $('#chatSearchContent');//검색엔터
 
     $(document).ready(function () {
+
+        if($('#yourId').val() == '') {
+            alert("상대방이 방을 나갔습니다. 메세지를 할 수 없습니다.")
+        }
+
         // 검색엔터
         searchEnter();
 
@@ -212,11 +218,11 @@
             var scrollPosition = $(window).scrollTop();
             var test = Math.ceil(scrollPosition + windowHeight);
 
-            console.log("windowHeight : ", windowHeight);
-            console.log("scrollPosition : ", scrollPosition);
-            console.log("windowHeight + scrollPosition : ", windowHeight + scrollPosition);
-            console.log("test : ", test);
-            console.log("documentHeight : ", documentHeight);
+            // console.log("windowHeight : ", windowHeight);
+            // console.log("scrollPosition : ", scrollPosition);
+            // console.log("windowHeight + scrollPosition : ", windowHeight + scrollPosition);
+            // console.log("test : ", test);
+            // console.log("documentHeight : ", documentHeight);
 
             // 스크롤 위치가 맨 아래에 도달했을 때 이벤트를 발생
             if (test >= documentHeight) {
@@ -273,7 +279,10 @@
             event.preventDefault();
         });
 
-        chatName()
+        //상대방 이미지가 있으면 소캣연결
+        if($('#yourId').val() != '') {
+            chatName()
+        }
     })
 
 
@@ -539,7 +548,7 @@
 
     function chatName() {
         wsOpen();
-        $("#yourMsg").show();
+        // $("#yourMsg").show();
     }
     //채팅방 들어온 아이디 읽지 않은거 모두 읽은걸로 업데이트
     function updateChat() {
@@ -860,12 +869,12 @@
         let params = {
             id : $('#roomId').val(),
             userId : $('#userId').val(),
-            yourId : $('#yourId').val()
+            yourId : $('#yourId').val() != '' ? $('#yourId').val() : 0
         }
         $('.bi-arrow-bar-right').click(function(e){
             $.ajax({
                 type: 'post',
-                url: "/quit",
+                url: "/room/quit",
                 data: params,
                 success: function (data) { // 결과 성공 콜백함수
                     console.log("data", data)

@@ -23,7 +23,9 @@
                 <c:if test="${item.roomYn == 'Y'}">
                     <small class="contentButton" data-get="${item.getId}" data-send="${item.sendId}">${item.lastMessage}</small>
                 </c:if>
-                <c:if test="${item.roomYn == 'N'}">
+
+                <%--나간사람이 없고 룸아이디가 개설되지 않았을 때 (item.quitYn == 'Y' 면 상대방이 나간 상태)--%>
+                <c:if test="${item.roomYn == 'N' && item.quitYn == 'N'}">
                     <button class="btn btn-info" onclick="insertRoom(${item.getId},${item.sendId} )">대화시작하기</button>
                 </c:if>
 

@@ -36,7 +36,10 @@ public class RoomService {
     }
     public int quitRoom(Room room) {
         logger.info("===quitRoom Start");
-
         return roomMapper.quitRoom(room);
+    }
+    public int deleteRoom(int id) {
+        logger.info("===quitRoom Start");
+        return roomMapper.deleteRoom(id);
     }
 }

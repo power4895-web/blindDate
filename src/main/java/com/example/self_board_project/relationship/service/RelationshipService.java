@@ -176,11 +176,25 @@ public class RelationshipService {
         }
     }
 
+    /**
+     * relationship 수정
+     * @param relationship
+     * @return
+     */
     public int allowRelationship(Relationship relationship) {
         Relationship relationshipInfo = selectRelationship(relationship);
         relationship.setId(relationshipInfo.getId());
         relationship.setAcceptCheck("Y");
         relationshipMapper.allowRelationship(relationship);
         return relationshipInfo.getId();
+    }
+
+    /**
+     * relationship 삭제
+     * @param id
+     * @return
+     */
+    public int deleteRelationship(int id) {
+        return relationshipMapper.deleteRelationship(id);
     }
 }

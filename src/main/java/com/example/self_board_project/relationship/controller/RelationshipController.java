@@ -161,7 +161,7 @@ public class RelationshipController {
     }
 
     /**
-     * header에서 채팅 눌렀을 떄 > 서로 relation을 보낸 사람들
+     * header에서 채팅 눌렀을 떄 > 서로 relation을 보낸 이력
      * @param auth
      * @param model
      * @return

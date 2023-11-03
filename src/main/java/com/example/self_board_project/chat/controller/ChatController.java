@@ -55,10 +55,12 @@ public class ChatController {
             }
             logger.info("yourId : {}", yourId);
 
-            if(yourId == 0) {
-                logger.info("yourId = 0");
-            }else {
-                logger.info("yourId =! 0");
+            if(roomInfo.getQuitId() != 0) {
+                if(yourId == roomInfo.getQuitId()) {
+                    logger.info("상대방이 나갔습니다.");
+                }
+            } else {
+                logger.info("상대방이 존재합니다.");
                 User user = new User();
                 user.setId(yourId);
                 user.setFlag("XS");
@@ -67,8 +69,6 @@ public class ChatController {
                 model.addAttribute("yourNickname", userInfo.getNickname());
                 model.addAttribute("imgUrl", userInfo.getImgUrl());
             }
-
-
 
             Chat chat = new Chat();
             chat.setRoomId(roomId);
@@ -86,7 +86,7 @@ public class ChatController {
         return "front:chat/chat";
     }
     /**
-     * 해당 채팅방 입장 => 채팅방의 방번호로 모든 리스트 가져오기
+     * 마지막 채팅이력 가져오기
      * @param auth
      * @return
      */
@@ -104,6 +104,13 @@ public class ChatController {
         return chat;
     }
 
+    /**
+     * 채팅 insert
+     * @param auth
+     * @param model
+     * @param chat
+     * @return
+     */
     @RequestMapping(value="/chat/insert")
     @ResponseBody
     public Chat insertChat(Auth auth, Model model, Chat chat) {
@@ -133,6 +140,14 @@ public class ChatController {
             return chatInfo;
         }
     }
+
+    /**
+     * //채팅방 들어온 아이디 읽지 않은거 모두 읽은걸로 업데이트
+     * @param auth
+     * @param model
+     * @param chat
+     * @return
+     */
     @RequestMapping(value="/chat/update")
     @ResponseBody
     public int updateChat(Auth auth, Model model, Chat chat) {

@@ -36,10 +36,10 @@ public class ChatService {
             int i=0;
             for (Chat item:chatList) {
                 if(item.getLastCreateDate() == null) {
-                    logger.info("lastDate없다");
+//                    logger.info("lastDate없다");
                     item.setShowCreateDate(item.getCreateDate());
                 } else {
-                    logger.info("lastDate있다");
+//                    logger.info("lastDate있다");
                     //현재시간
                     calendar.setTime(item.getCreateDate());
                     yearValue = calendar.get(Calendar.YEAR);
@@ -52,12 +52,12 @@ public class ChatService {
                     lastMonthValue = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
                     lastDayValue = calendar.get(Calendar.DAY_OF_MONTH);
 
-                    logger.info("현재 채팅시점 년,월,일 : {}" , yearValue + ":" + monthValue + "+" + dayValue);
-                    logger.info("과거 채팅시점 년,월,일 : {}" , lastYearValue + ":" + lastMonthValue + "+" + lastDayValue);
+//                    logger.info("현재 채팅시점 년,월,일 : {}" , yearValue + ":" + monthValue + "+" + dayValue);
+//                    logger.info("과거 채팅시점 년,월,일 : {}" , lastYearValue + ":" + lastMonthValue + "+" + lastDayValue);
                     String nowDate = yearValue + ":" + monthValue + "+" + dayValue;
                     String lastDate = lastYearValue + ":" + lastMonthValue + "+" + lastDayValue;
                     if(!nowDate.equals(lastDate)) {
-                        logger.info("nowDate != lastDate");
+//                        logger.info("nowDate != lastDate");
                         item.setShowCreateDate(item.getCreateDate());
                     }
 

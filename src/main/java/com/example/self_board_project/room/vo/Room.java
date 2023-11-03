@@ -13,6 +13,7 @@ public class Room {
     private String roomName;
     private String url;
     private int roomId;
+    private int quitId;
     private int roomBossId;
     private int roomStaffId;
     private String sessionId;

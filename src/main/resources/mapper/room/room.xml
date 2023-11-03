@@ -8,6 +8,7 @@
                t1.room_id,
                t1.room_boss_id,
                t1.room_staff_id,
+               t1.quit_id,
                t1.create_date
         FROM room t1
     </sql>
@@ -70,10 +71,14 @@
 <!--            AND field = #{field}-->
 <!--        </if>-->
     </update>
+
     <update id="quitRoom">
         /** quitRoom **/
         update `room`
             <set>
+                <if test="quitId != null and quitId != ''">
+                    quit_id = #{quitId},
+                </if>
                 <if test="roomBossId != null and roomBossId != ''">
                     room_staff_id = null,
                 </if>
@@ -82,8 +87,13 @@
                 </if>
             </set>
         WHERE id = #{id}
-
     </update>
+
+    <delete id="deleteRoom">
+        /** deleteRoom **/
+        delete from `room`
+        WHERE id = #{Id}
+    </delete>
 
 
 </mapper>

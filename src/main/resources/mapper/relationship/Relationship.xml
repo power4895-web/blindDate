@@ -40,6 +40,7 @@
             t1.id,
             t1.send_id,
             t1.get_id,
+            t1.quit_yn,
             t1.accept_check,
             t1.create_date,
             t2.id,
@@ -48,7 +49,7 @@
         FROM relationship t1
         join `user` t2 on t1.send_id = t2.id
         <where>
-            accept_check = 'Y' AND get_id = #{getId} AND quit_yn = 'N'
+            accept_check = 'Y' AND get_id = #{getId}
         </where>
     </select>
 
@@ -264,12 +265,19 @@
                , #{acceptCheck}
                , now())
     </insert>
+
     <update id="allowRelationship">
         /** allowRelationship **/
         UPDATE `relationship`
         SET accept_check = #{acceptCheck},
             quit_yn = #{quitYn},
             update_date = now()
+        WHERE id = #{id}
+    </update>
+
+    <update id="deleteRelationship">
+        /** deleteRelationship **/
+        delete from `relationship`
         WHERE id = #{id}
     </update>
 
