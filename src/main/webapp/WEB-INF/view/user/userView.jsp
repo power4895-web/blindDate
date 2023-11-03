@@ -140,7 +140,7 @@
                     <div class="h4 pb-2 mb-4 border-bottom"></div>
                     <%--평가유무--%>
                     <div id="notEvaluate" class="text-center">
-                        <div class="d-block p-2 text-bg-light" >${userInfo.realName} 님의 매력점수는?</div>
+                        <div class="d-block p-2 text-bg-light" >${userInfo.nickname} 님의 매력점수는?</div>
                         <div class="ratings jq-stars" data-rating="0"></div>
                     </div>
                     <div id="didEvaluate">
