@@ -73,6 +73,7 @@ public class FileService {
         return fileSmallList;
     }
     public void insertFile(FileInfo fileInfo, List<MultipartFile> files)throws Exception {
+        logger.info("service insertFile Start");
         List< FileInfo> list = new ArrayList< FileInfo>();
         String currentDate = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
         String projectPath = fileRootPath +  currentDate + "/";
@@ -81,15 +82,21 @@ public class FileService {
         if(!folder.isDirectory()) {
             folder.mkdirs();
         }
-        if (null != files && files.size() > 0) {
+        logger.info("폴더 생성");
+        logger.info("projectPath : {}",projectPath);
+        logger.info("resourcePathName : {}",resourcePathName);
+        logger.info("files.size() : {}", files.size());
 
+        if (null != files && files.size() > 0) {
+            logger.info("files : {}", files);
             int index = 0;
             for(MultipartFile multipartFile : files) {
+                logger.info("multipartFile : {}", multipartFile.getOriginalFilename());
                 UUID uuid = UUID.randomUUID();
                 String filename = uuid + "_" + multipartFile.getOriginalFilename();
                 File saveFile = new File(projectPath, filename);
                 multipartFile.transferTo(saveFile);
-
+                logger.info("transferTo 끝");
                 List<Map<String,Object>> imageList = new ArrayList<>();
 
                 
@@ -140,6 +147,7 @@ public class FileService {
                 fileInfo.setOriginalFilename(multipartFile.getOriginalFilename());
                 fileInfo.setFilepath(resourcePathName);
 
+                logger.info("imageList.size() : {}", imageList.size());
                 imageList.forEach(obj -> {
                     FileInfo img = new FileInfo();
                     img.setRefId(fileInfo.getRefId());
@@ -150,6 +158,7 @@ public class FileService {
                     img.setBossType(obj.get("bossType").toString());
                     img.setOriginalFilename(multipartFile.getOriginalFilename());
                     img.setSystemFilename(filename);
+                    logger.info("fileMapper.insertFile 직전 ");
                     fileMapper.insertFile(img);
                 });
                 index++;

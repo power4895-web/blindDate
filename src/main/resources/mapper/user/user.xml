@@ -6,42 +6,42 @@
 <mapper namespace="com.example.self_board_project.user.mapper.UserMapper">
     <sql id="selectQuery">
         SELECT t1.id,
-               t1.login_id,
-               t1.password,
-               t1.nickname,
-               t1.real_name,
-               t1.age,
-               t1.gender,
-               t1.email,
-               t1.phone_number,
-               t1.address_doro,
-               t1.address_jibun,
-               t1.latitude,
-               t1.longitude,
-               t1.address_detail,
-               t1.postal_code,
-               t1.grade_score,
-               t1.grade_code,
-               t1.job,
-               t1.workplace,
-               t1.purpose,
-               t1.introduce,
-               t1.today_profile_id,
-               t1.smoking_yn,
-               t1.drinking_type,
-               t1.religion_type,
-               t1.pet_type,
-               t1.hobby,
-               t1.ideal_type,
-               t1.mbti,
-               t1.height,
-               t1.academic,
-               t1.body_type,
-               t1.personality,
-               t1.create_date,
-               t1.update_date,
-               t1.update_id,
-               concat(t2.filepath, t2.image_name) img_url
+        t1.login_id,
+        t1.password,
+        t1.nickname,
+        t1.real_name,
+        t1.age,
+        t1.gender,
+        t1.email,
+        t1.phone_number,
+        t1.address_doro,
+        t1.address_jibun,
+        t1.latitude,
+        t1.longitude,
+        t1.address_detail,
+        t1.postal_code,
+        t1.grade_score,
+        t1.grade_code,
+        t1.job,
+        t1.workplace,
+        t1.purpose,
+        t1.introduce,
+        t1.today_profile_id,
+        t1.smoking_yn,
+        t1.drinking_type,
+        t1.religion_type,
+        t1.pet_type,
+        t1.hobby,
+        t1.ideal_type,
+        t1.mbti,
+        t1.height,
+        t1.academic,
+        t1.body_type,
+        t1.personality,
+        t1.create_date,
+        t1.update_date,
+        t1.update_id,
+        concat(t2.filepath, t2.image_name) img_url
         FROM user t1
         <if test="flag != null and flag != ''">
             join file t2 on t1.id = t2.ref_id and flag = #{flag} AND boss_type = 'Y'
@@ -139,6 +139,9 @@
                , #{email}
                , #{phoneNumber}
                , #{addressDoro}
+               , #{addressJibun}
+               , #{latitude}
+               , #{longitude}
                , #{addressDetail}
                , #{postalCode}
                , #{job}

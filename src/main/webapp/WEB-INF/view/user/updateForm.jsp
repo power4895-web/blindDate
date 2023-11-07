@@ -352,7 +352,7 @@
             data: formData,
             processData: false,
             contentType: false,
-            async: true,
+            async: false,
             // dataType : 'json',  //왜 삭제해야하는지는 잘 모르겠어.
             success: function (data) { // 결과 성공 콜백함수
                 console.log("data", data);

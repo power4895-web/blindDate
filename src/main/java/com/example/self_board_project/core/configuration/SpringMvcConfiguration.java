@@ -53,6 +53,8 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+//        registry.addResourceHandler("/favicon.ico").addResourceLocations("/static/favicon.ico");
+//        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
         if("local".equals(deploy)) {
             registry.addResourceHandler( uploadResourcePath + "**").addResourceLocations("file:///" + fileRootPath); //data 말고 다른 이름으로 해줘도 된다.
         }
