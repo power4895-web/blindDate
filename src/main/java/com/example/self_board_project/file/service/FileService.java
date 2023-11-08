@@ -76,15 +76,18 @@ public class FileService {
         logger.info("service insertFile Start");
         List< FileInfo> list = new ArrayList< FileInfo>();
         String currentDate = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-        String projectPath = fileRootPath +  currentDate + "/";
-        String resourcePathName = uploadResourcePath +  currentDate + "/";
-        File folder = new File(projectPath);
+        String projectPath = fileRootPath + "/"+  currentDate + "/"; //파일업로드 할 위치
+        String resourcePathName = uploadResourcePath + "/"+  currentDate + "/"; //DB에 저장할 파일업로드 위치
+        String fileFullPath = fileRootPath + uploadResourcePath + "/" + currentDate + "/";
+
+        File folder = new File(fileFullPath);
         if(!folder.isDirectory()) {
             folder.mkdirs();
         }
         logger.info("폴더 생성");
         logger.info("projectPath : {}",projectPath);
         logger.info("resourcePathName : {}",resourcePathName);
+        logger.info("resourcePathName : {}",fileFullPath);
         logger.info("files.size() : {}", files.size());
 
         if (null != files && files.size() > 0) {
@@ -94,7 +97,7 @@ public class FileService {
                 logger.info("multipartFile : {}", multipartFile.getOriginalFilename());
                 UUID uuid = UUID.randomUUID();
                 String filename = uuid + "_" + multipartFile.getOriginalFilename();
-                File saveFile = new File(projectPath, filename);
+                File saveFile = new File(fileFullPath, filename);
                 multipartFile.transferTo(saveFile);
                 logger.info("transferTo 끝");
                 List<Map<String,Object>> imageList = new ArrayList<>();
@@ -124,21 +127,21 @@ public class FileService {
                 });
                 imageList.add(new HashMap<String, Object>() {
                     {
-                        put("name", createTumbnail(projectPath, filename, 50, 50));
+                        put("name", createTumbnail(fileFullPath, filename, 50, 50));
                         put("flag", "XS");
                         put("bossType", finalBossType);
                     }
                 });
                 imageList.add(new HashMap<String, Object>() {
                     {
-                        put("name", createTumbnail(projectPath, filename, 200, 200));
+                        put("name", createTumbnail(fileFullPath, filename, 200, 200));
                         put("flag", "S");
                         put("bossType", finalBossType);
                     }
                 });
                 imageList.add(new HashMap<String, Object>() {
                     {
-                        put("name", createTumbnail(projectPath, filename, 400, 400));
+                        put("name", createTumbnail(fileFullPath, filename, 400, 400));
                         put("flag", "M");
                         put("bossType", finalBossType);
                     }
