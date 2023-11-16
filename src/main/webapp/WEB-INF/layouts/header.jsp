@@ -147,7 +147,8 @@
     function sendNotification() {
         // console.log("sendNotification 구독 start")
         //구독커넥션 연결
-        const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
+        const eventSource = new EventSource('laure-date.shop/notifications/subscribe/' + $('#info').val());
+        // const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
         eventSource.addEventListener('sse', event => {
             // console.log(">>>event.lastEventId : ", event.lastEventId)
             //서버에서 send()를 하면 이부분부터 로직이 수행된다.
@@ -201,7 +202,8 @@
                 notification.close();
             }, 10 * 1000);
             notification.addEventListener('click', () => {
-                window.open("http://localhost:8080/user/friendList/" + flag, '_blank');
+                window.open("laure-date.shop/user/friendList/" + flag, '_blank');
+                // window.open("http://localhost:8080/user/friendList/" + flag, '_blank');
             });
         }
     }

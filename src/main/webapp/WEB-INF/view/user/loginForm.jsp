@@ -91,13 +91,6 @@
 </body>
 </html>
 <script>
-
-    function test() {
-        const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/1');
-        eventSource.addEventListener('sse', event => {
-            console.log(event);
-        });
-    }
     function login() {
         console.log(">>", $("#loginId").val().trim())
         com.requestAjax({
