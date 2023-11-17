@@ -66,21 +66,13 @@ public class FileController {
      */
     @ResponseBody
     @RequestMapping(value = "/deleteFile/{id}")
-    public boolean deleteFile(@PathVariable String id) {
-        boolean result = fileService.deleteFile(id);
-        int originalId = Integer.parseInt(id)- 1;
-        FileInfo fileOriginal = fileService.selectFile(String.valueOf(originalId));
-        if(fileOriginal.getFlag().equals("O")) {
-            logger.info("O일 때");
-            result = fileService.deleteFile(String.valueOf(originalId));
+    public boolean deleteFile(@PathVariable int id) {
+        boolean result = false;
+        //차례대로 M, S, XS, O 지운다, M이 가장 최근(큰번호), 하위 아래3개 지운다
+        for(int i=0; i<4; i++) {
+            result = fileService.deleteFile(id-i);
         }
-
-        int MediumId = Integer.parseInt(id)+ 1;
-        FileInfo fileMedium = fileService.selectFile(String.valueOf(MediumId));
-        if(fileMedium.getFlag().equals("M")) {
-            logger.info("M일 때");
-            result = fileService.deleteFile(String.valueOf(MediumId));
-        }
+        logger.info("result : {}", result);
         return result;
     }
 }

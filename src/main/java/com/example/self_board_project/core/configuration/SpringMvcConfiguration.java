@@ -56,21 +56,15 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
 //        registry.addResourceHandler("/favicon.ico").addResourceLocations("/static/favicon.ico");
 //        registry.addResourceHandler("/static/**").addResourceLocations("/static/");
         if("local".equals(deploy)) {
+            //addResourceHandler안에서 세부적으로 addResourceLocations있는 경로의 파일들을 모두 뒤진다
+            //DB의 파일위치와 addresourcehandler가 같아야 한다. 즉 db의 파일경로가 /upload/data/common/ 시작한다면 addresourcehandler도 /upload/data/common/로 시작
+//          addResourceLocations에는 파일위치의 풀경로를 입력한다
+            registry.addResourceHandler("/upload/data/common/**").addResourceLocations("file:///" + fileRootPath + "/data/common/");
 
-            //파일위치는 data 하위에 있어야한다.
-            //front에서 파일이름을 불러올 땐 /data로 시작해야한다.
-            //addresourcehandler와 addresourcelocations의 마지막 부분은 같아야 한다.
-
-            registry.addResourceHandler("/data/**").addResourceLocations("file:///" + fileRootPath + "/data/");
-
-            // file.root.path = D:/upload/
-            // upload.resource.path = /upload/
-            // db: upload/20231020/
-            // front: upload/20231017/00656857-f446-4054-ab73-59520f25811e_송강4_400x400.png
-//             registry.addResourceHandler( uploadResourcePath + "**").addResourceLocations("file:///" + fileRootPath); //data 말고 다른 이름으로 해줘도 된다.
-            //X file.root.path = D:/upload/data
-            // upload.resource.path = /data/common
-//            registry.addResourceHandler( "/common/" + "**").addResourceLocations("file:///" + fileRootPath ); //data 말고 다른 이름으로 해줘도 된다.
+//          registry.addResourceHandler("/upload/**").addResourceLocations("file:///" + fileRootPath + "/data/common/");
+//            registry.addResourceHandler("/data/**").addResourceLocations("file:///" + fileRootPath + "/data/");
+//            registry.addResourceHandler("/upload/**").addResourceLocations("file:///" + fileRootPath);
+//            registry.addResourceHandler("/data/**").addResourceLocations("file:///" + fileRootPath + "/data/");
         }
     }
 

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,8 @@ import java.io.IOException;
 public class MainController {
     Logger logger = LoggerFactory.getLogger(getClass());
     private final HttpSession httpSession;
-
+    private @Value("${deploy}") String deploy;
+    private @Value("${front.domain}") String frontDomain;
     @Autowired
     private UserService userService;
     @RequestMapping("/")
@@ -130,6 +132,14 @@ public class MainController {
     {
         return "front:about";
     }
+
+
+//    @RequestMapping(value="/header")
+//    @ResponseBody
+//    public String header ()
+//    {
+//        return frontDomain;
+//    }
 
 
 

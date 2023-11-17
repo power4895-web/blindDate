@@ -97,29 +97,15 @@
 
         //로그인한 상태일때만 페이지 이동시 계속 구독 요청
         if ($('#info').val() != null) {
+            // getDeploy();
             sendNotification();
         }//if end
     })//ready end
 
 
-    async function updateNotification() {
-        console.log("updateNotification start")
-        const result = await $.ajax({
-            type: 'get',
-            url: "/notifications/update",
-            success: function (data) { // 결과 성공 콜백함수
-                console.log("notiCount", data)
-            },
-            error: function (request, status, error) { // 결과 에러 콜백함수
-                console.log("error", error)
-            }
-        })
-        console.log("result", result);
-        sendNotification();
-    }
-
-
     let totalNCount = 0; //mypage,친구리스트 알람개수
+
+
     //현재시점 알람개수 가져와서 매핑
     function getNotificationCount() {
         $.ajax({
@@ -144,12 +130,16 @@
 
     //구독하기
     // 최초 구독할 때 한번 호출
-    function sendNotification() {
+    function sendNotification(frontDomain) {
         // console.log("sendNotification 구독 start")
         //구독커넥션 연결
-        const eventSource = new EventSource('laure-date.shop/notifications/subscribe/' + $('#info').val());
-        // const eventSource = new EventSource('http://localhost:8080/notifications/subscribe/' + $('#info').val());
+        let eventSource = null;
+
+        eventSource = new EventSource('/notifications/subscribe/' + $('#info').val());
+        // eventSource = new EventSource(frontDomain + '/notifications/subscribe/' + $('#info').val());
+
         eventSource.addEventListener('sse', event => {
+            console.log(">>>서버에서 send 보냄 event.data:", event)
             // console.log(">>>event.lastEventId : ", event.lastEventId)
             //서버에서 send()를 하면 이부분부터 로직이 수행된다.
             //현재시점 알람가져오기
@@ -206,5 +196,19 @@
                 // window.open("http://localhost:8080/user/friendList/" + flag, '_blank');
             });
         }
+    }
+    function getDeploy () {
+        $.ajax({
+            type: 'get',
+            url: "/header",
+            success: function (data) { // 결과 성공 콜백함수
+                console.log("frontDomain", data)
+                sendNotification(data);
+            },
+            error: function (request, status, error) { // 결과 에러 콜백함수
+                console.log("error", error)
+            }
+        })
+
     }
 </script>

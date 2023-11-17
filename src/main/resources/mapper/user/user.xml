@@ -41,14 +41,21 @@
         t1.create_date,
         t1.update_date,
         t1.update_id,
-        concat(t2.filepath, t2.image_name) img_url
+        t1.role,
+        t1.provider
+        <if test="flag != null and flag != ''">
+            , concat(t2.filepath, t2.image_name) img_url
+        </if>
         FROM user t1
         <if test="flag != null and flag != ''">
             join file t2 on t1.id = t2.ref_id and flag = #{flag} AND boss_type = 'Y'
         </if>
-        <if test="flag == null ">
-            join file t2 on t1.id = t2.ref_id and flag = 'M' AND boss_type = "Y"
-        </if>
+<!--        <if test="flag == null ">-->
+<!--            join file t2 on t1.id = t2.ref_id-->
+<!--        </if>-->
+<!--        <if test="flag == null ">-->
+<!--            join file t2 on t1.id = t2.ref_id and flag = 'M' AND boss_type = "Y"-->
+<!--        </if>-->
     </sql>
 
 

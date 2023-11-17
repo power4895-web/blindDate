@@ -36,7 +36,7 @@ public class NotificationService {
      * 하나의 데이터도 전송되지 않는다면 SseEmitter의 유효 시간이 끝나면 503응답이 발생하는 문제가 있다. 따라서 연결시 바로 더미 데이터를 한 번 보내준다.
      */
     public SseEmitter subscribe(long userId, String lastEventId) {
-//        logger.info("====subscribe Service start ");
+        logger.info("====subscribe Service start ");
         String emitterId = makeTimeIncludeId(userId); // (1-2)
 //        logger.info("emitterId : {}", emitterId);
 
@@ -119,7 +119,7 @@ public class NotificationService {
      * @param data
      */
     private void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data) { // (4)
-//        logger.info("sendNotification Start");
+        logger.info("sendNotification Start");
 //        logger.info("emitter : {}", emitter);
 //        logger.info("eventId : {}", eventId);
 //        logger.info("emitterId : {}", emitterId);

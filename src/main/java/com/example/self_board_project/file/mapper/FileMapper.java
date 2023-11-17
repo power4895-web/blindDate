@@ -10,9 +10,9 @@ public interface FileMapper {
 
     public void selectFileCount(FileInfo fileInfo);
     public List<FileInfo> selectFileList(FileInfo fileInfo);
-    public FileInfo selectFile(String id);
+    public FileInfo selectFile(int id);
     public void insertFile(FileInfo fileInfo);
-    int deleteFile(String id);
+    int deleteFile(int id);
     public void updateFile(FileInfo fileInfo);
 
 }

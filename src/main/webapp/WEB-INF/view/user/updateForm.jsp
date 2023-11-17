@@ -31,11 +31,13 @@
                         <form action="/register" name="frm" id="frm" data-sb-form-api-token="API_TOKEN">
                             <input type="hidden" id="id" name="id" value="${userInfo.id}">
                             <!-- ID address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="loginId" name="loginId" value="${userInfo.loginId}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="loginId">아이디</label>
-                                <div class="invalid-feedback" data-sb-feedback="loginId:required">A loginId is required.</div>
-                            </div>
+                            <c:if test="${userInfo.provider == null}">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="loginId" name="loginId" value="${userInfo.loginId}" type="text" placeholder="Enter your name..." disabled data-sb-validations="required" />
+                                    <label for="loginId">아이디</label>
+                                    <div class="invalid-feedback" data-sb-feedback="loginId:required">A loginId is required.</div>
+                                </div>
+                            </c:if>
                             <!-- Name input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
@@ -49,11 +51,11 @@
                                 <div class="invalid-feedback" data-sb-feedback="nickname:required">A nickname is required.</div>
                             </div>
                             <!-- password input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="password" name="password" value="${userInfo.password}" type="password" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="password">비밀번호</label>
-                                <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>
-                            </div>
+<%--                            <div class="form-floating mb-3">--%>
+<%--                                <input class="form-control" id="password" name="password" value="${userInfo.password}" type="password" placeholder="Enter your name..." data-sb-validations="required" />--%>
+<%--                                <label for="password">비밀번호</label>--%>
+<%--                                <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>--%>
+<%--                            </div>--%>
                             <!-- age input-->
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="age" name="age" value="${userInfo.age}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
@@ -528,6 +530,7 @@
             type:"post",
             url : "/deleteFile/" + id,
             success: function(data){
+                console.log("data", data);
                 for(let i=1; i<7; i++) {
                     for(let j=1; j<3; j++) {
                         $('#fileList' + i + '_' + j).attr("src", '/static/files/who5.png');

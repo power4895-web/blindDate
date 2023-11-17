@@ -66,6 +66,7 @@ public class UserController {
         logger.info("type : {}", type );
         User user = new User();
         user.setId(id);
+        user.setFlag("M");
         User userInfo = userService.selectUser(user);
         model.addAttribute("userInfo", userInfo);
 
@@ -188,7 +189,7 @@ public class UserController {
 
             FileInfo fileInfo = new FileInfo();
             fileInfo.setRefId(Integer.parseInt(item3));
-            fileInfo.setFlag("user");
+            fileInfo.setDivision("user");
             List<FileInfo> fileList = fileService.selectFileList(fileInfo);
             userInfo2.setFileList(fileList);
             if(relationshipInfo != null) {
@@ -241,7 +242,7 @@ public class UserController {
         if(userInfo.getImgUrl() == null) {
             logger.info("회원수정으로 가기");
 //            StringUtil.alert(response, "파일을 등록해주세요");
-            return String.format("redirect:/updateForm/%s", userInfo.getId());
+            return String.format("redirect:/user/updateForm/%s", userInfo.getId());
         } else {
             return "true";
         }

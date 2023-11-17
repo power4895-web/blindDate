@@ -26,6 +26,7 @@ public class FileService {
 
     private @Value("${file.root.path}") String fileRootPath;
     private @Value("${upload.resource.path}") String uploadResourcePath;
+    private @Value("${deploy}") String deploy;
     @Autowired
     FileMapper fileMapper;
 
@@ -34,7 +35,7 @@ public class FileService {
      * @param id
      * @return
      */
-    public FileInfo selectFile(String id) {
+    public FileInfo selectFile(int id) {
         return fileMapper.selectFile(id);
     }
 
@@ -80,6 +81,8 @@ public class FileService {
         String resourcePathName = uploadResourcePath + "/"+  currentDate + "/"; //DB에 저장할 파일업로드 위치
         String fileFullPath = fileRootPath + uploadResourcePath + "/" + currentDate + "/";
 
+
+
         File folder = new File(fileFullPath);
         if(!folder.isDirectory()) {
             folder.mkdirs();
@@ -87,7 +90,7 @@ public class FileService {
         logger.info("폴더 생성");
         logger.info("projectPath : {}",projectPath);
         logger.info("resourcePathName : {}",resourcePathName);
-        logger.info("resourcePathName : {}",fileFullPath);
+        logger.info("fileFullPath : {}",fileFullPath);
         logger.info("files.size() : {}", files.size());
 
         if (null != files && files.size() > 0) {
@@ -148,15 +151,22 @@ public class FileService {
                 });
                 fileInfo.setSystemFilename(filename);
                 fileInfo.setOriginalFilename(multipartFile.getOriginalFilename());
-                fileInfo.setFilepath(resourcePathName);
 
+                //local이면 /upload/data/common
+                //dev보면 /data/common   >파일경로는 nginx 설정파일에서 설정, 보안을 위함
+                if(deploy.equals("local")) {
+                    String extractedPath = fileRootPath.substring(fileRootPath.lastIndexOf("/"));
+                    fileInfo.setFilepath(extractedPath + resourcePathName);
+                } else if (deploy.equals("dev")) {
+                    fileInfo.setFilepath(resourcePathName);
+                }
                 logger.info("imageList.size() : {}", imageList.size());
                 imageList.forEach(obj -> {
                     FileInfo img = new FileInfo();
                     img.setRefId(fileInfo.getRefId());
                     img.setDivision(fileInfo.getDivision());
                     img.setImageName(obj.get("name").toString());
-                    img.setFilepath(resourcePathName);
+                    img.setFilepath(fileInfo.getFilepath());
                     img.setFlag(obj.get("flag").toString());
                     img.setBossType(obj.get("bossType").toString());
                     img.setOriginalFilename(multipartFile.getOriginalFilename());
@@ -215,7 +225,7 @@ public class FileService {
      * @param id
      * @return
      */
-    public boolean deleteFile(String id) {
+    public boolean deleteFile(int id) {
         logger.info("deleteFile Mapper Start id {}", id);
         FileInfo fileInfo = selectFile(id);
         logger.info("fileInfoGetId : {}", fileInfo.getId());

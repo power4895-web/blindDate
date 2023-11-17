@@ -3,6 +3,7 @@ package com.example.self_board_project.core.authority;
 
 import com.example.self_board_project.user.mapper.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ public class AuthService  implements UserDetailsService {
 	
 	@Autowired
 	private AuthMapper mapper;
+	private @Value("${deploy}") String deploy;
 
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException, DataAccessException {
 		System.out.println("loadUserByUsername , loginId : " + loginId);
