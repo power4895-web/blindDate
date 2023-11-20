@@ -77,7 +77,11 @@
                     #{id}
                 </foreach>
             </if>
-            order by rand() limit 2;
+<!--            <if test="limit != null and limit != ''">-->
+<!--                AND gender = #{gender}-->
+<!--            </if>-->
+
+            order by rand() limit #{limit};
         </where>
     </select>
 

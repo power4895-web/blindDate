@@ -14,52 +14,46 @@
 <html>
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
         <title>Modern Business - Start Bootstrap Template</title>
     </head>
     <body class="d-flex flex-column">
         <main class="flex-shrink-0">
-            <!-- Page content-->
             <section class="bg-light py-5">
                 <div class="container px-5 my-5">
                     <div class="text-center mb-5">
-                        <h1 class="fw-bolder">FriendList👫</h1>
+                        <h1 class="fw-bolder">randomUserList <i class="bi bi-people" style="color: #005bd4"></i></h1>
                         <p class="lead fw-normal text-muted mb-0">Friends with a show of affection</p>
                     </div>
-
-                    <%--탭그리기 : 보낸표현,받은표현--%>
-                    <ul class="nav nav-pills mb-3 justify-content-center" id="myTab" role="tablist" style="float :none;">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link " id="sendExpresstionBtnId" onclick="sendExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false">보낸표현</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="getExpresstionBtnId" onclick="getExpressionBtn()" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true">받은표현</button>
-                        </li>
-                    </ul>
-                    <%--친구해요 호감 해시태그--%>
-                    <div class="d-grid gap-2  d-md-flex justify-content-md-start" id="myTag">
-                        <button type="button" id="totalFriend" class="btn btn-outline-secondary" aria-pressed="true" data-bs-toggle="button" onclick="totalTag()">전체</button>
-                        <button type="button" id="relationship" class="btn btn-outline-success active" aria-pressed="true" data-bs-toggle="button" onclick="letFriendshipTag()">친구해요
-                            <span class="badge text-bg-danger" id="relationshipCount"></span>
-                        </button>
-                        <button type="button" id="evaluation" class="btn btn-outline-info" data-bs-toggle="button" onclick="evaluationTag()">매력
-                            <span class="badge text-bg-danger" id="evaluationCount"></span>
-                        </button>
+                    <div class="row gy-xl-5 justify-content" >
+                        <c:forEach var="item" items="${randomUserList}" varStatus="status" >
+                            <div class="col-lg-6 col-xl-4">
+                                <div class="card mb-5 mb-xl-0">
+                                    <div class="card-body p-0">
+                                        <div class="mb-3">
+                                            <img class="card-img-top" src="${item.imgUrl}" alt="..." />
+                                        </div>
+                                        <ul class="list-unstyled mb-4">
+                                            <div class="small">
+                                                <div class="fw-bold">
+                                                    <a href="/user/view/${item.id}">${item.nickname}, ${item.age}</a>
+                                                </div>
+                                                <div class="text-muted">
+                                                    <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}
+                                                    <i class="bi bi-rulers"></i>${item.height}cm
+                                                    💘${item.purpose}
+                                                </div>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
                     </div>
 
-                    <%--탭 내용 시작--%>
-                    <div class="tab-content" id="pills-tabContent">
 
-                        <%--첫번 째--%>
-                        <div class="tab-pane fade" id="pills-home" role="tabpanel" aria-labelledby="sendExpresstionBtnId" tabindex="0">
-                            <div class="row gy-xl-5 justify-content" id="sendExpresstionProfile"></div>
-                        </div>
-                        <%--두번 째--%>
-                            <input type="hidden" id="flag"  name="flag" value="${flag}"  >
-                        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="getExpresstionBtnId" tabindex="0">
-                            <div class="row gy-xl-5 justify-content" id="getExpressionProfile"></div>
-                        </div>
-                    </div>
-                    <%--탭 내용 끝--%>
                 </div>
             </section>
         </main>
@@ -68,20 +62,20 @@
 <script>
 
     $(document).ready(function () {
-        getNotificationCount()
-        if ($('#flag').val() == 'relationship') {
-            console.log("relationship")
-            // 친구해요데이터가져오기
-            getRelationshipList2("get");
-        } else {
-            console.log("getEvaluationList")
-            //호감 활성화
-            activateTab("evaluation")
-            //매력 비활성화
-            deactivateTab("relationship")
-            //호감데이터가져오기
-            getEvaluationList("get");
-        }
+        // getNotificationCount()
+        // if ($('#flag').val() == 'relationship') {
+        //     console.log("relationship")
+        //     // 친구해요데이터가져오기
+        //     getRelationshipList2("get");
+        // } else {
+        //     console.log("getEvaluationList")
+        //     //호감 활성화
+        //     activateTab("evaluation")
+        //     //매력 비활성화
+        //     deactivateTab("relationship")
+        //     //호감데이터가져오기
+        //     getEvaluationList("get");
+        // }
     })
 
 //알림읽기

@@ -237,6 +237,7 @@ public class UserController {
      */
     public String goUpdateForm(User user, HttpServletResponse response) {
         logger.info("goUpdateForm");
+        user.setFlag("M");
         User userInfo = userService.selectUser(user);
         //대표파일 없으면 redirect
         if(userInfo.getImgUrl() == null) {
@@ -246,5 +247,15 @@ public class UserController {
         } else {
             return "true";
         }
+    }
+
+    @RequestMapping(value = "/user/randomUserList")
+    public String randomUserList(User user, Auth auth, Model model) {
+
+        logger.info("randomUserList");
+        user.setId(auth.getId());
+        List<User> randomUserList = userService.randomList(user);
+        model.addAttribute("randomUserList", randomUserList);
+        return "front:user/randomUserList";
     }
 }

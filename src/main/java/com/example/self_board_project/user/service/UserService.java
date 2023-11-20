@@ -96,7 +96,7 @@ public class UserService {
             }
             List<Integer> distinctIds = ids.stream().distinct().collect(Collectors.toList());
             user.setIds(distinctIds);
-
+            user.setLimit(2);
             if(item.getGender().equals("M")) {
                 user.setGender("F");
                 user.setId(item.getId());
@@ -120,6 +120,52 @@ public class UserService {
                 updateTodayProfileId(user);
             }
         }
+    }
+    public List<User> randomList(User user) {
+        logger.info("todayRandom user : {}", user.getId());
+        User userInfo = selectUser(user);
+        /*친구해요*/
+        Relationship relationship = new Relationship();
+        relationship.setSendId(user.getId());
+        //현재 회원의 친구해요 보낸사람 list 가져와서 내가 친구해요를 보낸 사람의 아이디(getId)를 가져온 후 getId를 ids에 다 담아 user를 검색할 때
+        //getId가 없는 유저만 검색(결국 친구해요 안한 회원들만 검색하게 된다)
+        List<Relationship> relationshipList = relationshipService.selectRelationshipList(relationship);
+        List<Integer> ids = new ArrayList<>();
+        for (int i = 0; i < relationshipList.size(); i++) {
+            ids.add(relationshipList.get(i).getGetId());
+        }
+        //호감
+        Evaluation evaluation = new Evaluation();
+        evaluation.setEvaluationId(user.getId());
+        List<Evaluation> evaluationList = evaluationService.selectEvaluationList(evaluation);
+        for (int i = 0; i < evaluationList.size(); i++) {
+            ids.add(evaluationList.get(i).getReceiveId());
+        }
+        String[] todayProfileIds = userInfo.getTodayProfileId().split(",");
+        for (String value : todayProfileIds) {
+            ids.add(Integer.parseInt(value));
+        }
+
+        List<Integer> distinctIds = ids.stream().distinct().collect(Collectors.toList());
+        logger.info("first distinctIds: 친구해요, 매력 측장, 오늘의 프로필아이디 중복제거  : {}" + distinctIds);
+
+        logger.info("sencond distinctIds  : {}" + distinctIds);
+
+        user.setIds(distinctIds);
+
+        if(userInfo.getGender().equals("M")) {
+            user.setGender("F");
+            user.setId(userInfo.getId());
+            user.setLimit(10);
+        } else {
+            user.setGender("M");
+            user.setLimit(10);
+        }
+        user.setFlag("M");
+        List<User> randomUserList = selectUserRandomList(user);
+
+
+        return randomUserList;
     }
 
 }

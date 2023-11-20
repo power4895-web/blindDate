@@ -18,11 +18,17 @@
 <p id="indexListAjax">
     <c:if test="${field == 'relationship' || field == 'total'}">
         <c:if test="${relationshipList != null}">
+<%--            css가 meet up위치가 변경되어 임시적으로 추가--%>
+            <div class="col-lg-6 col-xl-4">
+            </div>
             <div class="mb-1">
                 <p class="lead fw-semibold text-muted mb-0">내가 친구해요를 ${type == 'send' ? '보낸' :  '받은'} 이성  <i class="bi bi-heart-fill" style="color: red"></i></p>
             </div>
         </c:if>
         <c:if test="${relationshipList == null}">
+
+            <div class="col-lg-6 col-xl-4">
+            </div>
             <div class="mb-1">
                 <p class="lead fw-semibold text-muted mb-0">친구해요를 보낸 이성이 없습니다. 이성에게 먼저 다가가보세요.  <i class="bi bi-heart-fill" style="color: red"></i></p>
             </div>

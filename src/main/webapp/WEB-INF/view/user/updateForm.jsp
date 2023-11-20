@@ -10,211 +10,209 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <html>
-<head>
-    <meta charset="utf-8" />
-    <title>Modern Business - Start Bootstrap Template</title>
-</head>
-<body class="d-flex flex-column">
-<main class="flex-shrink-0">
-    <!-- Page content-->
-    <section class="py-5">
-        <div class="container px-5">
-            <!-- Contact form-->
-            <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
-                <div class="text-center mb-5">
-                    <h1 class="fw-bolder">내 정보 변경 <i class="bi bi-gear-fill"></i></h1>
-                </div>
-                <div class="row gx-5 justify-content-center">
-                    <div class="col-lg-8 col-xl-6">
-                        <form action="/register" name="frm" id="frm" data-sb-form-api-token="API_TOKEN">
-                            <input type="hidden" id="id" name="id" value="${userInfo.id}">
-                            <!-- ID address input-->
-                            <c:if test="${userInfo.provider == null}">
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="loginId" name="loginId" value="${userInfo.loginId}" type="text" placeholder="Enter your name..." disabled data-sb-validations="required" />
-                                    <label for="loginId">아이디</label>
-                                    <div class="invalid-feedback" data-sb-feedback="loginId:required">A loginId is required.</div>
-                                </div>
-                            </c:if>
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
-                                <label for="realName">이름</label>
-                                <div class="invalid-feedback" data-sb-feedback="realName:required">A realName is required.</div>
-                            </div>
-                            <!-- nickname input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="nickname" name="nickname" value="${userInfo.nickname}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="nickname">닉네임</label>
-                                <div class="invalid-feedback" data-sb-feedback="nickname:required">A nickname is required.</div>
-                            </div>
-                            <!-- password input-->
-<%--                            <div class="form-floating mb-3">--%>
-<%--                                <input class="form-control" id="password" name="password" value="${userInfo.password}" type="password" placeholder="Enter your name..." data-sb-validations="required" />--%>
-<%--                                <label for="password">비밀번호</label>--%>
-<%--                                <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>--%>
-<%--                            </div>--%>
-                            <!-- age input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="age" name="age" value="${userInfo.age}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="age">나이</label>
-                                <div class="invalid-feedback" data-sb-feedback="age:required">A age is required.</div>
-                            </div>
-                            <!-- gender input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="gender" name="gender" value="${userInfo.gender}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="gender">성별</label>
-                                <div class="invalid-feedback" data-sb-feedback="gender:required">A gender is required.</div>
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="email" name="email" value="${userInfo.email}" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                <label for="email">이메일</label>
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phoneNumber" name="phoneNumber" value="${userInfo.phoneNumber}" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                <label for="phoneNumber">핸드폰번호</label>
-                                <div class="invalid-feedback" data-sb-feedback="phoneNumber:required">A phone number is required.</div>
-                            </div>
-                            <!-- addressDoro input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="addressDoro" name="addressDoro" value="${userInfo.addressDoro}" data-sb-validations="required" />
-                                <label for="addressDoro">지역</label>
-                                <input type="hidden" id="postalCode" name="postalCode" title="우편번호">
-                                <input type="hidden" id="addressJibun" name="addressJibun" title="지번 주소">
-                                <input type="hidden" id="latitude" name="latitude" title="위도">
-                                <input type="hidden" id="longitude" name="longitude" title="경도">
-                                <div class="invalid-feedback" data-sb-feedback="addressDoro:required">A phone number is required.</div>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <button type="button" class="btn btn-primary btn-sm" id="btnSearchPostalCode">주소검색</button>
-                            </div>
-                            <!-- job input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="job" name="job" value="${userInfo.job}"  data-sb-validations="required" />
-                                <label for="job">직업</label>
-                                <div class="invalid-feedback" data-sb-feedback="job:required">A phone number is required.</div>
-                            </div>
-                            <!-- purpose input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="purpose" name="purpose" value="${userInfo.purpose}" data-sb-validations="required" />
-                                <label for="purpose">목적</label>
-                                <div class="invalid-feedback" data-sb-feedback="purpose:required">A phone number is required.</div>
-                            </div>
-                            <!-- smokingYn input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="smokingYn" name="smokingYn"  value="${userInfo.smokingYn}" data-sb-validations="required" />
-                                <label for="smokingYn">흡연여부</label>
-                                <div class="invalid-feedback" data-sb-feedback="smokingYn:required">A phone number is required.</div>
-                            </div>
-                            <!-- drinkingType input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="drinkingType" name="drinkingType" value="${userInfo.drinkingType}" data-sb-validations="required" />
-                                <label for="drinkingType">음주</label>
-                                <div class="invalid-feedback" data-sb-feedback="drinkingType:required">A phone number is required.</div>
-                            </div>
-                            <!-- religionType input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="religionType" name="religionType" value="${userInfo.religionType}" data-sb-validations="required" />
-                                <label for="religionType">종교</label>
-                                <div class="invalid-feedback" data-sb-feedback="religionType:required">A phone number is required.</div>
-                            </div>
-                            <!-- petType input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="petType" name="petType" value="${userInfo.petType}" data-sb-validations="required" />
-                                <label for="petType">반려동물</label>
-                                <div class="invalid-feedback" data-sb-feedback="petType:required">A phone number is required.</div>
-                            </div>
-                            <!-- hobby input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="hobby" name="hobby" value="${userInfo.hobby}" data-sb-validations="required" />
-                                <label for="hobby">취미</label>
-                                <div class="invalid-feedback" data-sb-feedback="hobby:required">A phone number is required.</div>
-                            </div>
-                            <!-- idealType input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="idealType" name="idealType" value="${userInfo.idealType}"  data-sb-validations="required" />
-                                <label for="idealType">이상형</label>
-                                <div class="invalid-feedback" data-sb-feedback="idealType:required">A phone number is required.</div>
-                            </div>
-                            <!-- mbti input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="mbti" name="mbti" value="${userInfo.mbti}" data-sb-validations="required" />
-                                <label for="mbti">MBTI</label>
-                                <div class="invalid-feedback" data-sb-feedback="mbti:required">A phone number is required.</div>
-                            </div>
-                            <!-- height input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="height" name="height" value="${userInfo.height}" data-sb-validations="required" />
-                                <label for="height">키</label>
-                                <div class="invalid-feedback" data-sb-feedback="height:required">A phone number is required.</div>
-                            </div>
-                            <!-- academic input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="academic" name="academic" value="${userInfo.academic}" data-sb-validations="required" />
-                                <label for="academic">학력</label>
-                                <div class="invalid-feedback" data-sb-feedback="academic:required">A phone number is required.</div>
-                            </div>
-                            <!-- bodyType input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="bodyType" name="bodyType" value="${userInfo.bodyType}" data-sb-validations="required" />
-                                <label for="bodyType">체형</label>
-                                <div class="invalid-feedback" data-sb-feedback="bodyType:required">A phone number is required.</div>
-                            </div>
-                            <!-- personality input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="personality" name="personality" value="${userInfo.personality}" data-sb-validations="required" />
-                                <label for="personality">성격</label>
-                                <div class="invalid-feedback" data-sb-feedback="personality:required">A phone number is required.</div>
-                            </div>
-
-                            <!-- Message input-->
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="introduce" name="introduce" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required">${userInfo.introduce}</textarea>
-                                <label for="introduce">introduce</label>
-                                <div class="invalid-feedback" data-sb-feedback="introduce:required">A introduce is required.</div>
-                            </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple" />
-                            </div>
-
-
-                            <section class="py-5" >
-                                <c:forEach var="item" begin="1" end="3" step="1">
-                                    <div class="container px-5 my-5" id="totalRemove">
-                                        <div class="row gx-5 align-items-center">
-                                            <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_1" />
-                                            </div>
-                                            <div class="col-lg-6 order-first order-lg-last">
-                                                <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_2" />
-                                            </div>
+    <head>
+        <meta charset="utf-8" />
+        <title>Modern Business - Start Bootstrap Template</title>
+    </head>
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <!-- Page content-->
+            <section class="py-5">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                        <div class="text-center mb-5">
+                            <h1 class="fw-bolder">내 정보 변경 <i class="bi bi-gear-fill"></i></h1>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <form action="/register" name="frm" id="frm" data-sb-form-api-token="API_TOKEN">
+                                    <input type="hidden" id="id" name="id" value="${userInfo.id}">
+                                    <!-- ID address input-->
+                                    <c:if test="${userInfo.provider == null}">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="loginId" name="loginId" value="${userInfo.loginId}" type="text" placeholder="Enter your name..." disabled data-sb-validations="required" />
+                                            <label for="loginId">아이디</label>
+                                            <div class="invalid-feedback" data-sb-feedback="loginId:required">A loginId is required.</div>
                                         </div>
+                                    </c:if>
+                                    <!-- Name input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
+                                        <label for="realName">이름</label>
+                                        <div class="invalid-feedback" data-sb-feedback="realName:required">A realName is required.</div>
                                     </div>
-                                </c:forEach>
-                            </section>
-                            <div class="d-none" id="submitSuccessMessage">
+                                    <!-- nickname input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="nickname" name="nickname" value="${userInfo.nickname}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                        <label for="nickname">닉네임</label>
+                                        <div class="invalid-feedback" data-sb-feedback="nickname:required">A nickname is required.</div>
+                                    </div>
+                                    <!-- password input-->
+        <%--                            <div class="form-floating mb-3">--%>
+        <%--                                <input class="form-control" id="password" name="password" value="${userInfo.password}" type="password" placeholder="Enter your name..." data-sb-validations="required" />--%>
+        <%--                                <label for="password">비밀번호</label>--%>
+        <%--                                <div class="invalid-feedback" data-sb-feedback="password:required">A password is required.</div>--%>
+        <%--                            </div>--%>
+                                    <!-- age input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="age" name="age" value="${userInfo.age}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                        <label for="age">나이</label>
+                                        <div class="invalid-feedback" data-sb-feedback="age:required">A age is required.</div>
+                                    </div>
+                                    <!-- gender input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="gender" name="gender" value="${userInfo.gender}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                        <label for="gender">성별</label>
+                                        <div class="invalid-feedback" data-sb-feedback="gender:required">A gender is required.</div>
+                                    </div>
+                                    <!-- Email address input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" name="email" value="${userInfo.email}" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <label for="email">이메일</label>
+                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                    </div>
+                                    <!-- Phone number input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="phoneNumber" name="phoneNumber" value="${userInfo.phoneNumber}" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                        <label for="phoneNumber">핸드폰번호</label>
+                                        <div class="invalid-feedback" data-sb-feedback="phoneNumber:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- addressDoro input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="addressDoro" name="addressDoro" value="${userInfo.addressDoro}" data-sb-validations="required" />
+                                        <label for="addressDoro">지역</label>
+                                        <input type="hidden" id="postalCode" name="postalCode" title="우편번호">
+                                        <input type="hidden" id="addressJibun" name="addressJibun" title="지번 주소">
+                                        <input type="hidden" id="latitude" name="latitude" title="위도">
+                                        <input type="hidden" id="longitude" name="longitude" title="경도">
+                                        <div class="invalid-feedback" data-sb-feedback="addressDoro:required">A phone number is required.</div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <button type="button" class="btn btn-primary btn-sm" id="btnSearchPostalCode">주소검색</button>
+                                    </div>
+                                    <!-- job input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="job" name="job" value="${userInfo.job}"  data-sb-validations="required" />
+                                        <label for="job">직업</label>
+                                        <div class="invalid-feedback" data-sb-feedback="job:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- purpose input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="purpose" name="purpose" value="${userInfo.purpose}" data-sb-validations="required" />
+                                        <label for="purpose">목적</label>
+                                        <div class="invalid-feedback" data-sb-feedback="purpose:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- smokingYn input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="smokingYn" name="smokingYn"  value="${userInfo.smokingYn}" data-sb-validations="required" />
+                                        <label for="smokingYn">흡연여부</label>
+                                        <div class="invalid-feedback" data-sb-feedback="smokingYn:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- drinkingType input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="drinkingType" name="drinkingType" value="${userInfo.drinkingType}" data-sb-validations="required" />
+                                        <label for="drinkingType">음주</label>
+                                        <div class="invalid-feedback" data-sb-feedback="drinkingType:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- religionType input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="religionType" name="religionType" value="${userInfo.religionType}" data-sb-validations="required" />
+                                        <label for="religionType">종교</label>
+                                        <div class="invalid-feedback" data-sb-feedback="religionType:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- petType input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="petType" name="petType" value="${userInfo.petType}" data-sb-validations="required" />
+                                        <label for="petType">반려동물</label>
+                                        <div class="invalid-feedback" data-sb-feedback="petType:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- hobby input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="hobby" name="hobby" value="${userInfo.hobby}" data-sb-validations="required" />
+                                        <label for="hobby">취미</label>
+                                        <div class="invalid-feedback" data-sb-feedback="hobby:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- idealType input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="idealType" name="idealType" value="${userInfo.idealType}"  data-sb-validations="required" />
+                                        <label for="idealType">이상형</label>
+                                        <div class="invalid-feedback" data-sb-feedback="idealType:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- mbti input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="mbti" name="mbti" value="${userInfo.mbti}" data-sb-validations="required" />
+                                        <label for="mbti">MBTI</label>
+                                        <div class="invalid-feedback" data-sb-feedback="mbti:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- height input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="height" name="height" value="${userInfo.height}" data-sb-validations="required" />
+                                        <label for="height">키</label>
+                                        <div class="invalid-feedback" data-sb-feedback="height:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- academic input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="academic" name="academic" value="${userInfo.academic}" data-sb-validations="required" />
+                                        <label for="academic">학력</label>
+                                        <div class="invalid-feedback" data-sb-feedback="academic:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- bodyType input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="bodyType" name="bodyType" value="${userInfo.bodyType}" data-sb-validations="required" />
+                                        <label for="bodyType">체형</label>
+                                        <div class="invalid-feedback" data-sb-feedback="bodyType:required">A phone number is required.</div>
+                                    </div>
+                                    <!-- personality input-->
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="personality" name="personality" value="${userInfo.personality}" data-sb-validations="required" />
+                                        <label for="personality">성격</label>
+                                        <div class="invalid-feedback" data-sb-feedback="personality:required">A phone number is required.</div>
+                                    </div>
+
+                                    <!-- Message input-->
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="introduce" name="introduce" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required">${userInfo.introduce}</textarea>
+                                        <label for="introduce">introduce</label>
+                                        <div class="invalid-feedback" data-sb-feedback="introduce:required">A introduce is required.</div>
+                                    </div>
+                                    <!-- Phone number input-->
+                                    <div class="form-floating mb-3">
+                                        <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple" />
+                                    </div>
+
+
+                                    <section class="py-5" >
+                                        <c:forEach var="item" begin="1" end="3" step="1">
+                                            <div class="container px-5 my-5" id="totalRemove">
+                                                <div class="row gx-5 align-items-center">
+                                                    <div class="col-lg-6 order-first order-lg-last">
+                                                        <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_1" />
+                                                    </div>
+                                                    <div class="col-lg-6 order-first order-lg-last">
+                                                        <img class="img-fluid rounded mb-5 mb-lg-0" src="/static/files/who5.png" alt="..." id="fileList${item}_2" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </section>
+                                    <div class="d-none" id="submitSuccessMessage">
+                                    </div>
+                                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                                </form>
+                                <div class="d-grid">
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="update()" type="submit">수정</button></div>
+                                </div>
                             </div>
-                            <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                        </form>
-                        <div class="d-grid">
-                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" onclick="update()" type="submit">수정</button></div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-</main>
-<!-- Footer-->
-</body>
+            </section>
+        </main>
+    <!-- Footer-->
+    </body>
 </html>
 <script>
 
