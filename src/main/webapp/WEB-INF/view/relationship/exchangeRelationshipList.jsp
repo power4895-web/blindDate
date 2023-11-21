@@ -63,7 +63,9 @@
                                         채팅이력이 없습니다. 친구해요를 먼저 보내세요.
                                     </div>
                                 </a>
-                            </div>
+                        </c:if>
+                        <c:if test="${exchangeRelationshipList.size() < 4}">
+                            </div><br><br><br><br><br><br><br><br><br><br><br>
                         </c:if>
                     </div>
                 </div>

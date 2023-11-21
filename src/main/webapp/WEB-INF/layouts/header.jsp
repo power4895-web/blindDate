@@ -72,12 +72,14 @@
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="/relationship/exchangeRelationship">
-                                        채팅<i class="bi bi-chat-dots" style="color: #005bd4"></i>
+                                        채팅💌</i>
+<%--                                        채팅<i class="bi bi-chat-dots" style="color: #005bd4"></i>--%>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="/user/randomUserList">
-                                        이성친구 더보기<i class="bi bi-people" style="color: #005bd4"></i>
+                                        이성친구 더보기${info.user.gender == M ? '👩' : '🧑'}</i>
+<%--                                        <i class="bi bi-people" style="color: #005bd4">--%>
                                     </a>
                                 </li>
                                 <li><a class="dropdown-item" href="/user/updateForm/${info.user.id}">내정보수정<i class="bi bi-gear-fill"></i></a></li>

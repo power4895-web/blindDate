@@ -239,8 +239,13 @@ public class UserController {
         logger.info("goUpdateForm");
         user.setFlag("M");
         User userInfo = userService.selectUser(user);
+        if(userInfo == null) {
+            logger.info("회원수정으로 가기");
+//            StringUtil.alert(response, "파일을 등록해주세요");
+            return String.format("redirect:/user/updateForm/%s", user.getId());
+        }
         //대표파일 없으면 redirect
-        if(userInfo.getImgUrl() == null) {
+        if(userInfo.getImgUrl() == null ) {
             logger.info("회원수정으로 가기");
 //            StringUtil.alert(response, "파일을 등록해주세요");
             return String.format("redirect:/user/updateForm/%s", userInfo.getId());
@@ -250,10 +255,19 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/randomUserList")
-    public String randomUserList(User user, Auth auth, Model model) {
+    public String randomUserList(User user, Auth auth, Model model,HttpServletResponse response) {
 
         logger.info("randomUserList");
         user.setId(auth.getId());
+        //자신의 대표사진이 없으면 회원수정으로 가기
+        String result = goUpdateForm(user, response);
+        logger.info("대표사진이 있는 결과 result : {}", result);
+        if(result == "true") {
+            logger.info("대표사진 존재함");
+        }  else {
+            return result;
+        }
+
         List<User> randomUserList = userService.randomList(user);
         model.addAttribute("randomUserList", randomUserList);
         return "front:user/randomUserList";
