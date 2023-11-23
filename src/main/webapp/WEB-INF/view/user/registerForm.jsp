@@ -129,9 +129,23 @@
                                 <div class="invalid-feedback" data-sb-feedback="purpose:required">A phone number is required.</div>
                             </div>
                             <!-- smokingYn input-->
+<%--                            <label for="smokingYn">흡연여부</label>--%>
+                            <div class="form-check-inline">
+                                <input class="form-check-input" type="radio" name="smokingYn" id="smokingY">
+                                <label class="form-check-label" for="smokingY">
+                                    흡연
+                                </label>
+                            </div>
+<%--                            <div class="form-check-inline">--%>
+<%--                                <input class="form-check-input" type="radio" name="smokingYn" id="smokingN" checked>--%>
+<%--                                <label class="form-check-label" for="smokingN">--%>
+<%--                                   비흡연--%>
+<%--                                </label>--%>
+<%--                            </div>--%>
                             <div class="form-floating mb-3">
                                 <input class="form-control" id="smokingYn" name="smokingYn"  data-sb-validations="required" />
-                                <label for="smokingYn">흡연여부</label>
+                                <label for="smokingYn">흡연여부
+                                </label>
                                 <div class="invalid-feedback" data-sb-feedback="smokingYn:required">A phone number is required.</div>
                             </div>
                             <!-- drinkingType input-->

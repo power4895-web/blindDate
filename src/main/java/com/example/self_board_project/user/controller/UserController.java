@@ -204,6 +204,22 @@ public class UserController {
     }
 
     /**
+     * 회원카드삭제
+     * @param auth
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/user/deleteUserIds/{id}")
+    public boolean deleteUserIds (Auth auth, @PathVariable String id ) {
+        logger.info("id : {}", id);
+        User user = new User();
+        user.setId(auth.getId());
+        userService.deleteUserIds(user, id);
+        return true;
+    }
+
+
+    /**
      * default는 보낸 표현에서 친구해요
      * @param model
      * @param response

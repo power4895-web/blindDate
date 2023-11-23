@@ -575,7 +575,7 @@
         realFile = await requestSyncPostBodyJson();
         realFileCount = realFile.length;
         if(realFileCount == 0) {
-            alert("최소 파일 한장을 등록해주셔야 활성화 됩니다.")
+            alert("최소 파일 한장과 필수항목을 등록해주셔야 활성화 됩니다.")
         }
         totalFileSize = realFileCount;
         console.log("현재 업로드되어있는 파일개수 totalFileSize" , totalFileSize)

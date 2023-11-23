@@ -74,6 +74,9 @@ public class User {
     //relationship
     private String sendYn;
 
+    private String deleteIds;
+    private String order;
+    private String rand;
     private int limit;
 
 }

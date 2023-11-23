@@ -27,6 +27,7 @@
         t1.purpose,
         t1.introduce,
         t1.today_profile_id,
+        t1.delete_ids,
         t1.smoking_yn,
         t1.drinking_type,
         t1.religion_type,
@@ -62,6 +63,26 @@
     <select id="selectUserList" resultType="com.example.self_board_project.user.vo.User">
         /** selectUserList **/
         <include refid="selectQuery"/>
+        <where>
+            <if test="gender != null and gender != ''">
+                AND gender = #{gender}
+            </if>
+            <if test="ids != null and ids.size > 0">
+                AND t1.id NOT IN
+                <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            <if test='order.equals("rand")'>
+                order by rand()
+            </if>
+            <if test='!order.equals("rand")'>
+                order by #{order}
+            </if>
+            <if test="limit != null and limit != ''">
+                limit #{limit}
+            </if>
+        </where>
     </select>
 
     <select id="selectUserRandomList" resultType="com.example.self_board_project.user.vo.User">
@@ -77,11 +98,10 @@
                     #{id}
                 </foreach>
             </if>
-<!--            <if test="limit != null and limit != ''">-->
-<!--                AND gender = #{gender}-->
-<!--            </if>-->
-
-            order by rand() limit #{limit};
+            order by rand()
+            <if test="limit != null and limit != ''">
+                limit #{limit}
+            </if>
         </where>
     </select>
 
@@ -139,6 +159,7 @@
                           , provider_id
                           , username
                           , role
+                          , today_profile_id
                           , create_date)
 
         VALUES ( #{loginId}
@@ -174,11 +195,12 @@
                , #{providerId}
                , #{username}
                , #{role}
+               , #{todayProfileId}
                , now())
     </insert>
 
 
-    <update id="updateUser">
+    <update id="deleteUserIds">
         /** updateUser **/
         UPDATE user
         SET login_id= #{loginId},
@@ -211,6 +233,7 @@
             body_type = #{bodyType},
             personality = #{personality},
             today_profile_id= #{todayProfileId},
+            delete_ids= #{deleteIds},
             update_date= now()
         WHERE id = #{id}
     </update>
