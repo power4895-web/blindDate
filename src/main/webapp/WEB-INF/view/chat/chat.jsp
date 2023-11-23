@@ -23,8 +23,8 @@
             <!-- 설정바(최소화, 닫기 버튼 등) -->
             <div class="setting_bar">
                 <i class="bi bi-list"></i>
-                <i class="bi bi-search"></i>
-                <i class="bi bi-arrow-bar-right"></i>
+                <i class="bi bi-search" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="찾기"></i>
+                <i class="bi bi-arrow-bar-right" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="나가기"></i>
 <%--                <i class="bi bi-alarm"></i>--%>
     <%--            <i class="icon-window-minimize" alt="최소화버튼" title="최소화">s</i>--%>
     <%--            <i class="icon-window-maximize" alt="최대화버튼" title="최대화">s</i>--%>
@@ -40,11 +40,12 @@
             <!-- 프로필 사진, 프로필명 -->
             <header>
                 <div class="header-col">
-                    <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer"></i>
+                    <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="뒤로가기"></i>
                     <p class="profile-name">${yourInfo.nickname}</p>
                 </div>
                 <div class="col-md-8 offset-md-2" style="display: none" id="chatSearchId">
                     <div class="input-group mb-sm-2 m" >
+                        <button type="button" class="btn-close" style="font-size: 1.5rem;" aria-label="Close" onclick="searchClose()"></button>
                         <input type="text" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Recipient's username" aria-describedby="inputGroup-sizing-sm" id="chatSearchContent">
                         <span class="input-group-text" id="basic-addon2" onclick="findAllChat();">찾기</span>
                     </div>
@@ -67,7 +68,7 @@
                                 <img class="profile-img" src="${yourInfo.imgUrl}">
                             </div>
                             <div class="profile-col">
-                                <span class="profile-name ">안녕하세요. <br>저는 ${yourInfo.age}이고 ${yourInfo.addressDoro}에 살아요.</span>
+                                <span class="profile-name ">안녕하세요. <br>저는 ${yourInfo.age}이고 ${yourInfo.address}에 살아요.</span>
                             </div><br><br>
                         </c:if>
 
@@ -160,7 +161,7 @@
                     <div class="insert-content">
                         <form name="chatform" id="chatform" >
                             <textarea name="chat-insert" id="chatInsert" ${yourInfo.id == null ? 'disabled' : ''}></textarea>
-                            <button class="chat-submit" onclick="send()" id="sendBtn" ${yourInfo.id == null ? 'disabled' : ''}>
+                            <button class="chat-submit" style="cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="전송" onclick="send()" id="sendBtn" ${yourInfo.id == null ? 'disabled' : ''}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                      class="bi bi-send-fill" viewBox="0 0 16 16">
                                     <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
@@ -660,6 +661,8 @@
     var oldCurrentIndex = 0;    //이전index번호
     var searchString = "";  //현재검색어
     var oldSearchString  = "";  //이전검색어
+    var searchResult   = false;  //이전검색어
+
 
 
     //찾기 검색버튼
@@ -857,11 +860,20 @@
 
     //돋보기검색
     function chatSearchBtn() {
+
         $('.bi-search').click(function(e){
-            $('#chatSearchId').show();
-            $('.fade-searchBtn').show();
-            $('.insert-content').hide();
-            $('#chatSearchContent').focus();
+            if(searchResult == false) {
+                $('#chatSearchId').show();
+                $('.fade-searchBtn').show();
+                $('.insert-content').hide();
+                $('#chatSearchContent').focus();
+                searchResult = true;
+            } else {
+                $('#chatSearchId').hide();
+                $('.fade-searchBtn').hide();
+                $('.insert-content').show();
+                searchResult = false;
+            }
         });
     }
     //낙가기
@@ -927,6 +939,14 @@
                 findAllChat();
             }
         });
+    }
+
+    //검색 닫기
+    function searchClose() {
+        $('#chatSearchId').hide();
+        $('.fade-searchBtn').hide();
+        $('.insert-content').show();
+        searchResult = false;
     }
 
 
