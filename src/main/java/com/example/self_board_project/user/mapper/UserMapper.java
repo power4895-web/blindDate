@@ -13,7 +13,7 @@ public interface UserMapper {
     public User findByEmail(String email);
 
     public void insertUser(User user);
-    public void updateUser(User user);
+    public Boolean updateUser(User user);
     public void updateTodayProfileId(User user);
     public void deleteUserIds(User user);
 }

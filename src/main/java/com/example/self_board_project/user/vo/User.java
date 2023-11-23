@@ -23,6 +23,7 @@ public class User {
     private String introduce;
     private String todayProfileId;
 
+    private String address;
     private String addressDoro;
     private String addressJibun;
     private Double latitude;

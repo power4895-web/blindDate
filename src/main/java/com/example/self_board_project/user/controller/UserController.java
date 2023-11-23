@@ -127,6 +127,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/user/update", method = RequestMethod.POST)
     public boolean userUpdate(Model model, User user) {
+        user.setAddress(user.getAddressDoro().split(" ")[0]);
         userService.updateUser(user);
         return true;
     }
@@ -210,12 +211,13 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/user/deleteUserIds/{id}")
+    @ResponseBody
     public boolean deleteUserIds (Auth auth, @PathVariable String id ) {
         logger.info("id : {}", id);
         User user = new User();
         user.setId(auth.getId());
-        userService.deleteUserIds(user, id);
-        return true;
+        boolean result = userService.deleteUserIds(user, id);
+        return result;
     }
 
 

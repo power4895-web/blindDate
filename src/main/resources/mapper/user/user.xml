@@ -14,6 +14,7 @@
         t1.gender,
         t1.email,
         t1.phone_number,
+        t1.address,
         t1.address_doro,
         t1.address_jibun,
         t1.latitude,
@@ -170,6 +171,7 @@
                , #{gender}
                , #{email}
                , #{phoneNumber}
+               , #{address}
                , #{addressDoro}
                , #{addressJibun}
                , #{latitude}
@@ -200,7 +202,7 @@
     </insert>
 
 
-    <update id="deleteUserIds">
+    <update id="updateUser">
         /** updateUser **/
         UPDATE user
         SET login_id= #{loginId},
@@ -212,6 +214,7 @@
             email= #{email},
             phone_number= #{phoneNumber},
             introduce= #{introduce},
+            address = #{address},
             address_doro = #{addressDoro},
             address_jibun = #{addressJibun},
             latitude = #{latitude},

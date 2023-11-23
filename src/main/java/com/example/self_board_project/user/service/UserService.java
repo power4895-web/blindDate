@@ -2,6 +2,8 @@ package com.example.self_board_project.user.service;
 
 import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
+import com.example.self_board_project.file.service.FileService;
+import com.example.self_board_project.file.vo.FileInfo;
 import com.example.self_board_project.relationship.service.RelationshipService;
 import com.example.self_board_project.relationship.vo.Relationship;
 import com.example.self_board_project.user.mapper.UserMapper;
@@ -27,6 +29,8 @@ public class UserService {
     private RelationshipService relationshipService;
     @Autowired
     private EvaluationService evaluationService;
+    @Autowired
+    private FileService fileService;
 
     public int selectUserCount() {
         System.out.println(">>");
@@ -48,6 +52,8 @@ public class UserService {
     }
     public void insertUser(User user) {
 
+        //지역명
+        user.setAddress(user.getAddressDoro().split(" ")[0]);
         //todayprofileId 2개 지정
         String todayProfileId = "";
         String userIds = "";
@@ -219,11 +225,22 @@ public class UserService {
         }
         user.setFlag("M");
         List<User> randomUserList = selectUserRandomList(user);
+
+        FileInfo fileInfo = new FileInfo();
+        for (User item:randomUserList) {
+            fileInfo.setRefId(item.getId());
+            fileInfo.setDivision("user");
+            List<FileInfo> fileList = fileService.selectFileList(fileInfo);
+            item.setFileList(fileList);
+        }
+
+
+
         return randomUserList;
     }
 
 
-    public void deleteUserIds(User user, String id) {
+    public boolean deleteUserIds(User user, String id) {
         User userInfo = selectUser(user);
         if(userInfo.getDeleteIds() != null) {
             userInfo.setDeleteIds(userInfo.getDeleteIds()  + "," + id);
@@ -231,5 +248,6 @@ public class UserService {
             userInfo.setDeleteIds(id);
         }
         userMapper.updateUser(userInfo);
+        return true;
     }
 }
