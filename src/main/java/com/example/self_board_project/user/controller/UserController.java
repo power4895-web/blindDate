@@ -272,10 +272,18 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/user/randomUserList")
-    public String randomUserList(User user, Auth auth, Model model,HttpServletResponse response) {
+    /**
+     * 이성친구 더보기
+     * @param user
+     * @param auth
+     * @param model
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/user/theMoreUserList")
+    public String theMoreUserList(User user, Auth auth, Model model,HttpServletResponse response) {
 
-        logger.info("randomUserList");
+        logger.info("theMoreUserList");
         user.setId(auth.getId());
         //자신의 대표사진이 없으면 회원수정으로 가기
         String result = goUpdateForm(user, response);
@@ -286,8 +294,8 @@ public class UserController {
             return result;
         }
 
-        List<User> randomUserList = userService.randomList(user);
-        model.addAttribute("randomUserList", randomUserList);
-        return "front:user/randomUserList";
+        List<User> theMoreUserList = userService.theMoreUserList(user);
+        model.addAttribute("theMoreUserList", theMoreUserList);
+        return "front:user/theMoreUserList";
     }
 }

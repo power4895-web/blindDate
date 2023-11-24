@@ -52,12 +52,12 @@
         <if test="flag != null and flag != ''">
             join file t2 on t1.id = t2.ref_id and flag = #{flag} AND boss_type = 'Y'
         </if>
-<!--        <if test="flag == null ">-->
-<!--            join file t2 on t1.id = t2.ref_id-->
-<!--        </if>-->
-<!--        <if test="flag == null ">-->
-<!--            join file t2 on t1.id = t2.ref_id and flag = 'M' AND boss_type = "Y"-->
-<!--        </if>-->
+        <!--        <if test="flag == null ">-->
+        <!--            join file t2 on t1.id = t2.ref_id-->
+        <!--        </if>-->
+        <!--        <if test="flag == null ">-->
+        <!--            join file t2 on t1.id = t2.ref_id and flag = 'M' AND boss_type = "Y"-->
+        <!--        </if>-->
     </sql>
 
 
@@ -74,32 +74,16 @@
                     #{id}
                 </foreach>
             </if>
-            <if test='order.equals("rand")'>
-                order by rand()
-            </if>
-            <if test='!order.equals("rand")'>
-                order by #{order}
-            </if>
-            <if test="limit != null and limit != ''">
-                limit #{limit}
-            </if>
-        </where>
-    </select>
 
-    <select id="selectUserRandomList" resultType="com.example.self_board_project.user.vo.User">
-        /** selectUserRandomList **/
-        <include refid="selectQuery"/>
-        <where>
-            <if test="gender != null and gender != ''">
-                AND gender = #{gender}
+            <if test="order!= null and order != ''">
+                <if test='order.equals("rand")'>
+                    order by rand()
+                </if>
+                <if test='!order.equals("rand")'>
+                    order by #{order}
+                </if>
             </if>
-            <if test="ids != null and ids.size > 0">
-                AND t1.id NOT IN
-                <foreach collection="ids" item="id" open="(" close=")" separator=",">
-                    #{id}
-                </foreach>
-            </if>
-            order by rand()
+
             <if test="limit != null and limit != ''">
                 limit #{limit}
             </if>
@@ -205,47 +189,146 @@
     <update id="updateUser">
         /** updateUser **/
         UPDATE user
-        SET login_id= #{loginId},
-            password= #{password},
-            nickname= #{nickname},
-            real_name= #{realName},
-            age= #{age},
-            gender= #{gender},
-            email= #{email},
-            phone_number= #{phoneNumber},
-            introduce= #{introduce},
-            address = #{address},
-            address_doro = #{addressDoro},
-            address_jibun = #{addressJibun},
-            latitude = #{latitude},
-            longitude = #{longitude},
-            address_detail = #{addressDetail},
-            postal_code = #{postalCode},
-            job = #{job},
-            purpose = #{purpose},
+        SET
+        <if test="loginId != null and loginId != ''">
+            login_id = #{loginId},
+        </if>
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="nickname != null and nickname != ''">
+            nickname = #{nickname},
+        </if>
+        <if test="realName != null and realName != ''">
+            real_name = #{realName},</if>
+        <if test="age != null and age != ''">
+            age = #{age},
+        </if>
+        <if test="gender != null and gender != ''">
+            gender = #{gender},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email},
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            phone_number = #{phoneNumber},
+        </if>
+        <if test="introduce != null and introduce != ''">
             introduce = #{introduce},
+        </if>
+        <if test="address != null and address != ''">
+            address = #{address},
+        </if>
+        <if test="addressDoro != null and addressDoro != ''">
+            address_doro = #{addressDoro},
+        </if>
+        <if test="addressJibun != null and addressJibun != ''">
+            address_jibun = #{addressJibun},
+        </if>
+        <if test="latitude != null and latitude != ''">
+            latitude = #{latitude},
+        </if>
+        <if test="longitude != null and longitude != ''">
+            longitude = #{longitude},
+        </if>
+        <if test="addressDetail != null and addressDetail != ''">
+            address_detail = #{addressDetail},
+        </if>
+        <if test="postalCode != null and postalCode != ''">
+            postal_code = #{postalCode},
+        </if>
+        <if test="job != null and job != ''">
+            job = #{job},
+        </if>
+        <if test="workplace != null and workplace != ''">
+            workplace = #{workplace},
+        </if>
+        <if test="purpose != null and purpose != ''">
+            purpose = #{purpose},
+        </if>
+        <if test="introduce != null and introduce != ''">
+            introduce = #{introduce},
+        </if>
+        <if test="smokingYn != null and smokingYn != ''">
             smoking_yn = #{smokingYn},
+        </if>
+        <if test="drinkingType != null and drinkingType != ''">
             drinking_type = #{drinkingType},
+        </if>
+        <if test="religionType != null and religionType != ''">
             religion_type = #{religionType},
+        </if>
+        <if test="petType != null and petType != ''">
             pet_type = #{petType},
+        </if>
+        <if test="hobby != null and hobby != ''">
             hobby = #{hobby},
+        </if>
+        <if test="idealType != null and idealType != ''">
             ideal_type = #{idealType},
+        </if>
+        <if test="mbti != null and mbti != ''">
             mbti = #{mbti},
+        </if>
+        <if test="height != null and height != ''">
             height = #{height},
+        </if>
+        <if test="academic != null and academic != ''">
             academic = #{academic},
+        </if>
+        <if test="bodyType != null and bodyType != ''">
             body_type = #{bodyType},
+        </if>
+        <if test="personality != null and personality != ''">
             personality = #{personality},
-            today_profile_id= #{todayProfileId},
-            delete_ids= #{deleteIds},
-            update_date= now()
+        </if>
+        <if test="todayProfileId != null and todayProfileId != ''">
+            today_profile_id = #{todayProfileId},
+        </if>
+        <if test="deleteIds != null and deleteIds != ''">
+            delete_ids = #{deleteIds},
+        </if>
+        update_date = now()
         WHERE id = #{id}
     </update>
 
-    <update id="updateTodayProfileId">
-        /** updateTodayProfileId **/
-        UPDATE user
-        SET today_profile_id = #{todayProfileId}
-        WHERE id = #{id}
-    </update>
+    <!--    <update id="updateUser">-->
+    <!--        /** updateUser **/-->
+    <!--        UPDATE user-->
+    <!--        SET login_id= #{loginId},-->
+    <!--            password= #{password},-->
+    <!--            nickname= #{nickname},-->
+    <!--            real_name= #{realName},-->
+    <!--            age= #{age},-->
+    <!--            gender= #{gender},-->
+    <!--            email= #{email},-->
+    <!--            phone_number= #{phoneNumber},-->
+    <!--            introduce= #{introduce},-->
+    <!--            address = #{address},-->
+    <!--            address_doro = #{addressDoro},-->
+    <!--            address_jibun = #{addressJibun},-->
+    <!--            latitude = #{latitude},-->
+    <!--            longitude = #{longitude},-->
+    <!--            address_detail = #{addressDetail},-->
+    <!--            postal_code = #{postalCode},-->
+    <!--            job = #{job},-->
+    <!--            purpose = #{purpose},-->
+    <!--            introduce = #{introduce},-->
+    <!--            smoking_yn = #{smokingYn},-->
+    <!--            drinking_type = #{drinkingType},-->
+    <!--            religion_type = #{religionType},-->
+    <!--            pet_type = #{petType},-->
+    <!--            hobby = #{hobby},-->
+    <!--            ideal_type = #{idealType},-->
+    <!--            mbti = #{mbti},-->
+    <!--            height = #{height},-->
+    <!--            academic = #{academic},-->
+    <!--            body_type = #{bodyType},-->
+    <!--            personality = #{personality},-->
+    <!--            today_profile_id= #{todayProfileId},-->
+    <!--            delete_ids= #{deleteIds},-->
+    <!--            update_date= now()-->
+    <!--        WHERE id = #{id}-->
+    <!--    </update>-->
 
 </mapper>

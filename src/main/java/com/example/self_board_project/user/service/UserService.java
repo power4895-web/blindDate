@@ -40,10 +40,6 @@ public class UserService {
 
         return userMapper.selectUserList(user);
     }
-    public List<User> selectUserRandomList(User user) {
-
-        return userMapper.selectUserRandomList(user);
-    }
     public User selectUser(User user) {
         return userMapper.selectUser(user);
     }
@@ -88,9 +84,6 @@ public class UserService {
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userMapper.updateUser(user);
     }
-    public void updateTodayProfileId(User user) {
-        userMapper.updateTodayProfileId(user);
-    }
 
     /**
      * 오늘의 프로필 업데이트, 배치
@@ -101,10 +94,11 @@ public class UserService {
         List<User> arrayUserList = new ArrayList<>();
 
         //user.getId가 있는 경우는, 현재 오늘의 소개회원이 없어 로그인한 회원의 아이디로 이 메소드가 호출된 경우, arrayUserList에 넣는다.
-        //user.getId가없는 경우는, 12시지나서 모든 회원들의 정보를 arrayUserList에 넣는다.
+
         if(user.getId() != null) {
             arrayUserList.add(selectUser(user));
         } else {
+            //user.getId가없는 경우는, 12시지나서 모든 회원들의 정보를 arrayUserList에 넣는다.
             List<User> userList = selectUserList(user);
             for (User item:userList) {
                 arrayUserList.add(item);
@@ -134,27 +128,30 @@ public class UserService {
             List<Integer> distinctIds = ids.stream().distinct().collect(Collectors.toList());
             user.setIds(distinctIds);
             user.setLimit(2);
+            user.setOrder("rand");
             if(item.getGender().equals("M")) {
                 user.setGender("F");
                 user.setId(item.getId());
-                List<User> femailRandomList = selectUserRandomList(user);
+                List<User> femailRandomList = selectUserList(user);
                 for (User item2: femailRandomList) {
                     todayProfileId += item2.getId() + ",";
                 }
                 todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
+                item.setTodayProfileId(todayProfileId);
                 user.setTodayProfileId(todayProfileId);
                 user.setId(item.getId());
-                updateTodayProfileId(user);
+                updateUser(user);
             } else {
                 user.setGender("M");
-                List<User> manRandomList = selectUserRandomList(user);
+                List<User> manRandomList = selectUserList(user);
                 for (User item2: manRandomList) {
                     todayProfileId += item2.getId() + ",";
                 }
                 todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
+                item.setTodayProfileId(todayProfileId);
                 user.setTodayProfileId(todayProfileId);
                 user.setId(item.getId());
-                updateTodayProfileId(user);
+                updateUser(user);
             }
         }
     }
@@ -165,7 +162,7 @@ public class UserService {
      * @param user
      * @return
      */
-    public List<User> randomList(User user) {
+    public List<User> theMoreUserList(User user) {
         logger.info("todayRandom user : {}", user.getId());
         User userInfo = selectUser(user);
         /*친구해요*/
@@ -208,10 +205,10 @@ public class UserService {
                 ids.add(Integer.parseInt(test));
             }
         }
-        logger.info("ids : {}" , ids);
+        logger.info("제외해야할 아이디들-ids : {}" , ids);
 
         List<Integer> distinctIds = ids.stream().distinct().collect(Collectors.toList());
-        logger.info("first distinctIds: 친구해요, 매력 측장, 오늘의 프로필아이디, 삭제한아이디 중복제거  : {}" + distinctIds);
+        logger.info("distinctIds: 친구해요, 매력 측장, 오늘의 프로필아이디, 삭제한아이디 중복제거한 아이디-distinctIds  : {}" + distinctIds);
         user.setIds(distinctIds);
 
 
@@ -224,22 +221,24 @@ public class UserService {
             user.setLimit(10);
         }
         user.setFlag("M");
-        List<User> randomUserList = selectUserRandomList(user);
+        List<User> theMoreUserList = selectUserList(user);
 
         FileInfo fileInfo = new FileInfo();
-        for (User item:randomUserList) {
+        for (User item:theMoreUserList) {
             fileInfo.setRefId(item.getId());
             fileInfo.setDivision("user");
             List<FileInfo> fileList = fileService.selectFileList(fileInfo);
             item.setFileList(fileList);
         }
-
-
-
-        return randomUserList;
+        return theMoreUserList;
     }
 
-
+    /**
+     * 프로필 사진 삭제
+     * @param user
+     * @param id
+     * @return
+     */
     public boolean deleteUserIds(User user, String id) {
         User userInfo = selectUser(user);
         if(userInfo.getDeleteIds() != null) {

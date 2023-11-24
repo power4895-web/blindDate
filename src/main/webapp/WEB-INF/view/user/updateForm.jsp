@@ -39,13 +39,13 @@
                                     </c:if>
                                     <!-- Name input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" />
+                                        <input class="form-control" id="realName" name="realName" value="${userInfo.realName}" type="text" placeholder="Enter your realName..." data-sb-validations="required" readonly/>
                                         <label for="realName">이름</label>
                                         <div class="invalid-feedback" data-sb-feedback="realName:required">A realName is required.</div>
                                     </div>
                                     <!-- nickname input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="nickname" name="nickname" value="${userInfo.nickname}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                        <input class="form-control" id="nickname" name="nickname" value="${userInfo.nickname}" type="text" placeholder="Enter your name..." data-sb-validations="required" readonly/>
                                         <label for="nickname">닉네임</label>
                                         <div class="invalid-feedback" data-sb-feedback="nickname:required">A nickname is required.</div>
                                     </div>
@@ -57,33 +57,33 @@
         <%--                            </div>--%>
                                     <!-- age input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="age" name="age" value="${userInfo.age}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                        <input class="form-control" id="age" name="age" value="${userInfo.age}" type="text" placeholder="Enter your name..." data-sb-validations="required" readonly/>
                                         <label for="age">나이</label>
                                         <div class="invalid-feedback" data-sb-feedback="age:required">A age is required.</div>
                                     </div>
                                     <!-- gender input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="gender" name="gender" value="${userInfo.gender}" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                                        <input class="form-control" id="gender" name="gender" value="${userInfo.gender}" type="text" placeholder="Enter your name..." data-sb-validations="required" readonly/>
                                         <label for="gender">성별</label>
                                         <div class="invalid-feedback" data-sb-feedback="gender:required">A gender is required.</div>
                                     </div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" name="email" value="${userInfo.email}" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                                        <input class="form-control" id="email" name="email" value="${userInfo.email}" type="email" placeholder="name@example.com" data-sb-validations="required,email" readonly/>
                                         <label for="email">이메일</label>
                                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                                     </div>
                                     <!-- Phone number input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="phoneNumber" name="phoneNumber" value="${userInfo.phoneNumber}" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
+                                        <input class="form-control" id="phoneNumber" name="phoneNumber" value="${userInfo.phoneNumber}" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" readonly/>
                                         <label for="phoneNumber">핸드폰번호</label>
                                         <div class="invalid-feedback" data-sb-feedback="phoneNumber:required">A phone number is required.</div>
                                     </div>
                                     <!-- addressDoro input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="addressDoro" name="addressDoro" value="${userInfo.addressDoro}" data-sb-validations="required" />
-                                        <label for="addressDoro">지역</label>
+                                        <input class="form-control" id="addressDoro" name="addressDoro" value="${userInfo.addressDoro}" data-sb-validations="required" readonly/>
+                                        <label for="addressDoro" >지역</label>
                                         <input type="hidden" id="postalCode" name="postalCode" title="우편번호">
                                         <input type="hidden" id="addressJibun" name="addressJibun" title="지번 주소">
                                         <input type="hidden" id="latitude" name="latitude" title="위도">

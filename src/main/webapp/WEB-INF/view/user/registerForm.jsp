@@ -99,7 +99,7 @@
 
                             <!-- addressDoro input-->
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="addressDoro" name="addressDoro" data-sb-validations="required" />
+                                <input class="form-control" id="addressDoro" name="addressDoro" data-sb-validations="required" readonly/>
                                 <label for="addressDoro">지역</label>
                                 <input type="hidden" id="postalCode" name="postalCode" title="우편번호" >
                                 <input type="hidden" id="addressJibun" name="addressJibun" title="지번 주소" >

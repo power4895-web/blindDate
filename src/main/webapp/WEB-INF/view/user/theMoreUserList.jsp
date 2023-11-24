@@ -24,11 +24,11 @@
             <section class="bg-light py-5">
                 <div class="container px-5 my-5">
                     <div class="text-center mb-5">
-                        <h1 class="fw-bolder">randomUserList <i class="bi bi-people" style="color: #005bd4"></i></h1>
+                        <h1 class="fw-bolder">theMoreUserList <i class="bi bi-people" style="color: #005bd4"></i></h1>
                         <p class="lead fw-normal text-muted mb-0">Friends with a show of affection</p>
                     </div>
                     <div class="row gy-xl-5 justify-content" >
-                        <c:forEach var="item" items="${randomUserList}" varStatus="dataStatus" >
+                        <c:forEach var="item" items="${theMoreUserList}" varStatus="dataStatus" >
                             <div class="col-lg-6 col-xl-4">
                                 <div class="card mb-5 mb-xl-0">
                                     <div class="card-header">

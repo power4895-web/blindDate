@@ -77,7 +77,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="/user/randomUserList">
+                                    <a class="dropdown-item" href="/user/theMoreUserList">
                                         이성친구 더보기${info.user.gender == M ? '👩' : '🧑'}</i>
 <%--                                        <i class="bi bi-people" style="color: #005bd4">--%>
                                     </a>

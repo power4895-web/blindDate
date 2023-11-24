@@ -77,7 +77,6 @@ public class User {
 
     private String deleteIds;
     private String order;
-    private String rand;
     private int limit;
 
 }
