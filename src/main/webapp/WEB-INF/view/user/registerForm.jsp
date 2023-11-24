@@ -481,16 +481,13 @@
     }
 
     function register() {
-        if(filesTempArr.length == 0) {
-            alert("파일을 한개이상 등록하세요.")
-            return;
-        }
-        // if(emailCheck == false) {
-        //     alert("이메일을 체크해주세요")
+        var frm = $("#frm").serializeObject();
+        //벨리데이션
+        // var result = validation(frm);
+        // if(result == false){
         //     return;
         // }
 
-        var frm = $("#frm").serializeObject();
         console.log("frm.realName : ", frm.realName)
         let params =  {
             "realName" : frm.realName,
@@ -577,6 +574,227 @@
         }
     }
 
+
+
+    function validation(frm){
+
+        if( frm.realName.trim() == "" ) {
+            alert("이름을 입력 해 주세요.")
+            $("#realName").focus();
+            return false;
+        }
+        if( frm.nickname.trim() == "" ) {
+            alert("닉네임을 입력 해 주세요.")
+            $("#nickname").focus();
+            return false;
+        }
+
+        //이메일 인증 체크
+        // if(emailCheck == false) {
+        //     alert("이메일을 체크해주세요")
+        //     return;
+        // }
+
+        var emailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        if( frm.loginId.trim() == "" ) {
+            alert("아이디을 입력 해 주세요.")
+                $("#loginId").focus();
+            return false;
+        }else if (emailCheck.test(frm.email) == false){
+            alert("올바른 이메일 형식으로 입력해주세요.")
+                $("#loginId").focus();
+            return false;
+        }
+
+        //비밀번호
+        if(frm.password == '' || frm.passwordCheck == '') {
+            alert("비밀번호 및 비밀번호 확인란에 사용하실 비밀번호를 입력해주세요.")
+                $("#password").focus();
+            return false;
+        }
+        if(frm.password != frm.passwordCheck) {
+            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다. <br> 동일한 비밀번호를 입력해주세요.")
+                $("#password").focus();
+            return false;
+        }
+        var pwd = $("#password").val();
+        var num = pwd.search(/[0-9]/g);
+        var eng = pwd.search(/[a-z]/ig);
+        var spe = pwd.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+        if(pwd.length < 8 || pwd.length > 30){
+            alert("비밀번호는  영문, 숫자, 특수기호 포함 <br />공백없이 8자 ~ 20자 이하여야합니다. <br/><strong>(8~20자리 이하인지 확인해주세요.)</strong>")
+                $("#password").focus();
+            return false;
+        }else if(pwd.search(/\s/) != -1){
+            alert("비밀번호는  영문, 숫자, 특수기호 포함 <br />공백없이 8자 ~ 20자 이하여야합니다. <br/><strong>(공백이 있는지 확인해주세요.)</strong>")
+                $("#password").focus();
+
+            return false;
+        }else if(num < 0){
+            alert("비밀번호는  영문, 숫자, 특수기호 포함 <br />공백없이 8자 ~ 20자 이하여야합니다. <br/><strong>(숫자를 입력하셨는지 확인해주세요.)</strong>")
+                $("#password").focus();
+            return false;
+        }else if(eng < 0){
+            alert("비밀번호는  영문, 숫자, 특수기호 포함 <br />공백없이 8자 ~ 20자 이하여야합니다. <br/><strong>(영문을 사용했는지 확인해주세요.)</strong>")
+                $("#password").focus();
+            return false;
+        }else if(spe < 0){
+            alert("비밀번호는  영문, 숫자, 특수기호 포함 <br />공백없이 8자 ~ 20자 이하여야합니다. <br/><strong>(특수문자를 사용했는지 확인해주세요.) <br/>`~!@@#$%^&*;:?/ 중 한 개 이상을 <br/>사용해주세요.</strong>")
+                $("#password").focus();
+            return false;
+        }
+        //본인인증 여부
+        // if(frm.realName == '') {
+        //     alert("휴대폰 본인 인증을 해 주세요.")
+        //     return false;
+        // }
+
+        //체크박스 여부
+        // if($("#chk01").is(":checked") != true || $("#chk02").is(":checked") != true) {
+        //     alert("이용약관은 필수입니다.")
+        //     return false;
+        // }
+        if( frm.age.trim() == "" ) {
+            alert("나이를 입력 해 주세요.")
+            $("#age").focus();
+            return false;
+        }
+        if( frm.gender.trim() == "" ) {
+            alert("성별를 입력 해 주세요.")
+            $("#gender").focus();
+            return false;
+        }
+        if( frm.phoneNumber.trim() == "" ) {
+            alert("핸드폰번호를 입력 해 주세요.")
+            $("#phoneNumber").focus();
+            return false;
+        }
+        if( frm.addressDoro.trim() == "" ) {
+            alert("주소를 입력 해 주세요.")
+            $("#addressDoro").focus();
+            return false;
+        }
+        if( frm.job.trim() == "" ) {
+            alert("직업를 입력 해 주세요.")
+            $("#job").focus();
+            return false;
+        }
+        if( frm.workplace.trim() == "" ) {
+            alert("직장를 입력 해 주세요.")
+            $("#workplace").focus();
+            return false;
+        }
+        if( frm.purpose.trim() == "" ) {
+            alert("목적을 입력 해 주세요.")
+            $("#purpose").focus();
+            return false;
+        }
+        if( frm.smokingYn.trim() == "" ) {
+            alert("흡연유무를 입력 해 주세요.")
+            $("#smokingYn").focus();
+            return false;
+        }
+        if( frm.drinkingType.trim() == "" ) {
+            alert("알콜여부를 입력 해 주세요.")
+            $("#drinkingType").focus();
+            return false;
+        }
+        if( frm.religionType.trim() == "" ) {
+            alert("종료를 입력 해 주세요.")
+            $("#religionType").focus();
+            return false;
+        }
+        if( frm.petType.trim() == "" ) {
+            alert("반려견유무를 입력 해 주세요.")
+            $("#petType").focus();
+            return false;
+        }
+        if( frm.hobby.trim() == "" ) {
+            alert("취미를 입력 해 주세요.")
+            $("#hobby").focus();
+            return false;
+        }
+        if( frm.idealType.trim() == "" ) {
+            alert("이상형을 입력 해 주세요.")
+            $("#idealType").focus();
+            return false;
+        }
+        if( frm.mbti.trim() == "" ) {
+            alert("MBTI를 입력 해 주세요.")
+            $("#mbti").focus();
+            return false;
+        }
+        if( frm.height.trim() == "" ) {
+            alert("신장을 입력 해 주세요.")
+            $("#height").focus();
+            return false;
+        }
+        if( frm.academic.trim() == "" ) {
+            alert("학력을 입력 해 주세요.")
+            $("#height").focus();
+            return false;
+        }
+        if( frm.bodyType.trim() == "" ) {
+            alert("체형을 입력 해 주세요.")
+            $("#bodyType").focus();
+            return false;
+        }
+        if( frm.personality.trim() == "" ) {
+            alert("성격을 입력 해 주세요.")
+            $("#personality").focus();
+            return false;
+        }
+        if( frm.introduce.trim() == "" ) {
+            alert("소개를 입력 해 주세요.")
+            $("#introduce").focus();
+            return false;
+        }
+
+        //파일 벨리데이션
+        if(filesTempArr.length == 0) {
+            alert("파일을 한개이상 등록하세요.")
+            return;
+        }
+
+
+    }
+    // 아이디(이메일)중복체크
+    function duplicateEmail(loginId){
+        var emailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        if( loginId.trim() == "" ) {
+            alert("아이디(이메일)을 입력 해 주세요.")
+                $("#loginId").focus();
+            return false;
+        }else if (emailCheck.test(loginId) == false){
+            alert("빈칸없이 올바른 이메일 형식으로 입력해주세요.")
+                $("#loginId").focus();
+            return false;
+        }
+        $.ajax({
+            type : "POST",
+            url : "/duplicationCheckId",
+            params: {
+                "loginId" : loginId
+            },
+            success: function (data) { // 결과 성공 콜백함수
+                if (data == '') {
+                    alert("사용가능한 아이디입니다.")
+                    $("#password").focus();
+                    duplicationCheck = true;
+                    if ($("#loginId").val() !== '') {
+                        $("#idChk").attr('disabled', true);
+                    }
+                    if ($("#idChk").html() == '중복체크') {
+                        $("#idChk").html('중복체크 완료');
+                        $("#idChk").attr('disabled', true);
+                    }
+                } else {
+                    alert("중복된 아이디입니다. <br>다른 아이디(이메일)를 사용해주세요.")
+                    $("#loginId").focus();
+                }
+             }
+        });
+    }
 
 
 </script>
