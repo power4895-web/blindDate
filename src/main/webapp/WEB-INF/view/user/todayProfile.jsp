@@ -64,7 +64,7 @@
                                         <%--슬라이드끝--%>
                                         <ul class="list-unstyled mb-4">
                                             <div class="small">
-                                                <div class="fw-bold"><a href="/user/view/${item.id}">${item.nickname}, ${item.age}</a></div>
+                                                <div class="fw-bold"><a href="/user/view/${item.id}" style="color: black">${item.nickname}, ${item.age}</a></div>
                                                 <div class="text-muted">
                                                         <i class="bi bi-geo-alt-fill"></i>${item.address}・${item.distance == 0.0 ? '측정불가' : item.distance}${item.distance == 0.0 ? '' : 'km'},
                                                         ${item.job}

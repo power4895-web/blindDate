@@ -80,7 +80,7 @@
                     <div class="text-center">
                         <div class="fs-4 mb-4 fst-italic">"Meeting is easy and comfortable"</div>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                            <img class="rounded-circle me-3" src="/static/files/40x40 고선우 증명사진.jpg" alt="..." />
                             <div class="fw-bold">
                                 KSW
                                 <span class="fw-bold text-primary mx-1">/</span>

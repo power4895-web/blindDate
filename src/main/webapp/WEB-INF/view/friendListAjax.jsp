@@ -45,10 +45,11 @@
                     <ul class="list-unstyled mb-4">
                         <div class="small">
                             <div class="fw-bold">
-                                <a href="/user/view/${type == 'send' ? item.getId : item.sendId}/${type}">${item.nickname}, ${item.age}</a>
+                                <a style="color: black" href="/user/view/${type == 'send' ? item.getId : item.sendId}/${type}">${item.nickname}, ${item.age}</a>
                             </div>
                             <div class="text-muted">
-                                <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}
+                                <i class="bi bi-geo-alt-fill"></i>${item.address}・${item.distance == 0.0 ? '측정불가' : item.distance}${item.distance == 0.0 ? '' : 'km'},
+<%--                                <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}--%>
                                 <i class="bi bi-rulers"></i>${item.height}cm
                                 💘${item.purpose}
                             </div>
@@ -82,10 +83,11 @@
                     <ul class="list-unstyled mb-4">
                         <div class="small">
                             <div class="fw-bold">
-                                <a href="/user/view/${type == 'send' ? item.receiveId : item.evaluationId}/${type}">${item.nickname}, ${item.age}</a>
+                                <a style="color: black" href="/user/view/${type == 'send' ? item.receiveId : item.evaluationId}/${type}">${item.nickname}, ${item.age}</a>
                             </div>
                             <div class="text-muted">
-                                <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}
+                                <i class="bi bi-geo-alt-fill"></i>${item.address}・${item.distance == 0.0 ? '측정불가' : item.distance}${item.distance == 0.0 ? '' : 'km'},
+<%--                                <i class="bi bi-geo-alt-fill"></i>${item.addressDoro}--%>
                                 <i class="bi bi-rulers"></i>${item.height}cm
                                 💘${item.purpose}
                             </div>
