@@ -1,5 +1,6 @@
 package com.example.self_board_project.user.service;
 
+import com.example.self_board_project.core.utils.SysUtil;
 import com.example.self_board_project.evaluation.service.EvaluationService;
 import com.example.self_board_project.evaluation.vo.Evaluation;
 import com.example.self_board_project.file.service.FileService;
@@ -229,6 +230,19 @@ public class UserService {
             fileInfo.setDivision("user");
             List<FileInfo> fileList = fileService.selectFileList(fileInfo);
             item.setFileList(fileList);
+
+
+            if(userInfo.getLatitude() != null && userInfo.getLongitude() != null && item.getLatitude() != null && item.getLongitude() != null) {
+                double distanceKiloMeter = SysUtil.getDistance(userInfo.getLatitude(), userInfo.getLongitude(), item.getLatitude(), item.getLongitude());
+                item.setDistance(Math.round(distanceKiloMeter));
+                logger.info(" 나와 이성간의 거리 :  : {}" + Math.round(distanceKiloMeter));
+            } else {
+                logger.info("회원 중 위도, 적도 데이터 없음");
+            }
+
+
+
+
         }
         return theMoreUserList;
     }

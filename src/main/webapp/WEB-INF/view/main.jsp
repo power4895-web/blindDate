@@ -25,7 +25,7 @@
             <div class="row gx-5 align-items-center justify-content-center">
                 <div class="col-lg-8 col-xl-7 col-xxl-6">
                     <div class="my-5 text-center text-xl-start">
-                        <h1 class="display-5 fw-bolder text-white mb-2">ksw4895a reliable match system</h1>
+                        <h1 class="display-5 fw-bolder text-white mb-2">a reliable match system</h1>
                         <p class="lead fw-normal text-white-50 mb-4">99.5%로 악성, 허위 유저를 잡는 밋업의 놀라운 AI 기술력으로 안심하고 즐겨보세요</p>
                         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
                             <a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">장점</a>
