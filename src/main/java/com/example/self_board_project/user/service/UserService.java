@@ -50,34 +50,39 @@ public class UserService {
     public void insertUser(User user) {
 
         //지역명
-        user.setAddress(user.getAddressDoro().split(" ")[0]);
+        if(user.getAddressDoro() != null) {
+            user.setAddress(user.getAddressDoro().split(" ")[0]);
+        }
         //todayprofileId 2개 지정
         String todayProfileId = "";
         String userIds = "";
         //회원의 반대성별로 찾아야 하니
-        if(user.getGender().equals("M")) {
-            user.setGender("F");
-        } else {
-            user.setGender("M");
-        }
-        //오늘의 프로필 id 2개 추가하깉
-        user.setLimit(2);
-        user.setOrder("rand");
-        List<User> userList = selectUserList(user);
-        for(int i=0; i < userList.size(); i++){
-            todayProfileId += userList.get(i).getId() + ",";
-        }
-        todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
-        user.setTodayProfileId(todayProfileId);
-        logger.info("todayProfileId : {}", todayProfileId);
+        if(user.getGender() != null) {
+            if(user.getGender().equals("M")) {
+                user.setGender("F");
+            } else {
+                user.setGender("M");
+            }
+            //오늘의 프로필 id 2개 추가하깉
+            user.setLimit(2);
+            user.setOrder("rand");
+            List<User> userList = selectUserList(user);
+            for(int i=0; i < userList.size(); i++){
+                todayProfileId += userList.get(i).getId() + ",";
+            }
+            todayProfileId = todayProfileId.substring(0, todayProfileId.length() - 1);
+            user.setTodayProfileId(todayProfileId);
+            logger.info("todayProfileId : {}", todayProfileId);
 
-        //insert할 땐 다시 회원의 성별로
-        if(user.getGender().equals("M")) {
-            user.setGender("F");
-        } else {
-            user.setGender("M");
+            //insert할 땐 다시 회원의 성별로
+            if(user.getGender().equals("M")) {
+                user.setGender("F");
+            } else {
+                user.setGender("M");
+            }
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         user.setRole("ROLE_USER");
         userMapper.insertUser(user);
     }

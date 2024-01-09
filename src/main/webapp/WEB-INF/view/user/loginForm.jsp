@@ -66,7 +66,7 @@
                                 <a href="/oauth2/authorization/facebook">페이스북로그인</a>
                             </p>
                             <p style="text-align: center; color: gray">
-                                <a href="/oauth2/authorizatio/naver">네이버로그인</a>
+                                <a href="/oauth2/authorization/naver">네이버로그인</a>
                             </p>
 
 

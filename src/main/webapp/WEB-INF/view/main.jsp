@@ -106,19 +106,35 @@
             <div class="row gx-5">
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="/static/files/민지.jpg" alt="..." />
+                        <img class="card-img-top" src="/static/files/민지_430x575.jpg" alt="..." />
                         <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Blog post title</h5></a>
-                            <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">New</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Let's get closer together.</h5></a>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직업: </label>
+                            <label>공무원</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직장: </label>
+                            <label>시청</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>학력: </label>
+                            <label>고등학교</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>체형: </label>
+                            <label>슬랜더</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>성격: </label>
+                            <label>상냥한</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>MBTI: </label>
+                            <label>ISFP</label>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                                     <div class="small">
-                                        <div class="fw-bold">Kelly Rowan</div>
-                                        <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
+                                        <div class="fw-bold">Minji</div>
+                                        <div class="text-muted">인천, 160cm 💘캐주얼</div>
                                     </div>
                                 </div>
                             </div>
@@ -127,19 +143,35 @@
                 </div>
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="/static/files/설윤2.jpg" alt="..." />
+                        <img class="card-img-top" src="/static/files/설윤2_430x575.jpg" alt="..." />
                         <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">Media</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Another blog post title</h5></a>
-                            <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">New</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">I'll be waiting for you.</h5></a>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직업: </label>
+                            <label>가수</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직장: </label>
+                            <label>뮤직뱅크</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>학력: </label>
+                            <label>대학교</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>체형: </label>
+                            <label>마름</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>성격: </label>
+                            <label>차가움</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>MBTI: </label>
+                            <label>ISFP</label>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                                     <div class="small">
-                                        <div class="fw-bold">Josiah Barclay</div>
-                                        <div class="text-muted">March 23, 2023 &middot; 4 min read</div>
+                                        <div class="fw-bold">Sulyoon</div>
+                                        <div class="text-muted">강남, 165cm 💘캐주얼</div>
                                     </div>
                                 </div>
                             </div>
@@ -148,19 +180,35 @@
                 </div>
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="/static/files/카리나.png" alt="..." />
+                        <img class="card-img-top" src="/static/files/카리나_430x575.png" alt="..." />
                         <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
-                            <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">New</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Let's be neighbors.</h5></a>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직업: </label>
+                            <label>인플루언서</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직장: </label>
+                            <label>인스타그램</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>학력: </label>
+                            <label>대학교</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>체형: </label>
+                            <label>마른</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>성격: </label>
+                            <label>차분함</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>MBTI: </label>
+                            <label>ENTJ</label>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                                     <div class="small">
-                                        <div class="fw-bold">Evelyn Martinez</div>
-                                        <div class="text-muted">April 2, 2023 &middot; 10 min read</div>
+                                        <div class="fw-bold">Karina</div>
+                                        <div class="text-muted">경기, 165cm 💘기타</div>
                                     </div>
                                 </div>
                             </div>
@@ -173,19 +221,35 @@
             <div class="row gx-5">
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="/static/files/박보검.jpg" alt="..." />
+                        <img class="card-img-top" src="/static/files/박보검_430x575.jpg" alt="..." />
                         <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Blog post title</h5></a>
-                            <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">New</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Let's get in touch.</h5></a>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직업: </label>
+                            <label>학생</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직장: </label>
+                            <label>학교</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>학력: </label>
+                            <label>대학교</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>체형: </label>
+                            <label>보통</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>성격: </label>
+                            <label>차분한</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>MBTI: </label>
+                            <label>ESFJ</label>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                                     <div class="small">
-                                        <div class="fw-bold">Kelly Rowan</div>
-                                        <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
+                                        <div class="fw-bold">bogum</div>
+                                        <div class="text-muted">성남, 188cm 💘친구</div>
                                     </div>
                                 </div>
                             </div>
@@ -194,19 +258,35 @@
                 </div>
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="/static/files/송강.jpg" alt="..." />
+                        <img class="card-img-top" src="/static/files/송강_430x575.jpg" alt="..." />
                         <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">Media</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Another blog post title</h5></a>
-                            <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">New</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Who likes to work out?</h5></a>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직업: </label>
+                            <label>의사</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직장: </label>
+                            <label>병원</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>학력: </label>
+                            <label>대학원</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>체형: </label>
+                            <label>보통</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>성격: </label>
+                            <label>차분한</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>MBTI: </label>
+                            <label>INTP</label>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                                     <div class="small">
-                                        <div class="fw-bold">Josiah Barclay</div>
-                                        <div class="text-muted">March 23, 2023 &middot; 4 min read</div>
+                                        <div class="fw-bold">Songgang</div>
+                                        <div class="text-muted">경기, 175cm 💘친구</div>
                                     </div>
                                 </div>
                             </div>
@@ -215,19 +295,35 @@
                 </div>
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="/static/files/차은우9.jpg" alt="..." />
+                        <img class="card-img-top" src="/static/files/차은우2_430x575.jpg" alt="..." />
                         <div class="card-body p-4">
-                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
-                            <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="badge bg-primary bg-gradient rounded-pill mb-2">New</div>
+                            <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">I like drinking.</h5></a>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직업: </label>
+                            <label>헬스트레이너</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>직장: </label>
+                            <label>헬스장</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>학력: </label>
+                            <label>대학교</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>체형: </label>
+                            <label>근육</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>성격: </label>
+                            <label>착한</label><br>
+                            <i class="bi bi-check text-primary"></i>
+                            <label>MBTI: </label>
+                            <label>ISFP</label>
                         </div>
                         <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                             <div class="d-flex align-items-end justify-content-between">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
                                     <div class="small">
-                                        <div class="fw-bold">Evelyn Martinez</div>
-                                        <div class="text-muted">April 2, 2023 &middot; 10 min read</div>
+                                        <div class="fw-bold">Eunwoo</div>
+                                        <div class="text-muted">전북, 180cm 💘연애</div>
                                     </div>
                                 </div>
                             </div>

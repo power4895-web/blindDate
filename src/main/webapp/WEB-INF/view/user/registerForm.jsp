@@ -217,9 +217,16 @@
                             </div>
 
                             <!-- Phone number input-->
+                            <label for="file" class="input-file-button">
+                                이미지 등록하기
+                            </label>
                             <div class="form-floating mb-3">
-                                <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple" />
+                                <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple" style="display: none;"/>
                             </div>
+
+<%--                            <input type="file" id="input-file"/>--%>
+
+
 
                             <section class="py-5">
                                 <c:forEach var="item" begin="1" end="3" step="1">
@@ -280,16 +287,17 @@
                 fileNum = 0;
                 return;
             }else{
-                fileNum += files.length; //선택한 파일 개수    6
-//     		console.log("현재 추가한 파일 개수fileNum", fileNum);
-//     		console.log("현재 업로드되어있는 파일개수", liSize);
 
+                fileNum += files.length; //선택한 파일 개수    6
+                //console.log("현재 추가한 파일 개수fileNum", fileNum);
+                //console.log("현재 업로드되어있는 파일개수", liSize);
                 totalFileSize = liSize + fileNum;
-//     		console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
+                //console.log("업로드된 파일과 현재추가한 파일 총 개수", totalFileSize);
+
                 if(totalFileSize > 6){
                     fileNum -= files.length;
-//     			console.log("최종적으로 남은 선택한 파일 개수: ", fileNum);
-//     			console.log("원래 파일업로드된 파일과 추가한 파일을 더한결과 5개가 넘습니다.")
+                    //console.log("최종적으로 남은 선택한 파일 개수: ", fileNum);
+                    //console.log("원래 파일업로드된 파일과 추가한 파일을 더한결과 5개가 넘습니다.")
                     totalFileSize = 6;  //5가 넘었을 경우 토탈카운트 다시 5로 맞춰준다.
                     alert("파일은 6개까지 올릴 수 있습니다.")
                     return;
@@ -298,7 +306,8 @@
             if(files.length > 0) {
                 addFiles(e);
             }
-            $(this).val("");
+            console.log($(this));
+            $(this).attr("title", 'd');
 
         })
 
@@ -812,5 +821,12 @@
         border-radius: 10px 10px 10px 10px;
         background-color: #78DCE8;
         color: white;
+    }
+    .input-file-button {
+        padding: 6px 25px;
+        background-color: #FF6600;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
     }
 </style>

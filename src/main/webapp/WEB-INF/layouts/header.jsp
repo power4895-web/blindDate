@@ -83,7 +83,7 @@
                                     </a>
                                 </li>
                                 <li><a class="dropdown-item" href="/user/updateForm/${info.user.id}">내정보수정<i class="bi bi-gear-fill"></i></a></li>
-                                <li><a class="dropdown-item" href="blog-post.html">스케줄<i class="bi bi-calendar" style="color: #005bd4"></i></a></li>
+<%--                                <li><a class="dropdown-item" href="blog-post.html">스케줄<i class="bi bi-calendar" style="color: #005bd4"></i></a></li>--%>
                             </ul>
                         </li>
                         <li>&nbsp;&nbsp;</li>

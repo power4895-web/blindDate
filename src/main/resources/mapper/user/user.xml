@@ -119,6 +119,7 @@
                           , gender
                           , email
                           , phone_number
+                          , address
                           , address_doro
                           , address_jibun
                           , latitude
