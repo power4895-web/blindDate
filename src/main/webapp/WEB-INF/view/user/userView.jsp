@@ -232,17 +232,19 @@
             $('#allowedRelationship').hide()
             $('#twoRelationship').hide()
         }
-        if($('#relationshipInfo').val() != '' && $('#type').val() == 'get') {
-            console.log("현재 친구관계입니다")
+        if($('#relationshipInfo').val() != '' && $('#relationshipAcceptCheck').val() == 'Y') {
+            console.log("내가 친구해요를 보냈고 상대가 수락한 상태입니다.")
             $('#notRelationship').hide()
             $('#allowRelationship').hide()
             $('#allowedRelationship').hide()
+            $('#twoRelationship').show()
         }
-        if($('#relationshipInfo').val() != '' && $('#type').val() == 'send') {
-            console.log("현재 친구해요를 보낸 상태입니다.")
+        if($('#relationshipInfo').val() != '' && $('#relationshipAcceptCheck').val() == 'N') {
+            console.log("현재 친구해요를 보낸 상태이지만 상대가 수락하지 않은상태입니다..")
             $('#notRelationship').hide()
             $('#allowRelationship').hide()
             $('#allowedRelationship').hide()
+            $('#twoRelationship').hide()
         }
         if($('#relationshipInfo').val() == '' && $('#type').val() == 'send') {
             console.log("현재 친구해요를 보내지 않았습니다.")
@@ -361,6 +363,7 @@
                 console.log("update한 pk값", data)
                 if(data != null) {
                     $('#allowedRelationship').show()
+                    $('#twoRelationship').show()
                     $('#allowRelationship').hide()
                     $('#didRelationship').hide()
                     $('#notRelationship').hide()

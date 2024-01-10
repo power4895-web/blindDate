@@ -41,7 +41,7 @@
             <header>
                 <div class="header-col">
                     <i class="bi bi-arrow-left"  style="margin-right: 10px; cursor: pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="뒤로가기"></i>
-                    <p class="profile-name">${yourInfo.nickname}</p>
+                    <p class="profile-name">${userInfo.nickname}</p>
                 </div>
                 <div class="col-md-8 offset-md-2" style="display: none" id="chatSearchId">
                     <div class="input-group mb-sm-2 m" >
@@ -169,13 +169,13 @@
                             </button>
                         </form>
                         <!-- 채팅 입력 관련 기능(파일 첨부, 캡쳐 등) -->
-                        <div class="insert-menu">
-                            <i class="icon-smile">😀</i>
-                            <i class="icon-attach">➕</i>
-                            <i class="icon-phone">📞</i>
-                            <i class="icon-calendar-empty">📆</i>
-                            <i class="icon-camera">📷</i>
-                        </div>
+<%--                        <div class="insert-menu">--%>
+<%--                            <i class="icon-smile">😀</i>--%>
+<%--                            <i class="icon-attach">➕</i>--%>
+<%--                            <i class="icon-phone">📞</i>--%>
+<%--                            <i class="icon-calendar-empty">📆</i>--%>
+<%--                            <i class="icon-camera">📷</i>--%>
+<%--                        </div>--%>
                     </div>
                 </div>
             </main>

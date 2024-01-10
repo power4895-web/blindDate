@@ -179,8 +179,12 @@
                                         <div class="invalid-feedback" data-sb-feedback="introduce:required">A introduce is required.</div>
                                     </div>
                                     <!-- Phone number input-->
+
+                                    <label for="file" class="input-file-button">
+                                        이미지 등록하기
+                                    </label>
                                     <div class="form-floating mb-3">
-                                        <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple" />
+                                        <input  id="file" name="file" type="file" accept=".jpg, .png, .jpeg, .hwp, .xlsx, .pdf, .docx" multiple="multiple"style="display: none;" />
                                     </div>
 
 
@@ -631,5 +635,12 @@
         border-radius: 10px 10px 10px 10px;
         background-color: #78DCE8;
         color: white;
+    }
+    .input-file-button {
+        padding: 6px 25px;
+        background-color: #FF6600;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
     }
 </style>
